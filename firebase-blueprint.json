@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "TournamentRegistration": {
+      "title": "Tournament Registration",
+      "description": "User registration for upcoming Ludo tournaments",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Player's full name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Player's email address"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Player's contact number"
+        },
+        "region": {
+          "type": "string",
+          "enum": ["Alexandra", "Soweto", "Mamelodi"],
+          "description": "Preferred tournament location"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of registration"
+        }
+      },
+      "required": ["fullName", "email", "phoneNumber", "region", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/registrations/{registrationId}": {
+      "schema": "TournamentRegistration",
+      "description": "Collection of tournament registrations"
+    }
+  }
+}

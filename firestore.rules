@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Helpers
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    
+    function incoming() { 
+      return request.resource.data; 
+    }
+
+    // Entity Validation
+    function isValidTournamentRegistration(data) {
+      return data.keys().hasAll(['fullName', 'email', 'phoneNumber', 'region', 'createdAt'])
+        && data.keys().size() == 5
+        && data.fullName is string && data.fullName.size() > 0 && data.fullName.size() <= 100
+        && data.email is string && data.email.size() <= 128 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && data.phoneNumber is string && data.phoneNumber.size() > 0 && data.phoneNumber.size() <= 20
+        && data.region in ['Alexandra', 'Soweto', 'Mamelodi']
+        && data.createdAt == request.time;
+    }
+
+    // Tournament Registrations Collection
+    match /registrations/{registrationId} {
+      // Allow public creation with strict validation
+      allow create: if isValidId(registrationId) && isValidTournamentRegistration(incoming());
+      
+      // PII Protection: Block all reads/updates/deletes from the client
+      // Only server-side or admin tools should access this data
+      allow get, list, update, delete: if false;
+    }
+  }
+}
