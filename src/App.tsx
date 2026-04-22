@@ -26,7 +26,11 @@ import {
   PlayCircle,
   Hash,
   ChevronRight,
-  ShoppingBag
+  ShoppingBag,
+  Heart,
+  Plus,
+  Filter,
+  ShoppingCart
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, serverTimestamp, getDocFromServer } from 'firebase/firestore';
@@ -48,6 +52,73 @@ interface RegistrationData {
   phoneNumber: string;
   region: 'Alexandra' | 'Soweto' | 'Mamelodi';
 }
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category: 'Apparel' | 'Equipment' | 'Accessories';
+  tag: string;
+  description: string;
+}
+
+const PRODUCTS: Product[] = [
+  {
+    id: 'j-01',
+    name: 'Elite Circuit Jersey',
+    price: 850.00,
+    category: 'Apparel',
+    image: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&h=800&fit=crop',
+    tag: 'New Entry',
+    description: 'Professional grade moisture-wicking fabric for intense tournament play.'
+  },
+  {
+    id: 'b-01',
+    name: 'Heritage Wooden Board',
+    price: 1200.00,
+    category: 'Equipment',
+    image: 'https://images.unsplash.com/photo-1611996598517-380f27471644?w=600&h=800&fit=crop',
+    tag: 'Bestseller',
+    description: 'Hand-carved African walnut board with custom teal inlay.'
+  },
+  {
+    id: 'c-01',
+    name: 'Founder\'s Cap',
+    price: 350.00,
+    category: 'Apparel',
+    image: 'https://images.unsplash.com/photo-1588850567054-981e97aec699?w=600&h=800&fit=crop',
+    tag: 'Limited',
+    description: 'Commemorative headwear featuring the official league badge.'
+  },
+  {
+    id: 'd-01',
+    name: 'Obsidian Pro Dice Set',
+    price: 250.00,
+    category: 'Equipment',
+    image: 'https://images.unsplash.com/photo-1589149022630-fce4e6f47795?w=600&h=800&fit=crop',
+    tag: 'Hot',
+    description: 'Weighted high-density dice for perfectly balanced rolls.'
+  },
+  {
+    id: 'h-01',
+    name: 'League Technical Hoodie',
+    price: 950.00,
+    category: 'Apparel',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=800&fit=crop',
+    tag: 'Winter Series',
+    description: 'Ultra-soft fleece designed for late-night tournament circuits.'
+  },
+  {
+    id: 'a-01',
+    name: 'Tactical Carrying Case',
+    price: 450.00,
+    category: 'Accessories',
+    image: 'https://images.unsplash.com/photo-1605733513597-a8f8d410fe3c?w=600&h=800&fit=crop',
+    tag: 'Essential',
+    description: 'Secure transport for your professional board and tokens.'
+  }
+];
 
 interface FirestoreErrorInfo {
   error: string;
@@ -105,6 +176,17 @@ const LudoBoardDecoration = () => (
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cart, setCart] = useState<string[]>([]);
+  const [wishlist, setWishlist] = useState<string[]>([]);
+  const [filter, setFilter] = useState<'All' | 'Apparel' | 'Equipment' | 'Accessories'>('All');
+  
+  const addToCart = (id: string) => {
+    setCart(prev => prev.includes(id) ? prev : [...prev, id]);
+  };
+
+  const toggleWishlist = (id: string) => {
+    setWishlist(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -200,7 +282,33 @@ export default function App() {
             ))}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3 pr-4 border-r border-white/10">
+              <button 
+                onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}
+                className="relative p-2 text-white/60 hover:text-red-500 transition-colors"
+                aria-label="Wishlist"
+              >
+                <Heart size={18} fill={wishlist.length > 0 ? "currentColor" : "none"} className={wishlist.length > 0 ? "text-red-500" : ""} />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[8px] font-black italic flex items-center justify-center rounded-full animate-bounce">
+                    {wishlist.length}
+                  </span>
+                )}
+              </button>
+              <button 
+                onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}
+                className="relative p-2 text-white/60 hover:text-accent-teal transition-colors"
+                aria-label="Shopping Cart"
+              >
+                <ShoppingCart size={18} fill={cart.length > 0 ? "currentColor" : "none"} className={cart.length > 0 ? "text-accent-teal" : ""} />
+                {cart.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-accent-teal text-white text-[8px] font-black italic flex items-center justify-center rounded-full">
+                    {cart.length}
+                  </span>
+                )}
+              </button>
+            </div>
             <a href="#shop" className="hidden sm:flex items-center gap-2 px-6 py-2 bg-accent-teal text-white hover:bg-white hover:text-accent-teal transition-all uppercase text-[10px] tracking-widest font-black italic shadow-[0_0_20px_rgba(20,184,166,0.2)]">
               <ShoppingBag size={14} /> Shop
             </a>
@@ -766,69 +874,112 @@ export default function App() {
             colorClass="text-accent-teal"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
-            {[
-              {
-                id: 'j-01',
-                name: 'Elite Circuit Jersey',
-                price: 'R850.00',
-                image: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&h=800&fit=crop',
-                tag: 'New Entry'
-              },
-              {
-                id: 'b-01',
-                name: 'Heritage Wooden Board',
-                price: 'R1,200.00',
-                image: 'https://images.unsplash.com/photo-1611996598517-380f27471644?w=600&h=800&fit=crop',
-                tag: 'Bestseller'
-              },
-              {
-                id: 'c-01',
-                name: 'Founder\'s Cap (Limited)',
-                price: 'R350.00',
-                image: 'https://images.unsplash.com/photo-1588850567054-981e97aec699?w=600&h=800&fit=crop',
-                tag: 'Members Only'
-              }
-            ].map((item, idx) => (
-              <motion.div 
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="theme-card group"
+          {/* Shop Filters */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-20">
+            {['All', 'Apparel', 'Equipment', 'Accessories'].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat as any)}
+                className={`px-8 py-3 text-[11px] font-black italic uppercase tracking-widest transition-all duration-300 ${
+                  filter === cat 
+                    ? 'bg-accent-teal text-white shadow-[0_0_20px_rgba(20,184,166,0.2)]' 
+                    : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
+                }`}
+                style={{ clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)' }}
               >
-                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-bg-deep/50">
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 bg-white text-black text-[9px] font-black italic uppercase tracking-widest">{item.tag}</span>
-                  </div>
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-accent-teal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                    <button className="btn-action btn-action-primary transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Ref_{item.id}</div>
-                  <h3 className="text-2xl font-display italic font-black uppercase text-white">{item.name}</h3>
-                  <div className="text-xl font-mono text-accent-teal font-black italic">{item.price}</div>
-                </div>
-              </motion.div>
+                {cat}
+              </button>
             ))}
           </div>
 
-          <div className="mt-20 p-10 bg-gradient-to-r from-bg-panel to-accent-teal/5 flex flex-col md:flex-row items-center justify-between gap-10 border border-teal-500/10" style={{ clipPath: 'polygon(0 0, 98% 0, 100% 100%, 2% 100%)' }}>
-            <div className="space-y-4 max-w-xl">
-              <h4 className="text-4xl font-display italic font-black uppercase text-white leading-none">Global Shipping Available</h4>
-              <p className="text-white/40 text-sm font-medium">Wear the mark of a champion. All merchandise proceeds support local township Ludo developmental programs.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-4">
+            <AnimatePresence mode="popLayout">
+              {PRODUCTS
+                .filter(p => filter === 'All' || p.category === filter)
+                .map((product, idx) => (
+                <motion.div 
+                  layout
+                  key={product.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  className="theme-card group"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden mb-8 bg-bg-deep/50 p-2">
+                    {/* Floating Badges */}
+                    <div className="absolute top-6 left-6 z-10 flex flex-col gap-2">
+                      <span className="px-3 py-1 bg-white text-black text-[9px] font-black italic uppercase tracking-[0.2em]">{product.tag}</span>
+                      {cart.includes(product.id) && (
+                        <span className="px-3 py-1 bg-accent-teal text-white text-[9px] font-black italic uppercase tracking-[0.2em] animate-pulse">In Cart</span>
+                      )}
+                    </div>
+
+                    {/* Wishlist Button */}
+                    <button 
+                      onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }}
+                      className={`absolute top-6 right-6 z-20 w-10 h-10 flex items-center justify-center transition-all duration-300 rounded-full border ${
+                        wishlist.includes(product.id) 
+                          ? 'bg-red-500 border-red-500 text-white' 
+                          : 'bg-black/20 border-white/10 text-white hover:bg-white hover:border-white hover:text-black'
+                      }`}
+                    >
+                      <Heart size={16} fill={wishlist.includes(product.id) ? "currentColor" : "none"} />
+                    </button>
+
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 group-hover:scale-105"
+                    />
+                    
+                    <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-bg-deep to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex flex-col gap-4">
+                      <p className="text-[10px] text-white/60 leading-tight font-medium line-clamp-2">{product.description}</p>
+                      <button 
+                        onClick={() => addToCart(product.id)}
+                        className="btn-action btn-action-primary w-full py-4 text-[10px]"
+                      >
+                        {cart.includes(product.id) ? 'Add Another' : 'Deploy to Cart'}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-1">
+                        <div className="text-[10px] text-teal-400 font-black italic uppercase tracking-[0.3em]">{product.category}</div>
+                        <h3 className="text-3xl font-display italic font-black uppercase text-white leading-none tracking-tighter">{product.name}</h3>
+                      </div>
+                      <div className="text-2xl font-mono text-white font-black italic tracking-tighter">R{product.price}</div>
+                    </div>
+                    <div className="pt-4 border-t border-teal-500/10 flex justify-between items-center opacity-40 group-hover:opacity-100 transition-opacity">
+                      <div className="text-[9px] uppercase tracking-widest font-bold">Serial_{product.id}</div>
+                      <div className="flex gap-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-ludo-red" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-ludo-green" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-ludo-yellow" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-ludo-blue" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          <div className="mt-32 p-12 bg-gradient-to-r from-bg-panel via-accent-teal/5 to-bg-panel flex flex-col lg:flex-row items-center justify-between gap-12 border-y border-teal-500/10 relative overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 10%, 100% 100%, 0 90%)' }}>
+            <div className="absolute top-0 right-0 p-8 opacity-[0.02]">
+              <ShoppingBag size={200} strokeWidth={0.5} />
             </div>
-            <button className="btn-action bg-white text-black hover:bg-accent-teal hover:text-white shrink-0">
-              Full Catalogue <ChevronRight size={16} />
+            <div className="space-y-6 max-w-2xl relative z-10">
+              <div className="tag-status">Global Logistics</div>
+              <h4 className="text-5xl font-display italic font-black uppercase text-white leading-[0.9] tracking-tighter">World Class Shipping.<br/><span className="text-teal-400">Zero Latency.</span></h4>
+              <p className="text-white/50 text-base font-medium leading-relaxed">
+                We deliver professional-grade equipment to players worldwide. All proceeds from the Pro Shop are directly reinvested into our township youth development programs.
+              </p>
+            </div>
+            <button className="btn-action bg-white text-black hover:bg-accent-teal hover:text-white shrink-0 px-12 py-6 text-sm">
+              Full Inventory Guide <ChevronRight size={18} />
             </button>
           </div>
         </div>
