@@ -24,7 +24,9 @@ import {
   Users,
   Camera,
   PlayCircle,
-  Hash
+  Hash,
+  ChevronRight,
+  ShoppingBag
 } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, serverTimestamp, getDocFromServer } from 'firebase/firestore';
@@ -175,23 +177,23 @@ export default function App() {
       />
 
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-[1000] px-10 py-6 border-b transition-all duration-500 bg-bg-panel/90 backdrop-blur-md ${scrolled ? 'border-teal-400/20 py-4 shadow-[0_0_30px_rgba(20,184,166,0.2)]' : 'border-teal-400/10'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-[1000] px-10 py-6 border-b transition-all duration-500 bg-bg-panel/95 backdrop-blur-xl ${scrolled ? 'border-teal-400/20 py-4 shadow-[0_0_30px_rgba(20,184,166,0.3)]' : 'border-teal-400/10'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <a href="#" className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-400 via-teal-600 to-teal-900 rounded-lg flex items-center justify-center border border-teal-400/40">
+          <a href="#" className="flex items-center gap-4 group">
+            <div className="w-10 h-10 bg-gradient-to-br from-teal-400 via-teal-600 to-teal-900 rounded-lg flex items-center justify-center border border-teal-400/40 group-hover:rotate-12 transition-transform">
               <div className="w-4 h-4 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
             </div>
-            <span className="text-2xl font-display italic font-medium tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-100 to-teal-400">
-              Ludo League South Africa
+            <span className="text-2xl font-display italic font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-100 to-teal-400">
+              Ludo League SA
             </span>
           </a>
 
           <div className="hidden md:flex items-center gap-10">
-            {['Tournaments', 'History', 'Winners', 'Gallery', 'Contact'].map((item) => (
+            {['Tournaments', 'History', 'Winners', 'Gallery', 'Shop', 'Contact'].map((item) => (
               <a 
                 key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-[11px] uppercase tracking-[0.25rem] font-medium text-white/50 hover:text-white transition-all"
+                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                className="text-[11px] uppercase tracking-[0.25rem] font-black italic text-white/50 hover:text-accent-teal transition-all"
               >
                 {item}
               </a>
@@ -199,44 +201,71 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="hidden sm:block px-6 py-2 border border-white/20 hover:bg-white hover:text-black transition-all uppercase text-[10px] tracking-widest font-bold">
-              Join League
-            </button>
+            <a href="#shop" className="hidden sm:flex items-center gap-2 px-6 py-2 bg-accent-teal text-white hover:bg-white hover:text-accent-teal transition-all uppercase text-[10px] tracking-widest font-black italic shadow-[0_0_20px_rgba(20,184,166,0.2)]">
+              <ShoppingBag size={14} /> Shop
+            </a>
             <button 
-              className="md:hidden text-white"
+              className="md:hidden text-white p-2 hover:bg-white/5 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 z-[999] bg-bg-deep pt-32 px-10 flex flex-col gap-8"
-        >
-          {['Tournaments', 'History', 'Winners', 'Gallery', 'Contact'].map((item) => (
-            <a 
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-4xl font-display italic font-light hover:text-accent-teal transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item}
-            </a>
-          ))}
-          <button 
-            className="mt-8 px-10 py-6 bg-white text-black text-xl font-bold uppercase tracking-widest"
-            onClick={() => setMobileMenuOpen(false)}
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[999] bg-bg-deep pt-32 px-10 flex flex-col gap-8 overflow-hidden"
           >
-            Join League
-          </button>
-        </motion.div>
-      )}
+            {/* Background Pattern for Mobile Menu */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none -z-10">
+              <LudoBoardDecoration />
+            </div>
+
+            {['Tournaments', 'History', 'Winners', 'Gallery', 'Shop', 'Contact'].map((item, idx) => (
+              <motion.a 
+                initial={{ x: 50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.1 + idx * 0.05 }}
+                key={item}
+                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                className="text-5xl font-display italic font-black uppercase text-white hover:text-accent-teal transition-colors flex items-center justify-between group"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>{item}</span>
+                <ChevronRight className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
+              </motion.a>
+            ))}
+            
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-auto mb-10 space-y-4"
+            >
+              <a 
+                href="#register"
+                className="w-full py-6 bg-accent-teal text-white text-xl font-black italic uppercase tracking-widest flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(20,184,166,0.3)]"
+                style={{ clipPath: 'polygon(5% 0, 100% 0, 95% 100%, 0 100%)' }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Join the League
+              </a>
+              <div className="text-center text-white/30 text-[10px] uppercase font-bold tracking-[0.4em]">
+                South Africa's Premier Ludo Ecosystem
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center pt-40 border-b border-white/5 relative overflow-hidden">
@@ -723,6 +752,84 @@ export default function App() {
                 )}
               </AnimatePresence>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pro Shop Section */}
+      <section id="shop" className="bg-bg-panel border-t border-teal-800/20">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader 
+            tag="Official Gear" 
+            title="League Pro Shop" 
+            subtitle="Equip yourself with the official apparel and professional-grade Ludo equipment used in the tournament."
+            colorClass="text-accent-teal"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+            {[
+              {
+                id: 'j-01',
+                name: 'Elite Circuit Jersey',
+                price: 'R850.00',
+                image: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&h=800&fit=crop',
+                tag: 'New Entry'
+              },
+              {
+                id: 'b-01',
+                name: 'Heritage Wooden Board',
+                price: 'R1,200.00',
+                image: 'https://images.unsplash.com/photo-1611996598517-380f27471644?w=600&h=800&fit=crop',
+                tag: 'Bestseller'
+              },
+              {
+                id: 'c-01',
+                name: 'Founder\'s Cap (Limited)',
+                price: 'R350.00',
+                image: 'https://images.unsplash.com/photo-1588850567054-981e97aec699?w=600&h=800&fit=crop',
+                tag: 'Members Only'
+              }
+            ].map((item, idx) => (
+              <motion.div 
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="theme-card group"
+              >
+                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-bg-deep/50">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="px-3 py-1 bg-white text-black text-[9px] font-black italic uppercase tracking-widest">{item.tag}</span>
+                  </div>
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-accent-teal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                    <button className="btn-action btn-action-primary transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Ref_{item.id}</div>
+                  <h3 className="text-2xl font-display italic font-black uppercase text-white">{item.name}</h3>
+                  <div className="text-xl font-mono text-accent-teal font-black italic">{item.price}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-20 p-10 bg-gradient-to-r from-bg-panel to-accent-teal/5 flex flex-col md:flex-row items-center justify-between gap-10 border border-teal-500/10" style={{ clipPath: 'polygon(0 0, 98% 0, 100% 100%, 2% 100%)' }}>
+            <div className="space-y-4 max-w-xl">
+              <h4 className="text-4xl font-display italic font-black uppercase text-white leading-none">Global Shipping Available</h4>
+              <p className="text-white/40 text-sm font-medium">Wear the mark of a champion. All merchandise proceeds support local township Ludo developmental programs.</p>
+            </div>
+            <button className="btn-action bg-white text-black hover:bg-accent-teal hover:text-white shrink-0">
+              Full Catalogue <ChevronRight size={16} />
+            </button>
           </div>
         </div>
       </section>
