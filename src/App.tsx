@@ -472,8 +472,8 @@ export default function App() {
             <div className="bg-bg-panel border-4 border-ludo-teal p-2 relative overflow-hidden group">
               <div className="aspect-[4/5] relative overflow-hidden transition-all duration-1000 group-hover:scale-105">
                 <img 
-                  src="https://images.unsplash.com/photo-1612287230217-969b698cb8d1?w=800&h=1000&fit=crop" 
-                  alt="Ludo Professional" 
+                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg" 
+                  alt="Ludo League SA School Team" 
                   className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-deep via-transparent to-transparent opacity-90" />
