@@ -680,9 +680,9 @@ export default function App() {
               className="md:col-span-2 md:row-span-2 group relative overflow-hidden bg-bg-card border border-teal-400/20 shadow-2xl"
             >
               <img 
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" 
+                src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_tough_match_evhrw5.jpg" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
-                alt="Community Finals"
+                alt="Tournament Tough Match"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
                 <div className="flex items-center gap-2 text-ludo-yellow mb-2">
@@ -696,28 +696,40 @@ export default function App() {
             {/* Grid Items */}
             {[
               { 
-                url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18", 
-                tag: "Strategy", 
-                title: "Mental Focus",
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_kasi_exhibition_x8wa0b.jpg", 
+                tag: "Exhibition", 
+                title: "Kasi Courts",
                 color: "border-ludo-red"
               },
               { 
-                url: "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a", 
-                tag: "Atmosphere", 
-                title: "Alexandra Courts",
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949476/Ludo_League_SA_School_teams_photo_tournament_jkh5y0.jpg", 
+                tag: "Youth", 
+                title: "School League",
                 color: "border-ludo-blue"
               },
               { 
-                url: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205", 
-                tag: "Victory", 
-                title: "Champion Smile",
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949475/Ludo_League_SA_Africa_Playing_tq1eth.jpg", 
+                tag: "Culture", 
+                title: "African Roots",
                 color: "border-ludo-green"
               },
               { 
-                url: "https://images.unsplash.com/photo-1528605248644-14dd04022da1", 
-                tag: "Legacy", 
-                title: "The Mamelodi Circle",
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_Corporate_exhibition_rv2l3j.jpg", 
+                tag: "Corporate", 
+                title: "Business League",
                 color: "border-ludo-yellow"
+              },
+              { 
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949476/Ludo_League_SA_women_and_kids_oioj8d.jpg", 
+                tag: "Community", 
+                title: "Next Generation",
+                color: "border-ludo-blue"
+              },
+              { 
+                url: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949469/Ludo_League_SA_tournament_young_and_old_cm8br8.jpg", 
+                tag: "Legacy", 
+                title: "Bridging Generations",
+                color: "border-ludo-green"
               },
             ].map((item, i) => (
               <motion.div 
@@ -728,7 +740,7 @@ export default function App() {
                 className={`group relative aspect-[4/5] bg-bg-card border border-teal-400/10 overflow-hidden ${item.color} border-l-4`}
               >
                 <img 
-                  src={`${item.url}?w=400&q=80`} 
+                  src={item.url} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                   alt={item.title}
                 />
@@ -740,7 +752,7 @@ export default function App() {
             ))}
 
             {/* Stats Block */}
-            <div className="bg-ludo-blue/10 border border-ludo-blue/20 p-8 flex flex-col justify-center items-center text-center space-y-4">
+            <div className="md:col-span-2 bg-ludo-blue/10 border border-ludo-blue/20 p-8 flex flex-col justify-center items-center text-center space-y-4">
               <Camera className="text-ludo-blue w-10 h-10 mb-2" />
               <div className="text-3xl font-mono font-bold text-white">5,000+</div>
               <div className="text-[10px] uppercase tracking-widest text-ludo-blue font-bold">Photos Captured</div>
