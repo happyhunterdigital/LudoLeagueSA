@@ -262,9 +262,11 @@ export default function App() {
       <nav className={`fixed top-0 left-0 right-0 z-[1000] px-10 py-6 border-b transition-all duration-500 bg-bg-panel/95 backdrop-blur-xl ${scrolled ? 'border-teal-400/20 py-4 shadow-[0_0_30px_rgba(20,184,166,0.3)]' : 'border-teal-400/10'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <a href="#" className="flex items-center gap-4 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-400 via-teal-600 to-teal-900 rounded-lg flex items-center justify-center border border-teal-400/40 group-hover:rotate-12 transition-transform">
-              <div className="w-4 h-4 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            </div>
+            <img 
+              src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" 
+              alt="Ludo League SA Logo" 
+              className="w-12 h-12 rounded-lg object-cover border border-teal-400/40 group-hover:rotate-12 transition-transform shadow-[0_0_15px_rgba(20,184,166,0.3)]" 
+            />
             <span className="text-2xl font-display italic font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-100 to-teal-400">
               Ludo League SA
             </span>
@@ -1038,9 +1040,11 @@ export default function App() {
       <footer className="px-10 py-6 border-t border-white/5 bg-bg-panel flex flex-col md:flex-row items-center justify-between text-[10px] uppercase tracking-[0.25em] text-white/30 font-bold">
         <div className="flex flex-col md:flex-row gap-10">
           <span className="text-white/60 flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-400 via-teal-600 to-teal-900 rounded-lg flex items-center justify-center border border-teal-400/40 scale-75">
-              <div className="w-4 h-4 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            </div>
+            <img 
+              src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" 
+              alt="Ludo League SA Logo" 
+              className="w-10 h-10 rounded-lg object-cover border border-teal-400/40 scale-75 shadow-[0_0_10px_rgba(20,184,166,0.2)]" 
+            />
             Ludo League SA
           </span>
           <div className="flex gap-8 py-3">
