@@ -1,9 +1,13 @@
+// src/App.tsx
 import React, { useEffect, useState } from 'react';
 import { useScroll, useSpring } from 'motion/react';
 import { doc, setDoc, serverTimestamp, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { RegistrationData } from './types';
 import { Navbar } from './components/layout/Navbar';
+import { Hero } from './components/features/Hero';
+import { HistorySection, WinnersSection } from './components/features/InfoSections';
+import { GallerySection, ContactSection } from './components/features/GalleryAndContact';
 import { ShopGrid } from './components/features/ShopGrid';
 import { TournamentRegistration } from './components/features/TournamentRegistration';
 
@@ -78,22 +82,27 @@ export default function App() {
         setMobileMenuOpen={setMobileMenuOpen} 
       />
       
-      {/* Spacer to account for fixed navbar */}
-      <div className="h-32"></div>
-
       <main>
+        <Hero />
         <TournamentRegistration 
           formData={formData} 
           setFormData={setFormData} 
           handleRegister={handleRegister} 
           formStatus={formStatus} 
         />
-        
+        <HistorySection />
+        <WinnersSection />
+        <GallerySection />
         <ShopGrid 
           addToCart={addToCart} 
           cart={cart} 
         />
+        <ContactSection />
       </main>
+      
+      <footer className="bg-bg-panel py-10 text-center border-t border-white/10">
+        <p className="text-white/40 text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+      </footer>
     </div>
   );
 }
