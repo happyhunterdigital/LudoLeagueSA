@@ -1,31 +1,22 @@
-// src/App.tsx
 import React, { useEffect, useState } from 'react';
 import { useScroll, useSpring } from 'motion/react';
-import { doc, setDoc, serverTimestamp, getDocFromServer } from 'firebase/firestore';
+import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
-import { RegistrationData } from './types';
 import { Navbar } from './components/layout/Navbar';
-import { Hero } from './components/features/Hero';
-import { HistorySection, WinnersSection } from './components/features/InfoSections';
-import { GallerySection, ContactSection } from './components/features/GalleryAndContact';
-import { ShopGrid } from './components/features/ShopGrid';
-import { TournamentRegistration } from './components/features/TournamentRegistration';
+import { Home } from './pages/Home';
+import { Tournaments } from './pages/Tournaments';
+import { History } from './pages/History';
+import { Gallery } from './pages/Gallery';
+import { Shop } from './pages/Shop';
+
+export type Page = 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [activePage, setActivePage] = useState<Page>('Home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
-  
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [formData, setFormData] = useState<RegistrationData>({
-    fullName: '',
-    email: '',
-    phoneNumber: '',
-    region: 'Soweto'
-  });
-
-  const addToCart = (id: string) => setCart(prev => prev.includes(id) ? prev : [...prev, id]);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -34,13 +25,12 @@ export default function App() {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     
-    // Validate Connection to Firestore - Defensive Protocol
+    // Validate Connection to Firestore
     const testConnection = async () => {
-      try {
-        await getDocFromServer(doc(db, 'test', 'connection'));
-      } catch (error) {
+      try { await getDocFromServer(doc(db, 'test', 'connection')); } 
+      catch (error) {
         if(error instanceof Error && error.message.includes('the client is offline')) {
-          console.error("Please check your Firebase configuration.");
+          console.error("Firebase configuration check required.");
         }
       }
     };
@@ -55,53 +45,36 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus('submitting');
-    try {
-      const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      const docRef = doc(db, 'registrations', registrationId);
-      await setDoc(docRef, { ...formData, createdAt: serverTimestamp() });
-      setFormStatus('success');
-      setFormData({ fullName: '', email: '', phoneNumber: '', region: 'Soweto' });
-      setTimeout(() => setFormStatus('idle'), 5000);
-    } catch (error) {
-      console.error("Registration failed. Verification Error:", error);
-      setFormStatus('error');
+  const getPageTheme = () => {
+    switch(activePage) {
+      case 'Tournaments': return 'from-ludo-red/10 to-bg-deep';
+      case 'History': return 'from-ludo-yellow/10 to-bg-deep';
+      case 'Gallery': return 'from-ludo-blue/10 to-bg-deep';
+      case 'Shop': return 'from-ludo-green/10 to-bg-deep';
+      default: return 'from-accent-teal/10 to-bg-deep';
     }
   };
 
   return (
-    <div className="relative min-h-screen bg-bg-deep selection:bg-white selection:text-black font-sans">
+    <div className={`relative min-h-screen bg-bg-deep bg-gradient-to-b ${getPageTheme()} selection:bg-white selection:text-black font-sans transition-colors duration-1000`}>
       <Navbar 
-        scrolled={scrolled} 
-        scaleX={scaleX} 
-        cart={cart} 
-        wishlist={wishlist} 
-        mobileMenuOpen={mobileMenuOpen} 
-        setMobileMenuOpen={setMobileMenuOpen} 
+        scrolled={scrolled} scaleX={scaleX} cart={cart} wishlist={wishlist} 
+        activePage={activePage} setActivePage={setActivePage}
+        mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} 
       />
       
-      <main>
-        <Hero />
-        <TournamentRegistration 
-          formData={formData} 
-          setFormData={setFormData} 
-          handleRegister={handleRegister} 
-          formStatus={formStatus} 
-        />
-        <HistorySection />
-        <WinnersSection />
-        <GallerySection />
-        <ShopGrid 
-          addToCart={addToCart} 
-          cart={cart} 
-        />
-        <ContactSection />
+      <div className="h-24 md:h-32"></div>
+
+      <main className="min-h-[80vh]">
+        {activePage === 'Home' && <Home setActivePage={setActivePage} />}
+        {activePage === 'Tournaments' && <Tournaments />}
+        {activePage === 'History' && <History />}
+        {activePage === 'Gallery' && <Gallery />}
+        {activePage === 'Shop' && <Shop cart={cart} setCart={setCart} />}
       </main>
-      
-      <footer className="bg-bg-panel py-10 text-center border-t border-white/10">
-        <p className="text-white/40 text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+
+      <footer className="bg-bg-panel py-10 text-center border-t border-white/10 mt-20">
+        <p className="text-white/40 text-xs md:text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
       </footer>
     </div>
   );
