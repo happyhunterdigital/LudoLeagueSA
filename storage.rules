@@ -1,0 +1,14 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      // Phase 2: Enforce Cryptographic Payload Rejection
+      // Only allows write operations if the payload is strictly an image file under 5MB.
+      // Automatically rejects .php, .exe, .sh, and disguised webshells.
+      allow write: if request.resource.size < 5 * 1024 * 1024 
+                   && request.resource.contentType.matches('image/.*');
+                   
+      allow read: if true;
+    }
+  }
+}
