@@ -3,16 +3,18 @@ import { useScroll, useSpring } from 'motion/react';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
+import { Landing } from './pages/Landing';
 import { Home } from './pages/Home';
 import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
 
-export type Page = 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop';
+export type Page = 'Landing' | 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  // Default state restored to Home
   const [activePage, setActivePage] = useState<Page>('Home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
@@ -24,6 +26,12 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
+    
+    // Dedicated Link Interceptor
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('page') === 'landing') {
+      setActivePage('Landing');
+    }
     
     // Validate Connection to Firestore
     const testConnection = async () => {
@@ -66,6 +74,7 @@ export default function App() {
       <div className="h-24 md:h-32"></div>
 
       <main className="min-h-[80vh]">
+        {activePage === 'Landing' && <Landing setActivePage={setActivePage} />}
         {activePage === 'Home' && <Home setActivePage={setActivePage} />}
         {activePage === 'Tournaments' && <Tournaments />}
         {activePage === 'History' && <History />}
