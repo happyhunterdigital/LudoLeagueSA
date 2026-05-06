@@ -22,6 +22,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleNavClick = (page: Page) => {
     setActivePage(page);
     setMobileMenuOpen(false);
+    
+    // Clear URL parameters when navigating to standard pages to ensure clean routing
+    const newUrl = window.location.pathname;
+    window.history.pushState({}, '', newUrl);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -31,6 +35,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       
       <nav className={`fixed top-0 left-0 right-0 z-[1000] px-4 md:px-10 py-4 md:py-6 border-b transition-all duration-500 bg-bg-panel/95 backdrop-blur-xl ${scrolled ? 'border-teal-400/20 py-3 shadow-lg' : 'border-teal-400/10'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
+          
+          {/* Logo restored to point exclusively to the Home page */}
           <button onClick={() => handleNavClick('Home')} className="flex items-center gap-3 group">
             <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="Logo" className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover border border-teal-400/40 group-hover:rotate-12 transition-transform" />
             <span className="text-xl md:text-2xl font-display italic font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-100 to-teal-400 hidden sm:block">Ludo League SA</span>
@@ -65,7 +71,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 bg-bg-panel border-b border-teal-400/20 py-4 px-4 flex flex-col gap-4 shadow-2xl">
             {navItems.map((item) => (
