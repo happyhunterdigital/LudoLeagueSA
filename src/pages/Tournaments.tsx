@@ -3,7 +3,6 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SharedUI';
 import { motion } from 'motion/react';
 
 export const Tournaments = () => {
@@ -26,34 +25,39 @@ export const Tournaments = () => {
   };
 
   return (
-    <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-slate-200">
+    <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-white/10">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-7xl mx-auto">
-        <SectionHeader tag="Compete" title="Registration" colorClass="text-ludo-red" />
-        <div className="max-w-2xl mx-auto bg-white border border-red-100 p-6 md:p-10 rounded-2xl shadow-xl mt-8">
+        
+        <div className="text-center max-w-4xl mx-auto mb-16">
+          <div className="tag-status mb-6">Compete</div>
+          <h2 className="text-6xl md:text-8xl font-display font-black mb-8 uppercase italic leading-none">Registration</h2>
+        </div>
+
+        <div className="max-w-2xl mx-auto theme-card rounded-2xl">
           <form onSubmit={handleRegister} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <div>
-                <label className="block text-slate-600 text-xs font-bold uppercase tracking-widest mb-2">Full Name</label>
-                <input type="text" required maxLength={100} className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 md:p-4 text-slate-900 focus:border-ludo-red outline-none" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Full Name</label>
+                <input type="text" required maxLength={100} className="w-full bg-black/20 border border-white/20 rounded-lg p-3 md:p-4 outline-none focus:border-white transition-colors" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} style={{ color: 'var(--text)' }} />
               </div>
               <div>
-                <label className="block text-slate-600 text-xs font-bold uppercase tracking-widest mb-2">Email</label>
-                <input type="email" required maxLength={128} className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 md:p-4 text-slate-900 focus:border-ludo-red outline-none" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Email</label>
+                <input type="email" required maxLength={128} className="w-full bg-black/20 border border-white/20 rounded-lg p-3 md:p-4 outline-none focus:border-white transition-colors" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={{ color: 'var(--text)' }} />
               </div>
               <div>
-                <label className="block text-slate-600 text-xs font-bold uppercase tracking-widest mb-2">Phone</label>
-                <input type="tel" required maxLength={20} className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 md:p-4 text-slate-900 focus:border-ludo-red outline-none" value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} />
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Phone</label>
+                <input type="tel" required maxLength={20} className="w-full bg-black/20 border border-white/20 rounded-lg p-3 md:p-4 outline-none focus:border-white transition-colors" value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} style={{ color: 'var(--text)' }} />
               </div>
               <div>
-                <label className="block text-slate-600 text-xs font-bold uppercase tracking-widest mb-2">Region</label>
-                <select className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 md:p-4 text-slate-900 focus:border-ludo-red outline-none appearance-none" value={formData.region} onChange={e => setFormData({...formData, region: e.target.value as any})}>
-                  <option value="Alexandra">Alexandra</option>
-                  <option value="Soweto">Soweto</option>
-                  <option value="Mamelodi">Mamelodi</option>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Region</label>
+                <select className="w-full bg-black/20 border border-white/20 rounded-lg p-3 md:p-4 outline-none appearance-none focus:border-white transition-colors" value={formData.region} onChange={e => setFormData({...formData, region: e.target.value as any})} style={{ color: 'var(--text)' }}>
+                  <option value="Alexandra" style={{ color: '#000' }}>Alexandra</option>
+                  <option value="Soweto" style={{ color: '#000' }}>Soweto</option>
+                  <option value="Mamelodi" style={{ color: '#000' }}>Mamelodi</option>
                 </select>
               </div>
             </div>
-            <button type="submit" disabled={formStatus === 'submitting'} className="w-full mt-6 bg-ludo-red text-white font-black uppercase tracking-widest py-4 rounded-lg hover:bg-slate-900 transition-colors flex items-center justify-center gap-3 shadow-lg">
+            <button type="submit" disabled={formStatus === 'submitting'} className="w-full mt-6 btn-action border-none rounded-lg">
               {formStatus === 'submitting' && <Loader2 className="animate-spin" size={20} />}
               {formStatus === 'success' && <CheckCircle2 size={20} />}
               {formStatus === 'error' && <AlertCircle size={20} />}
