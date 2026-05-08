@@ -12,7 +12,7 @@ const GALLERY_IMAGES = [
 
 export const Gallery = () => {
   return (
-    <section id="gallery" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-white/10">
+    <section id="gallery" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b" style={{ borderColor: 'var(--border-color)' }}>
       <div className="max-w-7xl mx-auto w-full">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="tag-status mb-6">Community & Culture</div>
@@ -26,9 +26,10 @@ export const Gallery = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              className={`rounded-xl overflow-hidden relative group shadow-2xl border border-white/20 ${index === 0 ? 'col-span-2 md:col-span-2 md:row-span-2 h-48 md:h-[400px]' : 'h-32 md:h-48'}`}
+              className={`rounded-xl overflow-hidden relative group shadow-2xl border ${index === 0 ? 'col-span-2 md:col-span-2 md:row-span-2 h-48 md:h-[400px]' : 'h-32 md:h-48'}`}
+              style={{ borderColor: 'var(--border-color)' }}
             >
-              <img src={src} alt="Gallery" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal" />
+              <img src={src} alt="Gallery" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             </motion.div>
           ))}
         </div>
