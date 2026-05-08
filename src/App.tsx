@@ -26,6 +26,13 @@ export default function App() {
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
+          
+          // Force mobile browsers to update their status bar to match the new background
+          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            const colors: Record<string, string> = { home: '#0033A0', tournaments: '#6A0DAD', history: '#008080', gallery: '#000000', shop: '#FFFFFF' };
+            themeColorMeta.setAttribute('content', colors[sectionId] || '#0033A0');
+          }
         }
       });
     }, { threshold: 0.4 }); 
@@ -35,11 +42,7 @@ export default function App() {
 
     const testConnection = async () => {
       try { await getDocFromServer(doc(db, 'test', 'connection')); } 
-      catch (error) {
-        if(error instanceof Error && error.message.includes('the client is offline')) {
-          console.error("Firebase configuration check required.");
-        }
-      }
+      catch (error) { console.error("Firebase offline"); }
     };
     testConnection();
     
@@ -53,18 +56,9 @@ export default function App() {
     setMobileMenuOpen(false);
   };
 
-  const getDynamicBackground = () => {
-    switch(activeSection) {
-      case 'tournaments': return 'bg-red-50';
-      case 'history': return 'bg-amber-50';
-      case 'gallery': return 'bg-blue-100'; // Light Navy/Blue influence
-      case 'shop': return 'bg-teal-50';
-      default: return 'bg-slate-50'; // Default Light Navy tint
-    }
-  };
-
   return (
-    <div className={`relative w-full ${getDynamicBackground()} transition-colors duration-1000 ease-in-out text-slate-900 font-sans`}>
+    // The theme class updates dynamically, CSS transitions handle the smooth color morphing
+    <div className={`theme-${activeSection} relative w-full font-sans`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -78,8 +72,9 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="bg-slate-900 py-10 text-center border-t border-slate-800">
-          <p className="text-white/40 text-xs md:text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+        {/* Footer color inherited via CSS variables */}
+        <footer className="py-10 text-center border-t border-white/10" style={{ backgroundColor: 'var(--card-bg)' }}>
+          <p className="text-xs md:text-sm font-mono opacity-50">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
         </footer>
       </main>
     </div>
