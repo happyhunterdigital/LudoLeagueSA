@@ -27,11 +27,11 @@ export default function App() {
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
           
-          // Force mobile browsers to update their status bar to match the new background
           const themeColorMeta = document.querySelector('meta[name="theme-color"]');
           if (themeColorMeta) {
-            const colors: Record<string, string> = { home: '#0033A0', tournaments: '#6A0DAD', history: '#008080', gallery: '#000000', shop: '#FFFFFF' };
-            themeColorMeta.setAttribute('content', colors[sectionId] || '#0033A0');
+            // Mobile browser header colors matching the active theme
+            const colors: Record<string, string> = { home: '#050914', tournaments: '#0EA5E9', history: '#0F172A', gallery: '#0EA5E9', shop: '#0F172A' };
+            themeColorMeta.setAttribute('content', colors[sectionId] || '#050914');
           }
         }
       });
@@ -57,8 +57,8 @@ export default function App() {
   };
 
   return (
-    // The theme class updates dynamically, CSS transitions handle the smooth color morphing
-    <div className={`theme-${activeSection} relative w-full font-sans`}>
+    // Dynamic theme class orchestrates the entire UI inversion natively
+    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -72,9 +72,8 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        {/* Footer color inherited via CSS variables */}
-        <footer className="py-10 text-center border-t border-white/10" style={{ backgroundColor: 'var(--card-bg)' }}>
-          <p className="text-xs md:text-sm font-mono opacity-50">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+        <footer className="py-10 text-center border-t transition-colors duration-700" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border-color)' }}>
+          <p className="text-xs md:text-sm font-mono opacity-50" style={{ color: 'var(--text)' }}>&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
         </footer>
       </main>
     </div>
