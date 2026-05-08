@@ -7,14 +7,10 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
-/* 
-  MODERN ALTERNATING COLOR SCHEME
-  Variables automatically invert text/backgrounds for maximum contrast 
-*/
 :root {
-  --bg: #050914; /* Deep neutral for Hero */
+  --bg: #050914; 
   --text: #FFFFFF;
-  --accent: #0EA5E9; /* Sky Blue */
+  --accent: #0EA5E9; 
   --card-bg: rgba(255, 255, 255, 0.05);
   --border-color: rgba(255, 255, 255, 0.1);
 }
@@ -27,33 +23,45 @@
   --border-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-tournaments, .theme-gallery {
-  --bg: #0EA5E9; /* Sky Blue */
-  --text: #0F172A; /* Navy Text for modern contrast */
+.theme-tournaments {
+  --bg: #0EA5E9; 
+  --text: #0F172A; 
   --accent: #FFFFFF; 
   --card-bg: rgba(255, 255, 255, 0.25);
-  --border-color: rgba(15, 23, 42, 0.1);
+  --border-color: rgba(15, 23, 42, 0.15);
 }
 
-.theme-history, .theme-shop {
-  --bg: #0F172A; /* Deep Navy */
+.theme-history {
+  --bg: #0F172A; 
   --text: #FFFFFF; 
-  --accent: #0EA5E9; /* Sky Blue */
+  --accent: #0EA5E9; 
+  --card-bg: rgba(14, 165, 233, 0.1); 
+  --border-color: rgba(14, 165, 233, 0.2);
+}
+
+.theme-gallery {
+  --bg: #0EA5E9; 
+  --text: #0F172A; 
+  --accent: #FFFFFF; 
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --border-color: rgba(15, 23, 42, 0.15);
+}
+
+.theme-shop {
+  --bg: #0F172A; 
+  --text: #FFFFFF; 
+  --accent: #0EA5E9; 
   --card-bg: rgba(14, 165, 233, 0.1); 
   --border-color: rgba(14, 165, 233, 0.2);
 }
 
 @layer base {
   body {
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background-color 0.6s ease-in-out, color 0.4s ease-in-out;
     @apply font-sans overflow-x-hidden leading-relaxed;
+    background-color: var(--bg);
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-black tracking-tight uppercase italic;
-    color: var(--text);
-    transition: color 0.4s ease-in-out;
   }
 }
 
@@ -66,12 +74,11 @@
   .btn-action {
     background-color: var(--accent);
     color: var(--bg);
-    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:scale-105 rounded-xl;
+    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:scale-105 rounded-xl border-none;
   }
   .tag-status {
     background-color: var(--card-bg);
     border-color: var(--accent);
-    color: var(--text);
     @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm backdrop-blur-md rounded-r-lg;
   }
 }
