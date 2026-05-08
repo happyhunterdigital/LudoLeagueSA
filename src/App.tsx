@@ -1,39 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useScroll, useSpring } from 'motion/react';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
-import { Landing } from './pages/Landing';
-import { Home } from './pages/Home';
+import { LandingHero } from './components/features/LandingHero';
 import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
 
-export type Page = 'Landing' | 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop';
-
 export default function App() {
-  const [scrolled, setScrolled] = useState(false);
-  // Default state restored to Home
-  const [activePage, setActivePage] = useState<Page>('Home');
+  const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
-
-  const { scrollYProgress } = useScroll();
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ container: scrollContainerRef });
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    
-    // Dedicated Link Interceptor
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('page') === 'landing') {
-      setActivePage('Landing');
-    }
-    
-    // Validate Connection to Firestore
+    // 1. Intersection Observer for Scroll Tracking & Dynamic Browser UI
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          setActiveSection(sectionId);
+          // Dynamically change browser title to feel like a "new page"
+          document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
+          // Silently update URL without triggering a jump
+          window.history.replaceState(null, '', `#${sectionId}`);
+        }
+      });
+    }, { threshold: 0.5 }); // Triggers when section is 50% visible
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => observer.observe(sec));
+
+    // 2. Validate Connection to Firestore
     const testConnection = async () => {
       try { await getDocFromServer(doc(db, 'test', 'connection')); } 
       catch (error) {
@@ -44,47 +48,45 @@ export default function App() {
     };
     testConnection();
     
-    // Neural Link Secured
+    // 3. Neural Link Secured
     console.log(`[Neural Link Secured] Chatbot model strictly set to: ${chatbotConfig.model}`);
     console.log(`[Audit Targeted] Initiating evaluation for: ${chatbotConfig.agencyAuditTarget}`);
     console.log(`[Focus Status] Target scope confirmed: ${chatbotConfig.focus}`);
     (window as any).agencyDigitalAuditLink = chatbotConfig;
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => observer.disconnect();
   }, []);
 
-  const getPageTheme = () => {
-    switch(activePage) {
-      case 'Tournaments': return 'from-ludo-red/10 to-bg-deep';
-      case 'History': return 'from-ludo-yellow/10 to-bg-deep';
-      case 'Gallery': return 'from-ludo-blue/10 to-bg-deep';
-      case 'Shop': return 'from-ludo-green/10 to-bg-deep';
-      default: return 'from-accent-teal/10 to-bg-deep';
-    }
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
   return (
-    <div className={`relative min-h-screen bg-bg-deep bg-gradient-to-b ${getPageTheme()} selection:bg-white selection:text-black font-sans transition-colors duration-1000`}>
+    <div className="relative h-screen w-full bg-bg-deep selection:bg-white selection:text-black font-sans overflow-hidden">
       <Navbar 
-        scrolled={scrolled} scaleX={scaleX} cart={cart} wishlist={wishlist} 
-        activePage={activePage} setActivePage={setActivePage}
+        scaleX={scaleX} cart={cart} wishlist={wishlist} 
+        activeSection={activeSection} scrollToSection={scrollToSection}
         mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} 
       />
       
-      <div className="h-24 md:h-32"></div>
-
-      <main className="min-h-[80vh]">
-        {activePage === 'Landing' && <Landing setActivePage={setActivePage} />}
-        {activePage === 'Home' && <Home setActivePage={setActivePage} />}
-        {activePage === 'Tournaments' && <Tournaments />}
-        {activePage === 'History' && <History />}
-        {activePage === 'Gallery' && <Gallery />}
-        {activePage === 'Shop' && <Shop cart={cart} setCart={setCart} />}
+      {/* Scroll-Snapped Container */}
+      <main 
+        ref={scrollContainerRef}
+        className="h-screen w-full overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      >
+        <LandingHero scrollToSection={scrollToSection} />
+        <Tournaments />
+        <History />
+        <Gallery />
+        <Shop cart={cart} setCart={setCart} />
+        
+        {/* Footer contained within the last snap element */}
+        <section className="h-auto snap-end bg-bg-panel py-10 text-center border-t border-white/10">
+          <p className="text-white/40 text-xs md:text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+        </section>
       </main>
-
-      <footer className="bg-bg-panel py-10 text-center border-t border-white/10 mt-20">
-        <p className="text-white/40 text-xs md:text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
-      </footer>
     </div>
   );
 }
