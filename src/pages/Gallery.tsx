@@ -1,5 +1,4 @@
 import React from 'react';
-import { SectionHeader } from '../components/ui/SharedUI';
 import { motion } from 'motion/react';
 
 const GALLERY_IMAGES = [
@@ -13,9 +12,12 @@ const GALLERY_IMAGES = [
 
 export const Gallery = () => {
   return (
-    <section id="gallery" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-slate-200">
+    <section id="gallery" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-white/10">
       <div className="max-w-7xl mx-auto w-full">
-        <SectionHeader tag="Community & Culture" title="The Gallery" colorClass="text-blue-600" />
+        <div className="text-center max-w-4xl mx-auto mb-16">
+          <div className="tag-status mb-6">Community & Culture</div>
+          <h2 className="text-6xl md:text-8xl font-display font-black mb-8 uppercase italic leading-none">The Gallery</h2>
+        </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
           {GALLERY_IMAGES.map((src, index) => (
@@ -24,9 +26,9 @@ export const Gallery = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              className={`bg-white rounded-xl overflow-hidden relative group shadow-md border border-slate-200 ${index === 0 ? 'col-span-2 md:col-span-2 md:row-span-2 h-48 md:h-[400px]' : 'h-32 md:h-48'}`}
+              className={`rounded-xl overflow-hidden relative group shadow-2xl border border-white/20 ${index === 0 ? 'col-span-2 md:col-span-2 md:row-span-2 h-48 md:h-[400px]' : 'h-32 md:h-48'}`}
             >
-              <img src={src} alt="Gallery" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
+              <img src={src} alt="Gallery" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal" />
             </motion.div>
           ))}
         </div>
