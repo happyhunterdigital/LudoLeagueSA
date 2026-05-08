@@ -19,7 +19,6 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
-    // Observer triggers at 40% visibility to change URL and active nav state smoothly during native scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -44,11 +43,7 @@ export default function App() {
     };
     testConnection();
     
-    console.log(`[Neural Link Secured] Chatbot model strictly set to: ${chatbotConfig.model}`);
-    console.log(`[Audit Targeted] Initiating evaluation for: ${chatbotConfig.agencyAuditTarget}`);
-    console.log(`[Focus Status] Target scope confirmed: ${chatbotConfig.focus}`);
     (window as any).agencyDigitalAuditLink = chatbotConfig;
-    
     return () => observer.disconnect();
   }, []);
 
@@ -58,15 +53,24 @@ export default function App() {
     setMobileMenuOpen(false);
   };
 
+  const getDynamicBackground = () => {
+    switch(activeSection) {
+      case 'tournaments': return 'bg-red-50';
+      case 'history': return 'bg-amber-50';
+      case 'gallery': return 'bg-blue-100'; // Light Navy/Blue influence
+      case 'shop': return 'bg-teal-50';
+      default: return 'bg-slate-50'; // Default Light Navy tint
+    }
+  };
+
   return (
-    <div className="relative w-full bg-slate-900 selection:bg-accent-teal selection:text-white font-sans text-slate-50">
+    <div className={`relative w-full ${getDynamicBackground()} transition-colors duration-1000 ease-in-out text-slate-900 font-sans`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
         mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} 
       />
       
-      {/* Native scrolling. No fixed heights, no overflow locks. */}
       <main className="w-full">
         <LandingHero scrollToSection={scrollToSection} />
         <Tournaments />
@@ -74,7 +78,7 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="bg-slate-950 py-10 text-center border-t border-teal-500/20">
+        <footer className="bg-slate-900 py-10 text-center border-t border-slate-800">
           <p className="text-white/40 text-xs md:text-sm font-mono">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
         </footer>
       </main>
