@@ -10,11 +10,19 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
       <LudoBoardDecoration />
       
       <div className="absolute inset-0 z-0 opacity-40">
-        <img 
-          src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949472/Ludo_League_SA_School_team_hold_Ludo_league_Boards_available_on_our_website_o9kls9.jpg" 
-          alt="Ludo League SA App Home" 
-          className="w-full h-full object-cover object-center"
-        />
+        <picture>
+          <source srcSet="https://res.cloudinary.com/dkyg07qvv/image/upload/f_avif,q_auto/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" type="image/avif" />
+          <source srcSet="https://res.cloudinary.com/dkyg07qvv/image/upload/f_webp,q_auto/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" type="image/webp" />
+          <img 
+            src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" 
+            alt="Ludo League SA App Portal" 
+            width="1920" 
+            height="800" 
+            loading="eager" 
+            fetchPriority="high"
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-bg-deep to-transparent"></div>
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-bg-deep to-transparent"></div>
         <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-bg-deep to-transparent hidden md:block"></div>
