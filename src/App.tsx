@@ -8,12 +8,17 @@ import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
+import { CookieConsent } from './components/features/CookieConsent';
+import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
+  
+  // Privacy and Cookie State
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -29,7 +34,6 @@ export default function App() {
           
           const themeColorMeta = document.querySelector('meta[name="theme-color"]');
           if (themeColorMeta) {
-            // Mobile browser header colors matching the active theme
             const colors: Record<string, string> = { home: '#050914', tournaments: '#0EA5E9', history: '#0F172A', gallery: '#0EA5E9', shop: '#0F172A' };
             themeColorMeta.setAttribute('content', colors[sectionId] || '#050914');
           }
@@ -57,7 +61,6 @@ export default function App() {
   };
 
   return (
-    // Dynamic theme class orchestrates the entire UI inversion natively
     <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
@@ -72,10 +75,20 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="py-10 text-center border-t transition-colors duration-700" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border-color)' }}>
+        <footer className="py-10 text-center border-t transition-colors duration-700 flex flex-col items-center gap-4" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border-color)' }}>
           <p className="text-xs md:text-sm font-mono opacity-50" style={{ color: 'var(--text)' }}>&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+          <button 
+            onClick={() => setIsPrivacyOpen(true)}
+            className="text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity font-bold underline"
+            style={{ color: 'var(--accent)' }}
+          >
+            Privacy Policy & Terms
+          </button>
         </footer>
       </main>
+
+      <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
+      <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
     </div>
   );
 }
