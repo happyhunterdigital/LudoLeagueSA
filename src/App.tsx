@@ -16,8 +16,6 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
-  
-  // Privacy and Cookie State
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   
   const { scrollYProgress } = useScroll();
@@ -31,12 +29,6 @@ export default function App() {
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
-          
-          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-          if (themeColorMeta) {
-            const colors: Record<string, string> = { home: '#050914', tournaments: '#0EA5E9', history: '#0F172A', gallery: '#0EA5E9', shop: '#0F172A' };
-            themeColorMeta.setAttribute('content', colors[sectionId] || '#050914');
-          }
         }
       });
     }, { threshold: 0.4 }); 
@@ -61,7 +53,10 @@ export default function App() {
   };
 
   return (
-    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700`}>
+    <div 
+      className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}
+      style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}
+    >
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -75,11 +70,11 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="py-10 text-center border-t transition-colors duration-700 flex flex-col items-center gap-4" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border-color)' }}>
-          <p className="text-xs md:text-sm font-mono opacity-50" style={{ color: 'var(--text)' }}>&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+        <footer className="py-10 text-center border-t transition-colors duration-700 flex flex-col items-center gap-4" style={{ borderColor: 'var(--border-color)' }}>
+          <p className="text-xs md:text-sm font-mono opacity-60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
-            className="text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity font-bold underline"
+            className="text-xs uppercase tracking-widest hover:opacity-100 transition-opacity font-bold underline"
             style={{ color: 'var(--accent)' }}
           >
             Privacy Policy & Terms
