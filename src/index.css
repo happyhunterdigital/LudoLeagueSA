@@ -7,61 +7,75 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
+/* 
+  "THE MODERN PLAY" & "VIBRANT SOCIAL" ARCHITECTURE
+  Soft, welcoming backgrounds with aggressive Ludo color-blocking per section.
+*/
 :root {
-  --bg: #050914; 
-  --text: #FFFFFF;
-  --accent: #0EA5E9; 
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --bg: #FFFFFF; 
+  --text: #001F3F; /* Deep Navy */
+  --accent: #FFBF00; /* Amber Orange */
+  --card-bg: #F8F9FA;
+  --border-color: #E2E8F0;
+  --btn-text: #001F3F;
 }
 
 .theme-home {
-  --bg: #050914; 
-  --text: #FFFFFF;
-  --accent: #0EA5E9; 
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --bg: #FFFFFF; 
+  --text: #001F3F;
+  --accent: #FFBF00; /* Amber Orange */
+  --card-bg: #F8F9FA;
+  --border-color: #E2E8F0;
+  --btn-text: #001F3F;
 }
 
 .theme-tournaments {
-  --bg: #0EA5E9; 
-  --text: #0F172A; 
-  --accent: #FFFFFF; 
-  --card-bg: rgba(255, 255, 255, 0.25);
-  --border-color: rgba(15, 23, 42, 0.15);
+  --bg: #FFFDF5; /* Soft Cream */
+  --text: #001F3F; 
+  --accent: #E63946; /* Cherry Red */
+  --card-bg: #FFFFFF;
+  --border-color: #FEE2E2;
+  --btn-text: #FFFFFF;
 }
 
 .theme-history {
-  --bg: #0F172A; 
-  --text: #FFFFFF; 
-  --accent: #0EA5E9; 
-  --card-bg: rgba(14, 165, 233, 0.1); 
-  --border-color: rgba(14, 165, 233, 0.2);
+  --bg: #F8F9FA; /* Light Grey/Blue */
+  --text: #001F3F; 
+  --accent: #F9D423; /* Sunflower Yellow */
+  --card-bg: #FFFFFF; 
+  --border-color: #FEF3C7;
+  --btn-text: #001F3F;
 }
 
 .theme-gallery {
-  --bg: #0EA5E9; 
-  --text: #0F172A; 
-  --accent: #FFFFFF; 
-  --card-bg: rgba(255, 255, 255, 0.25);
-  --border-color: rgba(15, 23, 42, 0.15);
+  --bg: #FFFFFF; 
+  --text: #001F3F; 
+  --accent: #007BFF; /* Electric Blue */
+  --card-bg: #F8F9FA;
+  --border-color: #E0F2FE;
+  --btn-text: #FFFFFF;
 }
 
 .theme-shop {
-  --bg: #0F172A; 
-  --text: #FFFFFF; 
-  --accent: #0EA5E9; 
-  --card-bg: rgba(14, 165, 233, 0.1); 
-  --border-color: rgba(14, 165, 233, 0.2);
+  --bg: #F8F9FA; 
+  --text: #001F3F; 
+  --accent: #2A9D8F; /* Meadow Green */
+  --card-bg: #FFFFFF; 
+  --border-color: #D1FAE5;
+  --btn-text: #FFFFFF;
 }
 
 @layer base {
   body {
-    @apply font-sans overflow-x-hidden leading-relaxed;
     background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.6s ease-in-out, color 0.4s ease-in-out;
+    @apply font-sans overflow-x-hidden leading-relaxed;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-black tracking-tight uppercase italic;
+    color: var(--text);
+    transition: color 0.4s ease-in-out;
   }
 }
 
@@ -69,17 +83,20 @@
   .theme-card {
     background-color: var(--card-bg);
     border-color: var(--border-color);
-    @apply border p-8 transition-all duration-300 relative shadow-xl hover:shadow-2xl backdrop-blur-md rounded-2xl;
+    /* Generous 20px rounded corners for a welcoming feel */
+    @apply border p-8 transition-all duration-300 relative shadow-lg hover:shadow-xl rounded-[20px];
   }
   .btn-action {
-    background-color: var(--accent);
-    color: var(--bg);
-    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:scale-105 rounded-xl border-none;
+    background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 85%, black));
+    color: var(--btn-text);
+    /* 16px rounded corners, 3D gradient feel */
+    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1 rounded-2xl border-none;
   }
   .tag-status {
     background-color: var(--card-bg);
     border-color: var(--accent);
-    @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm backdrop-blur-md rounded-r-lg;
+    color: var(--text);
+    @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm rounded-r-xl;
   }
 }
 
