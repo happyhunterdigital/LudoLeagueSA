@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 
-export const SectionHeader = ({ tag, title, subtitle, colorClass = "text-accent-teal" }: { tag: string, title: string, subtitle?: string, colorClass?: string }) => {
+export const SectionHeader = ({ tag, title, subtitle, colorClass }: { tag: string, title: string, subtitle?: string, colorClass?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   
@@ -13,11 +13,13 @@ export const SectionHeader = ({ tag, title, subtitle, colorClass = "text-accent-
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="text-center max-w-4xl mx-auto mb-20"
     >
-      <div className={`text-[11px] uppercase tracking-[0.5em] font-black italic ${colorClass} mb-6`}>
+      <div className="tag-status mb-6">
         {tag}
       </div>
-      <h2 className="text-6xl md:text-8xl font-display font-black mb-8 text-white uppercase italic leading-none">{title}</h2>
-      {subtitle && <p className="text-white/50 text-xl font-medium tracking-tight leading-relaxed max-w-2xl mx-auto">{subtitle}</p>}
+      <h2 className={`text-5xl md:text-7xl font-display font-black mb-6 uppercase italic leading-none ${colorClass || ''}`} style={{ color: colorClass ? undefined : 'var(--text)' }}>
+        {title}
+      </h2>
+      {subtitle && <p className="text-lg md:text-xl font-medium tracking-tight leading-relaxed max-w-2xl mx-auto opacity-70" style={{ color: 'var(--text)' }}>{subtitle}</p>}
     </motion.div>
   );
 };
