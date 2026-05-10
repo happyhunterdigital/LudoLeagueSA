@@ -5,7 +5,7 @@ import { LudoBoardDecoration } from '../ui/SharedUI';
 
 export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string) => void }) => {
   return (
-    <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b" style={{ borderColor: 'var(--border-color)' }}>
+    <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-slate-200">
       <LudoBoardDecoration />
       
       <div className="absolute inset-0 z-0">
@@ -23,11 +23,11 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
           />
         </picture>
         
-        {/* Fades to Pure White to match the Modern Play aesthetic */}
-        <div className="absolute inset-x-0 bottom-0 h-2/3 transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to top, var(--bg) 10%, transparent)' }}></div>
-        <div className="absolute inset-x-0 top-0 h-1/4 transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to bottom, var(--bg), transparent)' }}></div>
-        <div className="absolute inset-y-0 left-0 w-1/3 hidden md:block transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to right, var(--bg), transparent)' }}></div>
-        <div className="absolute inset-y-0 right-0 w-1/3 hidden md:block transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to left, var(--bg), transparent)' }}></div>
+        {/* Fades perfectly into the Warm Pearl (--bg-top) */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to top, var(--bg-top) 5%, transparent)' }}></div>
+        <div className="absolute inset-x-0 top-0 h-1/4 transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to bottom, var(--bg-top), transparent)' }}></div>
+        <div className="absolute inset-y-0 left-0 w-1/3 hidden md:block transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to right, var(--bg-top), transparent)' }}></div>
+        <div className="absolute inset-y-0 right-0 w-1/3 hidden md:block transition-colors duration-700" style={{ backgroundImage: 'linear-gradient(to left, var(--bg-top), transparent)' }}></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 text-center mt-10">
@@ -36,11 +36,11 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
             <span className="status-indicator"></span> 2025 Season Live
           </div>
           
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display font-black uppercase italic leading-none mb-6 text-[#001F3F]">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display font-black uppercase italic leading-none mb-6 drop-shadow-sm" style={{ color: 'var(--text)' }}>
             The Roll of <br /> <span style={{ color: 'var(--accent)' }}>Legends</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-2xl max-w-2xl mx-auto mb-10 font-medium leading-relaxed px-4 text-[#001F3F] opacity-90">
+          <p className="text-base sm:text-lg md:text-2xl max-w-2xl mx-auto mb-10 font-medium leading-relaxed px-4 drop-shadow-sm" style={{ color: 'var(--text)' }}>
             South Africa's premier competitive Ludo circuit.
           </p>
           
@@ -48,7 +48,7 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
             <button onClick={() => scrollToSection('tournaments')} className="btn-action w-full sm:w-auto">
               Enter Tournament <ArrowRight size={18} />
             </button>
-            <button onClick={() => scrollToSection('history')} className="px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 rounded-2xl border-2 hover:bg-slate-100 w-full sm:w-auto" style={{ borderColor: 'var(--accent)', color: 'var(--text)', backgroundColor: 'var(--bg)' }}>
+            <button onClick={() => scrollToSection('history')} className="px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 rounded-2xl border-2 hover:-translate-y-1 w-full sm:w-auto shadow-sm bg-white/80 backdrop-blur-md" style={{ borderColor: 'var(--text)', color: 'var(--text)' }}>
               View History
             </button>
           </div>
