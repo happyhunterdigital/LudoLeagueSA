@@ -15,13 +15,12 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen 
 }) => {
-  const navItems = ['home', 'tournaments', 'history', 'gallery', 'shop'];
+  const navItems = ['home', 'tournaments', 'history', 'gallery', 'shop', 'fund'];
 
   return (
     <>
       <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FFD700] to-[#FFC107] z-[9999] origin-left" style={{ scaleX }} />
       
-      {/* Deep Charcoal / Soft Navy Roof */}
       <nav className={`fixed top-0 left-0 right-0 z-[1000] px-4 md:px-10 py-4 md:py-5 transition-all duration-500 bg-[#2C3E50] shadow-lg`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
@@ -35,7 +34,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button 
                 key={item} 
                 onClick={() => scrollToSection(item)} 
-                /* Bright Yellow for active, off-white for inactive */
                 className={`text-[11px] uppercase tracking-[0.25rem] font-black italic transition-colors ${activeSection === item ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}
               >
                 {item}
