@@ -8,88 +8,78 @@
 }
 
 /* 
-  "THE MODERN PLAY" & "VIBRANT SOCIAL" ARCHITECTURE
-  Soft, welcoming backgrounds with aggressive Ludo color-blocking per section.
+  TINTED NEUTRALS & MUTED PASTELS
+  Deep Slate text, Ghost White bottoms, distinct top pastels per page.
 */
 :root {
-  --bg: #FFFFFF; 
-  --text: #001F3F; /* Deep Navy */
-  --accent: #FFBF00; /* Amber Orange */
-  --card-bg: #F8F9FA;
-  --border-color: #E2E8F0;
-  --btn-text: #001F3F;
+  --bg-top: #FDF5E6; 
+  --bg-bottom: #F8F9FA;
+  --text: #34495E; /* Deep Slate */
+  --accent: #FFC107; 
+  --nav-bg: #2C3E50; /* Deep Charcoal / Soft Navy */
+  --nav-active: #FFD700; /* Bright Yellow */
+  --card-bg: #FFFFFF;
 }
 
 .theme-home {
-  --bg: #FFFFFF; 
-  --text: #001F3F;
-  --accent: #FFBF00; /* Amber Orange */
-  --card-bg: #F8F9FA;
-  --border-color: #E2E8F0;
-  --btn-text: #001F3F;
+  --bg-top: #FDF5E6; /* Warm Pearl */
+  --bg-bottom: #F8F9FA;
+  --accent: #FFC107; /* Ludo Gold */
+  --btn-text: #34495E;
 }
 
 .theme-tournaments {
-  --bg: #FFFDF5; /* Soft Cream */
-  --text: #001F3F; 
-  --accent: #E63946; /* Cherry Red */
-  --card-bg: #FFFFFF;
-  --border-color: #FEE2E2;
+  --bg-top: #FFF0F0; /* Blush Cream */
+  --bg-bottom: #F8F9FA;
+  --accent: #D32F2F; /* Crimson Red */
   --btn-text: #FFFFFF;
 }
 
 .theme-history {
-  --bg: #F8F9FA; /* Light Grey/Blue */
-  --text: #001F3F; 
-  --accent: #F9D423; /* Sunflower Yellow */
-  --card-bg: #FFFFFF; 
-  --border-color: #FEF3C7;
-  --btn-text: #001F3F;
+  --bg-top: #E8F5E9; /* Soft Mint */
+  --bg-bottom: #F8F9FA;
+  --accent: #2E7D32; /* Emerald Green */
+  --btn-text: #FFFFFF;
 }
 
 .theme-gallery {
-  --bg: #FFFFFF; 
-  --text: #001F3F; 
-  --accent: #007BFF; /* Electric Blue */
-  --card-bg: #F8F9FA;
-  --border-color: #E0F2FE;
+  --bg-top: #E3F2FD; /* Pale Sky Blue */
+  --bg-bottom: #F8F9FA;
+  --accent: #1976D2; /* Royal Blue */
   --btn-text: #FFFFFF;
 }
 
 .theme-shop {
-  --bg: #F8F9FA; 
-  --text: #001F3F; 
-  --accent: #2A9D8F; /* Meadow Green */
-  --card-bg: #FFFFFF; 
-  --border-color: #D1FAE5;
+  --bg-top: #F3E5F5; /* Light Lavender */
+  --bg-bottom: #F8F9FA;
+  --accent: #7B1FA2; /* Deep Purple */
   --btn-text: #FFFFFF;
 }
 
 @layer base {
   body {
-    background-color: var(--bg);
+    background-image: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+    background-attachment: fixed;
     color: var(--text);
-    transition: background-color 0.6s ease-in-out, color 0.4s ease-in-out;
-    @apply font-sans overflow-x-hidden leading-relaxed;
+    transition: background-image 0.6s ease-in-out;
+    @apply font-sans overflow-x-hidden leading-relaxed min-h-screen;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-black tracking-tight uppercase italic;
     color: var(--text);
-    transition: color 0.4s ease-in-out;
   }
 }
 
 @layer components {
   .theme-card {
     background-color: var(--card-bg);
-    border-color: var(--border-color);
-    /* Generous 20px rounded corners for a welcoming feel */
-    @apply border p-8 transition-all duration-300 relative shadow-lg hover:shadow-xl rounded-[20px];
+    /* 16px rounded corners, very soft shadow for depth without blinding */
+    @apply p-8 transition-all duration-300 relative rounded-2xl shadow-[0_8px_30px_rgba(44,62,80,0.08)] hover:shadow-[0_12px_40px_rgba(44,62,80,0.12)] border border-slate-100;
   }
   .btn-action {
-    background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 85%, black));
+    background-color: var(--accent);
     color: var(--btn-text);
-    /* 16px rounded corners, 3D gradient feel */
+    /* Friendly, tactile 16px corners */
     @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1 rounded-2xl border-none;
   }
   .tag-status {
