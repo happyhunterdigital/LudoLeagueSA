@@ -29,12 +29,6 @@ export default function App() {
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
-          
-          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-          if (themeColorMeta) {
-            // Mobile browser header color matches the #2C3E50 Navbar Roof
-            themeColorMeta.setAttribute('content', '#2C3E50');
-          }
         }
       });
     }, { threshold: 0.4 }); 
@@ -59,7 +53,7 @@ export default function App() {
   };
 
   return (
-    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}>
+    <div className="relative w-full font-sans">
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -73,12 +67,11 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="py-10 text-center border-t border-slate-200 flex flex-col items-center gap-4" style={{ backgroundColor: 'var(--bg-bottom)' }}>
-          <p className="text-xs md:text-sm font-mono opacity-60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+        <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4">
+          <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
-            className="text-xs uppercase tracking-widest hover:opacity-100 transition-opacity font-bold underline"
-            style={{ color: 'var(--text)' }}
+            className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline"
           >
             Privacy Policy & Terms
           </button>
