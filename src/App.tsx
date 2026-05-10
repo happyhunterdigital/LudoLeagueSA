@@ -29,6 +29,12 @@ export default function App() {
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
+          
+          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            const colors: Record<string, string> = { home: '#FFFFFF', tournaments: '#FFFDF5', history: '#F8F9FA', gallery: '#FFFFFF', shop: '#F8F9FA' };
+            themeColorMeta.setAttribute('content', colors[sectionId] || '#FFFFFF');
+          }
         }
       });
     }, { threshold: 0.4 }); 
