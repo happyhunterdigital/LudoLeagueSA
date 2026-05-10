@@ -19,43 +19,39 @@ export const Tournaments = () => {
       setFormStatus('success');
       setFormData({ fullName: '', email: '', phoneNumber: '', region: 'Soweto' });
       setTimeout(() => setFormStatus('idle'), 5000);
-    } catch (error) {
-      console.error("Registration failed:", error);
-      setFormStatus('error');
-    }
+    } catch (error) { setFormStatus('error'); }
   };
 
   return (
-    <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 border-b border-slate-200">
+    <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9]">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-7xl mx-auto">
-        
-        <SectionHeader tag="Compete" title="Registration" />
+        <SectionHeader tag="Compete" title="Registration" colorClass="text-white" />
 
-        <div className="max-w-2xl mx-auto theme-card">
+        <div className="max-w-2xl mx-auto bg-white border border-white/20 p-8 rounded-2xl shadow-xl">
           <form onSubmit={handleRegister} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Full Name</label>
-                <input type="text" required maxLength={100} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 outline-none transition-colors focus:border-red-400 shadow-sm" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} style={{ color: 'var(--text)' }} />
+                <label className="block text-[#001F3F] text-xs font-bold uppercase tracking-widest mb-2">Full Name</label>
+                <input type="text" required maxLength={100} className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Email</label>
-                <input type="email" required maxLength={128} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 outline-none transition-colors focus:border-red-400 shadow-sm" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={{ color: 'var(--text)' }} />
+                <label className="block text-[#001F3F] text-xs font-bold uppercase tracking-widest mb-2">Email</label>
+                <input type="email" required maxLength={128} className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Phone</label>
-                <input type="tel" required maxLength={20} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 outline-none transition-colors focus:border-red-400 shadow-sm" value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} style={{ color: 'var(--text)' }} />
+                <label className="block text-[#001F3F] text-xs font-bold uppercase tracking-widest mb-2">Phone</label>
+                <input type="tel" required maxLength={20} className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Region</label>
-                <select className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 outline-none appearance-none transition-colors focus:border-red-400 shadow-sm" value={formData.region} onChange={e => setFormData({...formData, region: e.target.value as any})} style={{ color: 'var(--text)' }}>
+                <label className="block text-[#001F3F] text-xs font-bold uppercase tracking-widest mb-2">Region</label>
+                <select className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9] appearance-none" value={formData.region} onChange={e => setFormData({...formData, region: e.target.value as any})}>
                   <option value="Alexandra">Alexandra</option>
                   <option value="Soweto">Soweto</option>
                   <option value="Mamelodi">Mamelodi</option>
                 </select>
               </div>
             </div>
-            <button type="submit" disabled={formStatus === 'submitting'} className="w-full mt-6 btn-action">
+            <button type="submit" disabled={formStatus === 'submitting'} className="w-full mt-6 btn-action bg-[#D32F2F] text-white">
               {formStatus === 'submitting' && <Loader2 className="animate-spin" size={20} />}
               {formStatus === 'success' && <CheckCircle2 size={20} />}
               {formStatus === 'error' && <AlertCircle size={20} />}
