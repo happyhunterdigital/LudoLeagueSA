@@ -7,97 +7,28 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
-/* 
-  TINTED NEUTRALS & MUTED PASTELS
-  Deep Slate text, Ghost White bottoms, distinct top pastels per page.
-*/
-:root {
-  --bg-top: #FDF5E6; 
-  --bg-bottom: #F8F9FA;
-  --text: #34495E; /* Deep Slate */
-  --accent: #FFC107; 
-  --nav-bg: #2C3E50; /* Deep Charcoal / Soft Navy */
-  --nav-active: #FFD700; /* Bright Yellow */
-  --card-bg: #FFFFFF;
-}
-
-.theme-home {
-  --bg-top: #FDF5E6; /* Warm Pearl */
-  --bg-bottom: #F8F9FA;
-  --accent: #FFC107; /* Ludo Gold */
-  --btn-text: #34495E;
-}
-
-.theme-tournaments {
-  --bg-top: #FFF0F0; /* Blush Cream */
-  --bg-bottom: #F8F9FA;
-  --accent: #D32F2F; /* Crimson Red */
-  --btn-text: #FFFFFF;
-}
-
-.theme-history {
-  --bg-top: #E8F5E9; /* Soft Mint */
-  --bg-bottom: #F8F9FA;
-  --accent: #2E7D32; /* Emerald Green */
-  --btn-text: #FFFFFF;
-}
-
-.theme-gallery {
-  --bg-top: #E3F2FD; /* Pale Sky Blue */
-  --bg-bottom: #F8F9FA;
-  --accent: #1976D2; /* Royal Blue */
-  --btn-text: #FFFFFF;
-}
-
-.theme-shop {
-  --bg-top: #F3E5F5; /* Light Lavender */
-  --bg-bottom: #F8F9FA;
-  --accent: #7B1FA2; /* Deep Purple */
-  --btn-text: #FFFFFF;
-}
-
 @layer base {
   body {
-    background-image: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
-    background-attachment: fixed;
-    color: var(--text);
-    transition: background-image 0.6s ease-in-out;
-    @apply font-sans overflow-x-hidden leading-relaxed min-h-screen;
+    @apply font-sans overflow-x-hidden leading-relaxed bg-white;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-black tracking-tight uppercase italic;
-    color: var(--text);
   }
 }
 
 @layer components {
-  .theme-card {
-    background-color: var(--card-bg);
-    /* 16px rounded corners, very soft shadow for depth without blinding */
-    @apply p-8 transition-all duration-300 relative rounded-2xl shadow-[0_8px_30px_rgba(44,62,80,0.08)] hover:shadow-[0_12px_40px_rgba(44,62,80,0.12)] border border-slate-100;
-  }
   .btn-action {
-    background-color: var(--accent);
-    color: var(--btn-text);
-    /* Friendly, tactile 16px corners */
-    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1 rounded-2xl border-none;
-  }
-  .tag-status {
-    background-color: var(--card-bg);
-    border-color: var(--accent);
-    color: var(--text);
-    @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm rounded-r-xl;
+    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-1 rounded-2xl border-none;
   }
 }
 
 .status-indicator {
-  @apply w-3 h-3 rounded-full mr-3;
-  background-color: var(--accent);
+  @apply w-3 h-3 rounded-full mr-3 bg-[#FFC107];
   animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
+  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 #FFC107; }
   70% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 0 10px transparent; }
   100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 transparent; }
 }
