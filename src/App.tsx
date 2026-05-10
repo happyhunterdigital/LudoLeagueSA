@@ -8,6 +8,7 @@ import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
+import { CommunityFund } from './pages/CommunityFund';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 
@@ -66,6 +67,7 @@ export default function App() {
         <History />
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
+        <CommunityFund />
         
         <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4">
           <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
