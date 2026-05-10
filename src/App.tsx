@@ -32,8 +32,8 @@ export default function App() {
           
           const themeColorMeta = document.querySelector('meta[name="theme-color"]');
           if (themeColorMeta) {
-            const colors: Record<string, string> = { home: '#FFFFFF', tournaments: '#FFFDF5', history: '#F8F9FA', gallery: '#FFFFFF', shop: '#F8F9FA' };
-            themeColorMeta.setAttribute('content', colors[sectionId] || '#FFFFFF');
+            // Mobile browser header color matches the #2C3E50 Navbar Roof
+            themeColorMeta.setAttribute('content', '#2C3E50');
           }
         }
       });
@@ -59,10 +59,7 @@ export default function App() {
   };
 
   return (
-    <div 
-      className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}
-      style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}
-    >
+    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -76,12 +73,12 @@ export default function App() {
         <Gallery />
         <Shop cart={cart} setCart={setCart} />
         
-        <footer className="py-10 text-center border-t transition-colors duration-700 flex flex-col items-center gap-4" style={{ borderColor: 'var(--border-color)' }}>
+        <footer className="py-10 text-center border-t border-slate-200 flex flex-col items-center gap-4" style={{ backgroundColor: 'var(--bg-bottom)' }}>
           <p className="text-xs md:text-sm font-mono opacity-60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
             className="text-xs uppercase tracking-widest hover:opacity-100 transition-opacity font-bold underline"
-            style={{ color: 'var(--accent)' }}
+            style={{ color: 'var(--text)' }}
           >
             Privacy Policy & Terms
           </button>
