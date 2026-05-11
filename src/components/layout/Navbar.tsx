@@ -15,7 +15,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen 
 }) => {
-  const navItems = ['home', 'tournaments', 'history', 'gallery', 'shop', 'fund'];
+  const navItems = ['home', 'about', 'tournaments', 'history', 'gallery', 'shop', 'fund'];
 
   return (
     <>
@@ -26,10 +26,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 group">
             <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="Logo" className="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover shadow-sm group-hover:rotate-12 transition-transform" />
-            <span className="text-xl md:text-2xl font-display italic font-black tracking-tighter text-white hidden sm:block">Ludo League SA</span>
+            <span className="text-xl md:text-2xl font-display italic font-black tracking-tighter text-white hidden xl:block">Ludo League SA</span>
           </button>
           
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.map((item) => (
               <button 
                 key={item} 
@@ -56,14 +56,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ShoppingBag size={14} /> Shop
             </button>
             
-            <button className="md:hidden text-white p-2 hover:bg-slate-700 rounded-xl transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button className="lg:hidden text-white p-2 hover:bg-slate-700 rounded-xl transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-[#2C3E50] border-t border-slate-700 py-4 px-4 flex flex-col gap-4 shadow-2xl">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#2C3E50] border-t border-slate-700 py-4 px-4 flex flex-col gap-4 shadow-2xl">
             {navItems.map((item) => (
               <button key={item} onClick={() => scrollToSection(item)} className={`text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl ${activeSection === item ? 'bg-slate-800 text-[#FFD700]' : 'text-slate-300 hover:bg-slate-800'}`}>
                 {item}
