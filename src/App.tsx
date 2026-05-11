@@ -4,6 +4,7 @@ import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
 import { LandingHero } from './components/features/LandingHero';
+import { About } from './pages/About';
 import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
@@ -30,6 +31,12 @@ export default function App() {
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
           window.history.replaceState(null, '', `#${sectionId}`);
+          
+          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            const colors: Record<string, string> = { home: '#FFFFFF', about: '#0F172A', tournaments: '#0EA5E9', history: '#0F172A', gallery: '#0EA5E9', shop: '#0F172A', fund: '#0EA5E9' };
+            themeColorMeta.setAttribute('content', colors[sectionId] || '#FFFFFF');
+          }
         }
       });
     }, { threshold: 0.4 }); 
@@ -63,6 +70,7 @@ export default function App() {
       
       <main className="w-full">
         <LandingHero scrollToSection={scrollToSection} />
+        <About />
         <Tournaments />
         <History />
         <Gallery />
@@ -70,7 +78,7 @@ export default function App() {
         <CommunityFund />
         
         <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4">
-          <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2025 Ludo League South Africa. All Rights Reserved.</p>
+          <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
             className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline"
