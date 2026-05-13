@@ -23,10 +23,15 @@ jobs:
       - name: Build Vite Project
         run: npm run build
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LUDOLEAGUESA }}
-          projectId: gen-lang-client-0594861537
-          channelId: live
+      - name: Direct Firebase CLI Deploy
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LUDOLEAGUESA }}
+        run: |
+          # 1. Write the raw JSON secret to a secure, temporary file
+          echo "$FIREBASE_KEY" > firebase-key.json
+          
+          # 2. Force the Firebase CLI to use this exact credential
+          export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/firebase-key.json"
+          
+          # 3. Execute the direct deployment command
+          npx firebase-tools deploy --only hosting --project gen-lang-client-0594861537 --force
