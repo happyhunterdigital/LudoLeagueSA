@@ -31,5 +31,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LUDOLEAGUESA }}
-          projectId: ludoleaguesa
+          projectId: gen-lang-client-0594861537
           channelId: live
