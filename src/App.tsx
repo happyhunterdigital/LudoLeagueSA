@@ -9,9 +9,12 @@ import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
-import { CommunityFund } from './pages/CommunityFund';
+import { CommunityFund } from './components/features/CommunityFund';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
+
+export type Page = 'Landing' | 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' | 'Admin';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -24,9 +27,15 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
+    // Dynamic query router check
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('page') === 'admin') {
+      setActiveSection('admin');
+    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && params.get('page') !== 'admin') {
           const sectionId = entry.target.id;
           setActiveSection(sectionId);
           document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
@@ -55,13 +64,17 @@ export default function App() {
   }, []);
 
   const scrollToSection = (id: string) => {
+    // Clear admin override when leaving admin section
+    if (activeSection === 'admin') {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
 
   return (
-    <div className="relative w-full font-sans">
+    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}>
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -69,16 +82,23 @@ export default function App() {
       />
       
       <main className="w-full">
-        <LandingHero scrollToSection={scrollToSection} />
-        <About />
-        <Tournaments />
-        <History />
-        <Gallery />
-        <Shop cart={cart} setCart={setCart} />
-        <CommunityFund />
+        {activeSection === 'admin' ? (
+          <AdminDashboard />
+        ) : (
+          <>
+            <LandingHero scrollToSection={scrollToSection} />
+            <About />
+            <Tournaments />
+            <History />
+            <Gallery />
+            <Shop cart={cart} setCart={setCart} />
+            <CommunityFund />
+          </>
+        )}
         
-        <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4">
+        <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4 border-t border-slate-800">
           <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
+          <p className="text-xs text-white/40 font-mono">This website is coded by happyhunter.com</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
             className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline"
