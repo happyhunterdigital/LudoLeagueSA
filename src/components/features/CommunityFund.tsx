@@ -109,8 +109,11 @@ export const CommunityFund: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <h3 className="text-2xl font-display font-black italic uppercase">Step 2: Bank Transfer</h3>
               <div className="bg-slate-50 p-5 rounded-xl border text-sm text-slate-700 space-y-2">
-                <p><b>Bank Name:</b> Corporate Bank</p>
-                <p><b>Account:</b> 1234567890</p>
+                <p><b>Bank Name:</b> Nedbank</p>
+                <p><b>Account Holder:</b> THE LUDO LEAGUE SOUTH AFRICA (PTY) LTD</p>
+                <p><b>Account Number:</b> 1120230365</p>
+                <p><b>Branch Code:</b> 198765</p>
+                <p><b>Account Type:</b> Current Account</p>
                 <p><b>Amount:</b> R{selectedAmount}</p>
                 <p><b>Reference:</b> DON-{formData.fullName.replace(/\s+/g, '')}</p>
               </div>
@@ -120,6 +123,7 @@ export const CommunityFund: React.FC = () => {
                 <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
               </div>
               <div className="flex gap-4">
+                <p>Your payment is secure</p>
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
                 <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 btn-action bg-[#D32F2F] text-white disabled:opacity-50">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Complete Donation'}
