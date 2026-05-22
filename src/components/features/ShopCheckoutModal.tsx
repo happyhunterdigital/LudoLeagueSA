@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Lock, Loader2, CheckCircle2, UploadCloud } from 'lucide-react';
+import { X, Lock, Loader2, CheckCircle2, UploadCloud, Truck } from 'lucide-react';
 import { db, storage } from '../../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { PRODUCTS } from '../../data/products';
 
 interface CheckoutProps {
   isOpen: boolean;
@@ -12,15 +13,34 @@ interface CheckoutProps {
   clearCart: () => void;
 }
 
+const courierOptions = [
+  { id: 'inland_eco', name: 'Inland (Truck) - Economy (3kg)', price: 174 },
+  { id: 'inland_over', name: 'Inland (Truck) - Overnight (3kg)', price: 242 },
+  { id: 'coastal_eco', name: 'Coastal (Flight) - Economy (3kg)', price: 174 },
+  { id: 'coastal_over', name: 'Coastal (Flight) - Overnight (3kg)', price: 283 },
+  { id: 'local_over', name: 'Local (Gauteng) - Overnight (3kg)', price: 151 },
+  { id: 'local_sameday', name: 'Local (Gauteng) - Same Day (Before 10:30) (3kg)', price: 190 },
+];
+
 export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, cart, clearCart }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCourier, setSelectedCourier] = useState<string>('local_over');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     address: '',
     proofOfPayment: null as File | null,
   });
+
+  const baseTotal = cart.reduce((sum, itemId) => {
+    const item = PRODUCTS.find(p => p.id === itemId);
+    return sum + (item ? item.price : 0);
+  }, 0);
+
+  const chosenCourier = courierOptions.find(o => o.id === selectedCourier);
+  const courierPrice = chosenCourier ? chosenCourier.price : 0;
+  const grandTotal = baseTotal + courierPrice;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +64,10 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Physical Gear Delivery',
           deliveryAddress: formData.address,
+          courierChoice: chosenCourier?.name,
+          courierCost: courierPrice,
           items: cart,
+          totalCost: grandTotal,
           timestamp: serverTimestamp(),
         });
       }
@@ -66,11 +89,21 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-lg hover:bg-slate-100 transition-colors"><X size={20} /></button>
 
             {step === 1 && (
-              <form onSubmit={() => setStep(2)} className="space-y-5">
+              <form onSubmit={() => setStep(2)} className="space-y-4">
                 <h3 className="text-2xl font-display font-black italic uppercase">Step 1: Shipping Details</h3>
                 <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
                 <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal h-24" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal h-20" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Select Courier Rate (106x87x2cm - 3kg)</label>
+                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
+                    {courierOptions.map(option => (
+                      <option key={option.id} value={option.id}>{option.name} (+R{option.price})</option>
+                    ))}
+                  </select>
+                </div>
+
                 <button type="submit" className="w-full btn-action bg-accent-teal text-white">Next: Payment Info</button>
               </form>
             )}
@@ -81,8 +114,8 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2 text-sm text-slate-700">
                   <p><b>Bank Name:</b> Corporate Bank</p>
                   <p><b>Account Number:</b> 1234567890</p>
-                  <p><b>Branch Code:</b> 250655</p>
                   <p><b>Reference:</b> SHOP-{formData.fullName.replace(/\s+/g, '')}</p>
+                  <p className="pt-2 border-t text-base text-[#001F3F]"><b>Grand Total (inc. Shipping):</b> <span className="text-accent-teal font-black">R{grandTotal.toLocaleString()}</span></p>
                 </div>
                 <div className="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                   <UploadCloud size={32} className="text-slate-400 mb-2" />
