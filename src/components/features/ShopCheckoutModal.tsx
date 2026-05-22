@@ -91,20 +91,20 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             {step === 1 && (
               <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-4">
                 <h3 className="text-2xl font-display font-black italic uppercase">Step 1: Shipping Details</h3>
-                <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
                 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Select Courier Rate (106x87x2cm - 3kg)</label>
-                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
+                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
                     {courierOptions.map(option => (
                       <option key={option.id} value={option.id}>{option.name} (+R{option.price})</option>
                     ))}
                   </select>
                 </div>
 
-                <button type="submit" className="w-full py-4 bg-accent-teal hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment Info</button>
+                <button type="submit" className="w-full py-4 bg-[#0EA5E9] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment Info</button>
               </form>
             )}
 
@@ -118,16 +118,16 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                   <p><b>Branch Code:</b> 198765</p>
                   <p><b>Account Type:</b> Current Account</p>
                   <p><b>Reference:</b> SHOP-{formData.fullName.replace(/\s+/g, '')}</p>
-                  <p className="pt-2 border-t text-base text-[#001F3F]"><b>Grand Total (inc. Shipping):</b> <span className="text-accent-teal font-black">R{grandTotal.toLocaleString()}</span></p>
+                  <p className="pt-2 border-t text-base text-[#001F3F]"><b>Grand Total (inc. Shipping):</b> <span className="text-[#0EA5E9] font-black">R{grandTotal.toLocaleString()}</span></p>
                 </div>
                 <div className="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                   <UploadCloud size={32} className="text-slate-400 mb-2" />
-                  <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                  <span className="text-xs font-black text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
                   <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
                 </div>
                 <div className="flex gap-4">
                   <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                  <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-accent-teal hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center">
+                  <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Place Order'}
                   </button>
                 </div>
