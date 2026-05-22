@@ -89,22 +89,22 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-lg hover:bg-slate-100 transition-colors"><X size={20} /></button>
 
             {step === 1 && (
-              <form onSubmit={() => setStep(2)} className="space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-4">
                 <h3 className="text-2xl font-display font-black italic uppercase">Step 1: Shipping Details</h3>
-                <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal h-20" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
                 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Select Courier Rate (106x87x2cm - 3kg)</label>
-                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
+                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-accent-teal text-slate-900 font-bold" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
                     {courierOptions.map(option => (
                       <option key={option.id} value={option.id}>{option.name} (+R{option.price})</option>
                     ))}
                   </select>
                 </div>
 
-                <button type="submit" className="w-full btn-action bg-accent-teal text-white">Next: Payment Info</button>
+                <button type="submit" className="w-full py-4 bg-accent-teal hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment Info</button>
               </form>
             )}
 
@@ -122,12 +122,12 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 </div>
                 <div className="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                   <UploadCloud size={32} className="text-slate-400 mb-2" />
-                  <span className="text-xs font-bold text-slate-500">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                  <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
                   <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
                 </div>
                 <div className="flex gap-4">
                   <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                  <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 btn-action bg-accent-teal text-white disabled:opacity-50">
+                  <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-accent-teal hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Place Order'}
                   </button>
                 </div>
@@ -139,7 +139,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
                 <h3 className="text-2xl font-display font-black italic uppercase">Order Placed!</h3>
                 <p className="text-slate-600 leading-relaxed">Thank you for purchasing official gear! Your order status is currently pending verification of your bank transfer receipt.</p>
-                <button onClick={onClose} className="w-full btn-action bg-slate-900 text-white">Close Window</button>
+                <button onClick={onClose} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
               </div>
             )}
           </motion.div>
