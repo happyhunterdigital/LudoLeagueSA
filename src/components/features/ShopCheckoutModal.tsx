@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Lock, Loader2, CheckCircle2, UploadCloud, Truck } from 'lucide-react';
+import { X, Lock, Loader2, CheckCircle2, UploadCloud } from 'lucide-react';
 import { db, storage } from '../../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -112,8 +112,11 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
               <form onSubmit={handleSubmit} className="space-y-6">
                 <h3 className="text-2xl font-display font-black italic uppercase">Step 2: Bank Transfer</h3>
                 <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2 text-sm text-slate-700">
-                  <p><b>Bank Name:</b> Corporate Bank</p>
-                  <p><b>Account Number:</b> 1234567890</p>
+                  <p><b>Bank Name:</b> Nedbank</p>
+                  <p><b>Account Holder:</b> THE LUDO LEAGUE SOUTH AFRICA (PTY) LTD</p>
+                  <p><b>Account Number:</b> 1120230365</p>
+                  <p><b>Branch Code:</b> 198765</p>
+                  <p><b>Account Type:</b> Current Account</p>
                   <p><b>Reference:</b> SHOP-{formData.fullName.replace(/\s+/g, '')}</p>
                   <p className="pt-2 border-t text-base text-[#001F3F]"><b>Grand Total (inc. Shipping):</b> <span className="text-accent-teal font-black">R{grandTotal.toLocaleString()}</span></p>
                 </div>
