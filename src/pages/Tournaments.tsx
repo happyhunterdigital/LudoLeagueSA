@@ -3,7 +3,7 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../config/firebase';
 import { RegistrationData } from '../types';
-import { Loader2, CheckCircle2, AlertCircle, UploadCloud, Lock } from 'lucide-react';
+import { Loader2, CheckCircle2, AlertCircle, UploadCloud } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
@@ -80,8 +80,11 @@ export const Tournaments = () => {
             <form onSubmit={handleRegister} className="space-y-6">
               <h3 className="text-2xl font-display font-black italic uppercase">Step 2: Entrance Fee</h3>
               <div className="bg-[#F8F9FA] p-5 rounded-xl border border-slate-200 text-sm text-slate-700 space-y-2">
-                <p><b>Bank Name:</b> Corporate Bank</p>
-                <p><b>Account:</b> 1234567890</p>
+                <p><b>Bank Name:</b> Nedbank</p>
+                <p><b>Account Holder:</b> THE LUDO LEAGUE SOUTH AFRICA (PTY) LTD</p>
+                <p><b>Account Number:</b> 1120230365</p>
+                <p><b>Branch Code:</b> 198765</p>
+                <p><b>Account Type:</b> Current Account</p>
                 <p><b>Required Entry Fee:</b> R100.00</p>
                 <p><b>Reference:</b> TOUR-{formData.fullName.replace(/\s+/g, '')}</p>
               </div>
