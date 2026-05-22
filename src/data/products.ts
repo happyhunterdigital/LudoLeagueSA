@@ -2,57 +2,62 @@ import { Product } from '../types';
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'j-01',
-    name: 'Elite Circuit Jersey',
-    price: 850.00,
-    category: 'Apparel',
-    image: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&h=800&fit=crop',
-    tag: 'New Entry',
-    description: 'Professional grade moisture-wicking fabric for intense tournament play.'
-  },
-  {
-    id: 'b-01',
-    name: 'Heritage Wooden Board',
+    id: 'board-purple',
+    name: 'Heritage Wooden Board - Royal Purple',
     price: 1200.00,
+    originalPrice: 1500.00,
     category: 'Equipment',
-    image: 'https://images.unsplash.com/photo-1611996598517-380f27471644?w=600&h=800&fit=crop',
-    tag: 'Bestseller',
-    description: 'Hand-carved African walnut board with custom teal inlay.'
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Purple_Board_hohd9k.png',
+    tag: 'On Sale',
+    description: 'Handcrafted African timber board featuring a rich, royal purple layout.'
   },
   {
-    id: 'c-01',
-    name: 'Founder\'s Cap',
-    price: 350.00,
-    category: 'Apparel',
-    image: 'https://images.unsplash.com/photo-1588850567054-981e97aec699?w=600&h=800&fit=crop',
-    tag: 'Limited',
-    description: 'Commemorative headwear featuring the official league badge.'
-  },
-  {
-    id: 'd-01',
-    name: 'Obsidian Pro Dice Set',
-    price: 250.00,
+    id: 'board-original',
+    name: 'Heritage Wooden Board - Classic Teal',
+    price: 1200.00,
+    originalPrice: 1500.00,
     category: 'Equipment',
-    image: 'https://images.unsplash.com/photo-1589149022630-fce4e6f47795?w=600&h=800&fit=crop',
-    tag: 'Hot',
-    description: 'Weighted high-density dice for perfectly balanced rolls.'
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Original_Board_m6uyqi.png',
+    tag: 'On Sale',
+    description: 'Our traditional flagship tournament board with signature classic teal lining.'
   },
   {
-    id: 'h-01',
-    name: 'League Technical Hoodie',
-    price: 950.00,
-    category: 'Apparel',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=800&fit=crop',
-    tag: 'Winter Series',
-    description: 'Ultra-soft fleece designed for late-night tournament circuits.'
+    id: 'board-orange',
+    name: 'Heritage Wooden Board - Amber Orange',
+    price: 1200.00,
+    originalPrice: 1500.00,
+    category: 'Equipment',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Orange_Board_h3mopp.png',
+    tag: 'On Sale',
+    description: 'A striking high-vibrancy amber orange layout on solid premium wood.'
   },
   {
-    id: 'a-01',
-    name: 'Tactical Carrying Case',
-    price: 450.00,
+    id: 'board-black',
+    name: 'Heritage Wooden Board - Obsidian Black',
+    price: 1200.00,
+    originalPrice: 1500.00,
+    category: 'Equipment',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Black_Board_aq9yjo.png',
+    tag: 'On Sale',
+    description: 'A sleek, modern matte obsidian black pattern on a heavy wood base.'
+  },
+  {
+    id: 'board-blue',
+    name: 'Heritage Wooden Board - Electric Blue',
+    price: 1200.00,
+    originalPrice: 1500.00,
+    category: 'Equipment',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Blue_Board_mvqu4j.png',
+    tag: 'On Sale',
+    description: 'Our modern electric blue classic layout, certified for professional league play.'
+  },
+  {
+    id: 'tokens-dice',
+    name: 'Professional Token & Dice Set',
+    price: 150.00,
     category: 'Accessories',
-    image: 'https://images.unsplash.com/photo-1605733513597-a8f8d410fe3c?w=600&h=800&fit=crop',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Tokens_and_Dice_gk3mbd.png',
     tag: 'Essential',
-    description: 'Secure transport for your professional board and tokens.'
+    description: 'Heavyweight acrylic tokens and balanced tournament-grade dice.'
   }
 ];
