@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Lock } from 'lucide-react';
+import { Lock, Loader2, CheckCircle2, UploadCloud } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
+import { motion } from 'motion/react';
+import { db, storage } from '../../config/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface FundTier {
   amount: number;
@@ -14,72 +18,125 @@ const fundTiers: FundTier[] = [
 ];
 
 export const CommunityFund: React.FC = () => {
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    proofOfPayment: null as File | null,
+  });
+
   const currentFunds = 12500;
   const goalFunds = 50000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      let popUrl = '';
+      if (formData.proofOfPayment && storage) {
+        const fileRef = ref(storage, `donation_pops/${Date.now()}_${formData.proofOfPayment.name}`);
+        const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
+        popUrl = await getDownloadURL(uploadResult.ref);
+      }
+
+      if (db) {
+        await addDoc(collection(db, 'event_registrations'), {
+          fullName: formData.fullName,
+          email: formData.email,
+          paymentMethod: 'eft',
+          proofOfPaymentUrl: popUrl,
+          status: 'pending_verification',
+          eventName: 'League Community Fund Donation',
+          eventDate: new Date().toLocaleDateString(),
+          eventLink: 'N/A - Direct Donation',
+          amount: selectedAmount,
+          timestamp: serverTimestamp(),
+        });
+      }
+      setStep(3);
+    } catch (error) {
+      console.error("Donation failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <section className="relative z-10 py-20 px-4 md:px-10 border-t border-white/10 bg-bg-panel/30">
-      <div className="max-w-4xl mx-auto">
+    <section id="fund" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9]">
+      <div className="max-w-4xl mx-auto w-full">
         <SectionHeader 
           tag="Community First" 
           title="Back the League" 
           subtitle="Ludo League SA is built by the community, for the community. Contributions fund server upkeep, new features, and local prize pools."
-          colorClass="text-accent-gold"
+          colorClass="text-white"
         />
 
-        <div className="bg-bg-card border border-white/10 p-6 md:p-10 rounded-2xl shadow-2xl mt-12">
-          <div className="flex justify-between items-end mb-3">
-            <div>
-              <span className="text-3xl md:text-4xl font-display font-black text-accent-gold italic">R{currentFunds.toLocaleString()}</span>
-              <span className="text-white/50 ml-2 text-[10px] md:text-xs font-bold uppercase tracking-widest">raised of R{goalFunds.toLocaleString()} goal</span>
-            </div>
-            <span className="text-sm font-bold text-accent-gold">{progressPercentage.toFixed(1)}%</span>
-          </div>
-          
-          <div className="w-full bg-bg-deep rounded-full h-3 mb-8 border border-white/5 overflow-hidden">
-            <div 
-              className="bg-gradient-to-r from-accent-gold to-yellow-300 h-full rounded-full transition-all duration-1000 relative shadow-[0_0_15px_rgba(251,191,36,0.5)]" 
-              style={{ width: `${progressPercentage}%` }}
-            ></div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {fundTiers.map((tier) => (
-              <button
-                key={tier.amount}
-                onClick={() => setSelectedAmount(tier.amount)}
-                className={`p-5 rounded-xl border-2 text-left transition-all duration-300 ${
-                  selectedAmount === tier.amount 
-                    ? 'border-accent-gold bg-accent-gold/10 shadow-[0_0_20px_rgba(251,191,36,0.15)]' 
-                    : 'border-white/10 hover:border-accent-gold/50 hover:bg-white/5'
-                }`}
-              >
-                <div className="font-display font-black italic text-2xl text-white mb-2">R{tier.amount}</div>
-                <div className="text-xs text-white/70 font-medium leading-relaxed">{tier.perk}</div>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white border border-white/20 p-6 md:p-10 rounded-2xl shadow-xl mt-8 text-slate-800">
+          {step === 1 && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-end mb-3">
+                <div>
+                  <span className="text-4xl font-display font-black italic text-[#0F172A]">R{currentFunds.toLocaleString()}</span>
+                  <span className="text-slate-500 ml-2 text-xs font-bold uppercase tracking-widest">raised of R{goalFunds.toLocaleString()} goal</span>
+                </div>
+                <span className="text-sm font-bold text-[#0EA5E9]">{progressPercentage.toFixed(1)}%</span>
+              </div>
+              <div className="w-full bg-slate-100 rounded-full h-4 mb-8 overflow-hidden shadow-inner">
+                <div className="bg-[#0EA5E9] h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {fundTiers.map((tier) => (
+                  <button key={tier.amount} onClick={() => setSelectedAmount(tier.amount)} className={`p-6 rounded-xl border-2 text-left transition-all ${selectedAmount === tier.amount ? 'border-[#0EA5E9] bg-sky-50 shadow-md' : 'border-slate-200 hover:border-[#0EA5E9]'}`}>
+                    <div className="font-display font-black italic text-2xl text-[#0F172A] mb-2">R{tier.amount}</div>
+                    <div className="text-xs text-slate-600 font-bold leading-relaxed">{tier.perk}</div>
+                  </button>
+                ))}
+              </div>
+              <div className="space-y-4 pt-6 border-t">
+                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+              </div>
+              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full btn-action bg-[#D32F2F] text-white disabled:opacity-50">
+                Continue to Transfer
               </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-between pt-8 border-t border-white/10">
-            <div className="flex items-center space-x-3 mb-6 sm:mb-0 text-[10px] sm:text-xs text-white/50 uppercase tracking-widest font-bold">
-              <Lock size={14} className="text-accent-gold" />
-              <span>Secure local payments via <span className="text-white">Paystack / Yoco</span></span>
             </div>
-            <button 
-              disabled={!selectedAmount}
-              className="w-full sm:w-auto px-8 py-4 bg-accent-gold text-bg-deep font-black uppercase tracking-widest italic rounded-lg hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-accent-gold"
-            >
-              {selectedAmount ? `Contribute R${selectedAmount}` : 'Select an amount'}
-            </button>
-          </div>
-        </div>
-        
-        <div className="text-center text-[10px] text-white/40 mt-6 max-w-2xl mx-auto uppercase tracking-widest leading-relaxed">
-          Every transaction is heavily encrypted and audited. We believe in 100% financial transparency with our player base.
-        </div>
+          )}
+
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <h3 className="text-2xl font-display font-black italic uppercase">Step 2: Bank Transfer</h3>
+              <div className="bg-slate-50 p-5 rounded-xl border text-sm text-slate-700 space-y-2">
+                <p><b>Bank Name:</b> Corporate Bank</p>
+                <p><b>Account:</b> 1234567890</p>
+                <p><b>Amount:</b> R{selectedAmount}</p>
+                <p><b>Reference:</b> DON-{formData.fullName.replace(/\s+/g, '')}</p>
+              </div>
+              <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
+                <UploadCloud size={32} className="text-slate-400 mb-2" />
+                <span className="text-xs font-bold text-slate-500">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
+              </div>
+              <div className="flex gap-4">
+                <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
+                <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 btn-action bg-[#D32F2F] text-white disabled:opacity-50">
+                  {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Complete Donation'}
+                </button>
+              </div>
+            </form>
+          )}
+
+          {step === 3 && (
+            <div className="text-center space-y-6 py-6">
+              <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
+              <h3 className="text-2xl font-display font-black italic uppercase text-slate-900">Thank You!</h3>
+              <p className="text-slate-600 leading-relaxed">Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.</p>
+              <button onClick={() => { setStep(1); setSelectedAmount(null); }} className="w-full btn-action bg-slate-900 text-white">Back to start</button>
+            </div>
+          )}
+        </motion.div>
       </div>
     </section>
   );
