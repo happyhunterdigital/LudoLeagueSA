@@ -72,7 +72,7 @@ export const Tournaments = () => {
                   <option value="Mamelodi">Mamelodi</option>
                 </select>
               </div>
-              <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment</button>
+              <button type="submit" className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment</button>
             </form>
           )}
 
@@ -95,7 +95,7 @@ export const Tournaments = () => {
               </div>
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center">
+                <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Complete Registration'}
                 </button>
               </div>
