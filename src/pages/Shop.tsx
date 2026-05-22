@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
-import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
+import { motion } from 'motion/react';
+import { ShopCheckoutModal } from '../components/features/ShopCheckoutModal';
 
 export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatch<React.SetStateAction<string[]>> }) => {
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const addToCart = (id: string) => setCart(prev => prev.includes(id) ? prev : [...prev, id]);
+  const clearCart = () => setCart([]);
 
   return (
     <section id="shop" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A]">
       <div className="max-w-7xl mx-auto w-full">
         <SectionHeader tag="Merchandise" title="Official Gear" colorClass="text-white" />
         
+        {cart.length > 0 && (
+          <div className="flex justify-end mb-8 max-w-7xl mx-auto">
+            <button onClick={() => setIsCheckoutOpen(true)} className="btn-action bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest shadow-xl">
+              Proceed to Checkout ({cart.length} items)
+            </button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {PRODUCTS.slice(0, 3).map((product: Product, i) => (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={product.id} className="bg-[#1E293B] border border-slate-700 p-0 flex flex-col overflow-hidden rounded-2xl shadow-xl hover:-translate-y-1 transition-transform">
@@ -36,6 +47,13 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
           ))}
         </div>
       </div>
+
+      <ShopCheckoutModal 
+        isOpen={isCheckoutOpen} 
+        onClose={() => setIsCheckoutOpen(false)} 
+        cart={cart} 
+        clearCart={clearCart} 
+      />
     </section>
   );
 };
