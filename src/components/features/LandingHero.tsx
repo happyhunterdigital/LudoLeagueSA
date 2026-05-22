@@ -8,30 +8,25 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 bg-white">
       <LudoBoardDecoration />
       
-      {/* Absolute raw image. No opacity limits, no gradients, no shades. */}
+      {/* Background Video Layer */}
       <div className="absolute inset-0 z-0">
-        <picture>
-          <source srcSet="https://res.cloudinary.com/dkyg07qvv/image/upload/f_avif,q_auto/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" type="image/avif" />
-          <source srcSet="https://res.cloudinary.com/dkyg07qvv/image/upload/f_webp,q_auto/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" type="image/webp" />
-          <img 
-            src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" 
-            alt="Ludo League SA App Portal" 
-            width="1920" 
-            height="800" 
-            loading="eager" 
-            fetchPriority="high"
-            className="w-full h-full object-cover object-center"
-          />
-        </picture>
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="w-full h-full object-cover object-center"
+        >
+          <source src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779445750/The_Ludo_League_South_Africa_Hero_video_t1jl8j.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 text-center mt-10">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <div className="mb-6 text-[9px] md:text-[11px] text-white bg-[#0F172A] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 border-[#0EA5E9] inline-flex items-center shadow-lg rounded-r-xl">
-            <span className="status-indicator"></span> 2025 Season Live
+            <span className="status-indicator"></span> 2026 Season Live
           </div>
           
-          {/* Heavy drop shadow applied to ensure readability over the raw image */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display font-black uppercase italic leading-none mb-6 text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
             The Roll of <br /> <span className="text-[#0EA5E9]">Legends</span>
           </h1>
