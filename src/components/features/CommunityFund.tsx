@@ -96,10 +96,10 @@ export const CommunityFund: React.FC = () => {
                 ))}
               </div>
               <div className="space-y-4 pt-6 border-t">
-                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
               </div>
-              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full btn-action bg-[#D32F2F] text-white disabled:opacity-50">
+              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
                 Continue to Transfer
               </button>
             </div>
@@ -119,13 +119,12 @@ export const CommunityFund: React.FC = () => {
               </div>
               <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                 <UploadCloud size={32} className="text-slate-400 mb-2" />
-                <span className="text-xs font-bold text-slate-500">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
                 <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
               </div>
               <div className="flex gap-4">
-                <p>Your payment is secure</p>
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 btn-action bg-[#D32F2F] text-white disabled:opacity-50">
+                <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Complete Donation'}
                 </button>
               </div>
@@ -137,7 +136,7 @@ export const CommunityFund: React.FC = () => {
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
               <h3 className="text-2xl font-display font-black italic uppercase text-slate-900">Thank You!</h3>
               <p className="text-slate-600 leading-relaxed">Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.</p>
-              <button onClick={() => { setStep(1); setSelectedAmount(null); }} className="w-full btn-action bg-slate-900 text-white">Back to start</button>
+              <button onClick={() => { setStep(1); setSelectedAmount(null); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
           )}
         </motion.div>
