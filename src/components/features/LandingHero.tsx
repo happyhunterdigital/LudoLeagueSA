@@ -17,7 +17,7 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
           playsInline 
           className="w-full h-full object-cover object-center"
         >
-          <source src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779445750/The_Ludo_League_South_Africa_Hero_video_t1jl8j.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4" type="video/mp4" />
         </video>
         {/* Subtle, neutral dark overlay for typography legibility */}
         <div className="absolute inset-0 bg-black/40"></div>
