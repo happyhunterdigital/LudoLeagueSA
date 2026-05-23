@@ -5,16 +5,20 @@ import { LudoBoardDecoration } from '../ui/SharedUI';
 
 export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string) => void }) => {
   return (
-    <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-var(--bg-deep)">
+    <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
       
-      {/* Raw Image Layer - No responsive picture or video wrappers */}
+      {/* Background Video Layer - No image overlays or picture elements */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" 
-          alt="Ludo League SA Tournament" 
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
           className="w-full h-full object-cover object-center"
-        />
+        >
+          <source src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779445750/The_Ludo_League_South_Africa_Hero_video_t1jl8j.mp4" type="video/mp4" />
+        </video>
         {/* Subtle, neutral dark overlay for typography legibility */}
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#081619] to-transparent"></div>
