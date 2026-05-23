@@ -3,21 +3,22 @@ import { useScroll, useSpring } from 'motion/react';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
-import { LandingHero } from './components/features/LandingHero';
-import { About } from './pages/About';
+import { Home } from './pages/Home';
+import { OurLeagues } from './pages/OurLeagues';
 import { Tournaments } from './pages/Tournaments';
-import { History } from './pages/History';
+import { Academy } from './pages/Academy';
 import { Gallery } from './pages/Gallery';
+import { OurTeam } from './pages/OurTeam';
+import { Contact } from './pages/Contact';
 import { Shop } from './pages/Shop';
 import { CommunityFund } from './components/features/CommunityFund';
-import { AdminDashboard } from './pages/AdminDashboard';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 
-export type Page = 'Landing' | 'Home' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' | 'Admin';
+export type Page = 'home' | 'leagues' | 'tournaments' | 'academy' | 'gallery' | 'team' | 'contact' | 'shop' | 'admin';
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState<Page>('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
@@ -27,35 +28,22 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
-    // Dynamic query router check
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('page') === 'admin') {
-      setActiveSection('admin');
-    }
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && params.get('page') !== 'admin') {
-          const sectionId = entry.target.id;
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id as Page;
           setActiveSection(sectionId);
-          document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
-          window.history.replaceState(null, '', `#${sectionId}`);
-          
-          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-          if (themeColorMeta) {
-            const colors: Record<string, string> = { home: '#FFFFFF', about: '#0F172A', tournaments: '#0EA5E9', history: '#0F172A', gallery: '#0EA5E9', shop: '#0F172A', fund: '#0EA5E9' };
-            themeColorMeta.setAttribute('content', colors[sectionId] || '#FFFFFF');
-          }
+          document.title = `The Ludo League SA | ${sectionId.toUpperCase()}`;
         }
       });
-    }, { threshold: 0.4 }); 
+    }, { threshold: 0.4 });
 
-    const sections = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('section[id]');
     sections.forEach(sec => observer.observe(sec));
 
     const testConnection = async () => {
       try { await getDocFromServer(doc(db, 'test', 'connection')); } 
-      catch (error) { console.error("Firebase offline"); }
+      catch (error) { console.error("Firebase offline check completed."); }
     };
     testConnection();
     
@@ -63,18 +51,15 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  const scrollToSection = (id: string) => {
-    // Clear admin override when leaving admin section
-    if (activeSection === 'admin') {
-      window.history.replaceState(null, '', window.location.pathname);
-    }
+  const scrollToSection = (id: Page) => {
+    setActiveSection(id);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
 
   return (
-    <div className={`theme-${activeSection} relative w-full font-sans transition-colors duration-700 ease-in-out`}>
+    <div className="relative w-full bg-var(--color-bg-darkest) text-slate-50">
       <Navbar 
         scaleX={scaleX} cart={cart} wishlist={wishlist} 
         activeSection={activeSection} scrollToSection={scrollToSection}
@@ -82,26 +67,22 @@ export default function App() {
       />
       
       <main className="w-full">
-        {activeSection === 'admin' ? (
-          <AdminDashboard />
-        ) : (
-          <>
-            <LandingHero scrollToSection={scrollToSection} />
-            <About />
-            <Tournaments />
-            <History />
-            <Gallery />
-            <Shop cart={cart} setCart={setCart} />
-            <CommunityFund />
-          </>
-        )}
+        <Home setActivePage={scrollToSection} />
+        <OurLeagues />
+        <Tournaments />
+        <Academy />
+        <Gallery />
+        <OurTeam />
+        <Contact />
+        <Shop cart={cart} setCart={setCart} />
+        <CommunityFund />
         
-        <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-4 border-t border-slate-800">
+        <footer className="py-10 text-center bg-[#041a18] flex flex-col items-center gap-4 border-t border-slate-800">
           <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
           <p className="text-xs text-white/40 font-mono">This website is coded by happyhunter.com</p>
           <button 
             onClick={() => setIsPrivacyOpen(true)}
-            className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline"
+            className="text-xs uppercase tracking-widest text-[#00c9a7] hover:text-white transition-colors font-bold underline"
           >
             Privacy Policy & Terms
           </button>
