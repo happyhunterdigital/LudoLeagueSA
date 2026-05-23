@@ -8,7 +8,7 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
       
-      {/* Background Video Layer - Direct raw MP4 link */}
+      {/* Background Video Layer */}
       <div className="absolute inset-0 z-0">
         <video 
           autoPlay 
