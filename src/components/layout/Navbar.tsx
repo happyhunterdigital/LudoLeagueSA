@@ -16,7 +16,8 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen 
 }) => {
-  const navItems = ['home', 'leagues', 'tournaments', 'academy', 'gallery', 'team', 'contact'];
+  // "team" is permanently removed from the navigation bar
+  const navItems = ['home', 'leagues', 'tournaments', 'academy', 'gallery', 'contact'];
 
   return (
     <>
@@ -34,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {navItems.map((item) => (
               <button 
                 key={item} 
-                onClick={() => scrollToSection(item)} 
+                onClick={() => scrollToSection(item as Page)} 
                 className={`text-[11px] uppercase tracking-[0.25rem] font-black italic transition-colors ${activeSection === item ? 'text-[#e8a020]' : 'text-slate-300 hover:text-white'}`}
               >
                 {item}
@@ -66,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {mobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 bg-[#041a18] border-t border-slate-700 py-4 px-4 flex flex-col gap-4 shadow-2xl">
             {navItems.map((item) => (
-              <button key={item} onClick={() => scrollToSection(item)} className={`text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl ${activeSection === item ? 'bg-slate-800 text-[#e8a020]' : 'text-slate-300 hover:bg-slate-800'}`}>
+              <button key={item} onClick={() => scrollToSection(item as Page)} className={`text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl ${activeSection === item ? 'bg-slate-800 text-[#e8a020]' : 'text-slate-300 hover:bg-slate-800'}`}>
                 {item}
               </button>
             ))}
