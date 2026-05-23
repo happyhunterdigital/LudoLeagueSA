@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { Award, ShieldAlert, MapPin } from 'lucide-react';
 
@@ -15,22 +14,31 @@ export const OurLeagues = () => {
         </div>
       </section>
 
-      {/* Mamelodi League */}
-      <section className="py-24 px-6 bg-[#072e28]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2 space-y-6">
+      {/* Mamelodi League - Immersive Blended Background Layout */}
+      <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden">
+        {/* Designer Blended Background Graphic */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg" 
+            alt="Mamelodi Ludo League Branch" 
+            className="w-full h-full object-cover opacity-15 mix-blend-luminosity filter blur-[1px]"
+          />
+          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#072e28] via-[#072e28]/95 to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#072e28] to-transparent"></div>
+        </div>
+
+        <div className="container relative z-10 grid-2">
+          <div className="space-y-6">
             <span className="eyebrow">EST. FEB 2019</span>
             <h2>Mamelodi Ludo League</h2>
-            <p className="text-[#9abcb6] leading-relaxed">
+            <p className="text-[#9abcb6] text-lg leading-relaxed">
               Featuring a highly competitive roster of 20 registered clubs, our Pretoria/Mamelodi hub holds the standard for high-octane township strategy and community support.
             </p>
             <div className="flex items-center gap-2 text-sm text-[#e8a020] font-bold">
               <MapPin size={18} /> Pretoria, Gauteng
             </div>
           </div>
-          <div className="md:w-1/2 h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <img src="https://placehold.co/600x400/0a3d35/e8a020?text=Mamelodi+League" alt="Mamelodi" className="w-full h-full object-cover" />
-          </div>
+          <div className="hidden md:block"></div> {/* Spacer representing the blended image backdrop */}
         </div>
       </section>
 
@@ -38,13 +46,13 @@ export const OurLeagues = () => {
       <section className="py-24 px-6 bg-[#0a3d35]">
         <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
           <div className="md:w-1/2 h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <img src="https://placehold.co/600x400/072e28/00c9a7?text=Battle+of+the+Kasis" alt="BOTK" className="w-full h-full object-cover" />
+            <img src="https://placehold.co/600x400/041a18/00c9a7?text=Battle+of+the+Kasis" alt="BOTK" className="w-full h-full object-cover" />
           </div>
           <div className="md:w-1/2 space-y-6">
             <span className="eyebrow">INTER-TOWNSHIP KNOCKOUT</span>
             <h2>Battle of the Kasis (BOTK)</h2>
             <p className="text-[#9abcb6] leading-relaxed">
-              The ultimate Ludo clash between Soweto, Alexandra, and Mamelodi. The top clubs send their highly-trained champions into a bracket-based knockout to claim national supremacy.
+              The ultimate inter-township clash. The three titans of the league send their top 5 ranked clubs into a brutal, winner-takes-all knockout bracket.
             </p>
             <div className="flex items-center gap-2 text-sm text-[#00c9a7] font-bold">
               <ShieldAlert size={18} /> Clash of the Giants
