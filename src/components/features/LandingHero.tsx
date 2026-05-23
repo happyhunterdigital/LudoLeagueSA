@@ -8,14 +8,14 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
       
-      {/* Background Video Layer */}
+      {/* Background Video Layer - Updated with your new active video URL */}
       <div className="absolute inset-0 z-0">
         <video 
           autoPlay 
           loop 
           muted 
           playsInline 
-          src="https://res.cloudinary.com/dfzeb1s54/video/upload/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4"
+          src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779572768/The_Ludo_League_South_Africa_Hero_video_b2dcx9.mp4"
           className="w-full h-full object-cover object-center"
         />
         {/* Subtle, neutral dark overlay for typography legibility */}
@@ -25,7 +25,7 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 text-center mt-10">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="tag-status mb-6">
+          <div className="mb-6 text-[9px] md:text-[11px] text-white bg-[#0F172A] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 border-[#0EA5E9] inline-flex items-center shadow-lg rounded-r-xl">
             <span className="status-indicator"></span> 2026 Season Live
           </div>
           
@@ -38,7 +38,7 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={() => scrollToSection('tournaments')} className="btn-action w-full sm:w-auto">
+            <button onClick={() => scrollToSection('tournaments')} className="btn-action bg-[#D32F2F] text-white">
               Enter Tournament <ArrowRight size={18} />
             </button>
             <button onClick={() => scrollToSection('history')} className="px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 rounded-xl border-2 border-[#00f0c2] bg-[#0d272b]/80 text-white hover:-translate-y-1 w-full sm:w-auto shadow-xl">
