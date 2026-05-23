@@ -8,17 +8,16 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
       
-      {/* Background Video Layer - No image overlays or picture elements */}
+      {/* Background Video Layer - Direct binding to bypass format rejection */}
       <div className="absolute inset-0 z-0">
         <video 
           autoPlay 
           loop 
           muted 
           playsInline 
+          src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4"
           className="w-full h-full object-cover object-center"
-        >
-          <source src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4" type="video/mp4" />
-        </video>
+        />
         {/* Subtle, neutral dark overlay for typography legibility */}
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#081619] to-transparent"></div>
