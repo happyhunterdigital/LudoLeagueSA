@@ -1,64 +1,52 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;1,800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-}
+  --font-display: "Exo 2", sans-serif;
 
-/* 
-  "GIGANTIC" GAME ART DIRECTION
-  Vibrant neon cyan, deep forest teal, and sunset orange.
-*/
-:root {
-  --bg-deep: #081619; /* Darkest Forest Teal */
-  --bg-panel: #0d272b; /* Medium Teal */
-  --bg-card: #14373c; /* Lighter Slate-Teal */
-  --accent-neon: #00f0c2; /* Electric Cyan */
-  --accent-orange: #ff9d00; /* Sunset Orange */
-  --text-white: #ffffff;
-  --text-muted: #9bb3b6;
+  /* Custom Game-League Palette */
+  --color-bg-darkest: #041a18;
+  --color-bg-dark: #072e28;
+  --color-bg-mid: #0a3d35;
+  --color-bg-light: #0f5045;
+  --color-accent: #e8a020;
+  --color-accent-hover: #f5b83d;
+  --color-teal: #00c9a7;
+  --color-text-primary: #f0ede6;
+  --color-text-muted: #9abcb6;
+  --color-text-dark: #041a18;
+  --color-divider: rgba(0, 201, 167, 0.18);
 }
 
 @layer base {
   body {
-    background-color: var(--bg-deep);
-    color: var(--text-white);
+    background-color: var(--color-bg-darkest);
+    color: var(--color-text-primary);
     @apply font-sans overflow-x-hidden leading-relaxed;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-black tracking-widest uppercase italic;
-    color: var(--text-white);
+    @apply font-display font-black tracking-tight uppercase italic;
+    color: var(--color-text-primary);
   }
+  h1 { @apply text-5xl md:text-7xl leading-none font-extrabold; }
+  h2 { @apply text-3xl md:text-5xl leading-tight; }
 }
 
 @layer components {
   .theme-card {
-    background-color: var(--bg-card);
-    @apply border border-white/5 p-8 transition-all duration-300 relative shadow-2xl hover:border-white/15 rounded-2xl;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-divider);
+    @apply p-8 transition-all duration-300 relative shadow-xl hover:border-teal-400/50 hover:-translate-y-1 rounded-xl;
   }
   .btn-action {
-    background: linear-gradient(135deg, var(--accent-orange), #ff7b00);
-    color: #ffffff;
-    @apply px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,157,0,0.4)] hover:shadow-[0_0_30px_rgba(255,157,0,0.6)] hover:scale-105 rounded-xl border-none;
+    background-color: var(--color-accent);
+    color: var(--color-text-dark);
+    @apply px-8 py-4 uppercase text-xs font-black tracking-widest italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:bg-amber-400 hover:scale-105 rounded-lg border-none;
   }
   .tag-status {
-    background-color: var(--bg-panel);
-    border-color: var(--accent-neon);
-    color: var(--text-white);
+    background-color: var(--color-bg-mid);
+    border-color: var(--color-teal);
     @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm rounded-r-lg;
   }
-}
-
-.status-indicator {
-  @apply w-3 h-3 rounded-full mr-3;
-  background-color: var(--accent-neon);
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 var(--accent-neon); }
-  70% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 0 10px transparent; }
-  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 transparent; }
 }
