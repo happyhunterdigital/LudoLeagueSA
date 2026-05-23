@@ -12,10 +12,11 @@ import { OurTeam } from './pages/OurTeam';
 import { Contact } from './pages/Contact';
 import { Shop } from './pages/Shop';
 import { CommunityFund } from './components/features/CommunityFund';
+import { ShippingReturns } from './pages/ShippingReturns';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 
-export type Page = 'home' | 'leagues' | 'tournaments' | 'academy' | 'gallery' | 'team' | 'contact' | 'shop' | 'admin';
+export type Page = 'home' | 'leagues' | 'tournaments' | 'academy' | 'gallery' | 'team' | 'contact' | 'shop' | 'shipping';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Page>('home');
@@ -67,25 +68,39 @@ export default function App() {
       />
       
       <main className="w-full">
-        <Home setActivePage={scrollToSection} />
-        <OurLeagues />
-        <Tournaments />
-        <Academy />
-        <Gallery />
-        <OurTeam />
-        <Contact />
-        <Shop cart={cart} setCart={setCart} />
-        <CommunityFund />
+        {activeSection === 'shipping' ? (
+          <ShippingReturns />
+        ) : (
+          <>
+            <Home setActivePage={scrollToSection} />
+            <OurLeagues />
+            <Tournaments />
+            <Academy />
+            <Gallery />
+            <OurTeam />
+            <Contact />
+            <Shop cart={cart} setCart={setCart} />
+            <CommunityFund />
+          </>
+        )}
         
         <footer className="py-10 text-center bg-[#041a18] flex flex-col items-center gap-4 border-t border-slate-800">
           <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
           <p className="text-xs text-white/40 font-mono">This website is coded by happyhunter.com</p>
-          <button 
-            onClick={() => setIsPrivacyOpen(true)}
-            className="text-xs uppercase tracking-widest text-[#00c9a7] hover:text-white transition-colors font-bold underline"
-          >
-            Privacy Policy & Terms
-          </button>
+          <div className="flex gap-6">
+            <button 
+              onClick={() => setIsPrivacyOpen(true)}
+              className="text-xs uppercase tracking-widest text-[#00c9a7] hover:text-white transition-colors font-bold underline"
+            >
+              Privacy Policy & Terms
+            </button>
+            <button 
+              onClick={() => scrollToSection('shipping')}
+              className="text-xs uppercase tracking-widest text-[#00c9a7] hover:text-white transition-colors font-bold underline"
+            >
+              Shipping & Returns
+            </button>
+          </div>
         </footer>
       </main>
 
