@@ -14,7 +14,7 @@ export const OurLeagues = () => {
         </div>
       </section>
 
-      {/* Mamelodi League - Background Opacity Increased to 35% */}
+      {/* Mamelodi League - Background Opacity remains 35% */}
       <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
@@ -41,22 +41,24 @@ export const OurLeagues = () => {
         </div>
       </section>
 
-      {/* BOTK (Battle of the Kasis) - Fully Immersive Blended Layout */}
-      <section className="relative py-32 px-6 md:px-10 bg-[#0a3d35] overflow-hidden border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779563470/INTER-TOWNSHIP-KNOCKOUT_Battle_of_the_Kasis.The_ultimate_inter_township_clash.The_three_titans_of_the_Ludo_League_South_Africa_rmnqm4.jpg" 
-            alt="Battle of the Kasis" 
-            className="w-full h-full object-cover opacity-35 mix-blend-luminosity filter blur-[1px]"
-          />
-          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#0a3d35] via-[#0a3d35]/95 to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a3d35] to-transparent"></div>
-        </div>
+      {/* BOTK (Battle of the Kasis) - Left Image, Right Text (No Background Image) */}
+      <section className="py-24 px-6 md:px-10 bg-[#0a3d35] border-b border-white/5 relative z-10">
+        <div className="max-w-7xl mx-auto grid-2">
+          {/* Left Panel: Standout Image */}
+          <div className="h-80 md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
+            <img 
+              src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779563470/INTER-TOWNSHIP-KNOCKOUT_Battle_of_the_Kasis.The_ultimate_inter_township_clash.The_three_titans_of_the_Ludo_League_South_Africa_rmnqm4.jpg" 
+              alt="Battle of the Kasis" 
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-        <div className="container relative z-10 grid-2">
+          {/* Right Panel: Text Content */}
           <div className="space-y-6">
             <span className="eyebrow">INTER-TOWNSHIP KNOCKOUT</span>
-            <h2>Battle of the Kasis (BOTK)</h2>
+            <h2 className="text-4xl md:text-5xl font-display font-black uppercase italic leading-none text-white">
+              Battle of the Kasis (BOTK)
+            </h2>
             <p className="text-[#9abcb6] text-lg leading-relaxed">
               The ultimate inter-township clash. The three titans of the league (Soweto, Alexandra, and Mamelodi) send their top 5 ranked clubs into a brutal, bracket-based knockout tournament to claim national supremacy.
             </p>
@@ -64,7 +66,6 @@ export const OurLeagues = () => {
               <ShieldAlert size={18} /> Clash of the Giants
             </div>
           </div>
-          <div className="hidden md:block"></div>
         </div>
       </section>
     </div>
