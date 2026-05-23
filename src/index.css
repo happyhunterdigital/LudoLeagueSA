@@ -34,10 +34,13 @@
 }
 
 @layer components {
+  /* Ultra-modern Glassmorphic Card Style */
   .theme-card {
-    background-color: var(--color-bg-light);
-    border: 1px solid var(--color-divider);
-    @apply p-8 transition-all duration-300 relative shadow-xl hover:border-teal-400/50 hover:-translate-y-1 rounded-xl;
+    background: rgba(15, 80, 69, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 201, 167, 0.15);
+    @apply p-8 transition-all duration-300 relative shadow-2xl hover:border-teal-400/50 hover:-translate-y-1 rounded-2xl;
   }
   .btn-action {
     background-color: var(--color-accent);
@@ -45,7 +48,8 @@
     @apply px-8 py-4 uppercase text-xs font-black tracking-widest italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:bg-amber-400 hover:scale-105 rounded-lg border-none;
   }
   .tag-status {
-    background-color: var(--color-bg-mid);
+    background: rgba(10, 61, 53, 0.4);
+    backdrop-filter: blur(12px);
     border-color: var(--color-teal);
     @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm rounded-r-lg;
   }
