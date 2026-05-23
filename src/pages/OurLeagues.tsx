@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { Award, ShieldAlert, MapPin } from 'lucide-react';
+import { ShieldAlert, MapPin } from 'lucide-react';
 
 export const OurLeagues = () => {
   return (
@@ -14,14 +14,13 @@ export const OurLeagues = () => {
         </div>
       </section>
 
-      {/* Mamelodi League - Immersive Blended Background Layout */}
-      <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden">
-        {/* Designer Blended Background Graphic */}
+      {/* Mamelodi League - Background Opacity Increased to 35% */}
+      <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg" 
             alt="Mamelodi Ludo League Branch" 
-            className="w-full h-full object-cover opacity-15 mix-blend-luminosity filter blur-[1px]"
+            className="w-full h-full object-cover opacity-35 mix-blend-luminosity filter blur-[1px]"
           />
           <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#072e28] via-[#072e28]/95 to-transparent"></div>
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#072e28] to-transparent"></div>
@@ -38,26 +37,34 @@ export const OurLeagues = () => {
               <MapPin size={18} /> Pretoria, Gauteng
             </div>
           </div>
-          <div className="hidden md:block"></div> {/* Spacer representing the blended image backdrop */}
+          <div className="hidden md:block"></div>
         </div>
       </section>
 
-      {/* BOTK */}
-      <section className="py-24 px-6 bg-[#0a3d35]">
-        <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
-          <div className="md:w-1/2 h-80 rounded-2xl overflow-hidden shadow-2xl">
-            <img src="https://placehold.co/600x400/041a18/00c9a7?text=Battle+of+the+Kasis" alt="BOTK" className="w-full h-full object-cover" />
-          </div>
-          <div className="md:w-1/2 space-y-6">
+      {/* BOTK (Battle of the Kasis) - Fully Immersive Blended Layout */}
+      <section className="relative py-32 px-6 md:px-10 bg-[#0a3d35] overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779563470/INTER-TOWNSHIP-KNOCKOUT_Battle_of_the_Kasis.The_ultimate_inter_township_clash.The_three_titans_of_the_Ludo_League_South_Africa_rmnqm4.jpg" 
+            alt="Battle of the Kasis" 
+            className="w-full h-full object-cover opacity-35 mix-blend-luminosity filter blur-[1px]"
+          />
+          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#0a3d35] via-[#0a3d35]/95 to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a3d35] to-transparent"></div>
+        </div>
+
+        <div className="container relative z-10 grid-2">
+          <div className="space-y-6">
             <span className="eyebrow">INTER-TOWNSHIP KNOCKOUT</span>
             <h2>Battle of the Kasis (BOTK)</h2>
-            <p className="text-[#9abcb6] leading-relaxed">
-              The ultimate inter-township clash. The three titans of the league send their top 5 ranked clubs into a brutal, winner-takes-all knockout bracket.
+            <p className="text-[#9abcb6] text-lg leading-relaxed">
+              The ultimate inter-township clash. The three titans of the league (Soweto, Alexandra, and Mamelodi) send their top 5 ranked clubs into a brutal, bracket-based knockout tournament to claim national supremacy.
             </p>
             <div className="flex items-center gap-2 text-sm text-[#00c9a7] font-bold">
               <ShieldAlert size={18} /> Clash of the Giants
             </div>
           </div>
+          <div className="hidden md:block"></div>
         </div>
       </section>
     </div>
