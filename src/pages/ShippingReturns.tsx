@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { Truck, RotateCcw } from 'lucide-react';
+import { Truck, RotateCcw, Image as ImageIcon } from 'lucide-react';
 
 export const ShippingReturns = () => {
   return (
@@ -9,6 +9,8 @@ export const ShippingReturns = () => {
         <SectionHeader tag="Customer Service" title="Shipping & Returns" colorClass="text-[#e8a020]" />
 
         <div className="space-y-8">
+          
+          {/* Calculated Courier Rates (From Handwritten Note) */}
           <div className="theme-card">
             <div className="flex items-center gap-3 mb-4 text-[#e8a020]">
               <Truck size={24} />
@@ -34,18 +36,31 @@ export const ShippingReturns = () => {
             <p className="text-xs text-[#9abcb6]/70 mt-4 font-mono">Package Dimension Specifications: 106 x 87 x 2 cm | Total Weight: 3.0 kg</p>
           </div>
 
+          {/* Prints Shipping Policy (From PDF Page 1) */}
           <div className="theme-card">
             <div className="flex items-center gap-3 mb-4 text-[#00c9a7]">
-              <RotateCcw size={24} />
-              <h3 className="text-xl font-display font-black italic uppercase">Return & Replacement Policy</h3>
+              <ImageIcon size={24} />
+              <h3 className="text-xl font-display font-black italic uppercase">Prints Shipping Policy</h3>
             </div>
             <p className="text-[#9abcb6] leading-relaxed text-sm">
-              We take extreme pride in the handcrafted quality of our wooden Ludo boards. If your board arrives damaged, warped, or with transit-related structural defects, you are eligible for a <b>100% free exchange or full refund</b> within 14 days of receipt.
-            </p>
-            <p className="text-[#9abcb6] leading-relaxed text-sm mt-3">
-              Please email your courier dispatch slip and a photo of the defect to <b>info@ludoleague.co.za</b>. Once verified, our team will coordinate a replacement board delivery and retrieve the damaged unit free of charge.
+              We at Ludo League South Africa are committed to delivering your prints to you in a timely and safe manner. We offer shipping for print orders within South Africa. For International orders please send an email to <b>info@ludoleague.co.za</b> for shipping rates. Please allow up to 5 business days for us to process and ship your order. Prints are carefully packaged and shipped unframed to ensure their safe arrival. If you have any questions about our shipping methods or costs, please contact us.
             </p>
           </div>
+
+          {/* Return & Exchange Policy (From PDF Pages 1-2) */}
+          <div className="theme-card">
+            <div className="flex items-center gap-3 mb-4 text-[#e8a020]">
+              <RotateCcw size={24} />
+              <h3 className="text-xl font-display font-black italic uppercase">Return & Exchange Policy</h3>
+            </div>
+            <p className="text-[#9abcb6] leading-relaxed text-sm">
+              We want you to be completely satisfied with your Ludo League Ludo Boards and Tokens. If for any reason you are not happy with your purchase, please contact us within 7 days of receiving your order to initiate a return or exchange. Please note that for return or exchange requests, customers are responsible for covering the shipping costs. Items and prints must be returned in their original condition and packaging.
+            </p>
+            <p className="text-[#9abcb6] leading-relaxed text-sm mt-3">
+              Returns will be processed within 5 business days of receipt and a refund will be issued to the original form of payment. Exchanges will be shipped within 5 business days of receipt of the returned item. If you have any questions about our return and exchange policy, please contact us.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>
