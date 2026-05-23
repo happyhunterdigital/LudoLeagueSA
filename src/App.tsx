@@ -8,7 +8,6 @@ import { OurLeagues } from './pages/OurLeagues';
 import { Tournaments } from './pages/Tournaments';
 import { Academy } from './pages/Academy';
 import { Gallery } from './pages/Gallery';
-import { OurTeam } from './pages/OurTeam';
 import { Contact } from './pages/Contact';
 import { Shop } from './pages/Shop';
 import { CommunityFund } from './components/features/CommunityFund';
@@ -16,7 +15,7 @@ import { ShippingReturns } from './pages/ShippingReturns';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 
-export type Page = 'home' | 'leagues' | 'tournaments' | 'academy' | 'gallery' | 'team' | 'contact' | 'shop' | 'shipping';
+export type Page = 'home' | 'leagues' | 'tournaments' | 'academy' | 'gallery' | 'contact' | 'shop' | 'shipping';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Page>('home');
@@ -77,7 +76,6 @@ export default function App() {
             <Tournaments />
             <Academy />
             <Gallery />
-            <OurTeam />
             <Contact />
             <Shop cart={cart} setCart={setCart} />
             <CommunityFund />
