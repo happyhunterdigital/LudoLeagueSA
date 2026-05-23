@@ -8,14 +8,11 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
       
-      {/* Background Video Layer - Direct binding to bypass format rejection */}
+      {/* Background Image Layer - Static clean image, NO video traces */}
       <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4"
+        <img 
+          src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778264852/Ludo_League_SA_tournament_photos_j85mdo.jpg" 
+          alt="Ludo League SA Tournament" 
           className="w-full h-full object-cover object-center"
         />
         {/* Subtle, neutral dark overlay for typography legibility */}
