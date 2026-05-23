@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Trophy, BookOpen, GraduationCap, Quote } from 'lucide-react';
+import { ArrowRight, Trophy, Target, Compass } from 'lucide-react';
 import { LudoBoardDecoration } from '../components/ui/SharedUI';
 import { Page } from '../App';
 
@@ -70,26 +70,43 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
           <img 
             src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" 
             alt="Ludo Pieces" 
-            className="w-full h-full object-cover opacity-15 mix-blend-luminosity"
+            className="w-full h-full object-cover opacity-10 mix-blend-luminosity"
           />
-          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#072e28] via-[#072e28]/95 to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#072e28] to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#072e28] via-[#072e28]/95 to-[#072e28]"></div>
         </div>
 
-        <div className="container relative z-10 grid-2">
-          <div className="space-y-6">
+        <div className="container relative z-10 max-w-7xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="eyebrow">THE SPORT</span>
-            <h2>More Than a Game.<br />A Movement.</h2>
-            <p className="text-[#9abcb6] text-lg">
+            <h2>More Than a Game. A Movement.</h2>
+            <p className="text-[#9abcb6] text-lg leading-relaxed">
               The Ludo League SA is an inspiring, unique, and all-inclusive South African sport that transcends race, age, and background. We've been building champions and connecting communities since 2009.
             </p>
-            <div className="space-y-4 pl-4 border-l-2 border-[#00c9a7] text-base font-medium">
-              <p>🎯 Skill-based competitive play — not luck</p>
-              <p>🏆 Structured leagues and knockout tournaments</p>
-              <p>🌍 Rooted in township culture and community pride</p>
+          </div>
+
+          {/* 3-Column Glassmorphic Tiles Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 bg-[#00c9a7]/10 text-[#00c9a7] rounded-xl mb-4">
+                <Target size={24} />
+              </div>
+              <p className="text-white font-semibold leading-relaxed">Skill-based competitive play — not luck</p>
+            </div>
+
+            <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 bg-[#e8a020]/10 text-[#e8a020] rounded-xl mb-4">
+                <Trophy size={24} />
+              </div>
+              <p className="text-white font-semibold leading-relaxed">Structured leagues and knockout tournaments</p>
+            </div>
+
+            <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 bg-[#00c9a7]/10 text-[#00c9a7] rounded-xl mb-4">
+                <Compass size={24} />
+              </div>
+              <p className="text-white font-semibold leading-relaxed">Rooted in township culture and community pride</p>
             </div>
           </div>
-          <div className="hidden md:block"></div> {/* Spacer representing the blended image backdrop */}
         </div>
       </section>
     </div>
