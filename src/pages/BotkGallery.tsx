@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, ChevronRight, Grid } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const botkPhotos = [
   "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779654012/Battle_of_the_Kasis_BOTK_Ludo_League_bw2pa9.jpg",
@@ -16,32 +16,70 @@ const botkPhotos = [
   "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655586/Battle_of_the_Kasis_BOTK_hero_image_ehchpx.jpg"
 ];
 
+const mamelodiPhotos = [
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661781/Mamelodi_Ludo_League_Tournament_sua998.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661778/Mamelodi_Ludo_League_hw5c2g.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661774/Mamelodi_Ludo_LeagueSA_b7yihd.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661774/Mamelodi_Ludo_League_SA_plfeug.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661771/Mamelodi_Ludo_League_Event_cdpxhz.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661772/Mamelodi_Ludo_League_Tournament_fo6dyu.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779661757/Mamelodi_Ludo_League_1_qffeol.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1779568638/The_Ludo_League_South_Africa_Hero_video_acnbip.mp4",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg"
+];
+
 export const BotkGallery = () => {
+  const [tab, setTab] = useState<'botk' | 'mamelodi'>('botk');
   const [index, setIndex] = useState(0);
 
-  const next = () => setIndex((prev) => (prev + 1) % botkPhotos.length);
-  const prev = () => setIndex((prev) => (prev - 1 + botkPhotos.length) % botkPhotos.length);
+  const activePhotos = tab === 'botk' ? botkPhotos : mamelodiPhotos;
+  const currentAsset = activePhotos[index];
+  const isVideo = currentAsset.endsWith('.mp4');
+
+  const next = () => setIndex((prev) => (prev + 1) % activePhotos.length);
+  const prev = () => setIndex((prev) => (prev - 1 + activePhotos.length) % activePhotos.length);
+
+  const handleTabChange = (selectedTab: 'botk' | 'mamelodi') => {
+    setTab(selectedTab);
+    setIndex(0);
+  };
 
   return (
     <section className="min-h-screen w-full py-24 px-4 md:px-10 bg-[#0F172A] text-white">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader tag="Inter-Township Cup" title="BOTK Gallery" colorClass="text-[#FFC107]" />
+        <SectionHeader tag="Archived Events" title="League Gallery" colorClass="text-[#FFC107]" />
+
+        {/* Dynamic Tab Selector */}
+        <div className="flex justify-center gap-4 mb-10">
+          <button onClick={() => handleTabChange('botk')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${tab === 'botk' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
+            Battle of the Kasis (BOTK)
+          </button>
+          <button onClick={() => handleTabChange('mamelodi')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${tab === 'mamelodi' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
+            Mamelodi Ludo League
+          </button>
+        </div>
 
         {/* Large Featured Slide */}
         <div className="relative h-[300px] md:h-[500px] w-full bg-black/40 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center">
           <AnimatePresence mode="wait">
-            <motion.img 
-              key={index}
-              src={botkPhotos[index]} 
-              alt={`BOTK Showcase ${index + 1}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full h-full object-cover"
-            />
+            {isVideo ? (
+              <video key={currentAsset} autoPlay loop muted playsInline controls className="w-full h-full object-cover">
+                <source src={currentAsset} type="video/mp4" />
+              </video>
+            ) : (
+              <motion.img 
+                key={currentAsset}
+                src={currentAsset} 
+                alt="Active View"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full h-full object-cover"
+              />
+            )}
           </AnimatePresence>
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-between p-6">
-            <span className="text-sm font-bold tracking-widest text-[#FFC107]">Image {index + 1} of {botkPhotos.length}</span>
+            <span className="text-sm font-bold tracking-widest text-[#FFC107]">Asset {index + 1} of {activePhotos.length}</span>
             <div className="flex gap-2">
               <button onClick={prev} className="p-3 bg-white/10 hover:bg-[#0EA5E9] text-white rounded-xl backdrop-blur-sm transition-colors"><ChevronLeft size={20} /></button>
               <button onClick={next} className="p-3 bg-white/10 hover:bg-[#0EA5E9] text-white rounded-xl backdrop-blur-sm transition-colors"><ChevronRight size={20} /></button>
@@ -51,15 +89,22 @@ export const BotkGallery = () => {
 
         {/* Interactive Thumbnails */}
         <div className="grid grid-cols-5 md:grid-cols-10 gap-3 mt-8">
-          {botkPhotos.map((src, i) => (
-            <button 
-              key={i} 
-              onClick={() => setIndex(i)}
-              className={`h-16 rounded-xl overflow-hidden border-2 transition-all ${index === i ? 'border-[#FFC107] scale-105 shadow-md' : 'border-slate-800 opacity-60 hover:opacity-100'}`}
-            >
-              <img src={src} alt="Thumbnail" className="w-full h-full object-cover" />
-            </button>
-          ))}
+          {activePhotos.map((src, i) => {
+            const isThumbVideo = src.endsWith('.mp4');
+            return (
+              <button 
+                key={i} 
+                onClick={() => setIndex(i)}
+                className={`h-16 rounded-xl overflow-hidden border-2 transition-all relative ${index === i ? 'border-[#FFC107] scale-105 shadow-md' : 'border-slate-800 opacity-60 hover:opacity-100'}`}
+              >
+                {isThumbVideo ? (
+                  <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white"><Play size={20} /></div>
+                ) : (
+                  <img src={src} alt="Thumbnail" className="w-full h-full object-cover" />
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>
