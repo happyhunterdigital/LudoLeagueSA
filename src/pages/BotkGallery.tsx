@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
@@ -28,21 +28,40 @@ const mamelodiPhotos = [
   "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg"
 ];
 
-export const BotkGallery = () => {
-  const [tab, setTab] = useState<'botk' | 'mamelodi'>('botk');
+const sowetoPhotos = [
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664327/Soweto_Ludo_League_zh9qtr.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664332/Soweto_Ludo_League_Tournament_sw2zmb.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664332/Soweto_Ludo_League_Tournament_bcixeg.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664335/Soweto_Ludo_League_Tournament_rnkewh.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664335/Soweto_Ludo_League_Tournament_Event_vlovsc.jpg",
+  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664334/Soweto_Ludo_League_Event_xlhpkw.jpg"
+];
+
+interface BotkGalleryProps {
+  selectedTab: 'botk' | 'mamelodi' | 'soweto';
+  setSelectedTab: (tab: 'botk' | 'mamelodi' | 'soweto') => void;
+}
+
+export const BotkGallery: React.FC<BotkGalleryProps> = ({ selectedTab, setSelectedTab }) => {
   const [index, setIndex] = useState(0);
 
-  const activePhotos = tab === 'botk' ? botkPhotos : mamelodiPhotos;
+  const getPhotos = () => {
+    if (selectedTab === 'mamelodi') return mamelodiPhotos;
+    if (selectedTab === 'soweto') return sowetoPhotos;
+    return botkPhotos;
+  };
+
+  const activePhotos = getPhotos();
   const currentAsset = activePhotos[index];
-  const isVideo = currentAsset.endsWith('.mp4');
+  const isVideo = currentAsset ? currentAsset.endsWith('.mp4') : false;
 
   const next = () => setIndex((prev) => (prev + 1) % activePhotos.length);
   const prev = () => setIndex((prev) => (prev - 1 + activePhotos.length) % activePhotos.length);
 
-  const handleTabChange = (selectedTab: 'botk' | 'mamelodi') => {
-    setTab(selectedTab);
+  // Sync index on tab alterations
+  useEffect(() => {
     setIndex(0);
-  };
+  }, [selectedTab]);
 
   return (
     <section className="min-h-screen w-full py-24 px-4 md:px-10 bg-[#0F172A] text-white">
@@ -50,12 +69,15 @@ export const BotkGallery = () => {
         <SectionHeader tag="Archived Events" title="League Gallery" colorClass="text-[#FFC107]" />
 
         {/* Dynamic Tab Selector */}
-        <div className="flex justify-center gap-4 mb-10">
-          <button onClick={() => handleTabChange('botk')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${tab === 'botk' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
+        <div className="flex flex-wrap justify-center gap-4 mb-10">
+          <button onClick={() => setSelectedTab('botk')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${selectedTab === 'botk' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
             Battle of the Kasis (BOTK)
           </button>
-          <button onClick={() => handleTabChange('mamelodi')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${tab === 'mamelodi' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
+          <button onClick={() => setSelectedTab('mamelodi')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${selectedTab === 'mamelodi' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
             Mamelodi Ludo League
+          </button>
+          <button onClick={() => setSelectedTab('soweto')} className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${selectedTab === 'soweto' ? 'bg-[#FFC107] text-[#0F172A]' : 'bg-[#1E293B] text-slate-400 hover:bg-slate-800'}`}>
+            Soweto Ludo League
           </button>
         </div>
 
