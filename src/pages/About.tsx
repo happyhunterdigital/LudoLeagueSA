@@ -5,9 +5,18 @@ import { Target, Trophy, Users, Briefcase } from 'lucide-react';
 
 export const About = () => {
   return (
-    <section id="about" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A]">
-      <div className="max-w-7xl mx-auto w-full">
-        
+    <section id="about" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A] overflow-hidden">
+      {/* Dynamic Background Image - Subtle, high-transparency layout */}
+      <div className="absolute inset-0 z-0 opacity-15">
+        <img 
+          src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" 
+          alt="Ludo Pieces on Wood" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-transparent to-[#0F172A]"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <SectionHeader tag="Our Mission" title="About the League" colorClass="text-[#0EA5E9]" />
 
         <motion.div 
