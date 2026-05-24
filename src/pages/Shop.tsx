@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Tag, Eye, Info, X } from 'lucide-react';
+import { ShoppingCart, Tag, Trash2 } from 'lucide-react';
 import { Product } from '../types';
 import { PRODUCTS } from '../data/products';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { ShopCheckoutModal } from '../components/features/ShopCheckoutModal';
 
 export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatch<React.SetStateAction<string[]>> }) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const addToCart = (id: string) => setCart(prev => prev.includes(id) ? prev : [...prev, id]);
+  const addToCart = (id: string) => setCart(prev => [...prev, id]);
+  const removeFromCart = (indexToRemove: number) => {
+    setCart(prev => prev.filter((_, idx) => idx !== indexToRemove));
+  };
   const clearCart = () => setCart([]);
 
   return (
@@ -18,9 +20,27 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
         <SectionHeader tag="Merchandise" title="Official Gear" colorClass="text-white" />
         
         {cart.length > 0 && (
-          <div className="flex justify-end mb-8 max-w-7xl mx-auto">
-            <button onClick={() => setIsCheckoutOpen(true)} className="btn-action bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest shadow-xl">
-              Proceed to Checkout ({cart.length} items)
+          <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl mb-8 max-w-2xl mx-auto text-white">
+            <h4 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#FFC107]"><ShoppingCart /> Your Cart</h4>
+            <div className="divide-y divide-slate-700 mb-6">
+              {cart.map((itemId, idx) => {
+                const product = PRODUCTS.find(p => p.id === itemId);
+                if (!product) return null;
+                return (
+                  <div key={idx} className="flex justify-between items-center py-3">
+                    <span className="text-sm font-semibold truncate max-w-[200px] sm:max-w-[400px]">{product.name}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="font-bold text-[#FFC107]">R{product.price}</span>
+                      <button onClick={() => removeFromCart(idx)} className="text-red-400 hover:text-red-500 transition-colors p-1" aria-label="Remove item">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <button onClick={() => setIsCheckoutOpen(true)} className="w-full btn-action bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest shadow-xl">
+              Proceed to Checkout (R{cart.reduce((sum, id) => sum + (PRODUCTS.find(p => p.id === id)?.price || 0), 0)})
             </button>
           </div>
         )}
@@ -38,9 +58,6 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
                 <div className="text-[#0EA5E9] text-[10px] font-bold uppercase tracking-widest mb-1">{product.category}</div>
                 <h3 className="text-lg font-bold mb-2 text-white h-12 leading-tight">{product.name}</h3>
                 <p className="text-slate-400 text-xs mb-4 line-clamp-2">{product.description}</p>
-                <div className="flex gap-2 mb-4">
-                  <button onClick={() => setSelectedProduct(product)} className="flex items-center gap-1 text-[10px] uppercase font-black tracking-widest text-[#0EA5E9] bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700"><Eye size={12} /> View Specs</button>
-                </div>
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
                   <div className="flex flex-col">
                     {product.originalPrice && (
@@ -48,8 +65,8 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
                     )}
                     <span className="text-2xl font-display font-black text-[#FFC107]">R {product.price.toFixed(2)}</span>
                   </div>
-                  <button onClick={() => addToCart(product.id)} className={`p-2 px-4 rounded-xl transition-colors flex items-center gap-2 text-sm font-bold shadow-sm ${cart.includes(product.id) ? 'bg-[#0EA5E9] text-white' : 'bg-[#0F172A] text-white border border-slate-600 hover:bg-[#0EA5E9]'}`}>
-                    <ShoppingCart size={16} /> {cart.includes(product.id) ? 'Added' : 'Add'}
+                  <button onClick={() => addToCart(product.id)} className="p-2 px-4 bg-[#0F172A] text-white border border-slate-600 rounded-xl hover:bg-[#0EA5E9] transition-colors flex items-center gap-2 text-sm font-bold shadow-sm">
+                    <ShoppingCart size={16} /> Add
                   </button>
                 </div>
               </div>
@@ -57,31 +74,6 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
           ))}
         </div>
       </div>
-
-      {/* Specifications Modal */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProduct(null)} />
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="relative w-full max-w-lg bg-white border border-slate-200 p-8 rounded-[20px] shadow-2xl z-10 text-[#001F3F] max-h-[85vh] overflow-y-auto">
-              <button onClick={() => setSelectedProduct(null)} className="absolute top-6 right-6 p-2 rounded-lg hover:bg-slate-100 transition-colors"><X size={20} /></button>
-              <div className="flex items-center gap-2 text-[#0EA5E9] mb-4"><Info size={20} /><h3 className="text-xl font-display font-black italic uppercase">Product Details</h3></div>
-              <div className="space-y-4 text-sm">
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Sold By:</span><span className="w-2/3 font-black text-[#0EA5E9]">The Ludo League</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Brand:</span><span className="w-2/3 font-medium">Idaltes</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Type:</span><span className="w-2/3 font-medium">Dice Game</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Material:</span><span className="w-2/3 font-medium">Wood, Card Board</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Game Type:</span><span className="w-2/3 font-medium">Pro Ludo (Non-Rechargeable)</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Dimensions:</span><span className="w-2/3 font-medium">Width: 76 cm | Height: 0.3 cm | Depth: 76 cm</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Weight:</span><span className="w-2/3 font-medium">3 kg</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Skillset:</span><span className="w-2/3 font-medium leading-relaxed">Analysis & Critical Thinking, Creativity & Imagination, Hand & Eye Co-ordination, Problem Solving</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Minimum Age:</span><span className="w-2/3 font-medium">4+ Years</span></div>
-                <div className="flex border-b pb-2"><span className="w-1/3 text-slate-500 font-bold">Packaging Type:</span><span className="w-2/3 font-medium">Box (Pack of 1)</span></div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       <ShopCheckoutModal 
         isOpen={isCheckoutOpen} 
