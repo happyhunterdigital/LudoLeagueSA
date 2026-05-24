@@ -42,6 +42,14 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
   const courierPrice = chosenCourier ? chosenCourier.price : 0;
   const grandTotal = baseTotal + courierPrice;
 
+  const handleCancelTransaction = () => {
+    clearCart();
+    setStep(1);
+    setFormData({ fullName: '', email: '', address: '', proofOfPayment: null });
+    onClose();
+    alert("Transaction cancelled. Your shopping cart has been emptied.");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -72,7 +80,6 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
         });
       }
       setStep(3);
-      clearCart();
     } catch (error) {
       console.error("Checkout failed:", error);
     } finally {
@@ -126,7 +133,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                   <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
                 </div>
                 <div className="flex gap-4">
-                  <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
+                  <button type="button" onClick={handleCancelTransaction} className="w-1/2 py-4 bg-red-100 hover:bg-red-200 rounded-xl text-red-700 font-bold transition-colors">Cancel Transaction</button>
                   <button type="submit" disabled={isSubmitting || !formData.proofOfPayment} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
                     {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Place Order'}
                   </button>
@@ -139,7 +146,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
                 <h3 className="text-2xl font-display font-black italic uppercase">Order Placed!</h3>
                 <p className="text-slate-600 leading-relaxed">Thank you for purchasing official gear! Your order status is currently pending verification of your bank transfer receipt.</p>
-                <button onClick={onClose} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
+                <button onClick={() => { setStep(1); onClose(); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
               </div>
             )}
           </motion.div>
