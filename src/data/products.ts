@@ -54,10 +54,10 @@ export const PRODUCTS: Product[] = [
   {
     id: 'tokens-dice',
     name: 'Professional Token & Dice Set',
-    price: 200.00,
+    price: 150.00,
     category: 'Accessories',
     image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Tokens_and_Dice_gk3mbd.png',
     tag: 'Essential',
-    description: 'Heavyweight acrylic tokens and balanced tournament-grade dice.'
+    description: 'Beautifully crafted Ludo tokens and balanced dice set to complete your game sessions.'
   }
 ];
