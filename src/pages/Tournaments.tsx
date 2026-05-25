@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db, storage } from '../config/firebase';
+import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
 import { Loader2, CheckCircle2, UploadCloud, ArrowRight } from 'lucide-react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
@@ -18,12 +17,45 @@ export const Tournaments = () => {
     proofOfPayment: null
   });
 
-  const getBase64 = (file: File): Promise<string> => {
+  const compressAndGetBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX_WIDTH = 1000;
+          const MAX_HEIGHT = 1000;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.6));
+          } else {
+            resolve(event.target?.result as string);
+          }
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
     });
   };
 
@@ -33,16 +65,7 @@ export const Tournaments = () => {
     try {
       let popUrl = '';
       if (formData.proofOfPayment) {
-        try {
-          if (storage) {
-            const fileRef = ref(storage, `tournament_pops/${Date.now()}_${formData.proofOfPayment.name}`);
-            const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
-            popUrl = await getDownloadURL(uploadResult.ref);
-          }
-        } catch (storageError) {
-          console.warn("Storage upload failed due to GCS CORS. Falling back to base64 encoding document attachment.", storageError);
-          popUrl = await getBase64(formData.proofOfPayment);
-        }
+        popUrl = await compressAndGetBase64(formData.proofOfPayment);
       }
       const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       await setDoc(doc(db, 'event_registrations', registrationId), {
@@ -59,8 +82,8 @@ export const Tournaments = () => {
       });
       setStep(3);
     } catch (error) {
-      console.error("Registration submission failed:", error);
-      alert("Could not complete registration. Please verify your connection details and try again.");
+      console.error("Registration failed:", error);
+      alert("Registration failed entirely. Please check your network and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -129,7 +152,7 @@ export const Tournaments = () => {
           {step === 3 && (
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-              <h3 className="text-2xl font-display font-black italic uppercase text-slate-900">Registration Complete!</h3>
+              <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">ORDER PLACED pending verification</h3>
               <p className="text-slate-600 leading-relaxed">Thank you for joining the 2026 Tournament Circuit! Your registration status is pending bank payment verification.</p>
               <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
