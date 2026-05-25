@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, query, orderBy, updateDoc, doc, addDoc } from 'firebase/firestore';
-import { Loader2, CheckCircle2, FileText, Filter, Users } from 'lucide-react';
+import { Loader2, FileText, Filter, Users } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const AdminDashboard = () => {
@@ -31,18 +31,36 @@ export const AdminDashboard = () => {
     if (!db) return;
     try {
       await updateDoc(doc(db, 'event_registrations', reg.id), { status: 'verified' });
+      
+      const isShop = reg.eventName.toLowerCase().includes('shop') || reg.eventName.toLowerCase().includes('merchandise');
+      const isDonation = reg.eventName.toLowerCase().includes('donation') || reg.eventName.toLowerCase().includes('fund');
+      
+      let emailSubject = `Payment Verified: ${reg.eventName}`;
+      let thankYouMessage = '';
+
+      if (isShop) {
+        emailSubject = `Order Confirmed: Ludo League SA Official Gear`;
+        thankYouMessage = `<p>Thank you for purchasing official Ludo League SA merchandise! Your manual EFT payment has been verified, and your order is now being packaged for courier delivery. We will send you another update with tracking details once dispatched.</p>`;
+      } else if (isDonation) {
+        emailSubject = `Contribution Confirmed: Ludo League SA Community Fund`;
+        thankYouMessage = `<p>Thank you for your generous contribution to the Ludo League SA Community Fund! Your manual EFT payment has been verified. Your support directly funds server upkeep, township development initiatives, and local prize pools, helping us grow the game from grassroots to professional levels.</p>`;
+      } else {
+        emailSubject = `Registration Confirmed: Ludo League SA Tournament Arena`;
+        thankYouMessage = `<p>Thank you for registering to compete in the upcoming Ludo League SA tournament qualifiers! Your manual EFT entrance fee has been successfully verified, and your spot in the bracket is now fully secured. Keep rolling, keep winning!</p>`;
+      }
+
       await addDoc(collection(db, 'mail'), {
         to: reg.email,
         message: {
-          subject: `Payment Verified & Confirmed: ${reg.eventName}`,
+          subject: emailSubject,
           html: `
-            <div style="font-family: sans-serif; padding: 24px; color: #0f172a;">
-              <h2 style="color: #0d9488; font-style: italic;">Payment Verification Successful</h2>
-              <p>Hi <b>${reg.fullName}</b>,</p>
-              <p>We have successfully verified your manual EFT bank transfer for <b>${reg.eventName}</b>.</p>
-              <p><b>Event/Order details:</b> ${reg.eventDate}</p>
-              <p>Thank you for competing and backing the league!</p>
-              <a href="${reg.eventLink}" style="display: inline-block; background-color: #0d9488; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 16px;">Go to Portal</a>
+            <div style="font-family: sans-serif; padding: 32px; background-color: #f8fafc; color: #0f172a; max-width: 600px; margin: 0 auto; border-radius: 16px; border: 1px solid #e2e8f0;">
+              <h2 style="color: #0d9488; font-style: italic; margin-bottom: 20px; font-size: 24px; text-transform: uppercase;">Payment Verification Successful</h2>
+              <p style="font-size: 16px;">Hi <b>${reg.fullName}</b>,</p>
+              <div style="background-color: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; margin: 20px 0; font-size: 15px; line-height: 1.6;">
+                ${thankYouMessage}
+              </div>
+              <p style="font-size: 14px; color: #64748b; margin-top: 24px;">Ludo League South Africa (Pty) Ltd</p>
             </div>
           `
         }
@@ -65,7 +83,6 @@ export const AdminDashboard = () => {
     <section id="admin" className="min-h-screen w-full py-24 px-4 md:px-10 bg-slate-50 text-slate-900">
       <div className="max-w-7xl mx-auto">
         <SectionHeader tag="Secure Console" title="Admin Control" colorClass="text-slate-900" />
-        
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex items-center gap-2 text-slate-600 font-bold uppercase tracking-widest text-xs">
             <Filter size={16} /> Filter Collections:
@@ -78,7 +95,6 @@ export const AdminDashboard = () => {
             ))}
           </div>
         </div>
-
         {loading ? (
           <div className="flex justify-center py-20"><Loader2 className="animate-spin text-accent-teal" size={48} /></div>
         ) : (
