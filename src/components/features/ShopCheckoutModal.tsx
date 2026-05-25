@@ -32,7 +32,6 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
   const courierPrice = chosenCourier ? chosenCourier.price : 0;
   const grandTotal = baseTotal + courierPrice;
 
-  // Compresses screenshots to fit perfectly within the Firestore 1MB document limit
   const compressAndGetBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -64,7 +63,6 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
           const ctx = canvas.getContext('2d');
           if (ctx) {
             ctx.drawImage(img, 0, 0, width, height);
-            // Compress to standard JPEG at 60% quality (under 100KB payload size)
             resolve(canvas.toDataURL('image/jpeg', 0.6));
           } else {
             resolve(event.target?.result as string);
@@ -90,7 +88,6 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
     try {
       let popUrl = '';
       if (formData.proofOfPayment) {
-        // High-speed compression eliminates Firestore size errors and bypasses Storage preflight blocks
         popUrl = await compressAndGetBase64(formData.proofOfPayment);
       }
       if (db) {
@@ -172,7 +169,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             {step === 3 && (
               <div className="text-center space-y-6 py-6">
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-                <h3 className="text-2xl font-display font-black italic uppercase">Order Placed!</h3>
+                <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">ORDER PLACED pending verification</h3>
                 <p className="text-slate-600 leading-relaxed">Thank you for purchasing official gear! Your order status is currently pending verification of your bank transfer receipt.</p>
                 <button onClick={() => { setStep(1); onClose(); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
               </div>
