@@ -9,7 +9,7 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  originalPrice?: number; // Optional original price for sale items
+  originalPrice?: number;
   image: string;
   category: 'Apparel' | 'Equipment' | 'Accessories';
   tag: string;
