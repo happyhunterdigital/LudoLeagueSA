@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Lock, Loader2, CheckCircle2, UploadCloud } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
 import { motion } from 'motion/react';
-import { db, storage } from '../../config/firebase';
+import { db } from '../../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface FundTier {
   amount: number;
@@ -27,12 +26,45 @@ export const CommunityFund: React.FC = () => {
   const goalFunds = 50000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
-  const getBase64 = (file: File): Promise<string> => {
+  const compressAndGetBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX_WIDTH = 1000;
+          const MAX_HEIGHT = 1000;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.6));
+          } else {
+            resolve(event.target?.result as string);
+          }
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
     });
   };
 
@@ -42,16 +74,7 @@ export const CommunityFund: React.FC = () => {
     try {
       let popUrl = '';
       if (formData.proofOfPayment) {
-        try {
-          if (storage) {
-            const fileRef = ref(storage, `donation_pops/${Date.now()}_${formData.proofOfPayment.name}`);
-            const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
-            popUrl = await getDownloadURL(uploadResult.ref);
-          }
-        } catch (storageError) {
-          console.warn("Storage upload failed due to GCS CORS constraints. Falling back to Base64 serialization.", storageError);
-          popUrl = await getBase64(formData.proofOfPayment);
-        }
+        popUrl = await compressAndGetBase64(formData.proofOfPayment);
       }
       if (db) {
         await addDoc(collection(db, 'event_registrations'), {
@@ -69,8 +92,8 @@ export const CommunityFund: React.FC = () => {
       }
       setStep(3);
     } catch (error) {
-      console.error("Donation process failed completely:", error);
-      alert("We were unable to verify your connection structure. Please try again.");
+      console.error("Donation process failed:", error);
+      alert("Donation failed. Please verify your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -128,7 +151,7 @@ export const CommunityFund: React.FC = () => {
               </div>
               <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                 <UploadCloud size={32} className="text-slate-400 mb-2" />
-                <span className="text-xs font-black text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
                 <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
               </div>
               <div className="flex gap-4">
@@ -143,14 +166,14 @@ export const CommunityFund: React.FC = () => {
           {step === 3 && (
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-              <h3 className="text-2xl font-display font-black italic uppercase text-slate-900">Thank You!</h3>
+              <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">ORDER PLACED pending verification</h3>
               <p className="text-slate-600 leading-relaxed">Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.</p>
               <button onClick={() => { setStep(1); setSelectedAmount(null); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
           )}
         </motion.div>
-        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-slate-100 font-bold">
-          <Lock size={14} /> Secure local payments via Paystack / Yoco
+        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-slate-500 uppercase tracking-widest font-bold">
+          <Lock size={14} className="text-[#0EA5E9]" /> Secure local payments via Paystack / Yoco
         </div>
       </div>
     </section>
