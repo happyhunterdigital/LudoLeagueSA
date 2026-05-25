@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../config/firebase';
+import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
-import { Loader2, CheckCircle2, UploadCloud } from 'lucide-react';
+import { Loader2, CheckCircle2, AlertCircle, UploadCloud, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
@@ -22,29 +21,15 @@ export const Tournaments = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      let popUrl = '';
-      if (formData.proofOfPayment && storage) {
-        const fileRef = ref(storage, `tournament_pops/${Date.now()}_${formData.proofOfPayment.name}`);
-        const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
-        popUrl = await getDownloadURL(uploadResult.ref);
-      }
-
-      if (db) {
-        const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-        await setDoc(doc(db, 'event_registrations', registrationId), {
-          fullName: formData.fullName,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber,
-          region: formData.region,
-          paymentMethod: 'eft',
-          proofOfPaymentUrl: popUrl,
-          status: 'pending_verification',
-          eventName: 'Tournament Entry Registration',
-          eventDate: '2026 season live',
-          eventLink: 'https://ludoleague.co.za/#home',
-          timestamp: serverTimestamp()
-        });
-      }
+      const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      await setDoc(doc(db, 'event_registrations', registrationId), {
+        ...formData,
+        paymentMethod: 'eft',
+        status: 'pending_verification',
+        eventName: 'Tournament Entry Registration',
+        eventDate: '2026 season live',
+        timestamp: serverTimestamp()
+      });
       setStep(3);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -56,7 +41,20 @@ export const Tournaments = () => {
   return (
     <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9] text-[#0F172A]">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-7xl mx-auto">
+        
         <SectionHeader tag="Compete" title="Registration" colorClass="text-white" />
+
+        {/* Interactive Link Card to AFCON 2023 Standalone Page */}
+        <div className="max-w-2xl mx-auto bg-slate-900 text-white border border-slate-800 p-8 rounded-3xl shadow-2xl mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <span className="text-xs font-black uppercase text-[#FFC107] tracking-widest block mb-1">Archived Cup</span>
+            <h4 className="text-2xl font-display font-black italic">AFCON 2023 Details</h4>
+            <p className="text-slate-400 text-sm mt-1">Review brackets, standings, and gallery from Africa's Cup of Nations.</p>
+          </div>
+          <a href="?page=afcontournament" className="btn bg-[#0EA5E9] text-white hover:bg-white hover:text-bg-deep shrink-0">
+            View Details <ArrowRight size={16} />
+          </a>
+        </div>
 
         <div className="max-w-2xl mx-auto bg-white border border-white/20 p-8 rounded-2xl shadow-xl">
           {step === 1 && (
@@ -72,7 +70,7 @@ export const Tournaments = () => {
                   <option value="Mamelodi">Mamelodi</option>
                 </select>
               </div>
-              <button type="submit" className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment</button>
+              <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment</button>
             </form>
           )}
 
