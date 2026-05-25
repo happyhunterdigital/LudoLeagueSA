@@ -33,6 +33,15 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
   const courierPrice = chosenCourier ? chosenCourier.price : 0;
   const grandTotal = baseTotal + courierPrice;
 
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleCancelTransaction = () => {
     clearCart();
     setStep(1);
@@ -46,10 +55,17 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
     setIsSubmitting(true);
     try {
       let popUrl = '';
-      if (formData.proofOfPayment && storage) {
-        const fileRef = ref(storage, `shop_pops/${Date.now()}_${formData.proofOfPayment.name}`);
-        const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
-        popUrl = await getDownloadURL(uploadResult.ref);
+      if (formData.proofOfPayment) {
+        try {
+          if (storage) {
+            const fileRef = ref(storage, `shop_pops/${Date.now()}_${formData.proofOfPayment.name}`);
+            const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
+            popUrl = await getDownloadURL(uploadResult.ref);
+          }
+        } catch (storageError) {
+          console.warn("Storage upload blocked by CORS or network error. Initiating Base64 fallback write.", storageError);
+          popUrl = await getBase64(formData.proofOfPayment);
+        }
       }
       if (db) {
         await addDoc(collection(db, 'event_registrations'), {
@@ -71,7 +87,8 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
       }
       setStep(3);
     } catch (error) {
-      console.error("Checkout failed:", error);
+      console.error("Checkout failed entirely:", error);
+      alert("An unexpected error occurred during submission. Please check your network and try again.");
     } finally {
       setIsSubmitting(false);
     }
