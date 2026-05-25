@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
-import { Loader2, CheckCircle2, AlertCircle, UploadCloud, ArrowRight } from 'lucide-react';
+import { Loader2, CheckCircle2, UploadCloud, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const Tournaments = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<RegistrationData & { proofOfPayment: File | null }>({ 
-    fullName: '', 
-    email: '', 
-    phoneNumber: '', 
+  const [formData, setFormData] = useState<RegistrationData & { proofOfPayment: File | null }>({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
     region: 'Soweto',
     proofOfPayment: null
   });
@@ -23,7 +23,10 @@ export const Tournaments = () => {
     try {
       const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       await setDoc(doc(db, 'event_registrations', registrationId), {
-        ...formData,
+        fullName: formData.fullName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        region: formData.region,
         paymentMethod: 'eft',
         status: 'pending_verification',
         eventName: 'Tournament Entry Registration',
@@ -41,17 +44,15 @@ export const Tournaments = () => {
   return (
     <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9] text-[#0F172A]">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-7xl mx-auto">
-        
         <SectionHeader tag="Compete" title="Registration" colorClass="text-white" />
 
-        {/* Interactive Link Card to AFCON 2023 Standalone Page */}
         <div className="max-w-2xl mx-auto bg-slate-900 text-white border border-slate-800 p-8 rounded-3xl shadow-2xl mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span className="text-xs font-black uppercase text-[#FFC107] tracking-widest block mb-1">Archived Cup</span>
             <h4 className="text-2xl font-display font-black italic">AFCON 2023 Details</h4>
             <p className="text-slate-400 text-sm mt-1">Review brackets, standings, and gallery from Africa's Cup of Nations.</p>
           </div>
-          <a href="?page=afcontournament" className="btn bg-[#0EA5E9] text-white hover:bg-white hover:text-bg-deep shrink-0">
+          <a href="?page=afcontournament" className="btn-action bg-[#0EA5E9] text-white hover:bg-white hover:text-[#0F172A] shrink-0 rounded-xl px-6 py-3 font-bold flex items-center gap-2">
             View Details <ArrowRight size={16} />
           </a>
         </div>
@@ -61,10 +62,10 @@ export const Tournaments = () => {
             <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-6">
               <h3 className="text-2xl font-display font-black italic uppercase">Step 1: Your Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input required type="text" placeholder="Full Name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-                <input required type="email" placeholder="Email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-                <input required type="tel" placeholder="Phone" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} />
-                <select className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] appearance-none" value={formData.region} onChange={e => setFormData({...formData, region: e.target.value as any})}>
+                <input required type="text" placeholder="Full Name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+                <input required type="email" placeholder="Email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <input required type="tel" placeholder="Phone" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phoneNumber} onChange={e => setFormData({ ...formData, phoneNumber: e.target.value })} />
+                <select className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] appearance-none" value={formData.region} onChange={e => setFormData({ ...formData, region: e.target.value as any })}>
                   <option value="Alexandra">Alexandra</option>
                   <option value="Soweto">Soweto</option>
                   <option value="Mamelodi">Mamelodi</option>
@@ -88,8 +89,8 @@ export const Tournaments = () => {
               </div>
               <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                 <UploadCloud size={32} className="text-slate-400 mb-2" />
-                <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
-                <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
+                <span className="text-xs font-black text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
               </div>
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
