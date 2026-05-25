@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db, storage } from '../config/firebase';
 import { RegistrationData } from '../types';
 import { Loader2, CheckCircle2, UploadCloud, ArrowRight } from 'lucide-react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
@@ -17,10 +18,32 @@ export const Tournaments = () => {
     proofOfPayment: null
   });
 
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      let popUrl = '';
+      if (formData.proofOfPayment) {
+        try {
+          if (storage) {
+            const fileRef = ref(storage, `tournament_pops/${Date.now()}_${formData.proofOfPayment.name}`);
+            const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
+            popUrl = await getDownloadURL(uploadResult.ref);
+          }
+        } catch (storageError) {
+          console.warn("Storage upload failed due to GCS CORS. Falling back to base64 encoding document attachment.", storageError);
+          popUrl = await getBase64(formData.proofOfPayment);
+        }
+      }
       const registrationId = `reg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       await setDoc(doc(db, 'event_registrations', registrationId), {
         fullName: formData.fullName,
@@ -28,6 +51,7 @@ export const Tournaments = () => {
         phoneNumber: formData.phoneNumber,
         region: formData.region,
         paymentMethod: 'eft',
+        proofOfPaymentUrl: popUrl,
         status: 'pending_verification',
         eventName: 'Tournament Entry Registration',
         eventDate: '2026 season live',
@@ -35,7 +59,8 @@ export const Tournaments = () => {
       });
       setStep(3);
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Registration submission failed:", error);
+      alert("Could not complete registration. Please verify your connection details and try again.");
     } finally {
       setIsSubmitting(false);
     }
