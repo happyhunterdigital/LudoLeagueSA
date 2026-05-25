@@ -21,11 +21,7 @@ export const CommunityFund: React.FC = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    proofOfPayment: null as File | null,
-  });
+  const [formData, setFormData] = useState({ fullName: '', email: '', proofOfPayment: null as File | null });
 
   const currentFunds = 12500;
   const goalFunds = 50000;
@@ -41,7 +37,6 @@ export const CommunityFund: React.FC = () => {
         const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
         popUrl = await getDownloadURL(uploadResult.ref);
       }
-
       if (db) {
         await addDoc(collection(db, 'event_registrations'), {
           fullName: formData.fullName,
@@ -67,13 +62,12 @@ export const CommunityFund: React.FC = () => {
   return (
     <section id="fund" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9]">
       <div className="max-w-4xl mx-auto w-full">
-        <SectionHeader 
-          tag="Community First" 
-          title="Back the League" 
+        <SectionHeader
+          tag="Community First"
+          title="Back the League"
           subtitle="Ludo League SA is built by the community, for the community. Contributions fund server upkeep, new features, and local prize pools."
           colorClass="text-white"
         />
-
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white border border-white/20 p-6 md:p-10 rounded-2xl shadow-xl mt-8 text-slate-800">
           {step === 1 && (
             <div className="space-y-6">
@@ -96,12 +90,10 @@ export const CommunityFund: React.FC = () => {
                 ))}
               </div>
               <div className="space-y-4 pt-6 border-t">
-                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
               </div>
-              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
-                Continue to Transfer
-              </button>
+              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Continue to Transfer</button>
             </div>
           )}
 
@@ -119,8 +111,8 @@ export const CommunityFund: React.FC = () => {
               </div>
               <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                 <UploadCloud size={32} className="text-slate-400 mb-2" />
-                <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
-                <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({...formData, proofOfPayment: e.target.files ? e.target.files[0] : null})} />
+                <span className="text-xs font-black text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                <input required type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
               </div>
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
@@ -140,6 +132,9 @@ export const CommunityFund: React.FC = () => {
             </div>
           )}
         </motion.div>
+        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-white/80 font-bold">
+          <Lock size={14} /> Secure local payments via Paystack / Yoco
+        </div>
       </div>
     </section>
   );
