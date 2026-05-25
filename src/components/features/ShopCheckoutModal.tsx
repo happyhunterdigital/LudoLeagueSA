@@ -63,7 +63,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             popUrl = await getDownloadURL(uploadResult.ref);
           }
         } catch (storageError) {
-          console.warn("Storage upload blocked by CORS or network error. Initiating Base64 fallback write.", storageError);
+          console.warn("Storage upload failed due to GCS CORS. Falling back to base64 encoding document attachment.", storageError);
           popUrl = await getBase64(formData.proofOfPayment);
         }
       }
