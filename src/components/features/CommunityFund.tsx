@@ -27,15 +27,31 @@ export const CommunityFund: React.FC = () => {
   const goalFunds = 50000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
       let popUrl = '';
-      if (formData.proofOfPayment && storage) {
-        const fileRef = ref(storage, `donation_pops/${Date.now()}_${formData.proofOfPayment.name}`);
-        const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
-        popUrl = await getDownloadURL(uploadResult.ref);
+      if (formData.proofOfPayment) {
+        try {
+          if (storage) {
+            const fileRef = ref(storage, `donation_pops/${Date.now()}_${formData.proofOfPayment.name}`);
+            const uploadResult = await uploadBytes(fileRef, formData.proofOfPayment);
+            popUrl = await getDownloadURL(uploadResult.ref);
+          }
+        } catch (storageError) {
+          console.warn("Storage upload failed due to GCS CORS constraints. Falling back to Base64 serialization.", storageError);
+          popUrl = await getBase64(formData.proofOfPayment);
+        }
       }
       if (db) {
         await addDoc(collection(db, 'event_registrations'), {
@@ -53,7 +69,8 @@ export const CommunityFund: React.FC = () => {
       }
       setStep(3);
     } catch (error) {
-      console.error("Donation failed:", error);
+      console.error("Donation process failed completely:", error);
+      alert("We were unable to verify your connection structure. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -132,7 +149,7 @@ export const CommunityFund: React.FC = () => {
             </div>
           )}
         </motion.div>
-        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-white/80 font-bold">
+        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-slate-100 font-bold">
           <Lock size={14} /> Secure local payments via Paystack / Yoco
         </div>
       </div>
