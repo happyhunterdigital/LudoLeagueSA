@@ -54,7 +54,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'tokens-dice',
     name: 'Professional Token & Dice Set',
-    price: 200.00, // Updated from 150.00 to 200.00
+    price: 200.00,
     category: 'Accessories',
     image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Tokens_and_Dice_gk3mbd.png',
     tag: 'Essential',
