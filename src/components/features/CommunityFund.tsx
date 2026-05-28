@@ -11,14 +11,15 @@ interface FundTier {
 }
 
 const fundTiers: FundTier[] = [
-  { amount: 50, perk: 'Supporter Badge on Profile' },
-  { amount: 200, perk: 'Exclusive Ludo League SA Avatar' },
-  { amount: 500, perk: 'VIP Tournament Entry & Custom Board' },
+  { amount: 10, perk: 'Supporter Badge on Profile' },
+  { amount: 50, perk: 'Exclusive Ludo League SA Avatar' },
+  { amount: 200, perk: 'VIP Tournament Entry & Custom Board' },
 ];
 
 export const CommunityFund: React.FC = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(10);
+  const [customAmount, setCustomAmount] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast'>('payfast');
   const [formData, setFormData] = useState({ fullName: '', email: '', proofOfPayment: null as File | null });
@@ -26,6 +27,15 @@ export const CommunityFund: React.FC = () => {
   const currentFunds = 12500;
   const goalFunds = 50000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
+
+  const getFinalAmount = (): number => {
+    if (customAmount !== '') {
+      return parseFloat(customAmount) || 5;
+    }
+    return selectedAmount || 10;
+  };
+
+  const finalAmount = getFinalAmount();
 
   const compressAndGetBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -57,7 +67,6 @@ export const CommunityFund: React.FC = () => {
   };
 
   const triggerPayfastRedirect = () => {
-    if (!selectedAmount) return;
     const form = document.createElement('form');
     form.action = 'https://www.payfast.co.za/eng/process';
     form.method = 'POST';
@@ -71,7 +80,7 @@ export const CommunityFund: React.FC = () => {
       name_last: formData.fullName.split(' ').slice(1).join(' ') || '',
       email_address: formData.email,
       m_payment_id: `don_${Date.now()}`,
-      amount: selectedAmount.toFixed(2),
+      amount: finalAmount.toFixed(2),
       item_name: 'League Community Fund Donation',
       custom_str1: 'community_donation'
     };
@@ -88,6 +97,10 @@ export const CommunityFund: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (finalAmount < 5) {
+      alert("Donations must start from as little as R5. Please adjust your amount.");
+      return;
+    }
     setIsSubmitting(true);
     try {
       let popUrl = '';
@@ -104,7 +117,7 @@ export const CommunityFund: React.FC = () => {
           eventName: 'League Community Fund Donation',
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Direct Donation',
-          amount: selectedAmount,
+          amount: finalAmount,
           timestamp: serverTimestamp(),
         });
       }
@@ -145,17 +158,21 @@ export const CommunityFund: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {fundTiers.map((tier) => (
-                  <button key={tier.amount} onClick={() => setSelectedAmount(tier.amount)} className={`p-6 rounded-xl border-2 text-left transition-all ${selectedAmount === tier.amount ? 'border-[#0EA5E9] bg-sky-50 shadow-md' : 'border-slate-200 hover:border-[#0EA5E9]'}`}>
+                  <button key={tier.amount} type="button" onClick={() => { setSelectedAmount(tier.amount); setCustomAmount(''); }} className={`p-6 rounded-xl border-2 text-left transition-all ${selectedAmount === tier.amount && customAmount === '' ? 'border-[#0EA5E9] bg-sky-50 shadow-md' : 'border-slate-200 hover:border-[#0EA5E9]'}`}>
                     <div className="font-display font-black italic text-2xl text-[#0F172A] mb-2">R{tier.amount}</div>
                     <div className="text-xs text-slate-600 font-bold leading-relaxed">{tier.perk}</div>
                   </button>
                 ))}
               </div>
+              <div className="pt-2">
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Or enter Custom Amount (minimum R5):</label>
+                <input type="number" min="5" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
+              </div>
               <div className="space-y-4 pt-6 border-t">
                 <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
                 <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
               </div>
-              <button disabled={!selectedAmount || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Continue to Transfer</button>
+              <button disabled={finalAmount < 5 || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Continue to Transfer</button>
             </div>
           )}
 
@@ -175,7 +192,7 @@ export const CommunityFund: React.FC = () => {
                     <p><b>Account Number:</b> 1120230365</p>
                     <p><b>Branch Code:</b> 198765</p>
                     <p><b>Account Type:</b> Current Account</p>
-                    <p><b>Amount:</b> R{selectedAmount}</p>
+                    <p><b>Amount:</b> R{finalAmount}</p>
                     <p><b>Reference:</b> DON-{formData.fullName.replace(/\s+/g, '')}</p>
                   </div>
                   <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
@@ -185,9 +202,12 @@ export const CommunityFund: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-2 text-sm text-slate-700">
-                  <p className="text-base text-[#001F3F]"><b>Total Contribution:</b> <span className="text-[#0EA5E9] font-black">R{selectedAmount?.toFixed(2)}</span></p>
-                  <p className="text-xs text-slate-500">Secure online credit card, debit card, and instant EFT processing powered by Payfast.</p>
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-4 text-sm text-slate-700">
+                  <p className="text-base text-[#001F3F]"><b>Total Contribution:</b> <span className="text-[#0EA5E9] font-black">R{finalAmount.toFixed(2)}</span></p>
+                  <div className="border-t border-slate-200 pt-3 space-y-1.5 text-xs text-slate-500">
+                    <p className="font-bold text-slate-700 uppercase tracking-wider">Accepted Payment Methods:</p>
+                    <p>Visa - Mastercard - Maestro - Instant EFT - Capitec Pay - SnapScan - Zapper</p>
+                  </div>
                 </div>
               )}
 
@@ -205,7 +225,7 @@ export const CommunityFund: React.FC = () => {
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
               <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">ORDER PLACED pending verification</h3>
               <p className="text-slate-600 leading-relaxed">Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.</p>
-              <button onClick={() => { setStep(1); setSelectedAmount(null); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
+              <button onClick={() => { setStep(1); setSelectedAmount(10); setCustomAmount(''); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
           )}
         </motion.div>
