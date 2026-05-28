@@ -31,13 +31,11 @@ export const ChatbotWidget = () => {
     const userMessage = input.trim();
     setInput('');
 
-    // Capture the clean conversation history BEFORE appending the new user query to prevent duplication
     const historyToSend = messages.map(msg => ({
       role: msg.role === 'assistant' ? 'assistant' : 'user',
       content: msg.content
     }));
 
-    // Now append the new user query to the local UI state
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
 
