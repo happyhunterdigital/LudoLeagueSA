@@ -187,9 +187,12 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-2 text-sm text-slate-700">
+                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-4 text-sm text-slate-700">
                     <p className="text-base text-[#001F3F]"><b>Total Payment:</b> <span className="text-[#0EA5E9] font-black">R{grandTotal.toLocaleString()}</span></p>
-                    <p className="text-xs text-slate-500">Secure online credit card, debit card, and instant EFT processing powered by Payfast.</p>
+                    <div className="border-t border-slate-200 pt-3 space-y-1.5 text-xs text-slate-500">
+                      <p className="font-bold text-slate-700 uppercase tracking-wider">Accepted Payment Methods:</p>
+                      <p>Visa - Mastercard - Maestro - Instant EFT - Capitec Pay - SnapScan - Zapper</p>
+                    </div>
                   </div>
                 )}
                 <div className="flex gap-4">
@@ -203,7 +206,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             {step === 3 && (
               <div className="text-center space-y-6 py-6">
                 <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-                <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">ORDER PLACED pending verification</h3>
+                <h3 className="text-2xl font-display font-black italic uppercase text-slate-955">ORDER PLACED pending verification</h3>
                 <p className="text-slate-600 leading-relaxed">Thank you for purchasing official gear! Your order status is currently pending verification of your bank transfer receipt.</p>
                 <button onClick={() => { setStep(1); onClose(); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
               </div>
