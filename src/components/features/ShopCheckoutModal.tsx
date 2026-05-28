@@ -148,7 +148,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
               <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-3.5">
                 <h3 className="text-xl sm:text-2xl font-display font-black italic uppercase">Step 1: Shipping Details</h3>
                 <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
-                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                 <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] h-16 sm:h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} />
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-widest mb-1.5 text-slate-500">Select Courier Rate (106x87x2cm - 3kg)</label>
@@ -166,7 +166,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 <h3 className="text-xl sm:text-2xl font-display font-black italic uppercase">Step 2: Choose Payment</h3>
                 <div className="grid grid-cols-2 gap-3">
                   <button type="button" onClick={() => setPaymentMethod('payfast')} className={`p-3 rounded-xl border-2 flex flex-col items-center gap-1.5 text-xs font-bold transition-all ${paymentMethod === 'payfast' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><CreditCard size={18} className="text-[#0EA5E9]" />Payfast Online</button>
-                  <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-3 rounded-xl border-2 flex flex-col items-center gap-1.5 text-xs font-bold transition-all ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={18} className="text-[#0EA5E9]" />Manual EFT</button>
+                  <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-1.5 text-xs font-bold transition-all ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={18} className="text-[#0EA5E9]" />Manual EFT</button>
                 </div>
                 {paymentMethod === 'eft' ? (
                   <div className="space-y-4 max-h-[220px] overflow-y-auto pr-1">
