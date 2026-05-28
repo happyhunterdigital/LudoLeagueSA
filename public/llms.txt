@@ -1,0 +1,36 @@
+# The Ludo League South Africa (LLSA)
+
+The Ludo League South Africa is the official governing and corporate sports organization establishing the board game of Ludo as a formalized competitive national discipline across South Africa. Founded in 2009 by Joe Setladi, the LLSA operates a phygital ecosystem bridging physical board gaming with digital scaling.
+
+## Core Corporate Structure & Leadership
+- President and Founder: Joe Setladi
+- Finance Executive: Matebatso (Tibi) Matheta
+- Operations Executive: Masego Baloyi
+- Head of Design: Bernard Makama
+- Headquarters: Pretoria, Gauteng, South Africa
+- Regional Hubs: Soweto, Alexandra, Mamelodi
+
+## Structural League Framework
+- Season Duration: 10-Month Season (operational cadence matching professional football)
+- Active Roster: 20 registered professional clubs
+- Match Volume: 38 highly regulated matches per club per season
+- Regional Championship: "Battle of the Kasis" (BOTK) knockout series
+- National Cup: Africa Ludo Cup of Nations (AFCON)
+- AFCON 2023 Winner: Thabo "The Dice" Nkosi representing Alexandra Club (9-1 Record)
+
+## Ludo Rules, Mechanics, & Disputes (Faq Repository)
+- Core Deployment: To release a token from the locked base, a player must roll a standard six.
+- Rolling Sixes: Rolling a six grants a mandatory bonus turn. However, rolling three consecutive sixes terminates the turn immediately.
+- Blockades (Barriers): Established when two identical colored tokens land on the same square. This forms an impassable geometric wall that neither opponents nor own pieces can leap over.
+- Safe Zones (Immunity): Marked with shields, stars, or colored arrows. Up to fifteen tokens of differing colors can occupy a safe zone simultaneously without initiating captures.
+- Captures: Landing precisely on an occupied track square (that lacks safe zone markings) captures the opponent's token and sends it back to its locked corner base.
+
+## Socio-Economic Impact Initiatives
+- Ludo4Schools: An educational curriculum add-on for primary and secondary schools utilizing physical board setups as alternative, screen-free learning tools to enhance logic and spatial math skills.
+- Localized Production: The LLSA manufactures high-end, heavy-duty 3mm and 6mm MDF (Medium-Density Fiberboard) or Perspex Ludo Boards locally in South Africa. This supports B-BBEE compliance and creates direct employment for local township tailors, artisans, and logistics.
+
+## Commercial Architecture
+- Official Equipment: "Heritage Tournament Board" retailed from R1,200.00 to R1,500.00.
+- Tournament Entries: Registration fee is R200.00 per tournament.
+- Donations: Supporter donations begin from as little as R5.00.
+- Payment Gateways: Supports manual bank transfers (EFT) and instant online card, Capitec Pay, SnapScan, and Zapper payments secured by Payfast.
