@@ -30,7 +30,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       <nav className="fixed top-0 left-0 right-0 z-[1000] px-4 md:px-8 py-4 transition-all duration-500 bg-[#2C3E50] shadow-lg">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
-          {/* Logo container utilizing shrink-zero and whitespace-nowrap to prevent line wrapping */}
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-2.5 group shrink-0 whitespace-nowrap">
             <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="Logo" className="w-9 h-9 md:w-11 md:h-11 rounded-xl object-cover shadow-sm group-hover:rotate-12 transition-transform" />
             <span className="text-lg md:text-xl font-display italic font-black tracking-tight text-white">Ludo League SA</span>
@@ -76,6 +75,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {item}
               </button>
             ))}
+
+            <button onClick={() => handleNavClick('portal' as Page)} className={`text-[10px] xl:text-[11px] uppercase tracking-wider xl:tracking-[0.2rem] font-black italic transition-colors ${activeSection === 'portal' ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}>
+              My Portal
+            </button>
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
@@ -117,6 +120,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {item}
               </button>
             ))}
+            <button onClick={() => { scrollToSection('portal'); setMobileMenuOpen(false); }} className="text-left p-2.5 text-xs uppercase tracking-wider font-black italic rounded-lg text-slate-300 hover:bg-slate-800">My Portal</button>
           </div>
         )}
       </nav>
