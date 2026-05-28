@@ -189,9 +189,24 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                 ) : (
                   <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-4 text-sm text-slate-700">
                     <p className="text-base text-[#001F3F]"><b>Total Payment:</b> <span className="text-[#0EA5E9] font-black">R{grandTotal.toLocaleString()}</span></p>
-                    <div className="border-t border-slate-200 pt-3 space-y-1.5 text-xs text-slate-500">
-                      <p className="font-bold text-slate-700 uppercase tracking-wider">Accepted Payment Methods:</p>
-                      <p>Visa - Mastercard - Maestro - Instant EFT - Capitec Pay - SnapScan - Zapper</p>
+                    <div className="border-t border-slate-200 pt-3 space-y-2.5">
+                      <p className="font-bold text-slate-700 uppercase tracking-wider text-xs">Accepted Payment Methods:</p>
+                      <div className="flex flex-wrap items-center justify-center gap-4 bg-white/50 p-3.5 rounded-xl border border-slate-100">
+                        {/* Visa */}
+                        <svg className="h-4 w-10 text-[#1A1F71]" viewBox="0 0 24 15" fill="currentColor"><path d="M10.15 0l-2.4 14.3h2.36l2.4-14.3H10.15zm8.13 0l-2.2 10.3-.9-4.7c-.2-.9-.9-1.6-1.8-1.6H9.41l-.14.6 2.15.5c.6.1.9.4 1 .8l2.1 8.7h2.47L21 0h-2.72zm-12 0L3.8 9.5 3.5 8C2.9 6 1 3.8 0 3.3v11H2.47L6.47 0H6.28z" /></svg>
+                        {/* Mastercard */}
+                        <svg className="h-5 w-8" viewBox="0 0 24 15" fill="currentColor"><circle cx="7" cy="7.5" r="7" fill="#EB001B" /><circle cx="15" cy="7.5" r="7" fill="#F79E1B" opacity="0.8" /></svg>
+                        {/* Maestro */}
+                        <svg className="h-5 w-8" viewBox="0 0 24 15" fill="currentColor"><circle cx="7" cy="7.5" r="7" fill="#0064B3" /><circle cx="15" cy="7.5" r="7" fill="#EB001B" opacity="0.8" /></svg>
+                        {/* Instant EFT */}
+                        <svg className="h-5 w-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M12 10v11M12 3L3 10h18L12 3z" /></svg>
+                        {/* Capitec Pay */}
+                        <svg className="h-4 w-12" viewBox="0 0 40 15"><rect x="2" y="2" width="12" height="10" fill="#003366" rx="1" /><rect x="18" y="2" width="12" height="10" fill="#D32F2F" rx="1" /></svg>
+                        {/* SnapScan */}
+                        <svg className="h-5 w-5 text-[#22C55E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 9V5a2 2 0 012-2h4M21 9V5a2 2 0 00-2-2h-4M3 15v4a2 2 0 002 2h4M21 15v4a2 2 0 01-2 2h-4M12 12h.01" /></svg>
+                        {/* Zapper */}
+                        <svg className="h-5 w-5 text-[#F97316]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-2 4L9 17h8m0-10H7l8 10H7" /></svg>
+                      </div>
                     </div>
                   </div>
                 )}
