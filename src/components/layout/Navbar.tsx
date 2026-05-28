@@ -16,7 +16,9 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen
 }) => {
-  const navItems: Page[] = ['Home', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
+  // Added 'About' to the navigation items array
+  const navItems: Page[] = ['Home', 'About', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
+
   const handleNavClick = (item: Page) => {
     scrollToSection(item.toLowerCase() === 'home' ? 'home' : item.toLowerCase());
   };
