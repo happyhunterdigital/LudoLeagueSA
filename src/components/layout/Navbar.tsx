@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Heart, ShoppingCart, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { Page } from '../../App';
 
