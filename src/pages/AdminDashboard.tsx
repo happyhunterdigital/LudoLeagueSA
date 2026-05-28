@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, query, orderBy, updateDoc, doc, addDoc } from 'firebase/firestore';
-import { Loader2, FileText, Filter, Users } from 'lucide-react';
+import { Loader2, FileText, Filter, Users, Lock } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const AdminDashboard = () => {
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [registrations, setRegistrations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState<string>('all');
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'LudoAdmin2026!') {
+      setIsAuthenticated(true);
+    } else {
+      alert('Incorrect access password. Please try again.');
+    }
+  };
+
   const fetchData = async () => {
-    if (!db) return;
+    if (!db || !isAuthenticated) return;
     setLoading(true);
     try {
       const regQuery = query(collection(db, 'event_registrations'), orderBy('timestamp', 'desc'));
@@ -24,8 +35,10 @@ export const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [isAuthenticated]);
 
   const handleVerify = async (reg: any) => {
     if (!db) return;
@@ -78,6 +91,22 @@ export const AdminDashboard = () => {
     if (filterType === 'donation') return r.eventName.includes('Donation');
     return true;
   });
+
+  if (!isAuthenticated) {
+    return (
+      <section className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white p-6">
+        <form onSubmit={handleLogin} className="w-full max-w-md bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-2xl space-y-6 text-center">
+          <div className="mx-auto w-16 h-16 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center border border-amber-500/20">
+            <Lock size={28} />
+          </div>
+          <h2 className="text-3xl font-display font-black uppercase italic">Admin Portal Locked</h2>
+          <p className="text-slate-400 text-sm">Please input the secret administrator access password to enter the console.</p>
+          <input required type="password" placeholder="Access Password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white text-center font-bold outline-none focus:border-amber-500 transition-colors" />
+          <button type="submit" className="w-full py-4 bg-amber-500 hover:bg-white text-slate-950 font-black uppercase tracking-widest rounded-xl transition-all shadow-lg">Authenticate Console</button>
+        </form>
+      </section>
+    );
+  }
 
   return (
     <section id="admin" className="min-h-screen w-full py-24 px-4 md:px-10 bg-slate-50 text-slate-900">
