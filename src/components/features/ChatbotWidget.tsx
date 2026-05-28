@@ -30,17 +30,20 @@ export const ChatbotWidget = () => {
 
     const userMessage = input.trim();
     setInput('');
+
+    // Capture the clean conversation history BEFORE appending the new user query to prevent duplication
+    const historyToSend = messages.map(msg => ({
+      role: msg.role === 'assistant' ? 'assistant' : 'user',
+      content: msg.content
+    }));
+
+    // Now append the new user query to the local UI state
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
 
     try {
       const chatFn = httpsCallable(functions, 'ludoLeagueChatBot');
-      const chatHistory = messages.map(msg => ({
-        role: msg.role === 'assistant' ? 'assistant' : 'user',
-        content: msg.content
-      }));
-
-      const result = await chatFn({ message: userMessage, history: chatHistory }) as any;
+      const result = await chatFn({ message: userMessage, history: historyToSend }) as any;
       const botReply = result?.data?.reply || 'Pardon me, I encountered a communication delay. Please try again.';
       setMessages(prev => [...prev, { role: 'assistant', content: botReply }]);
     } catch (error) {
