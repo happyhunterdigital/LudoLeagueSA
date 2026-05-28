@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Heart, ShoppingCart, ShoppingBag, Menu, X } from 'lucide-react';
+import { Heart, ShoppingCart, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { Page } from '../../App';
 
 interface NavbarProps {
@@ -16,8 +16,8 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen
 }) => {
-  // Added 'About' to the navigation items array
-  const navItems: Page[] = ['Home', 'About', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
+  const [aboutHover, setAboutHover] = useState(false);
+  const navItems: Page[] = ['Home', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
 
   const handleNavClick = (item: Page) => {
     scrollToSection(item.toLowerCase() === 'home' ? 'home' : item.toLowerCase());
@@ -35,7 +35,38 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {navItems.map((item) => (
+            <button onClick={() => handleNavClick('Home')} className={`text-[11px] uppercase tracking-[0.25rem] font-black italic transition-colors ${activeSection === 'home' ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}>
+              Home
+            </button>
+
+            {/* Hover Trigger for the About & FAQs Dropdown */}
+            <div 
+              className="relative py-2"
+              onMouseEnter={() => setAboutHover(true)}
+              onMouseLeave={() => setAboutHover(false)}
+            >
+              <button 
+                onClick={() => handleNavClick('About')}
+                className={`text-[11px] uppercase tracking-[0.25rem] font-black italic transition-colors flex items-center gap-1.5 ${activeSection === 'about' || activeSection === 'faqs' ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}
+              >
+                About <ChevronDown size={12} />
+              </button>
+              <AnimatePresence>
+                {aboutHover && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 bg-[#2C3E50] border border-slate-700 rounded-xl shadow-2xl p-2 w-56 flex flex-col gap-1 z-[2000] mt-1"
+                  >
+                    <button onClick={() => { scrollToSection('about'); setAboutHover(false); }} className="text-left text-[10px] uppercase font-black tracking-widest text-slate-300 hover:text-[#FFD700] p-3 hover:bg-slate-800 rounded-lg transition-colors">Identity & Vision</button>
+                    <button onClick={() => { scrollToSection('faqs'); setAboutHover(false); }} className="text-left text-[10px] uppercase font-black tracking-widest text-slate-300 hover:text-[#FFD700] p-3 hover:bg-slate-800 rounded-lg transition-colors">FAQs & Rules</button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {navItems.slice(1).map((item) => (
               <button
                 key={item}
                 onClick={() => handleNavClick(item)}
@@ -73,7 +104,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {mobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 bg-[#2C3E50] border-t border-slate-700 py-4 px-4 flex flex-col gap-4 shadow-2xl">
-            {navItems.map((item) => (
+            <button onClick={() => { scrollToSection('home'); setMobileMenuOpen(false); }} className="text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl text-slate-300 hover:bg-slate-800">Home</button>
+            <button onClick={() => { scrollToSection('about'); setMobileMenuOpen(false); }} className="text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl text-slate-300 hover:bg-slate-800">Identity & Vision</button>
+            <button onClick={() => { scrollToSection('faqs'); setMobileMenuOpen(false); }} className="text-left p-3 text-sm uppercase tracking-widest font-black italic rounded-xl text-slate-300 hover:bg-slate-800">FAQs & Rules</button>
+            {navItems.slice(1).map((item) => (
               <button
                 key={item}
                 onClick={() => handleNavClick(item)}
