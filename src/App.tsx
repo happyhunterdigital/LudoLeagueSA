@@ -20,9 +20,10 @@ import { AfconTournament } from './pages/AfconTournament';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 import { ChatbotWidget } from './components/features/ChatbotWidget';
+import { UserDashboard } from './pages/UserDashboard';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
-  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About';
+  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -34,7 +35,7 @@ export default function App() {
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament'];
+  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal'];
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -101,6 +102,7 @@ export default function App() {
 
       <main className="w-full">
         {activeSection === 'admin' && <AdminDashboard />}
+        {activeSection === 'portal' && <UserDashboard />}
         {activeSection === 'botkgallery' && (
           <BotkGallery selectedTab={selectedGalleryTab} setSelectedTab={setSelectedGalleryTab} />
         )}
