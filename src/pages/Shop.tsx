@@ -1,79 +1,85 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Tag, Trash2 } from 'lucide-react';
-import { Product } from '../types';
-import { PRODUCTS } from '../data/products';
-import { SectionHeader } from '../components/ui/SharedUI';
-import { motion } from 'motion/react';
+import { Canvas } from '@react-three/fiber';
+import { ShoppingCart, Trash2, ArrowLeft } from 'lucide-react';
+import { LudoScene } from '../components/features/LudoScene';
 import { ShopCheckoutModal } from '../components/features/ShopCheckoutModal';
 
 export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatch<React.SetStateAction<string[]>> }) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
+
   const addToCart = (id: string) => setCart(prev => [...prev, id]);
   const removeFromCart = (indexToRemove: number) => {
     setCart(prev => prev.filter((_, idx) => idx !== indexToRemove));
   };
-  const clearCart = () => typeof window !== 'undefined' && setCart([]);
+  const clearCart = () => setCart([]);
 
   return (
-    <section id="shop" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A]">
-      <div className="max-w-7xl mx-auto w-full">
-        <SectionHeader tag="Merchandise" title="Official Boards" colorClass="text-white" />
+    <section id="shop" className="min-h-screen w-full relative bg-[#090F1C] overflow-hidden flex flex-col justify-between">
+      {/* 3D WebGL Canvas Layer beneath the UI */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 2, 7], fov: 45 }}>
+          <LudoScene 
+            selectedId={selectedBoardId} 
+            setSelectedId={setSelectedBoardId} 
+            addToCart={addToCart} 
+            cart={cart}
+          />
+        </Canvas>
+      </div>
+
+      {/* 2D UI Overlay - High Z-Index with pointer-events-none to let scroll pass to canvas */}
+      <div className="relative z-10 w-full h-full min-h-screen flex flex-col justify-between pointer-events-none">
         
-        {cart.length > 0 && (
-          <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl mb-8 max-w-2xl mx-auto text-white">
-            <h4 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#FFC107]"><ShoppingCart /> Your Cart</h4>
-            <div className="divide-y divide-slate-700 mb-6">
-              {cart.map((itemId, idx) => {
-                const product = PRODUCTS.find(p => p.id === itemId);
-                if (!product) return null;
-                return (
-                  <div key={idx} className="flex justify-between items-center py-3">
-                    <span className="text-sm font-semibold truncate max-w-[200px] sm:max-w-[400px]">{product.name}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="font-bold text-[#FFC107]">R{product.price}</span>
+        {/* Top Header */}
+        <header className="p-6 md:p-8 flex justify-between items-center w-full pointer-events-auto">
+          <div className="flex items-center gap-4">
+            {selectedBoardId && (
+              <button 
+                onClick={() => setSelectedBoardId(null)}
+                className="p-3 bg-slate-900/80 border border-slate-700/50 rounded-xl text-white hover:bg-amber-500 hover:text-slate-950 transition-all flex items-center gap-2 text-xs font-black uppercase tracking-wider shadow-lg cursor-pointer"
+              >
+                <ArrowLeft size={14} /> Back to Catalog
+              </button>
+            )}
+          </div>
+
+          {/* Cart Trigger */}
+          {cart.length > 0 && (
+            <div className="bg-slate-900/90 border border-slate-700 p-4 rounded-2xl w-72 text-white shadow-2xl space-y-4">
+              <h4 className="text-sm font-bold flex items-center gap-2 text-[#FFC107] uppercase tracking-wider"><ShoppingCart size={16} /> Your Cart</h4>
+              <div className="divide-y divide-slate-800 max-h-[120px] overflow-y-auto pr-1">
+                {cart.map((itemId, idx) => (
+                  <div key={idx} className="flex justify-between items-center py-2 text-xs">
+                    <span className="font-semibold truncate max-w-[140px]">Heritage Board</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#FFC107]">R1200</span>
                       <button onClick={() => removeFromCart(idx)} className="text-red-400 hover:text-red-500 transition-colors p-1" aria-label="Remove item">
-                        <Trash2 size={16} />
+                        <Trash2 size={12} />
                       </button>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
+              <button onClick={() => setIsCheckoutOpen(true)} className="w-full py-3 bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest text-[10px] rounded-lg shadow-xl hover:bg-white transition-all cursor-pointer">
+                Checkout (R{cart.length * 1200})
+              </button>
             </div>
-            <button onClick={() => setIsCheckoutOpen(true)} className="w-full btn-action bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest shadow-xl">
-              Proceed to Checkout (R{cart.reduce((sum, id) => sum + (PRODUCTS.find(p => p.id === id)?.price || 0), 0)})
-            </button>
-          </div>
-        )}
+          )}
+        </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {PRODUCTS.map((product: Product, i) => (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={product.id} className="bg-[#1E293B] border border-slate-700 p-0 flex flex-col overflow-hidden rounded-2xl shadow-xl hover:-translate-y-1 transition-transform">
-              <div className="h-48 overflow-hidden relative bg-white">
-                <div className="absolute top-3 left-3 z-10 px-2 py-1 text-[10px] uppercase tracking-widest font-bold rounded shadow-sm bg-white text-[#0F172A] flex items-center gap-1 border border-slate-200">
-                  <Tag size={12} className="text-red-500 animate-pulse" /> {product.tag}
-                </div>
-                <img src={product.image} alt={product.name} className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="text-[#0EA5E9] text-[10px] font-bold uppercase tracking-widest mb-1">{product.category}</div>
-                <h3 className="text-lg font-bold mb-2 text-white h-12 leading-tight">{product.name}</h3>
-                <p className="text-slate-400 text-xs mb-4 line-clamp-2">{product.description}</p>
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
-                  <div className="flex flex-col">
-                    {product.originalPrice && (
-                      <span className="text-xs text-red-400 line-through font-bold">R{product.originalPrice.toFixed(2)}</span>
-                    )}
-                    <span className="text-2xl font-display font-black text-[#FFC107]">R{product.price.toFixed(2)}</span>
-                  </div>
-                  <button onClick={() => addToCart(product.id)} className="p-2 px-4 bg-[#0F172A] text-white border border-slate-600 rounded-xl hover:bg-[#0EA5E9] transition-colors flex items-center gap-2 text-sm font-bold shadow-sm">
-                    <ShoppingCart size={16} /> Add
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Bottom Metadata & Specifications Footer */}
+        <footer className="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 w-full">
+          <div className="max-w-md bg-slate-950/85 backdrop-blur-md border border-slate-800 p-5 rounded-2xl space-y-2 pointer-events-auto text-left shadow-2xl">
+            <span className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[9px] font-black uppercase tracking-widest rounded-lg">Product Specifications</span>
+            <h3 className="text-xl font-display font-black italic text-white uppercase pt-1">Heritage Ludo Game</h3>
+            <p className="text-slate-400 text-xs leading-relaxed">Type: Dice Game | Age: 4+ Years | Pack of: 1</p>
+            <p className="text-slate-300 text-xs leading-relaxed border-t border-slate-800/80 pt-2 mt-2">Step into the world of professional play with our premium Ludo Board designed for performance, built for durability, and crafted for an unmatched playing experience. Features our unique, first-of-its-kind oversized layout.</p>
+          </div>
+          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Interactive 3D Product Showcase</p>
+        </footer>
       </div>
+
       <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={clearCart} />
     </section>
   );
