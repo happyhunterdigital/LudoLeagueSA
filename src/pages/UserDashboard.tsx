@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { Loader2, LogOut, Award, ShoppingBag, Heart, User as UserIcon, Shield } from 'lucide-react';
+import { Loader2, LogOut, Award, ShoppingBag, Heart, User as UserIcon, Shield, Gift } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const UserDashboard = () => {
@@ -94,6 +94,13 @@ export const UserDashboard = () => {
   const isBuyer = records.some(r => r.eventName.toLowerCase().includes('shop') || r.eventName.toLowerCase().includes('merchandise'));
   const isDonor = records.some(r => r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund'));
 
+  const totalDonations = records
+    .filter(r => r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund'))
+    .reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
+
+  const qualifiesForGift = totalDonations >= 500;
+  const progressPercentage = Math.min((totalDonations / 500) * 100, 100);
+
   return (
     <section className="min-h-screen w-full py-24 px-4 md:px-10 bg-[#0F172A] text-white">
       <div className="max-w-6xl mx-auto space-y-12">
@@ -111,42 +118,69 @@ export const UserDashboard = () => {
         {dataLoading ? (
           <div className="flex justify-center py-12"><Loader2 className="animate-spin text-amber-500" size={32} /></div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {isAthlete && (
-              <div className="bg-slate-800/50 border border-sky-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
-                <div className="w-10 h-10 text-sky-400 bg-sky-500/10 rounded-lg flex items-center justify-center"><Shield size={20} /></div>
-                <h3 className="text-xl font-display font-black italic uppercase">Tournament Athlete</h3>
-                <div className="text-xs text-slate-300 space-y-2">
-                  <p>Your regional tournament registration is verified. Brackets and qualifiers are live in Pretoria.</p>
-                  <p className="pt-2 border-t border-slate-700/50"><b>Ruleset:</b> Standardized physical clock rules strictly enforced by certified judges.</p>
-                </div>
-              </div>
-            )}
-            {isBuyer && (
-              <div className="bg-slate-800/50 border border-emerald-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
-                <div className="w-10 h-10 text-emerald-400 bg-emerald-500/10 rounded-lg flex items-center justify-center"><ShoppingBag size={20} /></div>
-                <h3 className="text-xl font-display font-black italic uppercase">Merchandise Orders</h3>
-                <div className="text-xs text-slate-300 space-y-2">
-                  <p>Your official high-density MDF wooden board order is currently processing.</p>
-                  <p className="pt-2 border-t border-slate-700/50"><b>Shipping status:</b> EFT verification successful. Courier dispatch tracking code pending.</p>
-                </div>
-              </div>
-            )}
+          <div className="space-y-8">
             {isDonor && (
-              <div className="bg-slate-800/50 border border-rose-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
-                <div className="w-10 h-10 text-rose-400 bg-rose-500/10 rounded-lg flex items-center justify-center"><Award size={20} /></div>
-                <h3 className="text-xl font-display font-black italic uppercase">Community Backer</h3>
-                <div className="text-xs text-slate-300 space-y-2">
-                  <p>Thank you for backing Ludo League SA. Unlocked profile badge: Supporter.</p>
-                  <p className="pt-2 border-t border-slate-700/50"><b>Impact Contribution:</b> Unlocks critical school resource kits and professional prize pools.</p>
+              <div className="bg-slate-800/40 border border-amber-500/20 p-8 rounded-3xl space-y-6 shadow-2xl">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-amber-500/10 rounded-xl text-amber-500"><Gift size={24} /></div>
+                    <div>
+                      <h3 className="text-2xl font-display font-black italic uppercase text-white">Supporter Gift Progression</h3>
+                      <p className="text-xs text-slate-400">Contribute R500 or more to qualify for an official premium Ludo Board</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-black text-amber-500">R{totalDonations.toLocaleString()} / R500</span>
                 </div>
+                <div className="w-full bg-slate-900 rounded-full h-4 overflow-hidden border border-slate-700 shadow-inner">
+                  <div className="bg-amber-500 h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
+                </div>
+                {qualifiesForGift ? (
+                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-emerald-400 text-sm font-bold flex items-center gap-3 animate-pulse">
+                    <CheckCircle2 size={20} /> Congratulations! You have qualified for an official Ludo Board Gift! Our admin team has been notified.
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-400">You need R{(500 - totalDonations).toLocaleString()} more to qualify for your professional board gift.</p>
+                )}
               </div>
             )}
-            {!isAthlete && !isBuyer && !isDonor && (
-              <div className="col-span-3 text-center py-12 bg-slate-800/30 border border-slate-700/50 rounded-2xl space-y-3">
-                <p className="text-sm text-slate-400">You have no active registrations, orders, or contributions on this account profile.</p>
-              </div>
-            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {isAthlete && (
+                <div className="bg-slate-800/50 border border-sky-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
+                  <div className="w-10 h-10 text-sky-400 bg-sky-500/10 rounded-lg flex items-center justify-center"><Shield size={20} /></div>
+                  <h3 className="text-xl font-display font-black italic uppercase">Tournament Athlete</h3>
+                  <div className="text-xs text-slate-300 space-y-2">
+                    <p>Your regional tournament registration is verified. Brackets and qualifiers are live in Pretoria.</p>
+                    <p className="pt-2 border-t border-slate-700/50"><b>Ruleset:</b> Standardized physical clock rules strictly enforced by certified judges.</p>
+                  </div>
+                </div>
+              )}
+              {isBuyer && (
+                <div className="bg-slate-800/50 border border-emerald-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
+                  <div className="w-10 h-10 text-emerald-400 bg-emerald-500/10 rounded-lg flex items-center justify-center"><ShoppingBag size={20} /></div>
+                  <h3 className="text-xl font-display font-black italic uppercase">Merchandise Orders</h3>
+                  <div className="text-xs text-slate-300 space-y-2">
+                    <p>Your official high-density MDF wooden board order is currently processing.</p>
+                    <p className="pt-2 border-t border-slate-700/50"><b>Shipping status:</b> EFT verification successful. Courier dispatch tracking code pending.</p>
+                  </div>
+                </div>
+              )}
+              {isDonor && (
+                <div className="bg-slate-800/50 border border-rose-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
+                  <div className="w-10 h-10 text-rose-400 bg-rose-500/10 rounded-lg flex items-center justify-center"><Award size={20} /></div>
+                  <h3 className="text-xl font-display font-black italic uppercase">Community Backer</h3>
+                  <div className="text-xs text-slate-300 space-y-2">
+                    <p>Thank you for backing Ludo League SA. Unlocked profile badge: Supporter.</p>
+                    <p className="pt-2 border-t border-slate-700/50"><b>Impact Contribution:</b> Unlocks critical school resource kits and professional prize pools.</p>
+                  </div>
+                </div>
+              )}
+              {!isAthlete && !isBuyer && !isDonor && (
+                <div className="col-span-3 text-center py-12 bg-slate-800/30 border border-slate-700/50 rounded-2xl space-y-3">
+                  <p className="text-sm text-slate-400">You have no active registrations, orders, or contributions on this account profile.</p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
