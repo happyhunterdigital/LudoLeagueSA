@@ -11,9 +11,9 @@ export const History = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
           {[
-            { year: "2018", title: "Foundation", desc: "Started as a community tournament in Soweto." },
-            { year: "2021", title: "National Circuit", desc: "Expanded across 5 provinces with professional rules." },
-            { year: "2024", title: "Digital Evolution", desc: "Integrated cryptographic registrations and AI." }
+            { year: "2013", title: "Foundation", desc: "Started as a community tournament in Alexandra, Johannesburg." },
+            { year: "2017", title: "Regional Circuit", desc: "Expanded across Gauteng with professional rules." },
+            { year: "2019", title: "League Evolution", desc: "Developed into a professional Local League format." }
           ].map((item, i) => (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} key={i} className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl shadow-xl">
               <div className="text-3xl md:text-4xl font-display font-black italic mb-3 text-[#FFC107]">{item.year}</div>
@@ -26,6 +26,16 @@ export const History = () => {
         <div className="mt-16">
           <SectionHeader tag="Hall of Fame" title="Past Winners" colorClass="text-[#0EA5E9]" />
           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl flex items-center gap-4 md:gap-6 shadow-xl">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#0F172A] flex items-center justify-center shrink-0 border border-slate-600">
+                <Trophy size={28} className="text-[#FFC107]" />
+              </div>
+              <div>
+                <div className="text-[10px] md:text-xs font-bold uppercase tracking-widest mb-1 text-[#0EA5E9]">2019 Champion</div>
+                <h3 className="text-xl md:text-3xl font-display font-black italic mb-1 text-white">Kea Mdawe</h3>
+                <p className="flex items-center gap-2 text-xs md:text-sm text-slate-400"><MapPin size={12} /> Mamelodi</p>
+              </div>
+            </div>
             <div className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl flex items-center gap-4 md:gap-6 shadow-xl">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#0F172A] flex items-center justify-center shrink-0 border border-slate-600">
                 <Trophy size={28} className="text-[#FFC107]" />
