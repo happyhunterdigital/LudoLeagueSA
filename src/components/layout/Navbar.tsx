@@ -17,7 +17,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen
 }) => {
   const [aboutHover, setAboutHover] = useState(false);
-  const navItems: Page[] = ['Home', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
+  
+  // Promoted Ludo4Schools to a top-level horizontal navigation link
+  const navItems: Page[] = ['Home', 'Ludo4Schools', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
 
   const handleNavClick = (item: Page) => {
     scrollToSection(item.toLowerCase() === 'home' ? 'home' : item.toLowerCase());
@@ -40,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               Home
             </button>
 
+            {/* Hover Trigger for the About & FAQs Dropdown */}
             <div 
               className="relative py-2"
               onMouseEnter={() => setAboutHover(true)}
@@ -47,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <button 
                 onClick={() => handleNavClick('About')}
-                className={`text-[10px] xl:text-[11px] uppercase tracking-wider xl:tracking-[0.2rem] font-black italic transition-colors flex items-center gap-1 ${activeSection === 'about' || activeSection === 'faqs' || activeSection === 'ludo4schools' ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}
+                className={`text-[10px] xl:text-[11px] uppercase tracking-wider xl:tracking-[0.2rem] font-black italic transition-colors flex items-center gap-1 ${activeSection === 'about' || activeSection === 'faqs' ? 'text-[#FFD700]' : 'text-slate-300 hover:text-white'}`}
               >
                 About <ChevronDown size={11} />
               </button>
@@ -61,7 +64,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     <button onClick={() => { scrollToSection('about'); setAboutHover(false); }} className="text-left text-[9px] uppercase font-black tracking-wider text-slate-300 hover:text-[#FFD700] p-2.5 hover:bg-slate-800 rounded-lg transition-colors">Identity & Vision</button>
                     <button onClick={() => { scrollToSection('faqs'); setAboutHover(false); }} className="text-left text-[9px] uppercase font-black tracking-wider text-slate-300 hover:text-[#FFD700] p-2.5 hover:bg-slate-800 rounded-lg transition-colors">FAQs & Rules</button>
-                    <button onClick={() => { scrollToSection('ludo4schools'); setAboutHover(false); }} className="text-left text-[9px] uppercase font-black tracking-wider text-slate-300 hover:text-[#FFD700] p-2.5 hover:bg-slate-800 rounded-lg transition-colors">Ludo4Schools</button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -112,7 +114,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button onClick={() => { scrollToSection('home'); setMobileMenuOpen(false); }} className="text-left p-2.5 text-xs uppercase tracking-wider font-black italic rounded-lg text-slate-300 hover:bg-slate-800">Home</button>
             <button onClick={() => { scrollToSection('about'); setMobileMenuOpen(false); }} className="text-left p-2.5 text-xs uppercase tracking-wider font-black italic rounded-lg text-slate-300 hover:bg-slate-800">Identity & Vision</button>
             <button onClick={() => { scrollToSection('faqs'); setMobileMenuOpen(false); }} className="text-left p-2.5 text-xs uppercase tracking-wider font-black italic rounded-lg text-slate-300 hover:bg-slate-800">FAQs & Rules</button>
-            <button onClick={() => { scrollToSection('ludo4schools'); setMobileMenuOpen(false); }} className="text-left p-2.5 text-xs uppercase tracking-wider font-black italic rounded-lg text-slate-300 hover:bg-slate-800">Ludo4Schools</button>
             {navItems.slice(1).map((item) => (
               <button
                 key={item}
