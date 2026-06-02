@@ -136,7 +136,7 @@ export const UserDashboard = () => {
                 </div>
                 {qualifiesForGift ? (
                   <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-emerald-400 text-sm font-bold flex items-center gap-3 animate-pulse">
-                    <CheckCircle2 size={20} /> Congratulations! You have qualified for an official Ludo Board Gift! Our admin team has been notified.
+                    <CheckCircle2 size={20} /> Congratulations! You have qualified for an official Gift! Our admin team has been notified.
                   </div>
                 ) : (
                   <p className="text-xs text-slate-400">You need R{(500 - totalDonations).toLocaleString()} more to qualify for your professional board gift.</p>
