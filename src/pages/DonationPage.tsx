@@ -16,6 +16,25 @@ const fundTiers: FundTier[] = [
   { amount: 500, perk: 'VIP Tournament Entry & Gift' },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, rotateX: 8, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: { ease: [0.16, 1, 0.3, 1], duration: 1.2 }
+  }
+};
+
 export const DonationPage = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(20);
@@ -126,38 +145,54 @@ export const DonationPage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full bg-[#0F172A] text-white py-24 px-4 md:px-10">
+    <section className="min-h-screen w-full bg-[#0F172A] text-white py-24 px-4 md:px-10 overflow-hidden relative">
+      {/* Cinematic slowly rotating back glow */}
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[120px] -z-10 top-1/4 -right-48 animate-[spin_20s_linear_infinite]" />
+
       <div className="max-w-6xl mx-auto space-y-24">
+        {/* Apple-style Split Hero with Masked Text Reveals */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="space-y-6 text-left">
-            <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-widest rounded-xl">Back the Movement</span>
-            <h1 className="text-5xl md:text-7xl font-display font-black leading-none uppercase italic">Secure a <br /><span className="text-[#0EA5E9]">Township Legacy</span></h1>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed">By contributing to the Ludo League South Africa, you are directly investing in job creation for local carpenters, seamstresses, and tournament coordinators. Your support expands the Ludo4Schools curriculum, placing rigid, screen-free strategic play into primary classrooms to sharpen foundational mathematics and build lifelong offline friendships.</p>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: [1, 1.02, 1] }} transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }} className="rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50">
-            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg" alt="Live Ludo Tokens" className="w-full h-80 sm:h-[400px] object-cover" />
+          <div className="space-y-6 text-left">
+            <div className="overflow-hidden">
+              <motion.span initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1 }} className="inline-block px-4 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-widest rounded-xl">Back the Movement</motion.span>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h1 initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.2, delay: 0.1 }} className="text-5xl md:text-7xl font-display font-black leading-none uppercase italic">
+                Secure a <br /><span className="text-[#0EA5E9]">Township Legacy</span>
+              </motion.h1>
+            </div>
+            <div className="overflow-hidden">
+              <motion.p initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.2, delay: 0.2 }} className="text-slate-300 text-sm md:text-base leading-relaxed">
+                By contributing to the Ludo League South Africa, you are directly investing in job creation for local carpenters, seamstresses, and tournament coordinators. Your support expands the Ludo4Schools curriculum, placing rigid, screen-free strategic play into primary classrooms to sharpen foundational mathematics and build lifelong offline friendships.
+              </motion.p>
+            </div>
+          </div>
+          <motion.div initial={{ opacity: 0, scale: 0.9, rotateY: -10 }} animate={{ opacity: 1, scale: 1, rotateY: 0 }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.4 }} className="rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 relative group">
+            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg" alt="Live Ludo Tokens" className="w-full h-80 sm:h-[400px] object-cover group-hover:scale-105 transition-transform duration-[2s]" />
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-2xl space-y-4">
+        {/* Staggered 3D Cards */}
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 md:grid-cols-3 gap-6 [perspective:1000px]">
+          <motion.div variants={cardVariants} className="bg-[#1E293B]/60 backdrop-blur-md border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-sky-500/40 transition-colors">
             <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400"><BookOpen size={24} /></div>
             <h3 className="text-lg font-display font-black italic uppercase">Screen-Free Classrooms</h3>
             <p className="text-slate-400 text-xs leading-relaxed">Your funding puts physical boards directly into schools. Ludo4Schools enhances logical reasoning, rapid mental mathematics, and face-to-face classroom teamwork, breaking screen addiction.</p>
-          </div>
-          <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-2xl space-y-4">
+          </motion.div>
+          <motion.div variants={cardVariants} className="bg-[#1E293B]/60 backdrop-blur-md border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-teal-500/40 transition-colors">
             <div className="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center text-teal-400"><Users size={24} /></div>
             <h3 className="text-lg font-display font-black italic uppercase">Township Circular Cash</h3>
             <p className="text-slate-400 text-xs leading-relaxed">We manufacture 100% of our equipment locally. Contributions fund materials, township wood workshops, and apparel tailoring, fostering direct black economic empowerment.</p>
-          </div>
-          <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-2xl space-y-4">
+          </motion.div>
+          <motion.div variants={cardVariants} className="bg-[#1E293B]/60 backdrop-blur-md border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-amber-500/40 transition-colors">
             <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500"><Award size={24} /></div>
             <h3 className="text-lg font-display font-black italic uppercase">Sustaining Local Talent</h3>
             <p className="text-slate-400 text-xs leading-relaxed">We employ township referees, operations managers, and commentators. Your support directly guarantees salaries for local organizers, professionalizing a cultural pastime.</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="bg-white border border-slate-200 p-6 md:p-10 rounded-3xl shadow-2xl text-slate-800 max-w-3xl mx-auto">
+        {/* Smooth, high-tension interactive transaction portal */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.2 }} className="bg-white border border-slate-200 p-6 md:p-10 rounded-3xl shadow-2xl text-slate-800 max-w-3xl mx-auto">
           {step === 1 && (
             <div className="space-y-6">
               <h3 className="text-3xl font-display font-black italic uppercase text-[#0F172A] text-center border-b pb-4">Contribution Portal</h3>
@@ -244,7 +279,7 @@ export const DonationPage = () => {
 
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                <button type="submit" disabled={isSubmitting || (paymentMethod === 'eft' && !formData.proofOfPayment)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
+                <button type="submit" disabled={isSubmitting || (paymentMethod === 'eft' && !formData.proofOfPayment)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-lg">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : paymentMethod === 'payfast' ? 'Pay Now' : 'Complete Donation'}
                 </button>
               </div>
