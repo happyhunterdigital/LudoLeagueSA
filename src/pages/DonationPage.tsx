@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Lock, Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, BookOpen, MapPin } from 'lucide-react';
+import { Lock, Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, BookOpen, MapPin, Heart } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { db } from '../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -53,6 +53,11 @@ export const DonationPage = () => {
       };
       reader.onerror = (err) => reject(err);
     });
+  };
+
+  const handleCancelTransaction = () => {
+    setStep(1);
+    setFormData({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null });
   };
 
   const triggerPayfastRedirect = () => {
@@ -123,7 +128,6 @@ export const DonationPage = () => {
   return (
     <section className="min-h-screen w-full bg-[#0F172A] text-white py-24 px-4 md:px-10">
       <div className="max-w-6xl mx-auto space-y-24">
-        {/* Animated Split-Screen Hero */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="space-y-6 text-left">
             <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-widest rounded-xl">Back the Movement</span>
@@ -135,7 +139,6 @@ export const DonationPage = () => {
           </motion.div>
         </div>
 
-        {/* The Compelling Case Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-2xl space-y-4">
             <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400"><BookOpen size={24} /></div>
@@ -154,7 +157,6 @@ export const DonationPage = () => {
           </div>
         </div>
 
-        {/* Stateful Donation, Sponsorship & Callback Interface */}
         <div className="bg-white border border-slate-200 p-6 md:p-10 rounded-3xl shadow-2xl text-slate-800 max-w-3xl mx-auto">
           {step === 1 && (
             <div className="space-y-6">
