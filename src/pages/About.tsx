@@ -41,14 +41,13 @@ const kitTiers = [
 export const About = () => {
   return (
     <section id="about" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A] overflow-hidden">
-      {/* Decorative background vectors */}
       <div className="absolute inset-0 z-0 opacity-10">
         <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" alt="Ludo Pieces" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-transparent to-[#0F172A]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 space-y-24">
-        {/* Core Identity Header */}
+        {/* Core Identity */}
         <div className="space-y-8">
           <SectionHeader tag="Core Identity" title="From Pastime to National Sport" colorClass="text-[#0EA5E9]" />
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
@@ -68,16 +67,21 @@ export const About = () => {
         {/* Grassroots Ecosystem Section */}
         <div className="space-y-8">
           <SectionHeader tag="Grassroots Ecosystem" title="The Physical Tournament Structure" colorClass="text-[#FFC107]" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl shadow-xl space-y-4">
-              <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500"><Award size={24} /></div>
-              <h3 className="text-2xl font-display font-black italic text-white uppercase">50-Person Micro-Tournament Engine</h3>
-              <p className="text-slate-300 leading-relaxed text-sm">Rather than hosting overwhelming, mass-scale gatherings, the league centers its physical competition around highly curated monthly tournaments strictly capped at 50 participants. This deliberate cap turns a physical limitation into an asset, ensuring highly manageable logistics while creating an intimate, high-energy environment. These micro-events act as the competitive heartbeat of the league, designed to showcase raw passion, intense player rivalries, and authentic community bonding.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl shadow-xl space-y-3">
+              <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500"><Award size={20} /></div>
+              <h3 className="text-lg font-display font-black italic text-white uppercase">50-Person Micro-Tournament Engine</h3>
+              <p className="text-slate-300 leading-relaxed text-xs">Rather than hosting overwhelming, mass-scale gatherings, the league centers its physical competition around highly curated monthly tournaments strictly capped at 50 participants. This deliberate cap turns a physical limitation into an asset, ensuring highly manageable logistics while creating an intimate, high-energy environment. These micro-events act as the competitive heartbeat of the league, designed to showcase raw passion, intense player rivalries, and authentic community bonding.</p>
             </div>
-            <div className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl shadow-xl space-y-4">
-              <div className="w-12 h-12 bg-rose-500/10 rounded-xl flex items-center justify-center text-rose-400"><MapPin size={24} /></div>
-              <h3 className="text-2xl font-display font-black italic text-white uppercase">Passive Offline Footprint</h3>
-              <p className="text-slate-300 leading-relaxed text-sm mb-4">To ensure the sport remains deeply rooted where people naturally gather, the league establishes a permanent, ambient presence in local communities. Branded, physical Ludo boards are placed directly into grassroots social hubs, including local spaza shops, taverns, and community halls. This placement allows everyday players to engage in casual matches within their daily social fabric, keeping the brand continuously visible.</p>
+            <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl shadow-xl space-y-3">
+              <div className="w-10 h-10 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400"><Trophy size={20} /></div>
+              <h3 className="text-lg font-display font-black italic text-white uppercase">Tournament and Clinics</h3>
+              <p className="text-slate-300 leading-relaxed text-xs">Ludo tournaments and clinics create vibrant, positive spaces where communities come together to learn, compete, and grow. They strengthen social cohesion, boost confidence, and sharpen strategic thinking in a fun, structured environment. Clinics introduce new players to the fundamentals of the sport, while tournaments showcase talent and celebrate achievement. These events also stimulate local economies by creating opportunities for facilitators and judges/referees, and small businesses. Most importantly, they offer safe, inclusive platforms that empower youth, promote teamwork, and build community pride through a culturally loved game.</p>
+            </div>
+            <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl shadow-xl space-y-3">
+              <div className="w-10 h-10 bg-rose-500/10 rounded-xl flex items-center justify-center text-rose-400"><MapPin size={20} /></div>
+              <h3 className="text-lg font-display font-black italic text-white uppercase">Passive Offline Footprint</h3>
+              <p className="text-slate-300 leading-relaxed text-xs">To ensure the sport remains deeply rooted where people naturally gather, the league establishes a permanent, ambient presence in local communities. Branded, physical Ludo boards are placed directly into grassroots social hubs, including local spaza shops, taverns, parks and community halls. This placement allows everyday players to engage in casual matches within their daily social fabric, keeping the brand continuously visible.</p>
             </div>
           </div>
         </div>
@@ -108,8 +112,8 @@ export const About = () => {
               <h3 className="text-2xl font-display font-black italic text-white uppercase">The On-Ground Player Base</h3>
               <div className="space-y-3 text-slate-300 text-sm">
                 <p>Our real-world competitive ecosystem is built around two distinct player profiles:</p>
-                <p><b>Casual & Social Gamers:</b> Individuals spanning ages 13 to 45 who seek accessible entertainment, nostalgic experiences, and opportunities for real-world social interaction.</p>
-                <p><b>Competitive Enthusiasts:</b> Dedicated players aged 14 to 35 who are driven by structured competition, the pursuit of mastery, and formal ranking within an organized league framework.</p>
+                <p><b>Casual & Social Gamers:</b> Individuals spanning ages 13 to 60 who seek accessible entertainment, nostalgic experiences, and opportunities for real-world social interaction.</p>
+                <p><b>Competitive Enthusiasts:</b> Dedicated players aged 17 to 45 who are driven by structured competition, the pursuit of mastery, and formal ranking within an organized league framework.</p>
               </div>
             </div>
             <div className="bg-[#1E293B] border border-slate-700 p-8 rounded-2xl shadow-xl space-y-4">
