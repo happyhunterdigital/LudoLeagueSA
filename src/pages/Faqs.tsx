@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { ChevronDown, HelpCircle, AlertCircle, BookOpen } from 'lucide-react';
+import { ChevronDown, HelpCircle, AlertCircle, BookOpen, Scale } from 'lucide-react';
 
 interface FaqItem {
   q: string;
   a: string;
   badge?: string;
 }
+
+const disputeFramework = [
+  { category: 'A. Dice Roll Disputes', items: 'Dice falling off the board, dice not shaken properly, rolling with two hands, or rolling before the opponent finishes their move.' },
+  { category: 'B. Touch Disputes ("Touch is a Move")', items: 'Player touching a token and trying to move another, opponent touching the board/tokens during your turn, or touching the dice before the opponent finishes playing.' },
+  { category: 'C. Token Movement Disputes', items: 'Incorrect counting, illegal splitting of married tokens, moving tokens out of order, or moving without an exact number.' },
+  { category: 'D. Capture Disputes', items: 'A player disputing whether a capture was legal, a token moved incorrectly before capture, or a capture being missed or ignored.' },
+  { category: 'E. Time-Wasting Disputes', items: 'A player intentionally delaying moves, repeatedly asking unnecessary questions, or refusing to roll.' },
+  { category: 'F. Coaching & Interference Disputes', items: 'Coaching during active play, spectator interference, or manager gestures/signals.' },
+  { category: 'G. Behavioural Misconduct', items: 'Inappropriate language, aggression, touching opponent\'s tokens, wearing unapproved brands, or substance use.' },
+  { category: 'H. Venue & Environmental Disputes', items: 'Poor lighting, unsafe environment, or noise interference.' }
+];
 
 const ruleDisputes: FaqItem[] = [
   {
@@ -28,102 +39,61 @@ const ruleDisputes: FaqItem[] = [
     q: "Can I form a blockade (two identical tokens) on my own starting square?",
     a: "Yes, theoretically this is permitted. However, in professional league play, this is classified as an \"advanced rule\" that must be agreed upon prior to the match, as it creates an impassable chokepoint early in the loop.",
     badge: "Tactics"
-  },
-  {
-    q: "If multiple tokens of different colors occupy a safe zone, does it form a blockade?",
-    a: "No. A blockade strictly requires two tokens of the identical color. Differing colors coexisting on a safe square do not block other pieces from passing through.",
-    badge: "Board Geometry"
-  },
-  {
-    q: "Are there limits to how many pawns can occupy a safe space?",
-    a: "No. There is no official limit. Theoretically, up to fifteen pawns could occupy a single safe space if the dice rolls align perfectly, though this leads to highly congested, chaotic mass-exoduses.",
-    badge: "Board Geometry"
-  }
-];
-
-const historicalFaqs: FaqItem[] = [
-  {
-    q: "What is the penalty for rolling three consecutive sixes?",
-    a: "In standard rules, rolling a six three consecutive times terminates your turn immediately. In punitive variants, the player is heavily penalized by forcing their last moved token all the way back to the starting yard, provided it has not entered the protected home row.",
-    badge: "Mechanics"
-  },
-  {
-    q: "How does the \"blob\" blockade challenge operate in Uckers?",
-    a: "In the naval variant Uckers, blockades form massive barriers called \"blobs.\" To break a blob, an opponent must land exactly behind the barrier, roll an initial six to declare an attack, and subsequently roll precise numbers to dismantle the blockade piece by piece.",
-    badge: "Uckers Variant"
-  },
-  {
-    q: "What is the extreme defeat rule in naval Uckers matches?",
-    a: "Losing a game before securing a single token in your home triangle is called an \"eight-piece in harbour\" or \"eight-piece dicking.\" Maritime tradition mandates that the losing player's name be permanently inscribed on the reverse side of the physical board to memorialize the defeat. Act of flipping the board to inspect these rules taped underneath immediately terminates the match.",
-    badge: "Uckers Variant"
   }
 ];
 
 export const Faqs = () => {
   const [disputeIndex, setDisputeIndex] = useState<number | null>(null);
-  const [histIndex, setHistIndex] = useState<number | null>(null);
+  const [frameworkOpen, setFrameworkOpen] = useState<number | null>(null);
 
   return (
     <section className="min-h-screen w-full py-24 px-4 md:px-10 bg-slate-50 text-slate-900">
-      <div className="max-w-4xl mx-auto space-y-16">
-        <div>
+      <div className="max-w-4xl mx-auto space-y-12">
+        <div className="text-center">
           <SectionHeader tag="Rulebook & disputes" title="Ludo FAQs & Mechanics" colorClass="text-slate-900" />
-          <p className="text-slate-600 text-center max-w-2xl mx-auto text-sm leading-relaxed mt-4">
-            Physical Ludo lacks a digital referee, making disputes over edge-case scenarios common. Below is the official ludological resolution for recurring disputes, historical rulesets, and tactical configurations.
+          <p className="text-slate-600 max-w-2xl mx-auto text-xs sm:text-sm leading-relaxed mt-4">
+            Physical Ludo lacks a digital referee, making disputes over edge-case scenarios common. Below is the official standardized play disputes framework and ludological resolutions.
           </p>
         </div>
 
-        {/* Section 1: Standardized Disputes */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-display font-black italic uppercase text-slate-950 flex items-center gap-3">
-            <AlertCircle className="text-[#0EA5E9]" /> Standardized Play Disputes
+        {/* Disputes Framework A to H */}
+        <div className="space-y-4">
+          <h3 className="text-xl sm:text-2xl font-display font-black italic uppercase text-slate-955 flex items-center gap-3">
+            <Scale className="text-[#0EA5E9]" /> Standardised Play Disputes Framework
           </h3>
-          <div className="space-y-4">
-            {ruleDisputes.map((faq, idx) => (
-              <div key={idx} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-md">
-                <button
-                  onClick={() => setDisputeIndex(disputeIndex === idx ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between font-bold text-slate-800 text-base md:text-lg hover:bg-slate-50 transition-colors"
-                >
-                  <span className="flex items-center gap-3">
-                    <HelpCircle className="text-slate-400 shrink-0" size={20} />
-                    {faq.q}
-                  </span>
-                  <ChevronDown className={`transition-transform duration-300 shrink-0 ${disputeIndex === idx ? 'rotate-180' : ''}`} />
-                </button>
-                {disputeIndex === idx && (
-                  <div className="p-6 bg-slate-50 border-t border-slate-100 space-y-3">
-                    <span className="px-3 py-1 bg-sky-50 text-[#0EA5E9] text-[10px] font-black uppercase tracking-widest rounded-full">{faq.badge}</span>
-                    <p className="text-slate-600 leading-relaxed text-sm md:text-base pt-2">{faq.a}</p>
-                  </div>
-                )}
+          <p className="text-xs text-slate-500 pb-2">Below are the official dispute categories recognised by the Ludo League South Africa (LLSA):</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {disputeFramework.map((item, idx) => (
+              <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-2">
+                <h4 className="font-bold text-slate-800 text-sm sm:text-base">{item.category}</h4>
+                <p className="text-slate-500 text-xs leading-relaxed">{item.items}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 2: Historical & Variant Rules */}
-        <div className="space-y-6">
-          <h3 className="text-2xl font-display font-black italic uppercase text-slate-950 flex items-center gap-3">
-            <BookOpen className="text-amber-500" /> Evolutionary & Historical Variants
+        {/* Standardized Disputes FAQ */}
+        <div className="space-y-4 pt-6">
+          <h3 className="text-xl sm:text-2xl font-display font-black italic uppercase text-slate-955 flex items-center gap-3">
+            <AlertCircle className="text-amber-500" /> Standardized Play Disputes
           </h3>
-          <div className="space-y-4">
-            {historicalFaqs.map((faq, idx) => (
-              <div key={idx} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-md">
+          <div className="space-y-3">
+            {ruleDisputes.map((faq, idx) => (
+              <div key={idx} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                 <button
-                  onClick={() => setHistIndex(histIndex === idx ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between font-bold text-slate-800 text-base md:text-lg hover:bg-slate-50 transition-colors"
+                  onClick={() => setDisputeIndex(disputeIndex === idx ? null : idx)}
+                  className="w-full p-5 text-left flex items-center justify-between font-bold text-slate-800 text-sm sm:text-base hover:bg-slate-50 transition-colors"
                 >
-                  <span className="flex items-center gap-3">
-                    <HelpCircle className="text-slate-400 shrink-0" size={20} />
+                  <span className="flex items-center gap-2.5">
+                    <HelpCircle className="text-slate-400 shrink-0" size={18} />
                     {faq.q}
                   </span>
-                  <ChevronDown className={`transition-transform duration-300 shrink-0 ${histIndex === idx ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`transition-transform duration-300 shrink-0 ${disputeIndex === idx ? 'rotate-180' : ''}`} />
                 </button>
-                {histIndex === idx && (
-                  <div className="p-6 bg-slate-50 border-t border-slate-100 space-y-3">
-                    <span className="px-3 py-1 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-full">{faq.badge}</span>
-                    <p className="text-slate-600 leading-relaxed text-sm md:text-base pt-2">{faq.a}</p>
+                {disputeIndex === idx && (
+                  <div className="p-5 bg-slate-50 border-t border-slate-100 space-y-2.5">
+                    <span className="px-3 py-0.5 bg-sky-50 text-[#0EA5E9] text-[9px] font-black uppercase tracking-widest rounded-full">{faq.badge}</span>
+                    <p className="text-slate-600 leading-relaxed text-xs sm:text-sm pt-1.5">{faq.a}</p>
                   </div>
                 )}
               </div>
