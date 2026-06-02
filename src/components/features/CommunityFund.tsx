@@ -13,7 +13,7 @@ interface FundTier {
 const fundTiers: FundTier[] = [
   { amount: 20, perk: 'Supporter Badge on Profile' },
   { amount: 100, perk: 'Exclusive Ludo League SA Avatar' },
-  { amount: 500, perk: 'VIP Tournament Entry & Custom Board' },
+  { amount: 500, perk: 'VIP Tournament Entry & Gift' }, // Updated perk name to Gift
 ];
 
 export const CommunityFund: React.FC = () => {
