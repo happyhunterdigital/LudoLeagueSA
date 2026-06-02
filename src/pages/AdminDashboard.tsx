@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, query, orderBy, updateDoc, doc, addDoc } from 'firebase/firestore';
-import { Loader2, FileText, Filter, Users, Lock } from 'lucide-react';
+import { Loader2, FileText, Filter, Users, Lock, Gift, CheckCircle2 } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const AdminDashboard = () => {
@@ -40,6 +40,12 @@ export const AdminDashboard = () => {
     }
   }, [isAuthenticated]);
 
+  const getAccumulativeDonations = (email: string): number => {
+    return registrations
+      .filter(r => r.email === email && (r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund')))
+      .reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
+  };
+
   const handleVerify = async (reg: any) => {
     if (!db) return;
     try {
@@ -53,13 +59,13 @@ export const AdminDashboard = () => {
 
       if (isShop) {
         emailSubject = `Order Confirmed: Ludo League SA Official Gear`;
-        thankYouMessage = `<p>Thank you for purchasing official Ludo League SA merchandise! Your manual EFT payment has been verified, and your order is now being packaged for courier delivery. We will send you another update with tracking details once dispatched.</p>`;
+        thankYouMessage = `<p>Thank you for purchasing official Ludo League SA merchandise! Your manual EFT payment has been verified, and your order is now being packaged for courier delivery.</p>`;
       } else if (isDonation) {
         emailSubject = `Contribution Confirmed: Ludo League SA Community Fund`;
-        thankYouMessage = `<p>Thank you for your generous contribution to the Ludo League SA Community Fund! Your manual EFT payment has been verified. Your support directly funds server upkeep, township development initiatives, and local prize pools, helping us grow the game from grassroots to professional levels.</p>`;
+        thankYouMessage = `<p>Thank you for your generous contribution to the Ludo League SA Community Fund! Your manual EFT payment has been verified. Your support directly funds server upkeep and township development.</p>`;
       } else {
         emailSubject = `Registration Confirmed: Ludo League SA Tournament Arena`;
-        thankYouMessage = `<p>Thank you for registering to compete in the upcoming Ludo League SA tournament qualifiers! Your manual EFT entrance fee has been successfully verified, and your spot in the bracket is now fully secured. Keep rolling, keep winning!</p>`;
+        thankYouMessage = `<p>Thank you for registering to compete in the upcoming Ludo League SA tournament qualifiers! Your manual EFT entrance fee has been successfully verified, and your spot in the bracket is now fully secured.</p>`;
       }
 
       await addDoc(collection(db, 'mail'), {
@@ -125,7 +131,7 @@ export const AdminDashboard = () => {
           </div>
         </div>
         {loading ? (
-          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-accent-teal" size={48} /></div>
+          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-amber-500" size={48} /></div>
         ) : (
           <div className="bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden">
             <div className="overflow-x-auto">
@@ -140,37 +146,48 @@ export const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
-                  {filteredRegistrations.map(item => (
-                    <tr key={item.id} className="hover:bg-slate-50/50">
-                      <td className="p-6">
-                        <div className="font-bold text-slate-900">{item.fullName}</div>
-                        <div className="text-xs text-slate-500">{item.email}</div>
-                      </td>
-                      <td className="p-6">
-                        <span className="inline-flex items-center gap-1 px-3 py-1 bg-teal-50 text-teal-700 text-xs font-bold uppercase rounded-full">
-                          <Users size={12} /> {item.region || 'Supporter'}
-                        </span>
-                      </td>
-                      <td className="p-6 font-medium text-slate-700">{item.eventName}</td>
-                      <td className="p-6">
-                        <span className={`px-3 py-1 text-xs font-bold uppercase rounded-full ${item.status === 'verified' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
-                          {item.status}
-                        </span>
-                      </td>
-                      <td className="p-6 flex items-center gap-3">
-                        {item.proofOfPaymentUrl && (
-                          <a href={item.proofOfPaymentUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-accent-teal hover:underline">
-                            <FileText size={16} /> Receipt
-                          </a>
-                        )}
-                        {item.status !== 'verified' && (
-                          <button onClick={() => handleVerify(item)} className="px-4 py-2 bg-emerald-500 text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-slate-900 transition-colors">
-                            Verify
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                  {filteredRegistrations.map(item => {
+                    const accumulativeDonations = getAccumulativeDonations(item.email);
+                    const isEligibleForGift = accumulativeDonations >= 500;
+                    return (
+                      <tr key={item.id} className="hover:bg-slate-50/50">
+                        <td className="p-6 space-y-2">
+                          <div>
+                            <div className="font-bold text-slate-900">{item.fullName}</div>
+                            <div className="text-xs text-slate-500">{item.email}</div>
+                          </div>
+                          {isEligibleForGift && (
+                            <div className="px-3 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-700 text-xs font-black rounded-lg flex items-center gap-1.5 w-fit animate-pulse">
+                              <Gift size={12} /> ELIGIBLE FOR GIFT (R{accumulativeDonations})
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-6">
+                          <span className="inline-flex items-center gap-1 px-3 py-1 bg-teal-50 text-teal-700 text-xs font-bold uppercase rounded-full">
+                            <Users size={12} /> {item.region || 'Supporter'}
+                          </span>
+                        </td>
+                        <td className="p-6 font-medium text-slate-700">{item.eventName}</td>
+                        <td className="p-6">
+                          <span className={`px-3 py-1 text-xs font-bold uppercase rounded-full ${item.status === 'verified' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="p-6 flex items-center gap-3">
+                          {item.proofOfPaymentUrl && (
+                            <a href={item.proofOfPaymentUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-accent-teal hover:underline">
+                              <FileText size={16} /> Receipt
+                            </a>
+                          )}
+                          {item.status !== 'verified' && (
+                            <button onClick={() => handleVerify(item)} className="px-4 py-2 bg-emerald-500 text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-slate-900 transition-colors">
+                              Verify
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
