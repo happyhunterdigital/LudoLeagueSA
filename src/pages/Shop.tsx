@@ -12,12 +12,12 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
   const removeFromCart = (indexToRemove: number) => {
     setCart(prev => prev.filter((_, idx) => idx !== indexToRemove));
   };
-  const clearCart = () => setCart([]);
+  const clearCart = () => typeof window !== 'undefined' && setCart([]);
 
   return (
     <section id="shop" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A]">
       <div className="max-w-7xl mx-auto w-full">
-        <SectionHeader tag="Merchandise" title="Official Gear" colorClass="text-white" />
+        <SectionHeader tag="Merchandise" title="Official Boards" colorClass="text-white" />
         
         {cart.length > 0 && (
           <div className="bg-[#1E293B] border border-slate-700 p-6 rounded-2xl mb-8 max-w-2xl mx-auto text-white">
@@ -61,9 +61,9 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
                   <div className="flex flex-col">
                     {product.originalPrice && (
-                      <span className="text-xs text-red-400 line-through font-bold">R {product.originalPrice.toFixed(2)}</span>
+                      <span className="text-xs text-red-400 line-through font-bold">R{product.originalPrice.toFixed(2)}</span>
                     )}
-                    <span className="text-2xl font-display font-black text-[#FFC107]">R {product.price.toFixed(2)}</span>
+                    <span className="text-2xl font-display font-black text-[#FFC107]">R{product.price.toFixed(2)}</span>
                   </div>
                   <button onClick={() => addToCart(product.id)} className="p-2 px-4 bg-[#0F172A] text-white border border-slate-600 rounded-xl hover:bg-[#0EA5E9] transition-colors flex items-center gap-2 text-sm font-bold shadow-sm">
                     <ShoppingCart size={16} /> Add
@@ -74,13 +74,7 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
           ))}
         </div>
       </div>
-
-      <ShopCheckoutModal 
-        isOpen={isCheckoutOpen} 
-        onClose={() => setIsCheckoutOpen(false)} 
-        cart={cart} 
-        clearCart={clearCart} 
-      />
+      <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={clearCart} />
     </section>
   );
 };
