@@ -17,9 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen
 }) => {
   const [aboutHover, setAboutHover] = useState(false);
-  
-  // Promoted Ludo4Schools to a top-level horizontal navigation link
-  const navItems: Page[] = ['Home', 'Ludo4Schools', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact'];
+  const navItems: Page[] = ['Home', 'Ludo4Schools', 'Leagues', 'Tournaments', 'History', 'Gallery', 'Shop', 'Contact', 'Donate' as Page];
 
   const handleNavClick = (item: Page) => {
     scrollToSection(item.toLowerCase() === 'home' ? 'home' : item.toLowerCase());
@@ -42,7 +40,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               Home
             </button>
 
-            {/* Hover Trigger for the About & FAQs Dropdown */}
             <div 
               className="relative py-2"
               onMouseEnter={() => setAboutHover(true)}
