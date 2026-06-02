@@ -7,23 +7,11 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
   return (
     <section id="home" className="min-h-screen w-full relative flex flex-col items-center justify-center pt-32 pb-20 border-b border-white/5 bg-[#081619]">
       <LudoBoardDecoration />
-
-      {/* Background Video Layer */}
+      
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover object-center"
-        >
-          <source
-            src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779572768/The_Ludo_League_South_Africa_Hero_video_b2dcx9.mp4"
-            type="video/mp4"
-          />
+        <video autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover object-center">
+          <source src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1780409268/Giant_die_falling_onto_Ludo_league_SA_ludo_board_vosbiv.mp4" type="video/mp4" />
         </video>
-        {/* Subtle, neutral dark overlay for typography legibility */}
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#081619] to-transparent" />
       </div>
@@ -33,15 +21,12 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
           <div className="mb-6 text-[9px] md:text-[11px] text-white bg-[#0F172A] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 border-[#0EA5E9] inline-flex items-center shadow-lg rounded-r-xl">
             <span className="status-indicator"></span> 2026 Season Live
           </div>
-
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-display font-black uppercase italic leading-none mb-6 text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
             The Roll of <br /> <span className="text-[#00f0c2] drop-shadow-none">Legends</span>
           </h1>
-
           <p className="text-base sm:text-lg md:text-2xl max-w-2xl mx-auto mb-10 font-bold leading-relaxed px-4 text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
             South Africa's premier competitive Ludo circuit.
           </p>
-
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => scrollToSection('tournaments')} className="btn-action bg-[#D32F2F] text-white">
               Enter Tournament <ArrowRight size={18} />
