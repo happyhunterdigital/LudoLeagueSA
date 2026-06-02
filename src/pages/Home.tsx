@@ -7,14 +7,12 @@ import { Page } from '../App';
 export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) => {
   return (
     <div className="flex flex-col w-full">
-      {/* 1A. Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 overflow-hidden" style={{ background: 'radial-gradient(circle, var(--color-bg-mid) 0%, var(--color-bg-darkest) 100%)' }}>
         <LudoBoardDecoration />
         
-        {/* Completely clear background video layer - No filters, no low opacities */}
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover object-center opacity-100">
-            <source src="https://res.cloudinary.com/dkyg07qvv/video/upload/v1779445750/The_Ludo_League_South_Africa_Hero_video_t1jl8j.mp4" type="video/mp4" />
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover object-center">
+            <source src="https://res.cloudinary.com/dfzeb1s54/video/upload/q_auto/f_auto/v1780409268/Giant_die_falling_onto_Ludo_league_SA_ludo_board_vosbiv.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-bg-darkest to-transparent"></div>
@@ -35,10 +33,10 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button onClick={() => setActivePage('tournaments')} className="btn-action">
+              <button onClick={() => setActivePage('Tournaments')} className="btn-action">
                 Join A League <ArrowRight size={18} />
               </button>
-              <button onClick={() => setActivePage('gallery')} className="px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 rounded-2xl border-2 border-[#00c9a7] bg-[#072e28]/85 text-white hover:-translate-y-1 w-full sm:w-auto shadow-xl">
+              <button onClick={() => setActivePage('Gallery')} className="px-10 py-5 uppercase text-[11px] tracking-[0.25em] font-black italic transition-all duration-300 flex items-center justify-center gap-2 rounded-2xl border-2 border-[#00c9a7] bg-[#072e28]/85 text-white hover:-translate-y-1 w-full sm:w-auto shadow-xl">
                 Watch Highlights
               </button>
             </div>
@@ -46,7 +44,6 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
         </div>
       </section>
 
-      {/* 1B. Stats Bar */}
       <section className="py-12 bg-[#e8a020] text-[#041a18] relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-around gap-8 text-center">
           {[
@@ -63,15 +60,9 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
         </div>
       </section>
 
-      {/* 1C. What is Ludo League */}
       <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden">
-        {/* Blended Background Graphic */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" 
-            alt="Ludo Pieces" 
-            className="w-full h-full object-cover opacity-10 mix-blend-luminosity"
-          />
+          <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" alt="Ludo Pieces" className="w-full h-full object-cover opacity-10 mix-blend-luminosity" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#072e28] via-[#072e28]/95 to-[#072e28]"></div>
         </div>
 
@@ -84,7 +75,6 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
             </p>
           </div>
 
-          {/* 3-Column Glassmorphic Tiles Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
               <div className="p-3 bg-[#00c9a7]/10 text-[#00c9a7] rounded-xl mb-4">
@@ -92,14 +82,12 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
               </div>
               <p className="text-white font-semibold leading-relaxed">Skill-based competitive play — not luck</p>
             </div>
-
             <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
               <div className="p-3 bg-[#e8a020]/10 text-[#e8a020] rounded-xl mb-4">
                 <Trophy size={24} />
               </div>
               <p className="text-white font-semibold leading-relaxed">Structured leagues and knockout tournaments</p>
             </div>
-
             <div className="theme-card bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-2xl flex flex-col items-center text-center">
               <div className="p-3 bg-[#00c9a7]/10 text-[#00c9a7] rounded-xl mb-4">
                 <Compass size={24} />
