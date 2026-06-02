@@ -146,11 +146,9 @@ export const DonationPage = () => {
 
   return (
     <section className="min-h-screen w-full bg-[#0F172A] text-white py-24 px-4 md:px-10 overflow-hidden relative">
-      {/* Cinematic slowly rotating back glow */}
       <div className="absolute w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[120px] -z-10 top-1/4 -right-48 animate-[spin_20s_linear_infinite]" />
 
       <div className="max-w-6xl mx-auto space-y-24">
-        {/* Apple-style Split Hero with Masked Text Reveals */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-left">
             <div className="overflow-hidden">
@@ -172,7 +170,6 @@ export const DonationPage = () => {
           </motion.div>
         </div>
 
-        {/* Staggered 3D Cards */}
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 md:grid-cols-3 gap-6 [perspective:1000px]">
           <motion.div variants={cardVariants} className="bg-[#1E293B]/60 backdrop-blur-md border border-slate-800 p-8 rounded-2xl space-y-4 hover:border-sky-500/40 transition-colors">
             <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400"><BookOpen size={24} /></div>
@@ -191,7 +188,6 @@ export const DonationPage = () => {
           </motion.div>
         </motion.div>
 
-        {/* Smooth, high-tension interactive transaction portal */}
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.2 }} className="bg-white border border-slate-200 p-6 md:p-10 rounded-3xl shadow-2xl text-slate-800 max-w-3xl mx-auto">
           {step === 1 && (
             <div className="space-y-6">
@@ -279,7 +275,7 @@ export const DonationPage = () => {
 
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
-                <button type="submit" disabled={isSubmitting || (paymentMethod === 'eft' && !formData.proofOfPayment)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-lg">
+                <button type="submit" disabled={isSubmitting || (paymentMethod === 'eft' && !formData.proofOfPayment)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : paymentMethod === 'payfast' ? 'Pay Now' : 'Complete Donation'}
                 </button>
               </div>
@@ -294,7 +290,7 @@ export const DonationPage = () => {
               <button onClick={() => { setStep(1); setSelectedAmount(20); setCustomAmount(''); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Close Window</button>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
