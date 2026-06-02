@@ -21,9 +21,10 @@ import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
 import { ChatbotWidget } from './components/features/ChatbotWidget';
 import { UserDashboard } from './pages/UserDashboard';
+import { Ludo4Schools } from './pages/Ludo4Schools';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
-  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal';
+  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' | 'Ludo4Schools';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -35,7 +36,7 @@ export default function App() {
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal'];
+  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools'];
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -50,18 +51,22 @@ export default function App() {
         const sectionId = entries[0].target.id;
         setActiveSection(sectionId);
         document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
-        window.history.replaceState(null, '', `#${sectionId}`);
+        window.history.pushState({ section: sectionId }, '', `#${sectionId}`);
       }
     }, { threshold: 0.4 });
 
     const sections = document.querySelectorAll('section');
     sections.forEach(sec => observer.observe(sec));
 
-    const handlePopState = () => {
+    const handlePopState = (event: PopStateEvent) => {
       const popParams = new URLSearchParams(window.location.search);
       const popPageParam = popParams.get('page');
       if (popPageParam && standalonePages.includes(popPageParam.toLowerCase())) {
         setActiveSection(popPageParam.toLowerCase());
+      } else if (event.state && event.state.section) {
+        setActiveSection(event.state.section);
+        const el = document.getElementById(event.state.section);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else {
         const hash = window.location.hash.replace('#', '');
         setActiveSection(hash || 'home');
@@ -83,8 +88,10 @@ export default function App() {
   }, [activeSection]);
 
   const scrollToSection = (id: string) => {
-    if (standalonePages.includes(activeSection.toLowerCase())) {
-      window.history.replaceState(null, '', window.location.pathname);
+    if (standalonePages.includes(id.toLowerCase())) {
+      window.history.pushState({ page: id.toLowerCase() }, '', `?page=${id.toLowerCase()}`);
+    } else {
+      window.history.pushState({ section: id.toLowerCase() }, '', `#${id.toLowerCase()}`);
     }
     setActiveSection(id.toLowerCase());
     const el = document.getElementById(id);
@@ -103,6 +110,7 @@ export default function App() {
       <main className="w-full">
         {activeSection === 'admin' && <AdminDashboard />}
         {activeSection === 'portal' && <UserDashboard />}
+        {activeSection === 'ludo4schools' && <Ludo4Schools />}
         {activeSection === 'botkgallery' && (
           <BotkGallery selectedTab={selectedGalleryTab} setSelectedTab={setSelectedGalleryTab} />
         )}
@@ -146,8 +154,8 @@ export default function App() {
             </a>
           </div>
           <div className="flex gap-6 text-xs font-bold uppercase tracking-widest text-[#0EA5E9]">
-            <button onClick={() => setActiveSection('newsupdates')} className="hover:text-white transition-colors underline">News & Updates</button>
-            <button onClick={() => setActiveSection('faqs')} className="hover:text-white transition-colors underline">FAQs</button>
+            <button onClick={() => scrollToSection('newsupdates')} className="hover:text-white transition-colors underline">News & Updates</button>
+            <button onClick={() => scrollToSection('faqs')} className="hover:text-white transition-colors underline">FAQs</button>
           </div>
           <p className="text-xs text-white/40 font-mono">This website is coded by happyhunter.com</p>
           <button onClick={() => setIsPrivacyOpen(true)} className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline">Privacy Policy & Terms</button>
