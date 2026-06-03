@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Share2, Check } from 'lucide-react';
 import { PRODUCTS } from '../../data/products';
+import { AnimatePresence } from 'motion/react';
 
 export const ShopCustomize = ({ selectedVariant }: { selectedVariant: string }) => {
   const [name, setName] = useState('My Board');
