@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useScroll, useSpring } from 'motion/react';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
@@ -35,6 +35,7 @@ export default function App() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
 
+  const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate'];
@@ -47,6 +48,7 @@ export default function App() {
     }
 
     const observer = new IntersectionObserver((entries) => {
+      if (isScrollingLock.current) return; // Ignores visibility updates during manual scrolls
       const isStandalone = standalonePages.includes(activeSection.toLowerCase());
       if (entries[0] && entries[0].isIntersecting && !isStandalone && !params.get('page')) {
         const sectionId = entries[0].target.id;
@@ -90,10 +92,13 @@ export default function App() {
 
   const scrollToSection = (id: string) => {
     const isTargetStandalone = standalonePages.includes(id.toLowerCase());
+    isScrollingLock.current = true; // Locks the observer during manual click transition
+
     if (isTargetStandalone) {
       window.history.pushState({ page: id.toLowerCase() }, '', `?page=${id.toLowerCase()}`);
       setActiveSection(id.toLowerCase());
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => { isScrollingLock.current = false; }, 850);
     } else {
       const isCurrentlyStandalone = standalonePages.includes(activeSection.toLowerCase());
       if (isCurrentlyStandalone) {
@@ -102,12 +107,14 @@ export default function App() {
         setTimeout(() => {
           const el = document.getElementById(id);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => { isScrollingLock.current = false; }, 850);
         }, 150);
       } else {
         window.history.pushState({ section: id.toLowerCase() }, '', `#${id.toLowerCase()}`);
         setActiveSection(id.toLowerCase());
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => { isScrollingLock.current = false; }, 850);
       }
     }
     setMobileMenuOpen(false);
@@ -169,8 +176,8 @@ export default function App() {
             </a>
           </div>
           <div className="flex gap-6 text-xs font-bold uppercase tracking-widest text-[#0EA5E9]">
-            <button onClick={() => scrollToSection('newsupdates')} className="hover:text-white transition-colors underline">News & Updates</button>
-            <button onClick={() => scrollToSection('faqs')} className="hover:text-white transition-colors underline">FAQs</button>
+            <button onClick={() => setActiveSection('newsupdates')} className="hover:text-white transition-colors underline">News & Updates</button>
+            <button onClick={() => setActiveSection('faqs')} className="hover:text-white transition-colors underline">FAQs</button>
           </div>
           <p className="text-xs text-white/40 font-mono">This website is coded by happyhunter.com</p>
           <button onClick={() => setIsPrivacyOpen(true)} className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline">Privacy Policy & Terms</button>
