@@ -11,7 +11,7 @@ interface ShopGridProps {
 
 export const ShopGrid: React.FC<ShopGridProps> = ({ addToCart, cart }) => {
   return (
-    <section id="shop" className="relative z-10 py-32 px-10 border-b border-teal-950">
+    <section id="shop-grid" className="relative z-10 py-32 px-10 border-b border-teal-950">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-7xl font-display font-black text-white uppercase italic tracking-tight">Official Boards</h2>
