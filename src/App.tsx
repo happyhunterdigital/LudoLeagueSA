@@ -89,14 +89,27 @@ export default function App() {
   }, [activeSection]);
 
   const scrollToSection = (id: string) => {
-    if (standalonePages.includes(id.toLowerCase())) {
+    const isTargetStandalone = standalonePages.includes(id.toLowerCase());
+    if (isTargetStandalone) {
       window.history.pushState({ page: id.toLowerCase() }, '', `?page=${id.toLowerCase()}`);
+      setActiveSection(id.toLowerCase());
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.history.pushState({ section: id.toLowerCase() }, '', `#${id.toLowerCase()}`);
+      const isCurrentlyStandalone = standalonePages.includes(activeSection.toLowerCase());
+      if (isCurrentlyStandalone) {
+        window.history.pushState({ section: id.toLowerCase() }, '', `/${window.location.hash}`);
+        setActiveSection(id.toLowerCase());
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      } else {
+        window.history.pushState({ section: id.toLowerCase() }, '', `#${id.toLowerCase()}`);
+        setActiveSection(id.toLowerCase());
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-    setActiveSection(id.toLowerCase());
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
 
