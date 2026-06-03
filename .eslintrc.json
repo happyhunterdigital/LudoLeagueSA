@@ -1,0 +1,7 @@
+{
+  "plugins": ["@firebase/eslint-plugin-security-rules"],
+  "rules": {
+    "@firebase/security-rules/no-wildcard-read": "error",
+    "@firebase/security-rules/no-write-all": "error"
+  }
+}
