@@ -14,9 +14,27 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
   const { viewport } = useThree();
 
   const boards = [
-    { id: 'board-purple', name: 'Royal Purple', color: '#4B0082', xPos: -2.8 },
-    { id: 'board-original', name: 'Classic Teal', color: '#008080', xPos: 0 },
-    { id: 'board-orange', name: 'Amber Orange', color: '#FF8C00', xPos: 2.8 }
+    { 
+      id: 'board-purple', 
+      name: 'Royal Purple', 
+      color: '#4B0082', 
+      xPos: -2.8,
+      imgUrl: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Purple_Board_hohd9k.png'
+    },
+    { 
+      id: 'board-original', 
+      name: 'Classic Teal', 
+      color: '#008080', 
+      xPos: 0,
+      imgUrl: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Original_Board_m6uyqi.png'
+    },
+    { 
+      id: 'board-orange', 
+      name: 'Amber Orange', 
+      color: '#FF8C00', 
+      xPos: 2.8,
+      imgUrl: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Orange_Board_h3mopp.png'
+    }
   ];
 
   return (
@@ -25,7 +43,6 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
       <ambientLight intensity={0.15} />
       <directionalLight position={[0, 8, 4]} intensity={0.6} castShadow />
 
-      {/* Structured spotlights with warm highlights */}
       <spotLight position={[-2.8, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
       <spotLight position={[0, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
       <spotLight position={[2.8, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
@@ -36,6 +53,7 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
           id={board.id}
           name={board.name}
           color={board.color}
+          imgUrl={board.imgUrl}
           position={[board.xPos, 0, 0]}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
@@ -44,12 +62,11 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
         />
       ))}
 
-      {/* High-performance glossy floor plane reflecting your 3D boards */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.3, 0]}>
         <planeGeometry args={[50, 50]} />
         <MeshReflectorMaterial
           blur={[150, 50]}
-          resolution={256} // Optimized resolution prevents frame drops during scrolling
+          resolution={256}
           mixBlur={0.8}
           mixStrength={15}
           roughness={0.9}
