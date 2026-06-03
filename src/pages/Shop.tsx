@@ -15,11 +15,11 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
   const clearCart = () => setCart([]);
 
   return (
-    <section id="shop" className="min-h-screen w-full relative bg-[#0C152B] overflow-hidden flex flex-col justify-between">
-      {/* 3D WebGL Canvas Layer - Configured with demand rendering to prevent scroll lag */}
+    <section id="shop" className="min-h-screen w-full relative bg-[#090F1C] overflow-hidden flex flex-col justify-between">
+      {/* 3D WebGL Canvas Layer - Unlocked with pointer-events-auto to enable clicks, hovers, and swipes */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <Canvas 
-          camera={{ position: [0, 1.8, 6.5], fov: 45 }}
+          camera={{ position: [1.2, 1.8, 6.5], fov: 45 }}
           frameloop="demand"
           className="w-full h-full"
         >
