@@ -1,6 +1,6 @@
 import React from 'react';
 import { useThree } from '@react-three/fiber';
-import { MeshReflectorMaterial } from '@react-three/drei';
+import { MeshReflectorMaterial, OrbitControls } from '@react-three/drei';
 import { LudoBoardModel } from './LudoBoardModel';
 
 interface LudoSceneProps {
@@ -48,17 +48,28 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
 
   return (
     <>
-      <color attach="background" args={['#060a12']} />
-      <ambientLight intensity={0.15} />
-      <directionalLight position={[0, 8, 4]} intensity={0.6} castShadow />
+      <color attach="background" args={['#0a142c']} />
+      
+      {/* High-intensity ambient and directional lights to completely brighten the page */}
+      <ambientLight intensity={0.9} />
+      <directionalLight position={[0, 10, 5]} intensity={2.0} castShadow />
 
-      {/* Structured spotlights with warm highlights */}
-      <spotLight position={[-5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
-      <spotLight position={[-2.5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
-      <spotLight position={[0, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
-      <spotLight position={[2.5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
-      <spotLight position={[5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
-      <spotLight position={[7.2, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.5} castShadow />
+      {/* Luminous, high-energy spotlights over each board */}
+      <spotLight position={[-5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+      <spotLight position={[-2.5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+      <spotLight position={[0, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+      <spotLight position={[2.5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+      <spotLight position={[5, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+      <spotLight position={[7.2, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={3.5} castShadow />
+
+      {/* OrbitControls locked vertically to allow smooth horizontal swipe/drag panning */}
+      <OrbitControls 
+        enableZoom={false} 
+        enablePan={true} 
+        maxPolarAngle={Math.PI / 2.1} 
+        minPolarAngle={Math.PI / 2.1} 
+        panSpeed={2.2}
+      />
 
       {products.map(item => (
         <LudoBoardModel
@@ -77,7 +88,7 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
         />
       ))}
 
-      {/* High-performance glossy floor plane reflecting your 3D boards */}
+      {/* High-performance glossy floor reflecting your 3D boards */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.3, 0]}>
         <planeGeometry args={[50, 50]} />
         <MeshReflectorMaterial
