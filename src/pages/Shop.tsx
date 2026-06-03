@@ -15,11 +15,11 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
   const clearCart = () => setCart([]);
 
   return (
-    <section id="shop" className="min-h-screen w-full relative bg-[#090F1C] overflow-hidden flex flex-col justify-between">
+    <section id="shop" className="min-h-screen w-full relative bg-[#0C152B] overflow-hidden flex flex-col justify-between">
       {/* 3D WebGL Canvas Layer - Configured with demand rendering to prevent scroll lag */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-auto">
         <Canvas 
-          camera={{ position: [1.2, 1.8, 6.5], fov: 45 }}
+          camera={{ position: [0, 1.8, 6.5], fov: 45 }}
           frameloop="demand"
           className="w-full h-full"
         >
@@ -73,13 +73,7 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
         </header>
 
         {/* Bottom Metadata & Specifications Footer */}
-        <footer className="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 w-full">
-          <div className="max-w-md bg-slate-950/85 backdrop-blur-md border border-slate-800 p-5 rounded-2xl space-y-2 pointer-events-auto text-left shadow-2xl">
-            <span className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[9px] font-black uppercase tracking-widest rounded-lg">Product Specifications</span>
-            <h3 className="text-xl font-display font-black italic text-white uppercase pt-1">Heritage Ludo Game</h3>
-            <p className="text-slate-400 text-xs leading-relaxed">Type: Dice Game | Age: 4+ Years | Pack of: 1</p>
-            <p className="text-slate-300 text-xs leading-relaxed border-t border-slate-800/80 pt-2 mt-2">Step into the world of professional play with our premium Ludo Board designed for performance, built for durability, and crafted for an unmatched playing experience. Features our unique, first-of-its-kind oversized layout.</p>
-          </div>
+        <footer className="p-6 md:p-8 flex justify-end items-end w-full">
           <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Interactive 3D Product Showcase</p>
         </footer>
       </div>
