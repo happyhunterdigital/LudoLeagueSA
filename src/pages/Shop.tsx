@@ -19,7 +19,7 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
       {/* 3D WebGL Canvas Layer - Configured with demand rendering to prevent scroll lag */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Canvas 
-          camera={{ position: [0, 1.8, 6.5], fov: 45 }}
+          camera={{ position: [1.2, 1.8, 6.5], fov: 45 }}
           frameloop="demand"
           className="w-full h-full"
         >
@@ -55,7 +55,7 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
               <div className="divide-y divide-slate-800 max-h-[120px] overflow-y-auto pr-1">
                 {cart.map((itemId, idx) => (
                   <div key={idx} className="flex justify-between items-center py-2 text-xs">
-                    <span className="font-semibold truncate max-w-[140px]">Heritage Board</span>
+                    <span className="font-semibold truncate max-w-[140px]">Ludo Item</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#FFC107]">R1200</span>
                       <button onClick={() => removeFromCart(idx)} className="text-red-400 hover:text-red-500 transition-colors p-1" aria-label="Remove item">
