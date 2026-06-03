@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
+import { Html, useTexture } from '@react-three/drei';
 import gsap from 'gsap';
 import * as THREE from 'three';
 
@@ -8,6 +8,7 @@ interface BoardModelProps {
   id: string;
   name: string;
   color: string;
+  imgUrl: string;
   position: [number, number, number];
   selectedId: string | null;
   setSelectedId: (id: string | null) => void;
@@ -15,15 +16,17 @@ interface BoardModelProps {
   isAdded: boolean;
 }
 
-export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, position, selectedId, setSelectedId, addToCart, isAdded }) => {
+export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, imgUrl, position, selectedId, setSelectedId, addToCart, isAdded }) => {
   const meshRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const { camera, invalidate } = useThree();
 
+  // Loads your custom Cloudinary board texture asynchronously
+  const boardTexture = useTexture(imgUrl);
+
   const isFocused = selectedId === id;
   const isAnyFocused = selectedId !== null;
 
-  // Triggers demand-frame rendering on hover changes
   useEffect(() => {
     invalidate();
   }, [hovered, selectedId, invalidate]);
@@ -32,7 +35,7 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, pos
     const handleScroll = () => {
       if (isFocused && meshRef.current) {
         meshRef.current.rotation.y += 0.04;
-        invalidate(); // Requests a single render frame on scroll
+        invalidate();
       }
     };
     window.addEventListener('wheel', handleScroll);
@@ -48,7 +51,7 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, pos
       z: position[2] + 3.8,
       duration: 1.2,
       ease: 'power2.out',
-      onUpdate: () => invalidate() // Requests render frames during transition
+      onUpdate: () => invalidate()
     });
   };
 
@@ -64,19 +67,16 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, pos
 
   useFrame(() => {
     if (meshRef.current) {
-      // Gentle idle float
       if (!isFocused) {
         meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.001) * 0.05;
       }
 
-      // Smooth Z-depth (coming forth) and scale lerps
       const targetZ = hovered && !isAnyFocused ? 0.8 : 0;
       const targetScale = hovered && !isAnyFocused ? 1.15 : 1;
 
       const currentZ = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.1);
       const currentScale = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1);
 
-      // Only invalidate frames if active animation is happening
       if (Math.abs(meshRef.current.position.z - targetZ) > 0.01) {
         meshRef.current.position.z = currentZ;
         meshRef.current.scale.set(currentScale, currentScale, currentScale);
@@ -92,6 +92,7 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, pos
       onClick={handleClick}
       className="pointer-events-auto"
     >
+      {/* 3D solid wood base backing */}
       <mesh 
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
@@ -99,12 +100,13 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, pos
         receiveShadow
       >
         <boxGeometry args={[2, 2, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.2} metalness={0.1} />
+        <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
       </mesh>
 
-      <mesh position={[0, 0, 0.07]}>
-        <planeGeometry args={[1.8, 1.8]} />
-        <meshStandardMaterial color="#ffffff" wireframe />
+      {/* Crisp front plane surfaced with your high-resolution Cloudinary board artwork */}
+      <mesh position={[0, 0, 0.061]}>
+        <planeGeometry args={[1.96, 1.96]} />
+        <meshStandardMaterial map={boardTexture} roughness={0.2} metalness={0.1} />
       </mesh>
 
       {isFocused && (
