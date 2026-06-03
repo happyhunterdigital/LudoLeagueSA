@@ -16,9 +16,13 @@ export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatc
 
   return (
     <section id="shop" className="min-h-screen w-full relative bg-[#090F1C] overflow-hidden flex flex-col justify-between">
-      {/* 3D WebGL Canvas Layer beneath the UI */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 2, 7], fov: 45 }}>
+      {/* 3D WebGL Canvas Layer - Configured with demand rendering to prevent scroll lag */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Canvas 
+          camera={{ position: [0, 1.8, 6.5], fov: 45 }}
+          frameloop="demand"
+          className="w-full h-full"
+        >
           <LudoScene 
             selectedId={selectedBoardId} 
             setSelectedId={setSelectedBoardId} 
