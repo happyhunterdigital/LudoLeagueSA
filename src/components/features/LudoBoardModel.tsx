@@ -18,79 +18,99 @@ interface BoardModelProps {
 export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, position, selectedId, setSelectedId, addToCart, isAdded }) => {
   const meshRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
-  const { camera } = useThree();
+  const { camera, invalidate } = useThree();
 
   const isFocused = selectedId === id;
   const isAnyFocused = selectedId !== null;
 
-  // Handles scroll-driven rotation when focused
+  // Triggers demand-frame rendering on hover changes
+  useEffect(() => {
+    invalidate();
+  }, [hovered, selectedId, invalidate]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (isFocused && meshRef.current) {
-        meshRef.current.rotation.y += 0.05;
+        meshRef.current.rotation.y += 0.04;
+        invalidate(); // Requests a single render frame on scroll
       }
     };
     window.addEventListener('wheel', handleScroll);
     return () => window.removeEventListener('wheel', handleScroll);
-  }, [isFocused]);
+  }, [isFocused, invalidate]);
 
-  // Handles smooth GSAP camera interpolation on click
   const handleClick = () => {
     if (isFocused) return;
     setSelectedId(id);
     gsap.to(camera.position, {
       x: position[0],
-      y: position[1] + 1.2,
-      z: position[2] + 4,
-      duration: 1.5,
-      ease: 'power3.out'
+      y: position[1] + 1,
+      z: position[2] + 3.8,
+      duration: 1.2,
+      ease: 'power2.out',
+      onUpdate: () => invalidate() // Requests render frames during transition
     });
   };
 
-  // Reset camera when catalog is backed
   useEffect(() => {
     if (selectedId === null) {
-      gsap.to(camera.position, { x: 0, y: 2, z: 7, duration: 1.2, ease: 'power2.out' });
+      gsap.to(camera.position, { 
+        x: 0, y: 1.8, z: 6.5, 
+        duration: 1.2, ease: 'power2.out',
+        onUpdate: () => invalidate()
+      });
     }
-  }, [selectedId, camera]);
+  }, [selectedId, camera, invalidate]);
 
   useFrame(() => {
     if (meshRef.current) {
-      // Subtle float animation
+      // Gentle idle float
       if (!isFocused) {
-        meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.0015) * 0.1;
-        meshRef.current.rotation.y += 0.003;
+        meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.001) * 0.05;
       }
-      // Hover scaling
+
+      // Smooth Z-depth (coming forth) and scale lerps
+      const targetZ = hovered && !isAnyFocused ? 0.8 : 0;
       const targetScale = hovered && !isAnyFocused ? 1.15 : 1;
-      meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+
+      const currentZ = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.1);
+      const currentScale = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1);
+
+      // Only invalidate frames if active animation is happening
+      if (Math.abs(meshRef.current.position.z - targetZ) > 0.01) {
+        meshRef.current.position.z = currentZ;
+        meshRef.current.scale.set(currentScale, currentScale, currentScale);
+        invalidate();
+      }
     }
   });
 
   return (
-    <group ref={meshRef} position={position} onClick={handleClick}>
-      {/* Visual Board Box Mesh representation */}
+    <group 
+      ref={meshRef} 
+      position={position} 
+      onClick={handleClick}
+      className="pointer-events-auto"
+    >
       <mesh 
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         castShadow
         receiveShadow
       >
-        <boxGeometry args={[2.2, 2.2, 0.15]} />
-        <meshStandardMaterial color={color} roughness={0.15} metalness={0.1} />
+        <boxGeometry args={[2, 2, 0.12]} />
+        <meshStandardMaterial color={color} roughness={0.2} metalness={0.1} />
       </mesh>
 
-      {/* Cross-and-Circle track border outlines */}
-      <mesh position={[0, 0, 0.09]}>
-        <planeGeometry args={[2, 2]} />
+      <mesh position={[0, 0, 0.07]}>
+        <planeGeometry args={[1.8, 1.8]} />
         <meshStandardMaterial color="#ffffff" wireframe />
       </mesh>
 
-      {/* Floating 3D space HTML Annotations */}
       {isFocused && (
-        <Html position={[0, 1.6, 0]} center className="pointer-events-auto">
-          <div className="bg-slate-950/90 border border-[#0EA5E9]/30 text-white p-4 rounded-xl shadow-2xl w-60 text-center space-y-3 backdrop-blur-md">
-            <h4 className="text-sm font-display font-black italic uppercase tracking-wider">{name} Board</h4>
+        <Html position={[0, 1.4, 0]} center className="pointer-events-auto">
+          <div className="bg-slate-950/90 border border-[#0EA5E9]/30 text-white p-4 rounded-xl shadow-2xl w-56 text-center space-y-3 backdrop-blur-md">
+            <h4 className="text-xs font-display font-black italic uppercase tracking-wider">{name} Board</h4>
             <p className="text-[10px] text-slate-400">Professional Rigid Spacing | 3mm/6mm MDF</p>
             <button 
               onClick={(e) => { e.stopPropagation(); addToCart(id); }}
