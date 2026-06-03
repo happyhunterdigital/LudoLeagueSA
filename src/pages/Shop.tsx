@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ShopHero } from '../components/features/ShopHero';
 import { ShopSelector } from '../components/features/ShopSelector';
 import { ShopFeatures } from '../components/features/ShopFeatures';
@@ -8,7 +8,7 @@ export const Shop = () => {
   const [activeSection, setActiveSection] = useState<number>(0);
   const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
-  useEffect(() => {
+  React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
