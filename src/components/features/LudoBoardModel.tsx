@@ -9,6 +9,8 @@ interface BoardModelProps {
   name: string;
   color: string;
   imgUrl: string;
+  price: number;
+  isBoard: boolean;
   position: [number, number, number];
   selectedId: string | null;
   setSelectedId: (id: string | null) => void;
@@ -16,14 +18,12 @@ interface BoardModelProps {
   isAdded: boolean;
 }
 
-export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, imgUrl, position, selectedId, setSelectedId, addToCart, isAdded }) => {
+export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, imgUrl, price, isBoard, position, selectedId, setSelectedId, addToCart, isAdded }) => {
   const meshRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const { camera, invalidate } = useThree();
 
-  // Loads your custom Cloudinary board texture asynchronously
   const boardTexture = useTexture(imgUrl);
-
   const isFocused = selectedId === id;
   const isAnyFocused = selectedId !== null;
 
@@ -71,6 +71,7 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, img
         meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.001) * 0.05;
       }
 
+      // Modern smooth Z-depth (coming forth) and scale lerps
       const targetZ = hovered && !isAnyFocused ? 0.8 : 0;
       const targetScale = hovered && !isAnyFocused ? 1.15 : 1;
 
@@ -100,27 +101,29 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, img
         receiveShadow
       >
         <boxGeometry args={[2, 2, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.1} />
+        <meshStandardMaterial color={color} roughness={0.5} metalness={0.15} />
       </mesh>
 
-      {/* Crisp front plane surfaced with your high-resolution Cloudinary board artwork */}
+      {/* Crisp front plane surfaced with high-gloss lacquer textures */}
       <mesh position={[0, 0, 0.061]}>
         <planeGeometry args={[1.96, 1.96]} />
-        <meshStandardMaterial map={boardTexture} roughness={0.2} metalness={0.1} />
+        <meshStandardMaterial map={boardTexture} roughness={0.05} metalness={0.15} />
       </mesh>
 
-      {isFocused && (
-        <Html position={[0, 1.4, 0]} center className="pointer-events-auto">
-          <div className="bg-slate-950/90 border border-[#0EA5E9]/30 text-white p-4 rounded-xl shadow-2xl w-56 text-center space-y-3 backdrop-blur-md">
-            <h4 className="text-xs font-display font-black italic uppercase tracking-wider">{name} Board</h4>
-            <p className="text-[10px] text-slate-400">Professional Rigid Spacing | 3mm/6mm MDF</p>
+      {/* HTML Specifications Popup renders strictly on hover */}
+      {hovered && (
+        <Html position={[0, 1.4, 0]} center className="pointer-events-none">
+          <div className="bg-slate-950/85 backdrop-blur-xl border border-white/10 text-white p-4 rounded-2xl shadow-2xl w-56 text-center space-y-2.5">
+            <h4 className="text-xs font-display font-black italic uppercase tracking-wider">{name}</h4>
+            <p className="text-[9px] text-slate-400 leading-relaxed">{isBoard ? 'Professional Rigid Spacing | 3mm/6mm MDF' : 'Official Professional Acrylic Tokens & Balanced Dice'}</p>
+            <p className="text-xs font-black text-amber-400">R{price.toLocaleString()}</p>
             <button 
               onClick={(e) => { e.stopPropagation(); addToCart(id); }}
-              className={`w-full py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer ${
+              className={`w-full py-2.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer pointer-events-auto ${
                 isAdded ? 'bg-sky-500 text-white' : 'bg-[#FFD700] text-slate-950 hover:bg-white'
               }`}
             >
-              {isAdded ? 'Added to Cart' : 'Order Board (R1200)'}
+              {isAdded ? 'Added to Cart' : 'Order Now'}
             </button>
           </div>
         </Html>
