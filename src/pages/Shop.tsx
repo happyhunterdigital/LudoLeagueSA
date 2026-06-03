@@ -1,84 +1,64 @@
-import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { ShoppingCart, Trash2, ArrowLeft } from 'lucide-react';
-import { LudoScene } from '../components/features/LudoScene';
-import { ShopCheckoutModal } from '../components/features/ShopCheckoutModal';
+import React, { useState, useEffect } from 'react';
+import { ShopHero } from '../components/features/ShopHero';
+import { ShopSelector } from '../components/features/ShopSelector';
+import { ShopFeatures } from '../components/features/ShopFeatures';
+import { ShopCustomize } from '../components/features/ShopCustomize';
 
-export const Shop = ({ cart, setCart }: { cart: string[], setCart: React.Dispatch<React.SetStateAction<string[]>> }) => {
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
+export const Shop = () => {
+  const [activeSection, setActiveSection] = useState<number>(0);
+  const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
-  const addToCart = (id: string) => setCart(prev => [...prev, id]);
-  const removeFromCart = (indexToRemove: number) => {
-    setCart(prev => prev.filter((_, idx) => idx !== indexToRemove));
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-section-index') || '0', 10);
+            setActiveSection(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const sections = document.querySelectorAll('[data-section-index]');
+    sections.forEach((sec) => observer.observe(sec));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToSectionIndex = (index: number) => {
+    const el = document.querySelector(`[data-section-index="${index}"]`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
-  const clearCart = () => setCart([]);
 
   return (
-    <section id="shop" className="min-h-screen w-full relative bg-[#090F1C] overflow-hidden flex flex-col justify-between">
-      {/* 3D WebGL Canvas Layer - Unlocked with pointer-events-auto to enable clicks, hovers, and swipes */}
-      <div className="absolute inset-0 z-0 pointer-events-auto">
-        <Canvas 
-          camera={{ position: [1.2, 1.8, 6.5], fov: 45 }}
-          frameloop="demand"
-          className="w-full h-full"
-        >
-          <LudoScene 
-            selectedId={selectedBoardId} 
-            setSelectedId={setSelectedBoardId} 
-            addToCart={addToCart} 
-            cart={cart}
-          />
-        </Canvas>
+    <section className="relative w-full bg-[#0F172A] text-white">
+      {/* Section 0: Cinematic Intro */}
+      <div data-section-index="0" className="w-full h-screen">
+        <ShopHero onExplore={() => scrollToSectionIndex(1)} />
       </div>
 
-      {/* 2D UI Overlay - High Z-Index with pointer-events-none to let scroll pass to canvas */}
-      <div className="relative z-10 w-full h-full min-h-screen flex flex-col justify-between pointer-events-none">
-        
-        {/* Top Header */}
-        <header className="p-6 md:p-8 flex justify-between items-center w-full pointer-events-auto">
-          <div className="flex items-center gap-4">
-            {selectedBoardId && (
-              <button 
-                onClick={() => setSelectedBoardId(null)}
-                className="p-3 bg-slate-900/80 border border-slate-700/50 rounded-xl text-white hover:bg-amber-500 hover:text-slate-950 transition-all flex items-center gap-2 text-xs font-black uppercase tracking-wider shadow-lg cursor-pointer"
-              >
-                <ArrowLeft size={14} /> Back to Catalog
-              </button>
-            )}
-          </div>
-
-          {/* Cart Trigger */}
-          {cart.length > 0 && (
-            <div className="bg-slate-900/90 border border-slate-700 p-4 rounded-2xl w-72 text-white shadow-2xl space-y-4">
-              <h4 className="text-sm font-bold flex items-center gap-2 text-[#FFC107] uppercase tracking-wider"><ShoppingCart size={16} /> Your Cart</h4>
-              <div className="divide-y divide-slate-800 max-h-[120px] overflow-y-auto pr-1">
-                {cart.map((itemId, idx) => (
-                  <div key={idx} className="flex justify-between items-center py-2 text-xs">
-                    <span className="font-semibold truncate max-w-[140px]">Ludo Item</span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#FFC107]">R1200</span>
-                      <button onClick={() => removeFromCart(idx)} className="text-red-400 hover:text-red-500 transition-colors p-1" aria-label="Remove item">
-                        <Trash2 size={12} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button onClick={() => setIsCheckoutOpen(true)} className="w-full py-3 bg-[#FFC107] text-[#0F172A] font-black uppercase tracking-widest text-[10px] rounded-lg shadow-xl hover:bg-white transition-all cursor-pointer">
-                Checkout (R{cart.length * 1200})
-              </button>
-            </div>
-          )}
-        </header>
-
-        {/* Bottom Metadata & Specifications Footer */}
-        <footer className="p-6 md:p-8 flex justify-end items-end w-full">
-          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Interactive 3D Product Showcase</p>
-        </footer>
+      {/* Section 1: Choose Your Board */}
+      <div data-section-index="1" className="w-full h-screen">
+        <ShopSelector 
+          selectedVariant={selectedVariant} 
+          setSelectedVariant={setSelectedVariant} 
+          onSelectComplete={() => scrollToSectionIndex(2)} 
+        />
       </div>
 
-      <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={clearCart} />
+      {/* Section 2: Feature Showcase */}
+      <div data-section-index="2" className="w-full h-screen">
+        <ShopFeatures selectedVariant={selectedVariant} />
+      </div>
+
+      {/* Section 3: Personalization & Mock Share */}
+      <div data-section-index="3" className="w-full h-screen">
+        <ShopCustomize selectedVariant={selectedVariant} />
+      </div>
     </section>
   );
 };
