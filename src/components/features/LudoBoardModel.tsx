@@ -71,7 +71,6 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, img
         meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.001) * 0.05;
       }
 
-      // Modern smooth Z-depth (coming forth) and scale lerps
       const targetZ = hovered && !isAnyFocused ? 0.8 : 0;
       const targetScale = hovered && !isAnyFocused ? 1.15 : 1;
 
@@ -101,7 +100,7 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, img
         receiveShadow
       >
         <boxGeometry args={[2, 2, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.5} metalness={0.15} />
+        <meshStandardMaterial color={color} roughness={0.6} metalness={0.15} />
       </mesh>
 
       {/* Crisp front plane surfaced with high-gloss lacquer textures */}
@@ -110,9 +109,9 @@ export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, img
         <meshStandardMaterial map={boardTexture} roughness={0.05} metalness={0.15} />
       </mesh>
 
-      {/* HTML Specifications Popup renders strictly on hover */}
-      {hovered && (
-        <Html position={[0, 1.4, 0]} center className="pointer-events-none">
+      {/* Glassmorphic Specifications Popup renders strictly on click selection */}
+      {isFocused && (
+        <Html position={[0, 1.4, 0]} center className="pointer-events-auto">
           <div className="bg-slate-950/85 backdrop-blur-xl border border-white/10 text-white p-4 rounded-2xl shadow-2xl w-56 text-center space-y-2.5">
             <h4 className="text-xs font-display font-black italic uppercase tracking-wider">{name}</h4>
             <p className="text-[9px] text-slate-400 leading-relaxed">{isBoard ? 'Professional Rigid Spacing | 3mm/6mm MDF' : 'Official Professional Acrylic Tokens & Balanced Dice'}</p>
