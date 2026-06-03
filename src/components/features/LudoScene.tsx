@@ -14,24 +14,22 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
   const { viewport } = useThree();
 
   const boards = [
-    { id: 'board-purple', name: 'Royal Purple', color: '#4B0082', xPos: -3 },
+    { id: 'board-purple', name: 'Royal Purple', color: '#4B0082', xPos: -2.8 },
     { id: 'board-original', name: 'Classic Teal', color: '#008080', xPos: 0 },
-    { id: 'board-orange', name: 'Amber Orange', color: '#FF8C00', xPos: 3 }
+    { id: 'board-orange', name: 'Amber Orange', color: '#FF8C00', xPos: 2.8 }
   ];
 
   return (
     <>
-      {/* Dark, cinematic, moody lighting setup */}
       <color attach="background" args={['#060a12']} />
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[0, 10, 5]} intensity={0.5} castShadow />
+      <ambientLight intensity={0.15} />
+      <directionalLight position={[0, 8, 4]} intensity={0.6} castShadow />
 
-      {/* SpotLights focusing on the Ludo boards */}
-      <spotLight position={[-3, 5, 2]} angle={0.3} penumbra={1} intensity={2} castShadow />
-      <spotLight position={[0, 5, 2]} angle={0.3} penumbra={1} intensity={2} castShadow />
-      <spotLight position={[3, 5, 2]} angle={0.3} penumbra={1} intensity={2} castShadow />
+      {/* Structured spotlights with warm highlights */}
+      <spotLight position={[-2.8, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
+      <spotLight position={[0, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
+      <spotLight position={[2.8, 4.5, 2.5]} angle={0.25} penumbra={1} intensity={1.8} castShadow />
 
-      {/* Interactive 3D board instances */}
       {boards.map(board => (
         <LudoBoardModel
           key={board.id}
@@ -46,20 +44,20 @@ export const LudoScene: React.FC<LudoSceneProps> = ({ selectedId, setSelectedId,
         />
       ))}
 
-      {/* Glossy highly reflective floor plane to mirror the boards */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.5, 0]}>
-        <planeGeometry args={[100, 100]} />
+      {/* High-performance glossy floor plane reflecting your 3D boards */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.3, 0]}>
+        <planeGeometry args={[50, 50]} />
         <MeshReflectorMaterial
-          blur={[300, 100]}
-          resolution={1024}
-          mixBlur={1}
-          mixStrength={40}
-          roughness={1}
-          depthScale={1.2}
-          minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
-          color="#151515"
-          metalness={0.5}
+          blur={[150, 50]}
+          resolution={256} // Optimized resolution prevents frame drops during scrolling
+          mixBlur={0.8}
+          mixStrength={15}
+          roughness={0.9}
+          depthScale={1}
+          minDepthThreshold={0.5}
+          maxDepthThreshold={1.2}
+          color="#080e1a"
+          metalness={0.4}
         />
       </mesh>
     </>
