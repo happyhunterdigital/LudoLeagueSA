@@ -54,6 +54,9 @@ export const products: Product[] = [
   }
 ];
 
+// Dual-Compatibility Export to satisfy both products and PRODUCTS imports across all components
+export const PRODUCTS = products;
+
 export const ingredients: INCIIngredient[] = [
   { name: 'Centella Asiatica', hazard: '1/10 (Safe)', function: 'Botanical Skin Calming', desc: 'Promotes rapid healing, ideal for sensitive skin and redness.' },
   { name: 'Titanium Dioxide', hazard: '2/10 (Safe)', function: 'Physical UV Blocker', desc: 'Provides non-irritating SPF shielding against harsh SA sun rays.' },
