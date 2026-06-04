@@ -1,63 +1,68 @@
-import { Product } from '../types';
+// File: src/data/products.ts
+import { Product, INCIIngredient, WorkshopDate } from '../types';
 
-export const PRODUCTS: Product[] = [
-  {
-    id: 'board-purple',
-    name: 'Heritage Wooden Board - Royal Purple',
-    price: 1200.00,
-    originalPrice: 1500.00,
-    category: 'Equipment',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Purple_Board_hohd9k.png',
-    tag: 'On Sale',
-    description: 'Type: Dice Game | Age: 4+ Years | Pack of: 2\n\nStep into the world of professional play with our premium Ludo Board in Royal Purple, designed for performance and built for durability. Our unique, oversized design gives players more space and smoother movement. Offers excellent rigidity, resistance to warping, and comes in 3mm or 6mm thickness options. These are the same authentic boards used by professional players across our leagues.'
+export const products: Product[] = [
+  { 
+    id: 'p1', 
+    name: '3-in-1 HD Liquid Foundation', 
+    category: 'Face', 
+    price: 350.00, 
+    desc: 'HD Liquid Foundation-Fixed and covering cosmetics. Soft formula perfectly mattifies and hides skin imperfections. Resistant coating 8 hours with SPF 25.',
+    swatches: [
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1779370849/HD_Liquid_Foundation_Shade_03._vsccn8.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1779370844/HD_Liquid_Foundation_Shade_04_wp7awd.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1779370847/HD_Liquid_Foundation_Shade_05_p4801l.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1779370845/HD_Liquid_Foundation_Shade_06_ufmjya.jpg"
+    ] 
+  },
+  { 
+    id: 'p2', 
+    name: '"The Bomb" Matte Lipstick', 
+    category: 'Lips', 
+    price: 185.00, 
+    desc: 'Ultra-pigmented matte texture that won\'t smudge or transfer. Enriched with skin-conditioning emollients.',
+    swatches: [
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514746/IMG_3579_yeshb8.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514752/IMG_3550_srr57a.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514749/IMG_3656_iielpb.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514746/IMG_3660_xqy9ht.jpg"
+    ] 
+  },
+  { 
+    id: 'p3', 
+    name: 'Premium Luscious Lip Gloss', 
+    category: 'Lips', 
+    price: 160.00, 
+    desc: 'High-gloss structural formula providing instant plumpness and shine with zero stickiness.',
+    swatches: [
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514744/IMG_3635_gxwlkw.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514744/IMG_3555_lljxjz.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514743/IMG_3573_clelw9.jpg"
+    ] 
   },
   {
-    id: 'board-original',
-    name: 'Heritage Wooden Board - Classic Teal',
-    price: 1200.00,
-    originalPrice: 1500.00,
-    category: 'Equipment',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Original_Board_m6uyqi.png',
-    tag: 'On Sale',
-    description: 'Type: Dice Game | Age: 4+ Years | Pack of: 2\n\nOur traditional flagship tournament board featuring Classic Teal lining. Crafted for an unmatched playing experience, the expanded layout enhances visibility and reduces congestion. Offers excellent rigidity, smooth playing surface, and resistance to warping. Available in 3mm or 6mm thickness. Play like a pro with the official board of the league.'
-  },
-  {
-    id: 'board-orange',
-    name: 'Heritage Wooden Board - Amber Orange',
-    price: 1200.00,
-    originalPrice: 1500.00,
-    category: 'Equipment',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Orange_Board_h3mopp.png',
-    tag: 'On Sale',
-    description: 'Type: Dice Game | Age: 4+ Years | Pack of: 2\n\nAn eye-catching, high-vibrancy Amber Orange layout on solid premium timber. This board provides excellent rigidity, a smooth playing surface, and resistance to warping. Available in lightweight 3mm or heavy-duty 6mm thickness options. Designed with competitive play in mind, this professional board delivers on all fronts: size, design, and authenticity.'
-  },
-  {
-    id: 'board-black',
-    name: 'Heritage Wooden Board - Obsidian Black',
-    price: 1200.00,
-    originalPrice: 1500.00,
-    category: 'Equipment',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Black_Board_aq9yjo.png',
-    tag: 'On Sale',
-    description: 'Type: Dice Game | Age: 4+ Years | Pack of: 2\n\nA modern, matte Obsidian Black design built for serious competitors. Features an expanded layout for smoother movement and greater freedom. Rigid, warp-resistant timber ensures complete consistency game after game. Includes colourful, easy-to-handle tokens. Upgrade your session and compete with the exact boards used across our professional tournaments.'
-  },
-  {
-    id: 'board-blue',
-    name: 'Heritage Wooden Board - Electric Blue',
-    price: 1200.00,
-    originalPrice: 1500.00,
-    category: 'Equipment',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Blue_Board_mvqu4j.png',
-    tag: 'On Sale',
-    description: 'Type: Dice Game | Age: 4+ Years | Pack of: 2\n\nOur modern Electric Blue layout, certified for professional league play. Designed with competitive play in mind, this board features a vibrant design with bold colours that bring the game to life. Choose between lightweight 3mm convenience or premium 6mm strength. Meets the rigorous standards required for serious gameplay.'
-  },
-  {
-    id: 'tokens-dice',
-    name: 'Professional Token & Dice Set',
-    price: 200.00,
-    category: 'Accessories',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Tokens_and_Dice_gk3mbd.png',
-    tag: 'Essential',
-    description: 'High-quality tokens and balanced dice set to complete your game sessions. Includes colourful, easy-to-handle tokens designed to match your professional board.'
+    id: 'p4',
+    name: 'MUA Matte Lip Liner Duo',
+    category: 'Lips',
+    price: 145.00,
+    desc: 'High-definition framing pencils to outline, shape, and maintain lip colour borders.',
+    swatches: [
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514742/IMG_3571_bpohpk.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514736/IMG_3562_fen9tf.jpg",
+      "https://res.cloudinary.com/dafc66cma/image/upload/q_auto/f_auto/v1780514735/IMG_3637_o9fyzk.jpg"
+    ]
   }
+];
+
+export const ingredients: INCIIngredient[] = [
+  { name: 'Centella Asiatica', hazard: '1/10 (Safe)', function: 'Botanical Skin Calming', desc: 'Promotes rapid healing, ideal for sensitive skin and redness.' },
+  { name: 'Titanium Dioxide', hazard: '2/10 (Safe)', function: 'Physical UV Blocker', desc: 'Provides non-irritating SPF shielding against harsh SA sun rays.' },
+  { name: 'Mica Pearls', hazard: '1/10 (Safe)', function: 'Mineral Luminescence', desc: 'Reflects ambient lighting for an organic, natural glow finish.' },
+  { name: 'Hyaluronic Acid', hazard: '1/10 (Safe)', function: 'Moisture Humectant', desc: 'Pulls hydration deep into cellular levels to plump dry areas.' }
+];
+
+export const workshopDates: WorkshopDate[] = [
+  { id: 'w1', date: 'October 12, 2025', location: 'Pretoria Brooklyn Studio', capacity: '2 Seats Left' },
+  { id: 'w2', date: 'October 24, 2025', location: 'Pretoria Brooklyn Studio', capacity: '4 Seats Left' },
+  { id: 'w3', date: 'November 08, 2025', location: 'Pretoria Brooklyn Studio', capacity: '6 Seats Left' }
 ];
