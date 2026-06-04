@@ -1,9 +1,9 @@
 // File: src/App.tsx
 import React, { useState, useEffect } from 'react';
 import { Product, CartItem } from './types';
-import { products } from './data/products'; // Corrected database import path
+import { products } from './data/products';
 import Header from './components/Header';
-import Hero from './components/Hero';
+import Hero from './components/HeroSection'; // Corrected import path pointing to HeroSection.tsx
 import BentoGrid from './components/BentoGrid';
 import ProductStore from './components/ProductStore';
 import MobileBottomNav from './components/MobileBottomNav';
