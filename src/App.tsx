@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Product, CartItem } from './types';
 import { products } from './data/products';
-import Header from './components/Layout/Header'; // Corrected import path pointing to Layout/Header.tsx
-import Hero from './components/HeroSection';
+import Header from './components/Header'; // Restored to your standard components directory path
+import Hero from './components/HeroSection'; // Maintained pointing to HeroSection.tsx
 import BentoGrid from './components/BentoGrid';
 import ProductStore from './components/ProductStore';
 import MobileBottomNav from './components/MobileBottomNav';
