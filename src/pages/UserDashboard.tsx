@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { Loader2, LogOut, Award, ShoppingBag, Heart, User as UserIcon, Shield, Gift } from 'lucide-react';
-import { SectionHeader } from '../components/ui/SharedUI';
+import { Loader2, LogOut, Award, ShoppingBag, Heart, User as UserIcon, Shield, Gift, CheckCircle2 } from 'lucide-react';
 
 export const UserDashboard = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -93,11 +92,7 @@ export const UserDashboard = () => {
   const isAthlete = records.some(r => r.eventName.toLowerCase().includes('tournament') || r.eventName.toLowerCase().includes('entry'));
   const isBuyer = records.some(r => r.eventName.toLowerCase().includes('shop') || r.eventName.toLowerCase().includes('merchandise'));
   const isDonor = records.some(r => r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund'));
-
-  const totalDonations = records
-    .filter(r => r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund'))
-    .reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
-
+  const totalDonations = records.filter(r => r.eventName.toLowerCase().includes('donation') || r.eventName.toLowerCase().includes('fund')).reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
   const qualifiesForGift = totalDonations >= 500;
   const progressPercentage = Math.min((totalDonations / 500) * 100, 100);
 
@@ -114,7 +109,6 @@ export const UserDashboard = () => {
           </div>
           <button onClick={handleSignOut} className="px-5 py-3 bg-slate-800 hover:bg-red-600 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all"><LogOut size={14} /> Sign Out</button>
         </div>
-
         {dataLoading ? (
           <div className="flex justify-center py-12"><Loader2 className="animate-spin text-amber-500" size={32} /></div>
         ) : (
@@ -143,7 +137,6 @@ export const UserDashboard = () => {
                 )}
               </div>
             )}
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {isAthlete && (
                 <div className="bg-slate-800/50 border border-sky-500/20 p-6 rounded-2xl space-y-4 shadow-xl">
