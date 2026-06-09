@@ -4,7 +4,7 @@ import { ShopSelector } from '../components/features/ShopSelector';
 import { ShopFeatures } from '../components/features/ShopFeatures';
 import { ShopCustomize } from '../components/features/ShopCustomize';
 
-export const Shop = () => {
+export const Shop = (props: any) => {
   const [activeSection, setActiveSection] = useState<number>(0);
   const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
@@ -20,10 +20,8 @@ export const Shop = () => {
       },
       { threshold: 0.5 }
     );
-
     const sections = document.querySelectorAll('[data-section-index]');
     sections.forEach((sec) => observer.observe(sec));
-
     return () => observer.disconnect();
   }, []);
 
@@ -40,22 +38,19 @@ export const Shop = () => {
       <div data-section-index="0" className="w-full h-screen">
         <ShopHero onExplore={() => scrollToSectionIndex(1)} />
       </div>
-
       {/* Section 1: Choose Your Board */}
       <div data-section-index="1" className="w-full h-screen">
-        <ShopSelector 
-          selectedVariant={selectedVariant} 
-          setSelectedVariant={setSelectedVariant} 
-          onSelectComplete={() => scrollToSectionIndex(2)} 
+        <ShopSelector
+          selectedVariant={selectedVariant}
+          setSelectedVariant={setSelectedVariant}
+          onSelectComplete={() => scrollToSectionIndex(2)}
         />
       </div>
-
       {/* Section 2: Feature Showcase */}
       <div data-section-index="2" className="w-full h-screen">
         <ShopFeatures selectedVariant={selectedVariant} />
       </div>
-
-      {/* Section 3: Personalization & Mock Share */}
+      {/* Section 3: Personalization */}
       <div data-section-index="3" className="w-full h-screen">
         <ShopCustomize selectedVariant={selectedVariant} />
       </div>
