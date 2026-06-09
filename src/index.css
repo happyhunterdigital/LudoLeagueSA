@@ -1,70 +1,173 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Exo 2", sans-serif;
-  
-  /* Custom Game-League Palette */
-  --color-bg-darkest: #041a18;
-  --color-bg-dark: #072e28;
-  --color-bg-mid: #0a3d35;
-  --color-bg-light: #0f5045;
-  --color-accent: #e8a020;
-  --color-accent-hover: #f5b83d;
-  --color-teal: #00c9a7;
-  --color-text-primary: #f0ede6;
-  --color-text-muted: #9abcb6;
-  --color-text-dark: #041a18;
-  --color-divider: rgba(0, 201, 167, 0.18);
+/* Design Tokens & Theme Variables */
+:root {
+  --color-bg-mid: #1e293b;
+  --color-bg-darkest: #0f172a;
+  --color-accent: #ffd700;
+  --color-accent-teal: #00c9a7;
+  --color-accent-gold: #e8a020;
+  --color-ludo-red: #d32f2f;
+
+  /* Global Theme Overrides */
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text: #ffffff;
+  --accent: #ffd700;
 }
 
-@layer base {
-  body {
-    background-color: var(--color-bg-darkest);
-    color: var(--color-text-primary);
-    @apply font-sans overflow-x-hidden leading-relaxed;
-    text-rendering: optimizeSpeed;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  /* Modern Performance Containment - prevents browser rendering off-screen sections synchronously */
-  section {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 1000px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-black tracking-tight uppercase italic;
-    color: var(--color-text-primary);
-  }
-  
-  h1 { @apply text-5xl md:text-7xl leading-none font-extrabold; }
-  h2 { @apply text-3xl md:text-5xl leading-tight; }
+/* Base Body Styles */
+body {
+  background-color: var(--color-bg-darkest);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
 }
 
-@layer components {
-  /* Ultra-modern Glassmorphic Card Style */
-  .theme-card {
-    background: rgba(15, 80, 69, 0.25);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 201, 167, 0.15);
-    will-change: transform, opacity;
-    @apply p-8 transition-all duration-300 relative shadow-2xl hover:border-teal-400/50 hover:-translate-y-1 rounded-2xl;
-  }
+/* Custom Display Typography */
+.font-display {
+  font-family: 'Impact', 'Arial Black', 'Trebuchet MS', sans-serif;
+}
 
-  .btn-action {
-    background-color: var(--color-accent);
-    color: var(--color-text-dark);
-    will-change: transform;
-    @apply px-8 py-4 uppercase text-xs font-black tracking-widest italic transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:bg-amber-400 hover:scale-105 rounded-lg border-none;
-  }
+/* Status Indicator Dot Animation */
+.status-indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #22c55e;
+  border-radius: 9999px;
+  animation: status-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
-  .tag-status {
-    background: rgba(10, 61, 53, 0.4);
-    backdrop-filter: blur(12px);
-    border-color: var(--color-teal);
-    @apply text-[11px] uppercase font-black italic tracking-widest px-4 py-2 border-l-4 inline-flex items-center shadow-sm rounded-r-lg;
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
   }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+}
+
+/* Global Custom Components */
+.tag-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 2.5rem;
+  text-transform: uppercase;
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.25em;
+  font-weight: 900;
+  font-style: italic;
+  border-radius: 1rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  background-color: var(--color-accent-gold);
+  color: #041a18;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  transform: translateY(-4px);
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+.btn-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-accent-teal);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.theme-card {
+  background-color: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.theme-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Grids */
+.grid-2 {
+  display: grid;
+  grid-template-cols: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-cols: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Shop Personalization Marquee Animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 25s linear infinite;
 }
