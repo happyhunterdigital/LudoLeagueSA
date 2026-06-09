@@ -1,132 +1,29 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
-import { Html, useTexture } from '@react-three/drei';
-import gsap from 'gsap';
+import React, { useRef } from 'react';
+import { useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import gsap from 'gsap';
 
-interface BoardModelProps {
-  id: string;
-  name: string;
-  color: string;
-  imgUrl: string;
-  price: number;
-  isBoard: boolean;
-  position: [number, number, number];
-  selectedId: string | null;
-  setSelectedId: (id: string | null) => void;
-  addToCart: (id: string) => void;
-  isAdded: boolean;
-}
-
-export const LudoBoardModel: React.FC<BoardModelProps> = ({ id, name, color, imgUrl, price, isBoard, position, selectedId, setSelectedId, addToCart, isAdded }) => {
-  const meshRef = useRef<THREE.Group>(null);
-  const [hovered, setHovered] = useState(false);
-  const { camera, invalidate } = useThree();
-
-  const boardTexture = useTexture(imgUrl);
-  const isFocused = selectedId === id;
-  const isAnyFocused = selectedId !== null;
-
-  useEffect(() => {
-    invalidate();
-  }, [hovered, selectedId, invalidate]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isFocused && meshRef.current) {
-        meshRef.current.rotation.y += 0.04;
-        invalidate();
-      }
-    };
-    window.addEventListener('wheel', handleScroll);
-    return () => window.removeEventListener('wheel', handleScroll);
-  }, [isFocused, invalidate]);
-
-  const handleClick = () => {
-    if (isFocused) return;
-    setSelectedId(id);
-    gsap.to(camera.position, {
-      x: position[0],
-      y: position[1] + 1,
-      z: position[2] + 3.8,
-      duration: 1.2,
-      ease: 'power2.out',
-      onUpdate: () => invalidate()
-    });
-  };
-
-  useEffect(() => {
-    if (selectedId === null) {
-      gsap.to(camera.position, { 
-        x: 0, y: 1.8, z: 6.5, 
-        duration: 1.2, ease: 'power2.out',
-        onUpdate: () => invalidate()
-      });
-    }
-  }, [selectedId, camera, invalidate]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      if (!isFocused) {
-        meshRef.current.position.y = position[1] + Math.sin(Date.now() * 0.001) * 0.05;
-      }
-
-      const targetZ = hovered && !isAnyFocused ? 0.8 : 0;
-      const targetScale = hovered && !isAnyFocused ? 1.15 : 1;
-
-      const currentZ = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.1);
-      const currentScale = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1);
-
-      if (Math.abs(meshRef.current.position.z - targetZ) > 0.01) {
-        meshRef.current.position.z = currentZ;
-        meshRef.current.scale.set(currentScale, currentScale, currentScale);
-        invalidate();
-      }
+export const LudoBoardModel = (props: any) => {
+  const group = useRef<THREE.Group>(null);
+  
+  useFrame((state) => {
+    if (group.current) {
+      group.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
 
   return (
-    <group 
-      ref={meshRef} 
-      position={position} 
-      onClick={handleClick}
-      className="pointer-events-auto"
+    <group
+      ref={group}
+      position={[0, 0, 0]}
+      onClick={() => {}}
+      {...props}
     >
-      {/* 3D solid wood base backing */}
-      <mesh 
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        castShadow
-        receiveShadow
-      >
-        <boxGeometry args={[2, 2, 0.12]} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.15} />
+      <mesh castShadow receiveShadow>
+        <boxGeometry args={[4, 0.2, 4]} />
+        <meshStandardMaterial color="#0c4a60" roughness={0.3} metalness={0.8} />
       </mesh>
-
-      {/* Crisp front plane surfaced with high-gloss lacquer textures */}
-      <mesh position={[0, 0, 0.061]}>
-        <planeGeometry args={[1.96, 1.96]} />
-        <meshStandardMaterial map={boardTexture} roughness={0.05} metalness={0.15} />
-      </mesh>
-
-      {/* Glassmorphic Specifications Popup renders strictly on click selection */}
-      {isFocused && (
-        <Html position={[0, 1.4, 0]} center className="pointer-events-auto">
-          <div className="bg-slate-950/85 backdrop-blur-xl border border-white/10 text-white p-4 rounded-2xl shadow-2xl w-56 text-center space-y-2.5">
-            <h4 className="text-xs font-display font-black italic uppercase tracking-wider">{name}</h4>
-            <p className="text-[9px] text-slate-400 leading-relaxed">{isBoard ? 'Professional Rigid Spacing | 3mm/6mm MDF' : 'Official Professional Acrylic Tokens & Balanced Dice'}</p>
-            <p className="text-xs font-black text-amber-400">R{price.toLocaleString()}</p>
-            <button 
-              onClick={(e) => { e.stopPropagation(); addToCart(id); }}
-              className={`w-full py-2.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all shadow-md cursor-pointer pointer-events-auto ${
-                isAdded ? 'bg-sky-500 text-white' : 'bg-[#FFD700] text-slate-950 hover:bg-white'
-              }`}
-            >
-              {isAdded ? 'Added to Cart' : 'Order Now'}
-            </button>
-          </div>
-        </Html>
-      )}
     </group>
   );
 };
