@@ -1,122 +1,103 @@
-import { onCall, HttpsError, CallableRequest } from "firebase-functions/v2/https";
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import Stripe from 'stripe';
 
-interface ChatRequest {
-  message: string;
-  history?: Array<{
-    role: string;
-    text?: string;
-    content?: string;
-  }>;
-}
+admin.initializeApp();
 
-interface ChatResponse {
-  reply: string;
-}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2023-10-16',
+});
 
-const SYSTEM_PROMPT_TEMPLATE = `You are the official smart digital assistant for The Ludo League South Africa (LLSA).
-
-YOUR EXHAUSTIVE KNOWLEDGE BASE BY PAGE:
-
-1. ABOUT & CORE IDENTITY
-- Core Mission: Centralized in Pretoria, LLSA elevates Ludo from a township pastime to a professional athletic sport. Combines competitive play on physical boards with modern digital scaling.
-- Leadership: Founder and President Joe Setladi, Finance Executive Matebatso (Tibi) Matheta, Operations Executive Masego Baloyi, Head of Design Bernard Makama.
-- Tournaments & Clinics: Create vibrant, positive spaces to learn, compete, and grow. Clinics introduce new players to fundamentals, while tournaments showcase talent. These events stimulate local township economies, creating opportunities for facilitators, judges/referees, and small businesses.
-- Offline Footprint: Establishes a permanent, ambient presence directly in grassroots social hubs, including local parks and community halls.
-
-2. STANDARDISED PLAY DISPUTES FRAMEWORK
-Below are the official dispute categories recognized by the league:
-- A. Dice Roll Disputes: Dice falling off the board, not shaken properly, rolling with two hands, or rolling before opponent finishes moving.
-- B. Touch Disputes ("Touch is a Move"): Player touching a token and trying to move another, opponent touching the board/tokens during your turn, or touching the dice before the opponent finishes playing.
-- C. Token Movement Disputes: Incorrect counting, illegal splitting of married tokens, moving out of order, or moving without an exact number.
-- D. Capture Disputes: Disputing whether a capture was legal, token moved incorrectly before capture, or capture was missed/ignored.
-- E. Time-Wasting Disputes: Intentionally delaying moves, repeatedly asking unnecessary questions, or refusing to roll.
-- F. Coaching & Interference: Coaching during active play, spectator interference, or manager gestures/signals.
-- G. Behavioural Misconduct: Inappropriate language, aggression, touching opponent's tokens, wearing unapproved brands, or substance use.
-- H. Venue & Environmental: Poor lighting, unsafe environment, or noise interference.
-
-3. LEAGUES & REGIONAL HUBS
-- Soweto Ludo League (Est. 2022): Hosted in one of the largest and most iconic townships. Rich in history, Ludo has found a natural home among the people of Soweto.
-- Mamelodi Ludo League (Est. Feb 2019): Pretoria region.
-- Battle of the Kasis (BOTK): Soweto vs Alexandra vs Mamelodi Knockout. The ultimate township showdown—a high-stakes, winner-takes-all knockout tournament. Rivalries are ignited, champions are crowned, and legends are born.
-
-4. HISTORY TIMELINE & CHAMPIONS
-- 2013 Foundation: Started as a community tournament in Alexandra, Johannesburg.
-- 2017 Regional Circuit: Expanded across Gauteng with professional rules.
-- 2019 League Evolution: Developed into a professional Local League format.
-- 2019 Champion: Kea Mdawe representing Mamelodi.
-- 2024 Champion: Thabo 'The Dice' Nkosi (Alexandra Club, 9-1 record).
-
-5. SHOP & DONATION PORTALS
-- Official Boards: Premium wooden boards (Royal Purple, Classic Teal, Amber Orange, Obsidian Black, Electric Blue) constructed from heavy-duty 3mm/6mm MDF/Perspex, retailing at R1200.00 (reduced from R1500.00).
-- Supporter Donations: Contributions start from as little as R20.00. Support is tracked dynamically. Supporter totals adding up to R500.00 or more are eligible to receive a special Gift.
-- Corporate Sponsorship & Investments: Sponsors can back tournaments or the league. Corporate investors can request an offline phone consultation by submitting an Investment Callback Request with their contact details.
-
-RULES:
-1. Base all answers strictly on your Knowledge Base. If a query is outside this scope, politely guide them to check ludoleague.co.za.
-2. Be direct, professional, highly strategic, and concise (keep answers to 2-4 sentences max).
-3. STRICT TEXT FORMATTING RULE: NEVER use asterisks, hash symbols, or any markdown syntax for text styling. Always output clean, plain text in beautifully structured, natural paragraphs. Emphasize key terms or headings solely using capitalized text without any markdown markers.`;
-
-export const ludoLeagueChatBot = onCall({
-  region: "us-central1",
-  cors: true,
-  secrets: ["LUDO_DEEPSEEK_API_KEY"],
-}, async (request: CallableRequest<ChatRequest>): Promise<ChatResponse> => {
-  const LUDO_DEEPSEEK_API_KEY = (process.env.LUDO_DEEPSEEK_API_KEY || "").trim();
-  const message = request.data.message;
-  const history = request.data.history;
-
-  if (!message) {
-    throw new HttpsError("invalid-argument", "Message is required.");
+// Checkout Session Cloud Function
+export const createCheckoutSession = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      'unauthenticated',
+      'User must be logged in to create a checkout session.'
+    );
   }
 
-  if (!LUDO_DEEPSEEK_API_KEY) {
-    console.error("LUDO_DEEPSEEK_API_KEY environment variable is missing.");
-    throw new HttpsError("failed-precondition", "Ludo DeepSeek API key is not configured.");
-  }
+  const { items, successUrl, cancelUrl } = data;
 
   try {
-    const messages = [
-      { role: "system", content: SYSTEM_PROMPT_TEMPLATE },
-      ...(history || []).map((m) => ({
-        role: (m.role === 'model' || m.role === 'bot' || m.role === 'assistant') ? 'assistant' : 'user',
-        content: m.text || m.content || ''
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: items.map((item: any) => ({
+        price_data: {
+          currency: 'zar',
+          product_data: {
+            name: item.name,
+            images: item.images,
+          },
+          unit_amount: item.price * 100, // Convert to cents
+        },
+        quantity: item.quantity,
       })),
-      { role: "user", content: message }
-    ];
+      mode: 'payment',
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      metadata: {
+        userId: context.auth.uid,
+      },
+    });
 
-    const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
-      method: "POST",
+    return { sessionId: session.id, url: session.url };
+  } catch (error) {
+    console.error('Error creating checkout session:', error);
+    throw new functions.https.HttpsError('internal', 'Unable to create checkout session');
+  }
+});
+
+// User Creation DB Profile Trigger
+export const onUserCreated = functions.auth.user().onCreate(async (user) => {
+  try {
+    await admin.firestore().collection('users').doc(user.uid).set({
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName || 'New Player',
+      role: 'user',
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  } catch (error) {
+    console.error('Error creating user profile:', error);
+  }
+});
+
+// DeepSeek-Powered Ludo League Chatbot Function
+export const ludoLeagueChatBot = functions.https.onCall(async (data, context) => {
+  const { message, history } = data;
+
+  const SYSTEM_PROMPT = `You are the official smart digital assistant for The Ludo League South Africa (LLSA). 
+You must base all responses on our Key Advantages:
+1. SCREEN-FREE CLASSROOM LEARNING: Through Ludo4Schools, we combat screen addiction by inserting physical strategy play into classrooms to sharpen logical geometry and math skills.
+2. 100% LOCAL TOWNSHIP MANUFACTURING: We create direct circular township cash-flow by manufacturing all MDF wood boards and acrylic game components inside local carpentry and tailoring workshops.
+3. STANDARDIZED TOURNAMENT FAIRNESS: We transition away from casual backyard rules using certified referees and strict rulesets.
+4. SPONSORSHIPS AND GRANTS: Backed by nominal parents subscriptions and corporate CSI grants.
+
+Be highly professional, direct, and concise (keep answers to 2-3 sentences max). Never use markdown markers like asterisks or hash symbols.`;
+
+  try {
+    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${LUDO_DEEPSEEK_API_KEY}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY || ''}`
       },
       body: JSON.stringify({
-        model: "deepseek-chat",
-        messages,
-        temperature: 0.2,
-        max_tokens: 500
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history,
+          { role: 'user', content: message }
+        ]
       })
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("DeepSeek connection failure:", response.status, errorText);
-      throw new HttpsError("unavailable", `DeepSeek API connection failed: ${response.status}`);
-    }
-
-    const data = await response.json() as any;
-    const replyText = data?.choices?.[0]?.message?.content;
-
-    if (!replyText) {
-      throw new HttpsError("internal", "Invalid response payload returned from DeepSeek API.");
-    }
-
-    return { reply: replyText.trim() };
-  } catch (error: any) {
-    console.error("Runtime exception during execution:", error);
-    if (error instanceof HttpsError) {
-      throw error;
-    }
-    throw new HttpsError("internal", error.message || "An unexpected error occurred processing the chat request.");
+    const resData: any = await response.json();
+    const reply = resData.choices?.[0]?.message?.content || 'Connection timed out. Please try again.';
+    return { reply };
+  } catch (error) {
+    console.error('DeepSeek AI Error:', error);
+    return { reply: 'I encountered an issue connecting to the servers. Please try again shortly.' };
   }
 });
