@@ -5,9 +5,6 @@ import { getFunctions } from 'firebase/functions';
 import { getAuth } from 'firebase/auth';
 import firebaseAppletConfig from '../../firebase-applet-config.json';
 
-// Reverses the key string at runtime to bypass GitHub static scanning alerts safely
-const decryptedApiKey = firebaseAppletConfig.apiKeyReversed.split('').reverse().join('');
-
 const firebaseConfig = {
   authDomain: firebaseAppletConfig.authDomain,
   projectId: firebaseAppletConfig.projectId,
@@ -15,7 +12,7 @@ const firebaseConfig = {
   messagingSenderId: firebaseAppletConfig.messagingSenderId,
   appId: firebaseAppletConfig.appId,
   measurementId: firebaseAppletConfig.measurementId,
-  apiKey: decryptedApiKey
+  apiKey: firebaseAppletConfig.apiKey
 };
 
 // Initialize Firebase
