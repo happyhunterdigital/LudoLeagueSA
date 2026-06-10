@@ -190,27 +190,27 @@ export const Navbar: React.FC<NavbarProps> = ({
     <>
       <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FFD700] to-[#E6C200] z-[9999] origin-left" style={{ scaleX }} />
 
-      <nav className="fixed top-0 left-0 right-0 z-[1000] px-6 md:px-12 py-5 bg-black/95 backdrop-blur-md border-b border-neutral-900 select-none">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between">
-          <button onClick={() => handleNavigationTrigger("home")} className="flex items-center gap-3 group tracking-normal select-none">
-            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="LLSA Branding Badge" className="w-10 h-10 rounded-xl object-cover border border-neutral-800 transition-transform duration-500 group-hover:rotate-6" />
-            <span className="text-base font-display italic font-black uppercase tracking-tight text-white group-hover:text-[#FFD700] transition-colors">Ludo League SA</span>
+      <nav className="fixed top-0 left-0 right-0 z-[1000] px-6 md:px-12 py-6 bg-black/95 backdrop-blur-md border-b border-neutral-900 select-none transition-colors duration-300">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <button onClick={() => handleNavigationTrigger("home")} className="flex items-center gap-4 group tracking-normal select-none">
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="LLSA Branding Badge" className="w-14 h-14 rounded-2xl object-cover border border-neutral-800 shadow-md transition-transform duration-500 group-hover:rotate-6" />
+            <span className="text-xl sm:text-2xl font-display italic font-black uppercase tracking-tight text-white group-hover:text-[#FFD700] transition-colors">Ludo League SA</span>
           </button>
 
-          <div className="flex items-center gap-3 sm:gap-5">
-            <div className="flex items-center gap-1.5 pr-3 sm:pr-5 border-r border-neutral-800">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-2 pr-4 border-r border-neutral-800">
               <button onClick={() => handleNavigationTrigger("shop")} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Wishlist">
-                <Heart size={18} fill={wishlist.length > 0 ? "#FFD700" : "none"} className={wishlist.length > 0 ? "text-[#FFD700]" : ""} />
+                <Heart size={20} fill={wishlist.length > 0 ? "#FFD700" : "none"} className={wishlist.length > 0 ? "text-[#FFD700]" : ""} />
               </button>
               <button onClick={() => handleNavigationTrigger("shop")} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Shopping Cart">
-                <ShoppingCart size={18} fill={cart.length > 0 ? "#FFD700" : "none"} className={cart.length > 0 ? "text-[#FFD700]" : ""} />
+                <ShoppingCart size={20} fill={cart.length > 0 ? "#FFD700" : "none"} className={cart.length > 0 ? "text-[#FFD700]" : ""} />
                 {cart.length > 0 && (
-                  <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-[#FFD700] text-black text-[9px] font-black flex items-center justify-center rounded-full shadow-md">{cart.length}</span>
+                  <span className="absolute top-0.5 right-0.5 w-4.5 h-4.5 bg-[#FFD700] text-black text-[9px] font-black flex items-center justify-center rounded-full shadow-md">{cart.length}</span>
                 )}
               </button>
             </div>
-            <button onClick={() => handleNavigationTrigger("shop")} className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-neutral-900 border border-neutral-800 hover:border-[#FFD700] text-white hover:text-[#FFD700] font-black uppercase text-[10px] tracking-widest rounded-xl transition-all">Equipment Shop</button>
-            <button onClick={toggleOverlayMenu} className="px-4 py-2.5 bg-[#FFD700] text-black font-black uppercase text-[10px] tracking-widest rounded-xl flex items-center gap-2 shadow-lg transition-transform active:scale-95" aria-label="Open Navigation Index">
+            <button onClick={() => handleNavigationTrigger("shop")} className="hidden sm:flex items-center gap-2 px-6 py-3 bg-neutral-900 border border-neutral-800 hover:border-[#FFD700] text-white hover:text-[#FFD700] font-black uppercase text-[11px] tracking-widest rounded-xl transition-all">Equipment Shop</button>
+            <button onClick={toggleOverlayMenu} className="px-5 py-3 bg-[#FFD700] text-black font-black uppercase text-[11px] tracking-widest rounded-xl flex items-center gap-2 shadow-lg transition-transform active:scale-95" aria-label="Open Navigation Index">
               MENU
               <div className="flex flex-col gap-0.5 w-3">
                 <span className="w-full h-0.5 bg-black" />
@@ -229,14 +229,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <motion.div variants={canvasVariants} initial="hidden" animate="visible" exit="exit" className="fixed inset-0 z-[9000] bg-black text-white flex flex-col justify-between p-8 md:p-12 overflow-y-auto">
               <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-70 mix-blend-screen" />
 
-              <div className="flex justify-between items-center w-full max-w-[1440px] mx-auto py-4 border-b border-neutral-900 z-20 mix-blend-difference">
+              <div className="flex justify-between items-center w-full max-w-5xl mx-auto py-4 border-b border-neutral-900 z-20 mix-blend-difference">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-500 flex items-center gap-2">
                   <ShieldAlert size={12} className="text-[#FFD700]" /> SYSTEM INDEX
                 </span>
                 <button onClick={toggleOverlayMenu} className="px-4 py-2 bg-neutral-900 border border-neutral-800 text-white rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:border-[#FFD700] transition-colors"><X size={14} /> Close</button>
               </div>
 
-              <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 my-auto py-12 z-20">
+              <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 my-auto py-12 z-20">
                 {CONSOLIDATED_MENU.map((group, groupIdx) => (
                   <div key={groupIdx} className="flex flex-col space-y-6">
                     <h3 className="text-xs font-black tracking-widest uppercase text-neutral-600 border-b border-neutral-900 pb-2">{group.categoryName}</h3>
@@ -272,11 +272,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ))}
               </div>
 
-              <div className="w-full max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-[10px] tracking-widest uppercase text-neutral-500 pt-6 border-t border-neutral-900 z-20 mix-blend-difference">
+              <div className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-[10px] tracking-widest uppercase text-neutral-500 pt-6 border-t border-neutral-900 z-20 mix-blend-difference">
                 <div><p className="font-bold text-neutral-400 mb-1">Corporate HQ</p><p>Pretoria, Gauteng, ZA</p></div>
                 <div><p className="font-bold text-neutral-400 mb-1">Administrative Mail</p><p>info@ludoleague.co.za</p></div>
                 <div><p className="font-bold text-neutral-400 mb-1">Ecosystem Engineers</p><p className="text-white font-black">Happy Hunter Smart Marketing</p></div>
-                <div className="text-right self-end font-mono text-neutral-700">©2026 CIRCUIT CONFIG</div>
+                <div className="text-right self-end font-mono text-neutral-700">©2026 COU_CONFIG</div>
               </div>
             </motion.div>
           </>
