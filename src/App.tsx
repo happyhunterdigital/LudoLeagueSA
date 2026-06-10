@@ -10,7 +10,6 @@ import { Tournaments } from './pages/Tournaments';
 import { History } from './pages/History';
 import { Gallery } from './pages/Gallery';
 import { Shop } from './pages/Shop';
-import { CommunityFund } from './components/features/CommunityFund';
 import { Contact } from './pages/Contact';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { BotkGallery } from './pages/BotkGallery';
@@ -42,7 +41,6 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate'];
 
-  // Automating the loading dismissal to release the split panels and reveal the site
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -62,7 +60,7 @@ export default function App() {
       if (entries[0] && entries[0].isIntersecting && !isStandalone && !params.get('page')) {
         const sectionId = entries[0].target.id;
         setActiveSection(sectionId);
-        document.title = `Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
+        document.title = `The Ludo League SA | ${sectionId.charAt(0).toUpperCase() + sectionId.slice(1)}`;
         window.history.pushState({ section: sectionId }, '', `#${sectionId}`);
       }
     }, { threshold: 0.4 });
@@ -168,7 +166,6 @@ export default function App() {
                 <History />
                 <Gallery />
                 <Shop cart={cart} setCart={setCart} />
-                <CommunityFund />
                 <Contact />
               </>
             )}
