@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useScroll, useSpring } from 'motion/react';
+import { useScroll, useSpring } from 'framer-motion';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
@@ -25,7 +25,8 @@ import { Ludo4Schools } from './pages/Ludo4Schools';
 import { DonationPage } from './pages/DonationPage';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
-  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' | 'Ludo4Schools' | 'Donate';
+ 'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' |
+'Ludo4Schools' | 'Donate';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -34,7 +35,6 @@ export default function App() {
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
-
   const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -46,7 +46,6 @@ export default function App() {
     if (pageParam && standalonePages.includes(pageParam.toLowerCase())) {
       setActiveSection(pageParam.toLowerCase());
     }
-
     const observer = new IntersectionObserver((entries) => {
       if (isScrollingLock.current) return;
       const isStandalone = standalonePages.includes(activeSection.toLowerCase());
@@ -75,14 +74,14 @@ export default function App() {
         setActiveSection(hash || 'home');
       }
     };
-    window.addEventListener('popstate', handlePopState);
 
+    window.addEventListener('popstate', handlePopState);
     const testConnection = async () => {
       try { await getDocFromServer(doc(db, 'test', 'connection')); }
       catch (error) { console.error("Firebase offline"); }
     };
-    testConnection();
 
+    testConnection();
     (window as any).agencyDigitalAuditLink = chatbotConfig;
     return () => {
       observer.disconnect();
@@ -93,7 +92,6 @@ export default function App() {
   const scrollToSection = (id: string) => {
     const isTargetStandalone = standalonePages.includes(id.toLowerCase());
     isScrollingLock.current = true;
-
     if (isTargetStandalone) {
       window.history.pushState({ page: id.toLowerCase() }, '', `?page=${id.toLowerCase()}`);
       setActiveSection(id.toLowerCase());
@@ -127,7 +125,6 @@ export default function App() {
         activeSection={activeSection} scrollToSection={scrollToSection}
         mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}
       />
-
       <main className="w-full">
         {activeSection === 'admin' && <AdminDashboard />}
         {activeSection === 'portal' && <UserDashboard />}
@@ -139,15 +136,14 @@ export default function App() {
         {activeSection === 'newsupdates' && <NewsUpdates />}
         {activeSection === 'faqs' && <Faqs />}
         {activeSection === 'afcontournament' && (
-          <AfconTournament setActivePage={(p) => setActiveSection(p.toLowerCase())} />
+          <AfconTournament setActivePage={(p: any) => setActiveSection(p.toLowerCase())} />
         )}
-
         {!standalonePages.includes(activeSection.toLowerCase()) && (
           <>
             <LandingHero scrollToSection={scrollToSection} />
             <About />
             <Leagues
-              setActivePage={(p) => setActiveSection(p.toLowerCase())}
+              setActivePage={(p: any) => setActiveSection(p.toLowerCase())}
               setSelectedGalleryTab={setSelectedGalleryTab}
             />
             <Tournaments />
@@ -158,7 +154,6 @@ export default function App() {
             <Contact />
           </>
         )}
-
         <footer className="py-10 text-center bg-[#0F172A] flex flex-col items-center gap-6 border-t border-slate-800">
           <p className="text-xs md:text-sm font-mono text-white/60">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
           <div className="flex items-center gap-4">
@@ -183,7 +178,6 @@ export default function App() {
           <button onClick={() => setIsPrivacyOpen(true)} className="text-xs uppercase tracking-widest text-[#0EA5E9] hover:text-white transition-colors font-bold underline">Privacy Policy & Terms</button>
         </footer>
       </main>
-
       <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
       <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
       <ChatbotWidget />
