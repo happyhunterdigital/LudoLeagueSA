@@ -42,6 +42,14 @@ export default function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate'];
 
+  // Automating the loading dismissal to release the split panels and reveal the site
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const pageParam = params.get('page');
@@ -124,7 +132,7 @@ export default function App() {
     <div className="bg-[#0F172A] min-h-screen font-sans antialiased selection:bg-white selection:text-black">
       <AnimatePresence mode="wait">
         {isLoading && (
-          <LudoLoader onComplete={() => setIsLoading(false)} />
+          <LudoLoader onComplete={() => {}} />
         )}
       </AnimatePresence>
 
