@@ -3,13 +3,13 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
 import { Loader2, CheckCircle2, UploadCloud, ArrowRight, CreditCard, Landmark } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const Tournaments = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast'>('payfast');
+  const [paymentMethod, setPaymentMethod] = useState<'payfast' | 'eft'>('payfast');
   const [formData, setFormData] = useState<RegistrationData & { proofOfPayment: File | null }>({
     fullName: '',
     email: '',
@@ -40,8 +40,12 @@ export const Tournaments = () => {
           }
           canvas.width = width; canvas.height = height;
           const ctx = canvas.getContext('2d');
-          if (ctx) { ctx.drawImage(img, 0, 0, width, height); resolve(canvas.toDataURL('image/jpeg', 0.6)); }
-          else { resolve(event.target?.result as string); }
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.6));
+          } else {
+            resolve(event.target?.result as string);
+          }
         };
         img.onerror = (err) => reject(err);
       };
@@ -53,7 +57,6 @@ export const Tournaments = () => {
     const form = document.createElement('form');
     form.action = 'https://www.payfast.co.za/eng/process';
     form.method = 'POST';
-
     const fields = {
       merchant_id: '35471207',
       merchant_key: 'q9qkx9sqx9l3m',
@@ -67,13 +70,11 @@ export const Tournaments = () => {
       item_name: 'Tournament Entry Registration',
       custom_str1: 'tournament_registration'
     };
-
     Object.entries(fields).forEach(([key, value]) => {
       const input = document.createElement('input');
       input.type = 'hidden'; input.name = key; input.value = value;
       form.appendChild(input);
     });
-
     document.body.appendChild(form);
     form.submit();
   };
@@ -99,7 +100,6 @@ export const Tournaments = () => {
         eventDate: '2026 season live',
         timestamp: serverTimestamp()
       });
-
       if (paymentMethod === 'payfast') {
         triggerPayfastRedirect();
       } else {
@@ -117,7 +117,6 @@ export const Tournaments = () => {
     <section id="tournaments" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0EA5E9] text-[#0F172A]">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-7xl mx-auto">
         <SectionHeader tag="Compete" title="Registration" colorClass="text-white" />
-
         <div className="max-w-2xl mx-auto bg-slate-900 text-white border border-slate-800 p-8 rounded-3xl shadow-2xl mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span className="text-xs font-black uppercase text-[#FFC107] tracking-widest block mb-1">Archived Cup</span>
@@ -128,7 +127,6 @@ export const Tournaments = () => {
             View Details <ArrowRight size={16} />
           </a>
         </div>
-
         <div className="max-w-2xl mx-auto bg-white border border-white/20 p-8 rounded-2xl shadow-xl">
           {step === 1 && (
             <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-6">
@@ -146,7 +144,6 @@ export const Tournaments = () => {
               <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Next: Payment</button>
             </form>
           )}
-
           {step === 2 && (
             <form onSubmit={handleRegister} className="space-y-6">
               <h3 className="text-2xl font-display font-black italic uppercase">Step 2: Choose Payment</h3>
@@ -154,7 +151,6 @@ export const Tournaments = () => {
                 <button type="button" onClick={() => setPaymentMethod('payfast')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${paymentMethod === 'payfast' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><CreditCard size={20} className="text-[#0EA5E9]" />Payfast Online</button>
                 <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={20} className="text-[#0EA5E9]" />Manual EFT</button>
               </div>
-
               {paymentMethod === 'eft' ? (
                 <div className="space-y-6">
                   <div className="bg-[#F8F9FA] p-5 rounded-xl border border-slate-200 text-sm text-slate-700 space-y-2">
@@ -181,7 +177,6 @@ export const Tournaments = () => {
                   </div>
                 </div>
               )}
-
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold hover:bg-slate-200 transition-colors">Back</button>
                 <button type="submit" disabled={isSubmitting || (paymentMethod === 'eft' && !formData.proofOfPayment)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shadow-lg">
@@ -190,7 +185,6 @@ export const Tournaments = () => {
               </div>
             </form>
           )}
-
           {step === 3 && (
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
