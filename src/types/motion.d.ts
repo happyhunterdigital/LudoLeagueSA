@@ -1,3 +1,4 @@
 declare module 'motion/react' {
-  export * from 'framer-motion';
+  import { motion, AnimatePresence, useSpring, useScroll } from 'framer-motion';
+  export { motion, AnimatePresence, useSpring, useScroll };
 }
