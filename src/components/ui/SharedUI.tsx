@@ -17,19 +17,18 @@ interface SectionHeaderProps {
   colorClass?: string;
 }
 
-export const SectionHeader: React.FC<SectionHeaderProps> = ({ 
-  tag, 
-  title, 
-  subtitle, 
-  colorClass = 'text-white' 
+export const SectionHeader: React.FC<SectionHeaderProps> = ({
+  tag,
+  title,
+  subtitle,
+  colorClass = 'text-white'
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-
   return (
     <div ref={ref} className={`flex flex-col items-center text-center space-y-4 ${colorClass}`}>
       {tag && (
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.5 }}
@@ -38,7 +37,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           {tag}
         </motion.span>
       )}
-      <motion.h2 
+      <motion.h2
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -47,7 +46,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         {title}
       </motion.h2>
       {subtitle && (
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
