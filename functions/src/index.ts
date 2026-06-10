@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import { onCall } from 'firebase-functions/v2/https';
 import * as admin from 'firebase-admin';
 
 admin.initializeApp();
@@ -18,9 +19,9 @@ export const onUserCreated = functions.auth.user().onCreate(async (user) => {
   }
 });
 
-// DeepSeek-Powered Ludo League Chatbot Function
-export const ludoLeagueChatBot = functions.https.onCall(async (data, context) => {
-  const { message, history } = data;
+// DeepSeek-Powered Ludo League Chatbot Function (Migrated to Gen 2)
+export const ludoLeagueChatBot = onCall({ region: 'us-central1', maxInstances: 10 }, async (request) => {
+  const { message, history } = request.data;
   const SYSTEM_PROMPT = `You are the official smart digital assistant for The Ludo League South Africa (LLSA).
 
 You must base all responses on our Key Advantages:
