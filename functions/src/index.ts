@@ -1,52 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import Stripe from 'stripe';
 
 admin.initializeApp();
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-10-16',
-});
-
-// Checkout Session Cloud Function
-export const createCheckoutSession = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError(
-      'unauthenticated',
-      'User must be logged in to create a checkout session.'
-    );
-  }
-
-  const { items, successUrl, cancelUrl } = data;
-
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: items.map((item: any) => ({
-        price_data: {
-          currency: 'zar',
-          product_data: {
-            name: item.name,
-            images: item.images,
-          },
-          unit_amount: item.price * 100, // Convert to cents
-        },
-        quantity: item.quantity,
-      })),
-      mode: 'payment',
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata: {
-        userId: context.auth.uid,
-      },
-    });
-
-    return { sessionId: session.id, url: session.url };
-  } catch (error) {
-    console.error('Error creating checkout session:', error);
-    throw new functions.https.HttpsError('internal', 'Unable to create checkout session');
-  }
-});
 
 // User Creation DB Profile Trigger
 export const onUserCreated = functions.auth.user().onCreate(async (user) => {
