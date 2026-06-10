@@ -32,7 +32,8 @@ const CONSOLIDATED_MENU: NavigationGroup[] = [
       { id: "tournaments", label: "Tournaments" },
       { id: "leagues", label: "Leagues" },
       { id: "history", label: "Hall of Fame" },
-      { id: "gallery", label: "Gallery" }
+      { id: "gallery", label: "Gallery" },
+      { id: "newsupdates", label: "News & Affairs" }
     ]
   },
   {
