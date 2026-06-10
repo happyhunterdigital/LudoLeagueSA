@@ -7,7 +7,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Impact', 'Arial Black', 'Trebuchet MS', 'sans-serif'],
+        'sans': ['"Plus Jakarta Sans"', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'display': ['"Inter"', 'Impact', 'sans-serif'],
+      },
+      letterSpacing: {
+        'thonik-tight': '-0.02em',
+        'thonik-mega': '-0.04em',
+        'thonik-wide': '0.18em',
       },
       transitionTimingFunction: {
         'thonik-ease': 'cubic-bezier(0.16, 1, 0.3, 1)',
