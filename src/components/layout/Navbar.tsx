@@ -80,6 +80,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const smoothX = useSpring(pointerX, { damping: 45, stiffness: 450, mass: 0.35 });
   const smoothY = useSpring(pointerY, { damping: 45, stiffness: 450, mass: 0.35 });
 
+  const toggleOverlayMenu = () => {
+    if (!mobileMenuOpen) {
+      setHoveredLink(null);
+    }
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   const handleNavigationTrigger = (id: string) => {
     setMobileMenuOpen(false);
     setTimeout(() => { scrollToSection(id); }, 250);
