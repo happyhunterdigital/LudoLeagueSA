@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import { useScroll, useSpring, AnimatePresence, motion } from 'framer-motion';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
 import { Navbar } from './components/layout/Navbar';
@@ -141,7 +141,23 @@ export default function App() {
             activeSection={activeSection} scrollToSection={scrollToSection}
             mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}
           />
-          <main className="w-full">
+          
+          {/* Global News Ticker Strip pinned immediately below the fixed, compact navbar */}
+          <div className="fixed top-[69px] md:top-[81px] left-0 right-0 z-[900] overflow-hidden border-b border-neutral-900/60 py-2.5 bg-black/95 whitespace-nowrap select-none flex items-center">
+            <motion.div 
+              animate={{ x: [0, -1400] }}
+              transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
+              className="flex space-x-16 text-[10px] font-display font-black tracking-thonik-wide uppercase text-neutral-400"
+            >
+              <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FFD700] animate-pulse" /> SOWETO GIANTS VS ALEXANDRA MASTERS ACTIVE IN BATTLE OF THE KASIS GRAND FINALS +++</span>
+              <span>MAMELODI CIRCUIT: MASONA CLUB RETAINS UNDEFEATED LEAGUE RATING +++</span>
+              <span>LUDO4SCHOOLS: EXPANDING TO 15 NEW GAUTENG CLASSROOM CLINICS +++</span>
+              <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FFD700] animate-pulse" /> SOWETO GIANTS VS ALEXANDRA MASTERS ACTIVE IN BATTLE OF THE KASIS GRAND FINALS +++</span>
+            </motion.div>
+          </div>
+
+          {/* Adjusted padding-top (pt-[111px] md:pt-[125px]) to prevent fixed navbar and ticker from obscuring any content */}
+          <main className="w-full pt-[111px] md:pt-[125px]">
             {activeSection === 'admin' && <AdminDashboard />}
             {activeSection === 'portal' && <UserDashboard />}
             {activeSection === 'ludo4schools' && <Ludo4Schools />}
