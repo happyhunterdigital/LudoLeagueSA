@@ -191,11 +191,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     <>
       <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FFD700] to-[#E6C200] z-[9999] origin-left" style={{ scaleX }} />
 
-      <nav className="fixed top-0 left-0 right-0 z-[1000] px-6 md:px-12 py-6 bg-black/95 backdrop-blur-md border-b border-neutral-900 select-none transition-colors duration-300">
+      {/* Slimmed padding layout across mobile and desktop classes (py-3 md:py-4) */}
+      <nav className="fixed top-0 left-0 right-0 z-[1000] px-6 md:px-12 py-3 md:py-4 bg-black/95 backdrop-blur-md border-b border-neutral-900 select-none transition-all duration-300">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <button onClick={() => handleNavigationTrigger("home")} className="flex items-center gap-4 group tracking-normal select-none">
-            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="LLSA Branding Badge" className="w-14 h-14 rounded-2xl object-cover border border-neutral-800 shadow-md transition-transform duration-500 group-hover:rotate-6" />
-            <span className="text-xl sm:text-2xl font-display italic font-black uppercase tracking-tight text-white group-hover:text-[#FFD700] transition-colors">Ludo League SA</span>
+          <button onClick={() => handleNavigationTrigger("home")} className="flex items-center gap-3 group tracking-normal select-none">
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949471/The_Ludo_League_Logo_p2pzvn.jpg" alt="LLSA Branding Badge" className="w-11 h-11 rounded-2xl object-cover border border-neutral-800 shadow-md transition-transform duration-500 group-hover:rotate-6" />
+            {/* Multi-color word branding applied directly (Ludo: Red, League: Gold, SA: Sky Blue) */}
+            <span className="text-xl sm:text-2xl font-display italic font-black uppercase tracking-tight flex gap-1.5 select-none">
+              <span className="text-[#d32f2f]">Ludo</span>
+              <span className="text-[#FFD700]">League</span>
+              <span className="text-[#0ea5e9]">SA</span>
+            </span>
           </button>
 
           <div className="flex items-center gap-4 sm:gap-6">
