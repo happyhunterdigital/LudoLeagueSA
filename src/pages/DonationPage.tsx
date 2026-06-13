@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, Shield, PhoneCall } from 'lucide-react';
+import { Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, Shield } from 'lucide-react';
 import { db } from '../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { GoldDiceHero } from '../components/features/GoldDiceHero';
 
 interface FundTier { amount: number; perk: string; }
 const fundTiers: FundTier[] = [
@@ -19,12 +20,17 @@ export const DonationPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null as File | null });
 
+  const formRef = useRef<HTMLDivElement>(null);
   const currentFunds = 12500;
   const goalFunds = 50000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
   const getFinalAmount = () => customAmount !== '' ? parseFloat(customAmount) || 50 : selectedAmount || 50;
   const finalAmount = getFinalAmount();
+
+  const handleScrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const compressAndGetBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -96,14 +102,13 @@ export const DonationPage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full bg-neutral-950 text-white py-32 px-6 md:px-12 flex flex-col justify-start select-none font-sans antialiased">
-      <div className="w-full max-w-5xl mx-auto text-center space-y-6 mb-20">
-        <span className="font-sans font-black tracking-thonik-wide text-[10px] text-neutral-500 uppercase block">// LUDO CROWDFUNDING NARRATIVE 2026</span>
-        <h2 className="font-display font-black tracking-thonik-mega text-4xl sm:text-6xl md:text-8xl uppercase text-white leading-none">INVEST IN <span className="text-[#FFD700]">HOPE.</span></h2>
-        <p className="font-sans font-light tracking-normal text-lg sm:text-2xl leading-relaxed text-neutral-300 max-w-3xl mx-auto italic">"South Africa's youth don't need handouts. They need opportunities. Help us create them, one roll at a time."</p>
-      </div>
+    <div className="min-h-screen w-full bg-neutral-950 text-white flex flex-col justify-start">
+      
+      {/* 3D WebGL GoldDiceHero with programmatic target form scrolling */}
+      <GoldDiceHero onActionClick={handleScrollToForm} />
 
-      <div className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+      {/* Narrative Matrix Grids */}
+      <div className="w-full max-w-5xl mx-auto py-24 px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { icon: Gift, title: "Donate", desc: "Whether it's R20 or R50,000, you're building a future. Contributions of R500 or more receive an official heritage Ludo board gift." },
           { icon: Shield, title: "Invest", desc: "Competitive Ludo has low barriers and high impact. Lodge an offline callback query below to discuss franchise ownership." },
@@ -117,7 +122,8 @@ export const DonationPage = () => {
         ))}
       </div>
 
-      <div className="w-full max-w-3xl mx-auto bg-black border border-neutral-900 p-8 md:p-12 rounded-3xl shadow-2xl relative">
+      {/* Multi-Step Contribution Form Ref Anchor */}
+      <div ref={formRef} className="w-full max-w-3xl mx-auto bg-black border border-neutral-900 p-8 md:p-12 rounded-3xl shadow-2xl relative mb-24">
         {step === 1 && (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-neutral-900 pb-4">
@@ -230,6 +236,6 @@ export const DonationPage = () => {
           </div>
         )}
       </div>
-    </section>
+    </div>
   );
 };
