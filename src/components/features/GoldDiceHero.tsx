@@ -1,27 +1,73 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { PerspectiveCamera, useTexture } from '@react-three/drei';
+import * as THREE from 'three';
+
+interface MetallicTextureDieProps {
+  rotationSpeed?: number;
+}
+
+const MetallicTextureDie = ({ rotationSpeed = 0.005 }: MetallicTextureDieProps) => {
+  // Safe CORS texture loader pulls your high-resolution asset into the WebGL memory pipeline
+  const texture = useTexture("https://res.cloudinary.com/dfzeb1s54/image/upload/v1781360203/GoldDiceHero_ptqaga.png");
+  const ref = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (ref.current) {
+      // Floating kinetic bounce math
+      ref.current.position.y = Math.sin(state.clock.getElapsedTime()) * 0.15;
+      // Controlled, slow 3D rotation coordinates
+      ref.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.4) * 0.25;
+      ref.current.rotation.x = Math.cos(state.clock.getElapsedTime() * 0.2) * 0.15;
+    }
+  });
+
+  return (
+    <mesh ref={ref} castShadow receiveShadow>
+      <planeGeometry args={[3.2, 3.2]} />
+      <meshStandardMaterial 
+        map={texture} 
+        transparent={true}
+        metalness={0.9} 
+        roughness={0.1}
+        envMapIntensity={1.2}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+};
 
 interface GoldDiceHeroProps {
+  rotationSpeed?: number;
   onActionClick: () => void;
 }
 
-export const GoldDiceHero: React.FC<GoldDiceHeroProps> = ({ onActionClick }) => {
+export const GoldDiceHero: React.FC<GoldDiceHeroProps> = ({ rotationSpeed = 0.005, onActionClick }) => {
   return (
     <section className="relative h-screen w-full bg-black overflow-hidden flex flex-col justify-center items-center">
       
-      {/* Dynamic Floating Luxury Object Backdrop Layer */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <motion.img 
-          src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1781360203/GoldDiceHero_ptqaga.png" 
-          alt="Floating Gold Dice Centerpiece" 
-          className="max-h-[50vh] max-w-[85%] object-contain opacity-80 select-none"
-          animate={{ y: [0, -20, 0] }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+      {/* 3D WebGL Canvas Layer with Custom Lights */}
+      <div className="absolute inset-0 z-0">
+        <Canvas shadows className="w-full h-full">
+          <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
+          
+          {/* Multiple light sources to generate dynamic metallic reflections */}
+          <ambientLight intensity={0.4} />
+          <directionalLight 
+            position={[5, 5, 5]} 
+            intensity={1.2} 
+            castShadow 
+            shadow-mapSize-width={1024} 
+            shadow-mapSize-height={1024} 
+          />
+          {/* Gold tinted point light to emphasize the metallic theme */}
+          <pointLight position={[0, 3, 2]} intensity={1.5} color="#FFD700" />
+          <pointLight position={[-5, -5, -2]} intensity={0.8} color="#FFD700" />
+
+          <Suspense fallback={null}>
+            <MetallicTextureDie rotationSpeed={rotationSpeed} />
+          </Suspense>
+        </Canvas>
       </div>
 
       {/* Overlaid Branded Content Layer */}
