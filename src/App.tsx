@@ -142,7 +142,6 @@ export default function App() {
             mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}
           />
           
-          {/* Global News Ticker Strip pinned immediately below the fixed, compact navbar */}
           <div className="fixed top-[69px] md:top-[81px] left-0 right-0 z-[900] overflow-hidden border-b border-neutral-900/60 py-2.5 bg-black/95 whitespace-nowrap select-none flex items-center">
             <motion.div 
               animate={{ x: [0, -1400] }}
@@ -156,7 +155,6 @@ export default function App() {
             </motion.div>
           </div>
 
-          {/* Adjusted padding-top (pt-[111px] md:pt-[125px]) to prevent fixed navbar and ticker from obscuring any content */}
           <main className="w-full pt-[111px] md:pt-[125px]">
             {activeSection === 'admin' && <AdminDashboard />}
             {activeSection === 'portal' && <UserDashboard />}
@@ -199,6 +197,9 @@ export default function App() {
                 </a>
                 <a href="https://wa.me/27725578097" target="_blank" rel="noreferrer" className="w-11 h-11 rounded-full bg-[#1E293B] border border-slate-700 flex items-center justify-center text-slate-300 hover:text-[#0EA5E9] hover:border-[#0EA5E9] transition-all" aria-label="WhatsApp">
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.615.96 3.2 1.456 4.903 1.456 5.4 0 9.794-4.392 9.797-9.794.002-2.618-1.01-5.074-2.852-6.92C16.652 2.052 14.191.995 11.597.995c-5.405 0-9.8 4.394-9.802 9.797-.001 1.792.482 3.447 1.4 4.966l-.92 3.35 3.456-.906zM17.5 13.9c-.3-.15-1.7-.85-2-.95-.25-.1-.45-.15-.65.15-.2.3-.75.95-.95 1.15-.15.2-.35.2-.65.05-1.1-.55-1.95-1-2.75-2.4-.2-.35-.05-.55.1-.7.15-.15.3-.35.45-.5.15-.15.2-.25.3-.45.1-.2.05-.35-.05-.5-.1-.15-.65-1.6-.9-2.2-.2-.55-.45-.45-.65-.45-.2 0-.4 0-.6.2-.2.2-.8.8-.8 1.95s.8 2.3 1 2.5c.2.2 1.8 2.7 4.3 3.8.6.25 1.1.4 1.5.55.6.2 1.1.15 1.5.1.5-.05 1.7-.7 1.9-1.35.2-.65.2-1.2.1-1.35-.1-.1-.3-.2-.6-.35z" /></svg>
+                </a>
+                <a href="https://www.youtube.com/@ludoleague1525" target="_blank" rel="noreferrer" className="w-11 h-11 rounded-full bg-[#1E293B] border border-slate-700 flex items-center justify-center text-slate-300 hover:text-[#D32F2F] hover:border-[#D32F2F] transition-all" aria-label="YouTube">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>
               </div>
               <div className="flex gap-6 text-xs font-bold uppercase tracking-widest text-[#0EA5E9]">
