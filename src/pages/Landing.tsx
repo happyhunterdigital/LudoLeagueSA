@@ -6,36 +6,44 @@ import { LandingFeatures } from '../components/features/LandingFeatures';
 import { LandingGallery } from '../components/features/LandingGallery';
 import { LandingSystems } from '../components/features/LandingSystems';
 import { LandingMediaGrid } from '../components/features/LandingMediaGrid';
+import { SocialProofSection } from '../components/features/SocialProofSection';
+import { LeadCaptureSection } from '../components/features/LeadCaptureSection';
 import { LandingCTA } from '../components/features/LandingCTA';
 import { CommunityFund } from '../components/features/CommunityFund';
 
 export const Landing = ({ setActivePage }: { setActivePage: (p: Page) => void }) => {
   return (
-    <div className="flex flex-col w-full">
-      {/* 2. Hero Section */}
+    <div className="flex flex-col w-full bg-black">
+      {/* Hero Section */}
       <LandingHero scrollToSection={(id) => setActivePage('Tournaments')} />
       
-      {/* 3. News Ticker Carousel */}
+      {/* News Ticker Carousel */}
       <LandingCarousel />
 
-      {/* 4. Three-Column Feature Highlights */}
+      {/* Feature / Tournament Highlights */}
       <LandingFeatures />
 
-      {/* 5. Custom Board Selection Gallery */}
+      {/* Board Selection Gallery */}
       <LandingGallery />
 
-      {/* 6 & 7. Core Systems & Sporting Structure */}
+      {/* Core Systems & Sporting Structure */}
       <LandingSystems />
 
-      {/* 8. Media Content Grid */}
+      {/* Media Content Grid */}
       <LandingMediaGrid />
 
-      {/* 4. Donation/Contribution Gateway */}
+      {/* Social Proof / Community */}
+      <SocialProofSection />
+
+      {/* Donation / Community Fund */}
       <div id="donation-section">
         <CommunityFund />
       </div>
 
-      {/* 9. Secondary CTA / Community Links */}
+      {/* Lead Capture / Email Orchestration */}
+      <LeadCaptureSection />
+
+      {/* CTA / Community Links */}
       <LandingCTA />
     </div>
   );

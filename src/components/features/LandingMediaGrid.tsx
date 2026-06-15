@@ -1,7 +1,6 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { SectionHeader } from '../ui/SharedUI';
 import { PlayCircle } from 'lucide-react';
+import { ScrollReveal, StaggerContainer, StaggerChild } from '../ui/ScrollReveal';
 
 const mediaPhotos = [
   "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_tough_match_evhrw5.jpg",
@@ -14,26 +13,42 @@ const mediaPhotos = [
 
 export const LandingMediaGrid: React.FC = () => {
   return (
-    <section id="media-grid" className="relative z-10 py-24 px-4 md:px-10 bg-slate-900 border-b border-white/10">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader tag="See Ludo In Action" title="Media & Content" colorClass="text-[#0EA5E9]" />
+    <section id="media-grid" className="relative z-10 bg-black border-b border-white/[0.04] overflow-hidden">
+      <div className="max-w-7xl mx-auto py-24 md:py-32 px-6 md:px-10">
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <span className="eyebrow" style={{ color: '#00f0c2' }}>See Ludo In Action</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase text-white leading-[0.95]">
+              Media & <span className="text-[#00f0c2]">Content</span>
+            </h2>
+          </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" staggerDelay={0.08}>
           {mediaPhotos.map((src, index) => (
-            <motion.div 
+            <StaggerChild
               key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className={`rounded-2xl overflow-hidden relative group cursor-pointer shadow-lg border border-white/10 ${index === 0 ? 'col-span-2 row-span-2 h-64 md:h-[420px]' : 'h-32 md:h-48'}`}
+              className={`${index === 0 ? 'col-span-2 row-span-2' : ''}`}
             >
-              <img src={src} alt="Media Asset" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                <PlayCircle size={40} className="text-[#0EA5E9] scale-75 group-hover:scale-100 transition-transform duration-300" />
+              <div 
+                className={`rounded-2xl overflow-hidden relative group cursor-pointer border border-white/[0.06] ${
+                  index === 0 ? 'h-64 md:h-[420px]' : 'h-32 md:h-48'
+                }`}
+              >
+                <img 
+                  src={src} 
+                  alt="Media Asset" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <PlayCircle size={index === 0 ? 56 : 36} className="text-[#FACC15] drop-shadow-lg" />
+                </div>
               </div>
-            </motion.div>
+            </StaggerChild>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

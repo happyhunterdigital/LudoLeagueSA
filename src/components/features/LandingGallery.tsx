@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { SectionHeader } from '../ui/SharedUI';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollReveal } from '../ui/ScrollReveal';
 
 interface BoardItem {
   id: string;
@@ -21,45 +21,63 @@ export const LandingGallery: React.FC = () => {
   const [selected, setSelected] = useState<BoardItem>(boards[1]);
 
   return (
-    <section id="board-gallery" className="relative z-10 py-24 px-6 md:px-10 bg-slate-900 text-white">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-        <div className="md:w-1/2 space-y-6">
-          <SectionHeader tag="Equipment" title="Choose Your Board" colorClass="text-[#FFC107]" />
-          <p className="text-slate-300 max-w-lg">
-            Our luxury wooden boards are custom-engineered for balanced, competitive tournament play, utilizing professional-grade, high-density local timber.
-          </p>
-          
-          <div className="flex flex-wrap gap-3 pt-4">
-            {boards.map((board) => (
-              <button 
-                key={board.id} 
-                onClick={() => setSelected(board)}
-                className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all p-1 bg-white ${selected.id === board.id ? 'border-[#FFC107] scale-110 shadow-lg' : 'border-white/10 opacity-70 hover:opacity-100'}`}
-              >
-                <img src={board.src} alt={board.name} className="w-full h-full object-contain" />
-              </button>
-            ))}
-          </div>
-        </div>
+    <section id="board-gallery" className="relative z-10 bg-[#0A0A0A] border-t border-b border-white/[0.04] overflow-hidden">
+      {/* Subtle glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#FACC15]/[0.02] rounded-full blur-3xl" />
 
-        <div className="md:w-1/2 flex flex-col items-center">
-          <div className="h-80 w-full max-w-md bg-white rounded-3xl p-6 flex items-center justify-center border border-white/10 shadow-2xl relative">
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={selected.id}
-                src={selected.src} 
-                alt={selected.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="max-h-full max-w-full object-contain"
-              />
-            </AnimatePresence>
-          </div>
-          <div className="text-center mt-6">
-            <h4 className="text-2xl font-display font-black italic text-[#FFC107]">{selected.name}</h4>
-            <p className="text-slate-400 text-sm mt-1">{selected.desc}</p>
-          </div>
+      <div className="relative max-w-7xl mx-auto py-24 md:py-32 px-6 md:px-10">
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          
+          {/* Text side */}
+          <ScrollReveal direction="left" className="md:w-1/2 space-y-6">
+            <span className="eyebrow">Equipment</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase text-white leading-[0.95]">
+              Choose Your <span className="text-[#FACC15]">Board</span>
+            </h2>
+            <p className="text-white/40 max-w-lg text-base leading-relaxed">
+              Our luxury wooden boards are custom-engineered for balanced, competitive tournament play, utilizing professional-grade, high-density local timber.
+            </p>
+            
+            {/* Board selector thumbnails */}
+            <div className="flex flex-wrap gap-3 pt-4">
+              {boards.map((board) => (
+                <button 
+                  key={board.id} 
+                  onClick={() => setSelected(board)}
+                  className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 p-1.5 bg-white/5 backdrop-blur-sm ${
+                    selected.id === board.id 
+                      ? 'border-[#FACC15] scale-110 shadow-[0_0_20px_rgba(250,204,21,0.15)]' 
+                      : 'border-white/10 opacity-60 hover:opacity-100 hover:border-white/30'
+                  }`}
+                >
+                  <img src={board.src} alt={board.name} className="w-full h-full object-contain" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          {/* Board display */}
+          <ScrollReveal direction="right" delay={0.2} className="md:w-1/2 flex flex-col items-center">
+            <div className="relative h-80 w-full max-w-md bg-[#111827]/40 border border-white/[0.06] rounded-3xl p-8 flex items-center justify-center backdrop-blur-sm">
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={selected.id}
+                  src={selected.src} 
+                  alt={selected.name}
+                  initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, rotateY: 10 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="max-h-full max-w-full object-contain drop-shadow-2xl"
+                  loading="lazy"
+                />
+              </AnimatePresence>
+            </div>
+            <div className="text-center mt-6">
+              <h4 className="text-2xl font-display font-black text-[#FACC15]">{selected.name}</h4>
+              <p className="text-white/40 text-sm mt-1">{selected.desc}</p>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Plus Jakarta Sans"', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        'display': ['"Inter"', 'Impact', 'sans-serif'],
+        'sans': ['"Outfit"', '"Plus Jakarta Sans"', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        'display': ['"Outfit"', '"Inter"', 'Impact', 'sans-serif'],
       },
       letterSpacing: {
         'thonik-tight': '-0.02em',
@@ -19,14 +19,31 @@ export default {
         'thonik-ease': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       colors: {
-        'bg-mid': '#1e293b',
-        'bg-darkest': '#0f172a',
-        'accent-teal': '#00c9a7',
-        'accent-gold': '#e8a020',
-        'ludo-red': '#d32f2f',
-        'brand-yellow': '#FFD700',
+        /* ─── Brand Core ─── */
+        'brand-yellow': '#FACC15',
+        'brand-yellow-hot': '#FFE600',
         'brand-black': '#000000',
-      }
+        'brand-slate': '#111827',
+        /* ─── Legacy Mapped ─── */
+        'bg-mid': '#1E293B',
+        'bg-darkest': '#0F172A',
+        'bg-deep': '#0A0A0A',
+        'bg-card': '#111827',
+        'bg-panel': '#0D0D0D',
+        'accent-teal': '#00f0c2',
+        'accent-gold': '#FACC15',
+        'ludo-red': '#D32F2F',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '26': '6.5rem',
+        '30': '7.5rem',
+        '34': '8.5rem',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
     },
   },
   plugins: [],
