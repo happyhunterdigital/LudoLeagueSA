@@ -162,13 +162,13 @@ export const DonationHero = ({
 
         {/* Right Column: High-Contrast Dynamic Collage */}
         <motion.div
-          className="relative h-[450px] w-full sm:h-[550px] flex items-center justify-center"
+          className="relative h-[450px] w-full sm:h-[600px] max-w-lg mx-auto flex items-center justify-center mt-12 lg:mt-0"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Pure Theme Decorative Ambient Gradients (No colors from outside the palette) */}
+          {/* Pure Theme Decorative Ambient Gradients */}
           <motion.div
             className="absolute top-10 left-1/4 h-32 w-32 rounded-full bg-[#FFE600]/5 blur-3xl"
             variants={floatingVariants}
@@ -181,28 +181,25 @@ export const DonationHero = ({
             style={{ transitionDelay: '0.5s' }}
           />
 
-          {/* Back Left Image Layer */}
+          {/* Main Focus Image - Center Right */}
           <motion.div
-            className="absolute bottom-4 left-2 h-40 w-40 overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl sm:h-56 sm:w-56 grayscale hover:grayscale-0 transition-all duration-500 z-10"
-            style={{ transformOrigin: 'top right' }}
-            variants={imageVariants}
-          >
-            <img src={DEFAULT_IMAGES[2]} alt="Ludo4Schools collaborative clinic session" className="h-full w-full object-cover" />
-          </motion.div>
-
-          {/* Top Center Focus Image Layer */}
-          <motion.div
-            className="absolute left-1/2 top-4 h-52 w-52 -translate-x-1/2 overflow-hidden border-2 border-[#FFE600] bg-neutral-900 p-2 shadow-2xl sm:h-72 sm:w-72 z-20"
-            style={{ transformOrigin: 'bottom center' }}
+            className="absolute right-0 top-[10%] w-[65%] sm:w-[70%] aspect-square overflow-hidden border-2 border-[#FFE600] bg-neutral-900 p-2 shadow-2xl z-20"
             variants={imageVariants}
           >
             <img src={DEFAULT_IMAGES[0]} alt="Ludo League SA youth development matching" className="h-full w-full object-cover" />
           </motion.div>
-          
-          {/* Bottom Right Floating Image Layer */}
+
+          {/* Left Floating Image - Top Left */}
           <motion.div
-            className="absolute right-2 top-1/3 h-44 w-44 overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl sm:h-60 sm:w-60 grayscale hover:grayscale-0 transition-all duration-500 z-10"
-            style={{ transformOrigin: 'left center' }}
+            className="absolute left-0 top-0 w-[45%] sm:w-[50%] aspect-square overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 z-10"
+            variants={imageVariants}
+          >
+            <img src={DEFAULT_IMAGES[2]} alt="Ludo4Schools collaborative clinic session" className="h-full w-full object-cover" />
+          </motion.div>
+          
+          {/* Bottom Floating Image - Bottom Left */}
+          <motion.div
+            className="absolute left-[10%] bottom-[5%] w-[50%] sm:w-[55%] aspect-square overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 z-30"
             variants={imageVariants}
           >
             <img src={DEFAULT_IMAGES[1]} alt="Tournament execution layout" className="h-full w-full object-cover" />
