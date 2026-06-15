@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, Shield } from 'lucide-react';
 import { db } from '../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { GoldDiceHero } from '../components/features/GoldDiceHero';
+import { DonationHero } from '../components/features/DonationHero';
 
 interface FundTier { amount: number; perk: string; }
 const fundTiers: FundTier[] = [
   { amount: 50, perk: 'Supporter Profile Badge' },
   { amount: 200, perk: 'Exclusive Player Avatar' },
-  { amount: 500, perk: 'Complimentary Heritage Board Gift' },
+  { amount: 500, perk: 'Complimentary Ludo Leauge Gift' },
 ];
 
 export const DonationPage = () => {
@@ -104,8 +104,8 @@ export const DonationPage = () => {
   return (
     <div className="min-h-screen w-full bg-neutral-950 text-white flex flex-col justify-start">
       
-      {/* 3D WebGL GoldDiceHero with programmatic target form scrolling */}
-      <GoldDiceHero onActionClick={handleScrollToForm} />
+      {/* Premium DonationHero with programmatic target form scrolling */}
+      <DonationHero actions={[{ text: "Donate Safely Now", onClick: handleScrollToForm, isPrimary: true }, { text: "View Our Roadmap", onClick: () => window.location.href='#', isPrimary: false }]} />
 
       {/* Narrative Matrix Grids */}
       <div className="w-full max-w-5xl mx-auto py-24 px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -144,7 +144,7 @@ export const DonationPage = () => {
                 </div>
 
                 {finalAmount >= 500 && (
-                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-[#00c9a7] text-xs font-black uppercase tracking-widest rounded-xl text-center animate-pulse">🎉 Qualified for complimentary Heritage Board Gift!</div>
+                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-[#00c9a7] text-xs font-black uppercase tracking-widest rounded-xl text-center animate-pulse">🎉 Qualified for complimentary Ludo Leauge Gift!</div>
                 )}
 
                 <div className="grid grid-cols-3 gap-3">
