@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Share2, Check } from 'lucide-react';
+import { useState } from 'react';
+import { Share2 } from 'lucide-react';
 import { PRODUCTS } from '../../data/products';
 import { AnimatePresence } from 'motion/react';
 

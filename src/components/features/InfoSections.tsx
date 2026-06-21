@@ -1,5 +1,4 @@
 // src/components/features/InfoSections.tsx
-import React from 'react';
 import { Trophy, Calendar, MapPin } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
 

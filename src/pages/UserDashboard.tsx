@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { Loader2, LogOut, Award, ShoppingBag, Heart, User as UserIcon, Shield, Gift, CheckCircle2 } from 'lucide-react';
+import { Loader2, LogOut, Award, ShoppingBag, User as UserIcon, Shield, Gift, CheckCircle2 } from 'lucide-react';
 
 export const UserDashboard = () => {
   const [user, setUser] = useState<User | null>(null);

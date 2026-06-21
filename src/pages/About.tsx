@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { Target, Users, Shield, Trophy, Shirt, Compass, MapPin, Award } from 'lucide-react';

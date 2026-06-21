@@ -1,5 +1,4 @@
 // src/components/features/GalleryAndContact.tsx
-import React from 'react';
 import { Phone, Instagram, Twitter, Facebook } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
 

@@ -4,8 +4,7 @@ import { ShopSelector } from '../components/features/ShopSelector';
 import { ShopFeatures } from '../components/features/ShopFeatures';
 import { ShopCustomize } from '../components/features/ShopCustomize';
 
-export const Shop = (props: any) => {
-  const [activeSection, setActiveSection] = useState<number>(0);
+export const Shop = () => {
   const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
   React.useEffect(() => {
@@ -13,8 +12,8 @@ export const Shop = (props: any) => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-section-index') || '0', 10);
-            setActiveSection(index);
+            // const index = parseInt(entry.target.getAttribute('data-section-index') || '0', 10);
+            // setActiveSection(index);
           }
         });
       },

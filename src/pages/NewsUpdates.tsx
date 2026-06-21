@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, X, ShieldAlert, Activity, FileText } from "lucide-react";
+import { Calendar, Clock, ShieldAlert, Activity, FileText } from "lucide-react";
 import { LUDO_NEWS_DATABASE, MOCK_LUDO_ARCHIVES, LudoNewsItem } from "../data/newsArchiveData";
 
 const cascadeVariants = {

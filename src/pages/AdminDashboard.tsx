@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, query, orderBy, updateDoc, doc, addDoc } from 'firebase/firestore';
-import { Loader2, FileText, Filter, Users, Lock, Gift, CheckCircle2 } from 'lucide-react';
+import { Loader2, FileText, Filter, Users, Lock, Gift } from 'lucide-react';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const AdminDashboard = () => {

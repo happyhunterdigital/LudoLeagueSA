@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { RegistrationData } from '../../types';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 

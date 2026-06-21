@@ -1,4 +1,3 @@
-import React from 'react';
 import { Page } from '../App';
 import { LandingHero } from '../components/features/LandingHero';
 import { LandingCarousel } from '../components/features/LandingCarousel';

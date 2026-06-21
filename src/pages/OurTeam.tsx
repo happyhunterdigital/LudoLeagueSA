@@ -1,7 +1,4 @@
-import React from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { Users, Shield, Compass } from 'lucide-react';
-
 export const OurTeam = () => {
   return (
     <div className="flex flex-col w-full bg-[#041a18]">

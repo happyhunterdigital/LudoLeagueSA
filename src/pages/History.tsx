@@ -1,4 +1,3 @@
-import React from 'react';
 import { Trophy, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '../components/ui/SharedUI';

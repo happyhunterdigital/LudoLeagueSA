@@ -1,4 +1,3 @@
-import React from 'react';
 import { SectionHeader } from '../ui/SharedUI';
 import { Page } from '../../App';
 import { Quote } from 'lucide-react';

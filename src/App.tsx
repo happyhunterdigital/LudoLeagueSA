@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useScroll, useSpring, AnimatePresence, motion } from 'framer-motion';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db, chatbotConfig } from './config/firebase';
@@ -42,7 +42,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>([]);
+  const [wishlist] = useState<string[]>([]);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
   const isScrollingLock = useRef(false);

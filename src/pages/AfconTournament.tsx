@@ -1,7 +1,5 @@
 import React from 'react';
 import { Page } from '../App';
-import { SectionHeader } from '../components/ui/SharedUI';
-import { motion } from 'motion/react';
 import { Trophy, Calendar, MapPin, ArrowLeft } from 'lucide-react';
 import { AfconPodiumAndTable } from '../components/features/AfconPodiumAndTable';
 import { AfconGalleryAndInfo } from '../components/features/AfconGalleryAndInfo';

@@ -1,7 +1,4 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { SectionHeader } from '../components/ui/SharedUI';
-import { GraduationCap, Award, Users, BookOpen, Landmark, Heart } from 'lucide-react';
+import { BookOpen, Landmark, Heart } from 'lucide-react';
 
 export const Ludo4Schools = () => {
   return (

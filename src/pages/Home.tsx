@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Trophy, Target, Compass } from 'lucide-react';
 import { LudoBoardDecoration } from '../components/ui/SharedUI';

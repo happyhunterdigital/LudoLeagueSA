@@ -1,4 +1,3 @@
-import React from 'react';
 import { Users, Trophy, Heart, GraduationCap, MapPin, Star } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
 import { Page } from '../../App';

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Users, Award, Shield } from 'lucide-react';
+import { Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Gift, Award, Shield } from 'lucide-react';
 import { db } from '../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { DonationHero } from '../components/features/DonationHero';

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
-import { ChevronDown, HelpCircle, AlertCircle, BookOpen, Scale } from 'lucide-react';
+import { ChevronDown, HelpCircle, AlertCircle, Scale } from 'lucide-react';
 
 interface FaqItem {
   q: string;
@@ -44,8 +44,6 @@ const ruleDisputes: FaqItem[] = [
 
 export const Faqs = () => {
   const [disputeIndex, setDisputeIndex] = useState<number | null>(null);
-  const [frameworkOpen, setFrameworkOpen] = useState<number | null>(null);
-
   return (
     <section className="min-h-screen w-full py-24 px-4 md:px-10 bg-slate-50 text-slate-900">
       <div className="max-w-4xl mx-auto space-y-12">

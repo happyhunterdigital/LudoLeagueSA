@@ -7,7 +7,7 @@ interface MetallicTextureDieProps {
   rotationSpeed?: number;
 }
 
-const MetallicTextureDie = ({ rotationSpeed = 0.005 }: MetallicTextureDieProps) => {
+const MetallicTextureDie = ({ }: MetallicTextureDieProps) => {
   // Safe CORS texture loader pulls your high-resolution asset into the WebGL memory pipeline
   const texture = useTexture("https://res.cloudinary.com/dfzeb1s54/image/upload/v1781360203/GoldDiceHero_ptqaga.png");
   const ref = useRef<THREE.Mesh>(null);

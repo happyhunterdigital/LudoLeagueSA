@@ -1,4 +1,3 @@
-import React from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { GraduationCap, Award, Compass } from 'lucide-react';
 

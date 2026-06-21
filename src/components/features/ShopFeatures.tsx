@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const slides = [
@@ -7,7 +7,7 @@ const slides = [
   { headline: "106x87x2cm Box Dimensions", subline: "Oversized tactical play layout satisfying physical standards required for serious tournament play." }
 ];
 
-export const ShopFeatures = ({ selectedVariant }: { selectedVariant: string }) => {
+export const ShopFeatures = ({  }: { selectedVariant: string }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

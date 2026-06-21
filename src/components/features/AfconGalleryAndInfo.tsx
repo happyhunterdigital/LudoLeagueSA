@@ -1,7 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { ArrowRight, Video } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
-import { Calendar, Shield, Users, ArrowRight, Video } from 'lucide-react';
 import { Page } from '../../App';
 
 const afconPhotos = [
