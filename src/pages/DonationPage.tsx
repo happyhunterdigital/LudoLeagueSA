@@ -104,21 +104,98 @@ export const DonationPage = () => {
     <div className="min-h-screen w-full bg-neutral-950 text-white flex flex-col justify-start">
       
       {/* Premium DonationHero with programmatic target form scrolling */}
-      <DonationHero actions={[{ text: "Donate Safely Now", onClick: handleScrollToForm, isPrimary: true }, { text: "View Our Roadmap", onClick: () => window.location.href='#', isPrimary: false }]} />
+      <DonationHero 
+        title={<>LUDO CROWDFUNDING <span className="text-[#FFE600]">2026</span></>}
+        subtitle="A New South African Sport. A New South African Future."
+        stats={[
+          { value: "R1M", label: "Funding Goal" },
+          { value: "100%", label: "Youth Impact" },
+          { value: "2026", label: "National League" }
+        ]}
+        actions={[{ text: "Donate Safely Now", onClick: handleScrollToForm, isPrimary: true }, { text: "Read Our Story", onClick: () => window.scrollBy({ top: 600, behavior: 'smooth' }), isPrimary: false }]} 
+      />
+
+      {/* Narrative Section */}
+      <div className="w-full max-w-4xl mx-auto py-24 px-6 md:px-12 space-y-16">
+        
+        {/* Intro */}
+        <div className="text-center space-y-6">
+          <h2 className="text-[#FFD700] font-display font-black text-3xl md:text-5xl uppercase tracking-tight">Ludo ka Nkane!</h2>
+          <p className="text-xl md:text-2xl font-light text-neutral-300 italic border-l-4 border-[#FFD700] pl-6 py-2 mx-auto max-w-2xl text-left">
+            "South Africa's youth don't need handouts. They need opportunities. Help us create them, one roll at a time."
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="space-y-6 text-neutral-400 leading-relaxed font-light">
+            <h3 className="text-white font-display font-black text-2xl uppercase tracking-wider">Help Us Build The Future</h3>
+            <p><strong className="text-white">Every legend starts with a single roll.</strong></p>
+            <p>South Africa doesn't have a shortage of talent. It has a shortage of opportunities.</p>
+            <p>Every year, thousands of young South Africans leave school and university full of hope, only to find themselves locked out of the economy. Graduates search for work. Young entrepreneurs struggle to get funding. Communities battle with unemployment and a lack of positive spaces to gather and grow.</p>
+            <p>But what if something as simple as a board game could become a platform for opportunity?</p>
+            <p>At Ludo League SA, we believe it can.</p>
+          </div>
+          <div className="space-y-6 text-neutral-400 leading-relaxed font-light bg-neutral-900/30 p-8 rounded-2xl border border-neutral-800/50">
+            <p>What started around kitchen tables and street corners is becoming a movement that brings people together, builds communities, creates jobs, and gives ordinary people a chance to become extraordinary.</p>
+            <p>This isn't just about playing Ludo.</p>
+            <ul className="space-y-2 text-white font-bold tracking-wide">
+              <li className="flex items-center gap-3"><span className="w-2 h-2 bg-[#FFD700] rounded-full" />It's about creating a sport.</li>
+              <li className="flex items-center gap-3"><span className="w-2 h-2 bg-[#FFD700] rounded-full" />A business.</li>
+              <li className="flex items-center gap-3"><span className="w-2 h-2 bg-[#FFD700] rounded-full" />A culture.</li>
+              <li className="flex items-center gap-3"><span className="w-2 h-2 bg-[#FFD700] rounded-full" />A future.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 border-t border-neutral-900">
+          <div className="space-y-6 text-neutral-400 leading-relaxed font-light order-2 md:order-1 bg-neutral-900/30 p-8 rounded-2xl border border-neutral-800/50">
+            <h3 className="text-white font-display font-black text-2xl uppercase tracking-wider">Our Mission</h3>
+            <p>To create opportunities for South Africans through the power of community, competition, and entrepreneurship.</p>
+            <p>To give young people a platform to lead.</p>
+            <p>To build a proudly South African sport that belongs to everyone.</p>
+            <p>To turn a simple board game into a legacy.</p>
+          </div>
+          <div className="space-y-6 text-neutral-400 leading-relaxed font-light order-1 md:order-2">
+            <h3 className="text-white font-display font-black text-2xl uppercase tracking-wider">More Than A Game</h3>
+            <p>When people think of Ludo, they think of family. They think of laughter. Competition. Arguments over a lucky six. Stories that last a lifetime.</p>
+            <p>We're taking that feeling and turning it into something bigger. We are creating opportunities for:</p>
+            <div className="grid grid-cols-2 gap-2 text-sm text-white">
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Players</div>
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Content Creators</div>
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Photographers</div>
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Event Hosts</div>
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Organisers</div>
+              <div className="bg-neutral-900 p-2 rounded flex items-center gap-2"><CheckCircle2 size={14} className="text-[#FFD700]"/> Entrepreneurs</div>
+            </div>
+            <p className="font-bold text-[#FFD700] mt-4">We want every tournament to create not only champions, but opportunities.</p>
+          </div>
+        </div>
+        
+        <div className="text-center pt-12 space-y-4">
+          <h3 className="text-white font-display font-black text-3xl uppercase tracking-wider">Our Funding Goal</h3>
+          <p className="text-5xl font-black text-[#FFD700] tracking-tighter">R1,000,000</p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-neutral-400 pt-4 uppercase tracking-widest font-bold">
+            <span>National Expansion</span> • <span>Recruitment</span> • <span>League Production</span> • <span>Ludo4Schools</span>
+          </div>
+        </div>
+      </div>
 
       {/* Narrative Matrix Grids */}
-      <div className="w-full max-w-5xl mx-auto py-24 px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[
-          { icon: Gift, title: "Donate", desc: "Whether it's R20 or R50,000, you're building a future. Contributions of R500 or more receive an official heritage Ludo board gift." },
-          { icon: Shield, title: "Invest", desc: "Competitive Ludo has low barriers and high impact. Lodge an offline callback query below to discuss franchise ownership." },
-          { icon: Award, title: "Sponsor", desc: "Reach communities overlooked by traditional sports. Partner with us to scale league production and math school clinics." }
-        ].map((item, idx) => (
-          <div key={idx} className="border-l-4 border-[#FFD700] bg-neutral-900/60 p-8 rounded-r-2xl space-y-4">
-            <item.icon size={24} className="text-[#FFD700]" />
-            <h3 className="font-display font-black tracking-thonik-tight uppercase text-2xl text-white">{item.title}</h3>
-            <p className="text-sm font-light text-neutral-400 leading-relaxed">{item.desc}</p>
-          </div>
-        ))}
+      <div className="w-full max-w-6xl mx-auto pb-24 px-6 md:px-12">
+        <h2 className="text-center font-display font-black text-3xl text-white uppercase mb-12">Three Ways To Be Part Of The Movement</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: Gift, title: "Donate", desc: "Whether it's R20 or R50,000, you're helping create opportunities where they're needed most. You aren't simply giving money. You're helping build a future." },
+            { icon: Shield, title: "Invest", desc: "Competitive Ludo is one of the most accessible sports in Africa. Low barriers to entry. Mass participation. High entertainment value. Help us build Africa's premier Ludo ecosystem." },
+            { icon: Award, title: "Sponsor", desc: "Partner with a movement reaching communities overlooked by traditional sports. Brand exposure. Community impact. Digital reach. National tournaments. Together, we can build something iconic." }
+          ].map((item, idx) => (
+            <div key={idx} className="border-t-4 border-[#FFD700] bg-neutral-900/60 p-8 rounded-b-2xl space-y-4 hover:bg-neutral-900 transition-all cursor-pointer" onClick={handleScrollToForm}>
+              <item.icon size={32} className="text-[#FFD700]" />
+              <h3 className="font-display font-black tracking-thonik-tight uppercase text-2xl text-white">{item.title}</h3>
+              <p className="text-sm font-light text-neutral-400 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Multi-Step Contribution Form Ref Anchor */}
