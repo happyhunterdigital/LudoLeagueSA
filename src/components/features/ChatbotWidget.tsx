@@ -13,7 +13,7 @@ export const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hello! I am your LLSA assistant powered by DeepSeek. How can I assist you with tournaments, Ludo4Schools, or custom board purchases today?' }
+    { role: 'assistant', content: 'Hello! I am your LLSA assistant. How can I assist you with tournaments, Ludo4Schools, or custom board purchases today?' }
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

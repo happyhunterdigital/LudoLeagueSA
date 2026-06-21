@@ -37,6 +37,10 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Inject Environment Secrets
+        run: |
+          echo "DEEPSEEK_API_KEY=${{ secrets.LUDO_DEEPSEEK_API_KEY }}" > functions/.env
+
       - name: Deploy to Firebase
         run: firebase deploy --only hosting,functions --project ludoleaguesa-33371 --force
 
