@@ -41,8 +41,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cart, setCart] = useState<string[]>([]);
-  const [wishlist] = useState<string[]>([]);
+
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
   const isScrollingLock = useRef(false);
