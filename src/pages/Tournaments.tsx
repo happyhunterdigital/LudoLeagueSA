@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { RegistrationData } from '../types';
 import { Loader2, CheckCircle2, UploadCloud, ArrowRight, CreditCard, Landmark } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { SectionHeader } from '../components/ui/SharedUI';
 
 export const Tournaments = () => {
