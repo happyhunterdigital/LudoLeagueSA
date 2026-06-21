@@ -179,12 +179,18 @@ RESOURCES & DIRECT WEB NAVIGATION INDEX:
 - Hall of Fame (History): https://ludoleague.co.za/#history (AFCON champions, Kea Mdawe, Thabo Nkosi)
 - Action Gallery: https://ludoleague.co.za/#gallery (Match visuals)
 - Ludo 4 Schools: https://ludoleague.co.za/?page=ludo4schools (Math summation, classroom logic clinics)
-- Community Fund: https://ludoleague.co.za/?page=donate (Circular economy funding, buy equipment)
 - Identity & Vision (About): https://ludoleague.co.za/#about (Pretoria headquarters, team coordinates)
 - Player Portal: https://ludoleague.co.za/?page=portal (Login to track matches and verification metrics)
 - Get In Touch (Contact): https://ludoleague.co.za/#contact (info@ludoleague.co.za)
 - News & Affairs: https://ludoleague.co.za/?page=newsupdates (Bento-grid match report, ticker states)
 - FAQ Repository: https://ludoleague.co.za/?page=faqs (Blockade rules, safe zones, rolling consecutive sixes)
+
+CROWDFUNDING 2026 & DONATIONS PORTAL (https://ludoleague.co.za/?page=donate):
+- Goal: R1,000,000 for National Expansion, Recruitment, League Production, and Ludo4Schools.
+- Minimum Contribution: R20.00
+- Support Tiers: R50 (Profile Badge), R200 (Exclusive Avatar), R500+ (Complimentary Ludo League Gift).
+- Payment Methods: Payfast Online (Visa, Mastercard, Maestro, Instant EFT, Capitec Pay, SnapScan, Zapper) or Manual EFT (Nedbank Account: 1120230365).
+- Corporate Investment: Companies can request a callback for Franchise ownership (RTP modeling) or corporate CSI sponsorships.
 
 Do NOT use markdown bold text, asterisks, or hash symbols. Always keep answers brief, professional, helpful, and under 3 sentences. Provide the exact page link (https://ludoleague.co.za/...) for more details where relevant.`;
 
@@ -266,12 +272,18 @@ RESOURCES & DIRECT WEB NAVIGATION INDEX:
 - Hall of Fame (History): https://ludoleague.co.za/#history (AFCON champions, Kea Mdawe, Thabo Nkosi)
 - Action Gallery: https://ludoleague.co.za/#gallery (Match visuals)
 - Ludo 4 Schools: https://ludoleague.co.za/?page=ludo4schools (Math summation, classroom logic clinics)
-- Community Fund: https://ludoleague.co.za/?page=donate (Circular economy funding, buy equipment)
 - Identity & Vision (About): https://ludoleague.co.za/#about (Pretoria headquarters, team coordinates)
 - Player Portal: https://ludoleague.co.za/?page=portal (Login to track matches and verification metrics)
 - Get In Touch (Contact): https://ludoleague.co.za/#contact (info@ludoleague.co.za)
 - News & Affairs: https://ludoleague.co.za/?page=newsupdates (Bento-grid match report, ticker states)
 - FAQ Repository: https://ludoleague.co.za/?page=faqs (Blockade rules, safe zones, rolling consecutive sixes)
+
+CROWDFUNDING 2026 & DONATIONS PORTAL (https://ludoleague.co.za/?page=donate):
+- Goal: R1,000,000 for National Expansion, Recruitment, League Production, and Ludo4Schools.
+- Minimum Contribution: R20.00
+- Support Tiers: R50 (Profile Badge), R200 (Exclusive Avatar), R500+ (Complimentary Ludo League Gift).
+- Payment Methods: Payfast Online (Visa, Mastercard, Maestro, Instant EFT, Capitec Pay, SnapScan, Zapper) or Manual EFT (Nedbank Account: 1120230365).
+- Corporate Investment: Companies can request a callback for Franchise ownership (RTP modeling) or corporate CSI sponsorships.
 
 Be highly professional, direct, and concise (keep answers to 2-3 sentences max). Never use markdown markers like asterisks or hash symbols.`;
 
