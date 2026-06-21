@@ -221,7 +221,7 @@ export default function App() {
                 <Tournaments />
                 <History />
                 <Gallery />
-                <Shop cart={cart} setCart={setCart} />
+                <Shop />
                 <Contact />
               </>
             )}

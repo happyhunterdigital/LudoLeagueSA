@@ -4,7 +4,7 @@ import { ShopSelector } from '../components/features/ShopSelector';
 import { ShopFeatures } from '../components/features/ShopFeatures';
 import { ShopCustomize } from '../components/features/ShopCustomize';
 
-export const Shop = (props: any) => {
+export const Shop = () => {
   const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
   React.useEffect(() => {
