@@ -14,7 +14,7 @@ export const Landing = ({ setActivePage }: { setActivePage: (p: Page) => void })
   return (
     <div className="flex flex-col w-full bg-black">
       {/* Hero Section */}
-      <LandingHero scrollToSection={(id) => setActivePage('Tournaments')} />
+      <LandingHero scrollToSection={() => setActivePage('Tournaments')} />
       
       {/* News Ticker Carousel */}
       <LandingCarousel />

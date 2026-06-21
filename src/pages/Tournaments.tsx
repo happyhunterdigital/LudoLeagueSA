@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { RegistrationData } from '../types';

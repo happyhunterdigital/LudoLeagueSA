@@ -1,3 +1,4 @@
+import { SectionHeader } from '../components/ui/SharedUI';
 import { BookOpen, Landmark, Heart } from 'lucide-react';
 
 export const Ludo4Schools = () => {
