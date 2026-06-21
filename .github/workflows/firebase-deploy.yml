@@ -35,3 +35,8 @@ jobs:
           args: deploy --only hosting,functions --project ludoleaguesa-33371 --force
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LUDOLEAGUESA }}
+
+      - name: Verify Deployment
+        run: |
+          curl -f https://ludoleague.co.za/index.html || exit 1
+          curl -I https://ludoleague.co.za/ | grep "Strict-Transport-Security" || exit 1

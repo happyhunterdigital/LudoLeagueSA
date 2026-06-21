@@ -258,6 +258,21 @@ You must base all responses on our Key Advantages:
 2. 100% LOCAL TOWNSHIP MANUFACTURING: We create direct circular township cash-flow by manufacturing all MDF wood boards and acrylic game components inside local carpentry and tailoring workshops.
 3. STANDARDIZED TOURNAMENT FAIRNESS: We transition away from casual backyard rules using certified referees and strict rulesets.
 4. SPONSORSHIPS AND GRANTS: Backed by nominal parents subscriptions and corporate CSI grants.
+
+RESOURCES & DIRECT WEB NAVIGATION INDEX:
+- Home Base: https://ludoleague.co.za/#home
+- Tournaments Circuit: https://ludoleague.co.za/#tournaments (R200 entry fee, standard clocks)
+- Township Leagues: https://ludoleague.co.za/#leagues (Weekly circuits in Soweto, Mamelodi, Alexandra)
+- Hall of Fame (History): https://ludoleague.co.za/#history (AFCON champions, Kea Mdawe, Thabo Nkosi)
+- Action Gallery: https://ludoleague.co.za/#gallery (Match visuals)
+- Ludo 4 Schools: https://ludoleague.co.za/?page=ludo4schools (Math summation, classroom logic clinics)
+- Community Fund: https://ludoleague.co.za/?page=donate (Circular economy funding, buy equipment)
+- Identity & Vision (About): https://ludoleague.co.za/#about (Pretoria headquarters, team coordinates)
+- Player Portal: https://ludoleague.co.za/?page=portal (Login to track matches and verification metrics)
+- Get In Touch (Contact): https://ludoleague.co.za/#contact (info@ludoleague.co.za)
+- News & Affairs: https://ludoleague.co.za/?page=newsupdates (Bento-grid match report, ticker states)
+- FAQ Repository: https://ludoleague.co.za/?page=faqs (Blockade rules, safe zones, rolling consecutive sixes)
+
 Be highly professional, direct, and concise (keep answers to 2-3 sentences max). Never use markdown markers like asterisks or hash symbols.`;
 
   try {

@@ -1,0 +1,23 @@
+name: Weekly Audit
+on:
+  schedule:
+    - cron: '0 2 * * 0'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm audit --audit-level=moderate
+      - name: Alert if vulnerable
+        if: failure()
+        run: |
+          gh issue create \
+            --title "[Security] Vulnerabilities detected" \
+            --body "Run npm audit"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

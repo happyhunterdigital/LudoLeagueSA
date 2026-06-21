@@ -18,20 +18,20 @@ service firebase.storage {
 
     // User avatars/profiles
     match /users/{userId}/{fileName} {
-      allow read: if true;
-      allow write: if isOwner(userId) || isAdmin();
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+      allow write: if (isAuthenticated() && request.auth.uid == userId && request.resource.size < 10 * 1024 * 1024) || (isAdmin() && request.resource.size < 10 * 1024 * 1024);
     }
 
     // Tournament assets
     match /tournaments/{tournamentId}/{fileName} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAdmin() && request.resource.size < 10 * 1024 * 1024;
     }
 
     // Product images
     match /products/{productId}/{fileName} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAdmin() && request.resource.size < 10 * 1024 * 1024;
     }
 
     // Default deny

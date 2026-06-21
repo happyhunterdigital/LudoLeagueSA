@@ -39,7 +39,8 @@ service cloud.firestore {
 
     // Event registrations collection (Handles frontend sign-ups and donations)
     match /event_registrations/{registrationId} {
-      allow create: if true; // Allow public tournament sign-ups and donation submissions
+      allow create: if request.resource.data.size() <= 1000 &&
+                     request.resource.data.email.matches('^[a-zA-Z0-9._%+-]+@.*$'); // Allow public tournament sign-ups and donation submissions with validation
       allow read: if isAdmin() || (isAuthenticated() && request.auth.token.email == resource.data.email);
       allow update: if isAdmin();
       allow delete: if isAdmin();

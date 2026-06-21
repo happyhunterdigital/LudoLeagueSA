@@ -64,7 +64,9 @@ export const ChatbotWidget = () => {
           >
             <div className="bg-[#2C3E50] p-4 border-b border-slate-700 flex items-center justify-between text-white">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-slate-950 font-black"><Bot size={18} /></div>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden bg-slate-800">
+                  <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1782024034/GoldDiceHero_1_kusjkg.png" alt="Bot Icon" className="w-full h-full object-cover" />
+                </div>
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-black font-display italic">League Assistant</h4>
                   <span className="text-[9px] text-[#00f0c2] font-bold">Online</span>
@@ -98,8 +100,8 @@ export const ChatbotWidget = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <button onClick={() => setIsOpen(!isOpen)} className="w-14 h-14 bg-[#FFD700] hover:bg-white hover:scale-105 text-slate-950 rounded-full flex items-center justify-center shadow-2xl transition-all border border-amber-400">
-        <MessageSquare size={24} />
+      <button onClick={() => setIsOpen(!isOpen)} className="w-14 h-14 bg-slate-900 hover:scale-105 text-white rounded-full flex items-center justify-center shadow-2xl transition-all border border-amber-400 overflow-hidden">
+        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1782024034/GoldDiceHero_1_kusjkg.png" alt="Chat" className="w-full h-full object-cover" />
       </button>
     </div>
   );
