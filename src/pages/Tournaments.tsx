@@ -59,7 +59,7 @@ export const Tournaments = () => {
     form.method = 'POST';
     const fields = {
       merchant_id: '35471207',
-      merchant_key: 'q9qkx9sqx9I3m',
+      merchant_key: 'q9qkx9sqx9l3m',
       return_url: 'https://ludoleague.co.za/?page=tournaments&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=tournaments&status=cancel',
       name_first: formData.fullName.split(' ')[0] || '',

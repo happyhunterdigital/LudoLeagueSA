@@ -77,7 +77,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
 
     const fields = {
       merchant_id: '35471207',
-      merchant_key: 'q9qkx9sqx9I3m',
+      merchant_key: 'q9qkx9sqx9l3m',
       return_url: 'https://ludoleague.co.za/?page=shop&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=shop&status=cancel',
       name_first: formData.fullName.split(' ')[0] || '',
