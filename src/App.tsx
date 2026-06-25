@@ -32,6 +32,7 @@ import { UserDashboard } from './pages/UserDashboard';
 import { Ludo4Schools } from './pages/Ludo4Schools';
 import { DonationPage } from './pages/DonationPage';
 import { LudoLoader } from './components/features/LudoLoader';
+import { ShopCheckoutModal } from './components/features/ShopCheckoutModal';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' |
@@ -41,15 +42,22 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cart] = useState<string[]>([]);
+  const [cart, setCart] = useState<string[]>([]);
   const [wishlist] = useState<string[]>([]);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+
+  const addToCart = (id: string) => {
+    if (!cart.includes(id)) {
+      setCart([...cart, id]);
+    }
+  };
 
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
   const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate'];
+  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate', 'shop'];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -150,6 +158,7 @@ export default function App() {
             scaleX={scaleX} cart={cart} wishlist={wishlist}
             activeSection={activeSection} scrollToSection={scrollToSection}
             mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}
+            openCart={() => setIsCheckoutOpen(true)}
           />
           
           {/* News Ticker */}
@@ -176,6 +185,9 @@ export default function App() {
             )}
             {activeSection === 'newsupdates' && <NewsUpdates />}
             {activeSection === 'faqs' && <Faqs />}
+            {activeSection === 'shop' && (
+              <Shop addToCart={addToCart} openCart={() => setIsCheckoutOpen(true)} />
+            )}
             {activeSection === 'afcontournament' && (
               <AfconTournament setActivePage={(p: any) => setActiveSection(p.toLowerCase())} />
             )}
@@ -222,7 +234,6 @@ export default function App() {
                 <Tournaments />
                 <History />
                 <Gallery />
-                <Shop />
                 <Contact />
               </>
             )}
@@ -278,6 +289,7 @@ export default function App() {
           </main>
           <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
           <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+          <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={() => setCart([])} />
           <ChatbotWidget />
         </div>
       )}

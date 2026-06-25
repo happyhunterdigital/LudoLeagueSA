@@ -10,6 +10,7 @@ interface NavbarProps {
   scrollToSection: (id: string) => void;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
+  openCart: () => void;
 }
 
 interface NavigationLink {
@@ -69,7 +70,7 @@ const canvasVariants = {
 };
 
 export const Navbar: React.FC<NavbarProps> = ({
-  scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen
+  scaleX, cart, wishlist, activeSection, scrollToSection, mobileMenuOpen, setMobileMenuOpen, openCart
 }) => {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -206,10 +207,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="flex items-center gap-4 sm:gap-6">
             <div className="flex items-center gap-2 pr-4 border-r border-neutral-800">
-              <button onClick={() => handleNavigationTrigger("shop")} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Wishlist">
+              <button onClick={openCart} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Wishlist">
                 <Heart size={20} fill={wishlist.length > 0 ? "#FFD700" : "none"} className={wishlist.length > 0 ? "text-[#FFD700]" : ""} />
               </button>
-              <button onClick={() => handleNavigationTrigger("shop")} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Shopping Cart">
+              <button onClick={openCart} className="relative p-2 text-neutral-400 hover:text-[#FFD700] transition-colors" aria-label="Shopping Cart">
                 <ShoppingCart size={20} fill={cart.length > 0 ? "#FFD700" : "none"} className={cart.length > 0 ? "text-[#FFD700]" : ""} />
                 {cart.length > 0 && (
                   <span className="absolute top-0.5 right-0.5 w-4.5 h-4.5 bg-[#FFD700] text-black text-[9px] font-black flex items-center justify-center rounded-full shadow-md">{cart.length}</span>

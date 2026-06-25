@@ -55,10 +55,10 @@ export const Tournaments = () => {
 
   const triggerPayfastRedirect = () => {
     const form = document.createElement('form');
-    form.action = 'https://www.payfast.co.za/eng/process';
+    form.action = 'https://sandbox.payfast.co.za/eng/process';
     form.method = 'POST';
     const fields = {
-      merchant_id: '35471207',
+      merchant_id: '10004002',
       merchant_key: 'q9qkx9sqx9l3m',
       return_url: 'https://ludoleague.co.za/?page=tournaments&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=tournaments&status=cancel',

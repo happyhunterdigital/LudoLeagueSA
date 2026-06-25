@@ -4,7 +4,12 @@ import { ShopSelector } from '../components/features/ShopSelector';
 import { ShopFeatures } from '../components/features/ShopFeatures';
 import { ShopCustomize } from '../components/features/ShopCustomize';
 
-export const Shop = () => {
+interface ShopProps {
+  addToCart: (id: string) => void;
+  openCart: () => void;
+}
+
+export const Shop: React.FC<ShopProps> = ({ addToCart, openCart }) => {
   const [selectedVariant, setSelectedVariant] = useState<string>('board-original');
 
   React.useEffect(() => {
@@ -42,7 +47,10 @@ export const Shop = () => {
         <ShopSelector
           selectedVariant={selectedVariant}
           setSelectedVariant={setSelectedVariant}
-          onSelectComplete={() => scrollToSectionIndex(2)}
+          onSelectComplete={() => {
+            addToCart(selectedVariant);
+            openCart();
+          }}
         />
       </div>
       {/* Section 2: Feature Showcase */}
