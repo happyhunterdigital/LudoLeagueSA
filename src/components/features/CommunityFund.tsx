@@ -68,12 +68,12 @@ export const CommunityFund: React.FC = () => {
 
   const triggerPayfastRedirect = () => {
     const form = document.createElement('form');
-    form.action = 'https://sandbox.payfast.co.za/eng/process';
+    form.action = 'https://www.payfast.co.za/eng/process';
     form.method = 'POST';
 
     const fields = {
-      merchant_id: '10004002',
-      merchant_key: 'q9qkx9sqx9l3m',
+      merchant_id: '35471207',
+      merchant_key: 'q9qkx9sqx9I3m',
       return_url: 'https://ludoleague.co.za/?page=fund&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=fund&status=cancel',
       name_first: formData.fullName.split(' ')[0] || '',

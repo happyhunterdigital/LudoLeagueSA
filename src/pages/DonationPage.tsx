@@ -54,9 +54,9 @@ export const DonationPage = () => {
 
   const triggerPayfastRedirect = () => {
     const form = document.createElement('form');
-    form.action = 'https://sandbox.payfast.co.za/eng/process'; form.method = 'POST';
+    form.action = 'https://www.payfast.co.za/eng/process'; form.method = 'POST';
     const fields = {
-      merchant_id: '10004002', merchant_key: 'q9qkx9sqx9l3m',
+      merchant_id: '35471207', merchant_key: 'q9qkx9sqx9I3m',
       return_url: 'https://ludoleague.co.za/?page=donate&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=donate&status=cancel',
       name_first: formData.fullName.split(' ')[0] || '', name_last: formData.fullName.split(' ').slice(1).join(' ') || '',
