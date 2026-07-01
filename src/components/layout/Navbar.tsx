@@ -51,11 +51,13 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           
-          {/* Brand Logo - Preserved Exact Original Structure and Style */}
+          {/* Brand Logo - Updated with the specific Cloudinary Logo Asset */}
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-brand-yellow rounded flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-              <span className="font-display font-black text-black text-xl">LL</span>
-            </div>
+            <img 
+              src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1781346202/favicon_o48plg.png" 
+              alt="Ludo League SA Logo" 
+              className="w-10 h-10 object-contain transform group-hover:rotate-12 transition-transform duration-300"
+            />
             <span className="font-display font-bold text-white tracking-widest uppercase hidden md:block">
               Ludo League <span className="text-brand-yellow">SA</span>
             </span>
@@ -92,9 +94,9 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
             </button>
           </div>
 
-          {/* Mobile Menu Toggle - md:hidden Restored to prevent rendering on desktop */}
+          {/* Global Menu Toggle (Burger Menu) - Present on both desktop and mobile as requested */}
           <button 
-            className="md:hidden text-white p-2"
+            className="text-white p-2 hover:text-brand-yellow transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
