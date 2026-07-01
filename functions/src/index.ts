@@ -80,7 +80,7 @@ botApp.get("/webhook", (req: Request, res: Response) => {
 botApp.post("/webhook", async (req: Request, res: Response) => {
   try {
     const value = req.body.entry?.[0]?.changes?.[0]?.value;
-    const message = value?.messages?..[0];
+    const message = value?.messages?.[0];
     if (message && message.type === "text") {
       const userRawText = message.text.body;
       const cleanInput = userRawText.toLowerCase().trim();
