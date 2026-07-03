@@ -47,9 +47,9 @@ export const ShopSelector: React.FC<SelectorProps> = ({ selectedVariant, setSele
       {/* Horizontal Carousel */}
       <div className="flex items-center justify-center gap-6 sm:gap-12 relative max-w-4xl w-full">
         <button onClick={handlePrev} className="p-3 bg-slate-800 border border-slate-700 rounded-full hover:bg-white hover:text-slate-950 transition-all text-white cursor-pointer select-none">&larr;</button>
-        
+
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={selectedVariant}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -60,7 +60,7 @@ export const ShopSelector: React.FC<SelectorProps> = ({ selectedVariant, setSele
             <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 p-2 bg-white flex items-center justify-center">
               <img src={currentItem.src} alt={currentItem.name} className="max-w-full max-h-full object-contain" />
             </div>
-            
+
             <div className="space-y-1.5">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFC107]">Professional Series</span>
               <h4 className="text-xl sm:text-2xl font-display font-black italic text-white uppercase">{currentItem.name}</h4>
@@ -73,7 +73,7 @@ export const ShopSelector: React.FC<SelectorProps> = ({ selectedVariant, setSele
       </div>
 
       {/* Action Button */}
-      <button 
+      <button
         onClick={onSelectComplete}
         className="absolute bottom-12 px-10 py-4 bg-[#FFC107] text-[#0F172A] font-black uppercase text-xs tracking-widest rounded-xl shadow-lg hover:bg-white hover:scale-105 transition-all flex items-center gap-2 cursor-pointer"
       >

@@ -21,21 +21,21 @@ export const ShopCustomize = ({ selectedVariant }: { selectedVariant: string }) 
       {/* Center Personalization Board */}
       <div className="relative z-10 flex flex-col items-center text-center space-y-8 max-w-xl w-full">
         <span className="text-[10px] tracking-[0.25em] font-black uppercase text-slate-500">Double click and enter your name</span>
-        
+
         <div className="relative w-64 h-64 sm:w-80 sm:h-80 bg-white border border-slate-200 shadow-2xl p-4 rounded-[32px] flex items-center justify-center">
           <img src={currentItem.image} alt={currentItem.name} className="max-w-[85%] max-h-[85%] object-contain" />
-          
+
           {/* Custom Name Typography Overlay */}
-          <input 
-            type="text" 
-            value={name} 
+          <input
+            type="text"
+            value={name}
             maxLength={18}
-            onChange={e => setName(e.target.value)} 
+            onChange={e => setName(e.target.value)}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-xs font-black uppercase tracking-widest bg-slate-900/90 text-[#FFC107] px-4 py-2 border border-amber-500/20 rounded-xl outline-none shadow-lg focus:border-amber-500 transition-colors pointer-events-auto"
           />
         </div>
 
-        <button 
+        <button
           onClick={() => setShowModal(true)}
           className="px-10 py-4 bg-slate-900 text-white font-black uppercase text-xs tracking-widest rounded-xl shadow-lg hover:bg-[#D32F2F] hover:scale-105 transition-all flex items-center gap-2 cursor-pointer pointer-events-auto"
         >

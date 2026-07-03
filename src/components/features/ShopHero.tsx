@@ -28,7 +28,7 @@ export const ShopHero = ({ onExplore }: { onExplore: () => void }) => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(15,23,42,0.35)_0%,rgba(15,23,42,0.95)_100%)]" />
 
       {/* Hero Visual */}
-      <motion.div 
+      <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
@@ -57,8 +57,8 @@ export const ShopHero = ({ onExplore }: { onExplore: () => void }) => {
       {/* Scroll indicator */}
       <button onClick={onExplore} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 text-[9px] tracking-[0.3em] text-white/50 hover:text-white transition-colors cursor-pointer z-20">
         <span>EXPLORE CATALOG</span>
-        <motion.div 
-          animate={{ y: [0, 8, 0] }} 
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <ChevronDown size={14} className="text-[#FFC107]" />

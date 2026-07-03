@@ -45,7 +45,9 @@
    BASE LAYER
    ═══════════════════════════════════════════════════════ */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -87,8 +89,17 @@ body {
 }
 
 @keyframes status-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.9); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -136,7 +147,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -145,7 +156,7 @@ body {
   transform: translateY(-4px);
   background-color: #FFE600;
   color: var(--color-brand-black);
-  box-shadow: 0 0 60px rgba(250, 204, 21, 0.3), 0 20px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 0 60px rgba(250, 204, 21, 0.3), 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .btn-action:hover::after {
@@ -242,13 +253,23 @@ body {
    ═══════════════════════════════════════════════════════ */
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0%); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 .animate-marquee {
@@ -272,7 +293,7 @@ body {
 }
 
 .gradient-mesh {
-  background: 
+  background:
     radial-gradient(ellipse at 20% 50%, rgba(250, 204, 21, 0.04) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(0, 240, 194, 0.03) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, rgba(211, 47, 47, 0.03) 0%, transparent 50%);

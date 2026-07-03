@@ -7,7 +7,7 @@ const slides = [
   { headline: "106x87x2cm Box Dimensions", subline: "Oversized tactical play layout satisfying physical standards required for serious tournament play." }
 ];
 
-export const ShopFeatures = ({  }: { selectedVariant: string }) => {
+export const ShopFeatures = ({ }: { selectedVariant: string }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -26,21 +26,21 @@ export const ShopFeatures = ({  }: { selectedVariant: string }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl w-full">
         <div className="rounded-3xl overflow-hidden border border-slate-800 shadow-2xl relative bg-slate-950/60 p-6 flex items-center justify-center min-h-[300px]">
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent -z-10" />
-          <motion.img 
+          <motion.img
             key={index}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 0.35, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8 }}
-            src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg" 
-            alt="Feature focus" 
+            src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg"
+            alt="Feature focus"
             className="w-full h-80 object-cover rounded-xl"
           />
         </div>
 
         <div className="h-48 flex items-center">
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
