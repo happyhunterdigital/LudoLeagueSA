@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Volume2, VolumeX } from 'lucide-react';
 
 // Simple utility function to combine class names without requiring external libraries
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
@@ -69,6 +70,8 @@ export const DonationHero = ({
   videoUrl = "https://res.cloudinary.com/dfzeb1s54/video/upload/v1783104793/Ludo_League_Fund_raising_hero_section_video_d0qhp7.mp4",
   className
 }: DonationHeroProps) => {
+  const [isMuted, setIsMuted] = useState(false);
+
   return (
     <section className={cn('relative w-full overflow-hidden bg-black py-28 md:py-40 lg:py-48 border-b border-neutral-900 flex items-center justify-center min-h-[85vh]', className)}>
       
@@ -78,7 +81,7 @@ export const DonationHero = ({
           src={videoUrl}
           autoPlay
           loop
-          muted
+          muted={isMuted}
           playsInline
           className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
         />
@@ -146,6 +149,15 @@ export const DonationHero = ({
         </motion.div>
 
       </div>
+
+      {/* Mute/Unmute Control */}
+      <button 
+        onClick={() => setIsMuted(!isMuted)} 
+        className="absolute bottom-6 right-6 z-30 p-3 rounded-full bg-black/50 border border-white/10 hover:border-[#FFE600] text-white hover:text-[#FFE600] transition-all focus:outline-none flex items-center justify-center"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+      </button>
     </section>
   );
 };

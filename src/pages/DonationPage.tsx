@@ -22,7 +22,7 @@ export const DonationPage = () => {
 
   const formRef = useRef<HTMLDivElement>(null);
   const currentFunds = 12500;
-  const goalFunds = 50000;
+  const goalFunds = 1000000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
   const getFinalAmount = () => customAmount !== '' ? parseFloat(customAmount) || 50 : selectedAmount || 50;
