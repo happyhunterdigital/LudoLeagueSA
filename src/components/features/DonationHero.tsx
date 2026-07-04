@@ -23,15 +23,9 @@ interface DonationHeroProps {
   subtitle?: string;
   actions?: ActionProps[];
   stats?: StatProps[];
+  videoUrl?: string;
   className?: string;
 }
-
-// Fixed Cloudinary image paths provided for the Ludo4Schools ecosystem
-const DEFAULT_IMAGES = [
-  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1781478032/Ludo4School_Ludo_league_ckgoa0.jpg",
-  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1781478039/Ludo4School-Ludoleague_wmbnpe.jpg",
-  "https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1781478024/Ludo4School_Ludoleague_epotdv.jpg"
-];
 
 // High-contrast animation variants matching the UI UX Pro Max layout guidelines
 const containerVariants = {
@@ -56,30 +50,6 @@ const itemVariants = {
   },
 };
 
-const imageVariants = {
-  hidden: { opacity: 0, scale: 0.9, y: 20 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
-const floatingVariants = {
-  animate: {
-    y: [0, -12, 0],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      ease: 'easeInOut',
-    },
-  },
-};
-
 export const DonationHero = ({
   title = (
     <>
@@ -96,15 +66,30 @@ export const DonationHero = ({
     { value: "100%", label: "Direct Impact Sourced" },
     { value: "2026", label: "League Roadmap Vision" }
   ],
+  videoUrl = "https://res.cloudinary.com/dfzeb1s54/video/upload/v1783104793/Ludo_League_Fund_raising_hero_section_video_d0qhp7.mp4",
   className
 }: DonationHeroProps) => {
   return (
-    <section className={cn('w-full overflow-hidden bg-black py-20 lg:py-32 border-b border-neutral-900', className)}>
-      <div className="container mx-auto px-4 grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-12">
+    <section className={cn('relative w-full overflow-hidden bg-black py-28 md:py-40 lg:py-48 border-b border-neutral-900 flex items-center justify-center min-h-[85vh]', className)}>
+      
+      {/* Background Video */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
+        <video 
+          src={videoUrl}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
+        />
+        {/* Anti-Gravity Protocol Phase 1: High contrast background overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black z-10" />
+      </div>
+
+      <div className="relative container mx-auto px-6 z-20 flex flex-col items-center text-center max-w-4xl">
         
-        {/* Left Column: Premium Text Architecture */}
         <motion.div
-          className="flex flex-col items-center text-center lg:items-start lg:text-left"
+          className="flex flex-col items-center text-center w-full"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -113,31 +98,31 @@ export const DonationHero = ({
           {/* Elite Mini-Tag */}
           <motion.span 
             variants={itemVariants}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FFE600]/30 bg-[#FFE600]/10 px-3 py-1 text-xs font-mono uppercase tracking-widest text-[#FFE600]"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFE600]/30 bg-[#FFE600]/10 px-4 py-1.5 text-xs font-mono uppercase tracking-widest text-[#FFE600]"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#FFE600] animate-pulse" />
             Official Development Fund
           </motion.span>
 
           <motion.h1
-            className="text-4xl font-black tracking-tight text-white sm:text-6xl uppercase font-display"
+            className="text-4xl font-black tracking-tight text-white sm:text-6xl md:text-7xl uppercase font-display max-w-3xl leading-[1.05]"
             variants={itemVariants}
           >
             {title}
           </motion.h1>
           
-          <motion.p className="mt-6 max-w-lg text-base md:text-lg text-neutral-400 font-sans leading-relaxed" variants={itemVariants}>
+          <motion.p className="mt-6 max-w-xl text-base md:text-lg text-neutral-300 font-sans leading-relaxed" variants={itemVariants}>
             {subtitle}
           </motion.p>
           
           {/* Custom Yellow & Black Action Cluster */}
-          <motion.div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start" variants={itemVariants}>
+          <motion.div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto" variants={itemVariants}>
             {actions.map((action, index) => (
               <button
                 key={index}
                 onClick={action.onClick}
                 className={cn(
-                  "px-8 py-4 text-sm uppercase font-mono font-black tracking-wider transition-all duration-300 rounded-none border",
+                  "px-10 py-4 text-xs uppercase font-mono font-black tracking-wider transition-all duration-300 rounded-none border w-full sm:w-auto",
                   action.isPrimary 
                     ? "bg-[#FFE600] text-black border-[#FFE600] hover:bg-black hover:text-[#FFE600]"
                     : "bg-transparent text-white border-white/20 hover:border-[#FFE600] hover:text-[#FFE600]",
@@ -150,62 +135,16 @@ export const DonationHero = ({
           </motion.div>
 
           {/* Core Impact Matrix Row */}
-          <motion.div className="mt-14 grid grid-cols-3 gap-6 md:gap-12 w-full max-w-md border-t border-neutral-900 pt-8" variants={itemVariants}>
+          <motion.div className="mt-16 grid grid-cols-3 gap-6 md:gap-12 w-full max-w-lg border-t border-neutral-900/60 pt-8" variants={itemVariants}>
             {stats.map((stat, index) => (
-              <div key={index} className="flex flex-col items-center lg:items-start">
+              <div key={index} className="flex flex-col items-center">
                 <p className="text-3xl font-black text-[#FFE600] font-display tracking-tight">{stat.value}</p>
-                <p className="text-xs font-mono uppercase text-neutral-500 mt-1 text-center lg:text-left leading-tight">{stat.label}</p>
+                <p className="text-xs font-mono uppercase text-neutral-500 mt-1 text-center leading-tight">{stat.label}</p>
               </div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Right Column: High-Contrast Dynamic Collage */}
-        <motion.div
-          className="relative h-[450px] w-full sm:h-[600px] max-w-lg mx-auto flex items-center justify-center mt-12 lg:mt-0"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {/* Pure Theme Decorative Ambient Gradients */}
-          <motion.div
-            className="absolute top-10 left-1/4 h-32 w-32 rounded-full bg-[#FFE600]/5 blur-3xl"
-            variants={floatingVariants}
-            animate="animate"
-          />
-          <motion.div
-            className="absolute bottom-10 right-1/4 h-24 w-24 rounded-full bg-[#FFE600]/5 blur-2xl"
-            variants={floatingVariants}
-            animate="animate"
-            style={{ transitionDelay: '0.5s' }}
-          />
-
-          {/* Main Focus Image - Center Right */}
-          <motion.div
-            className="absolute right-0 top-[10%] w-[65%] sm:w-[70%] aspect-square overflow-hidden border-2 border-[#FFE600] bg-neutral-900 p-2 shadow-2xl z-20"
-            variants={imageVariants}
-          >
-            <img src={DEFAULT_IMAGES[0]} alt="Ludo League SA youth development matching" className="h-full w-full object-cover" />
-          </motion.div>
-
-          {/* Left Floating Image - Top Left */}
-          <motion.div
-            className="absolute left-0 top-0 w-[45%] sm:w-[50%] aspect-square overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 z-10"
-            variants={imageVariants}
-          >
-            <img src={DEFAULT_IMAGES[2]} alt="Ludo4Schools collaborative clinic session" className="h-full w-full object-cover" />
-          </motion.div>
-          
-          {/* Bottom Floating Image - Bottom Left */}
-          <motion.div
-            className="absolute left-[10%] bottom-[5%] w-[50%] sm:w-[55%] aspect-square overflow-hidden border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 z-30"
-            variants={imageVariants}
-          >
-            <img src={DEFAULT_IMAGES[1]} alt="Tournament execution layout" className="h-full w-full object-cover" />
-          </motion.div>
-          
-        </motion.div>
       </div>
     </section>
   );
