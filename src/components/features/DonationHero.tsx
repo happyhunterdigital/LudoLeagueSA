@@ -70,26 +70,48 @@ export const DonationHero = ({
   videoUrl = "https://res.cloudinary.com/dfzeb1s54/video/upload/v1783104793/Ludo_League_Fund_raising_hero_section_video_d0qhp7.mp4",
   className
 }: DonationHeroProps) => {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // Default to true to bypass browser autoplay blocks
 
   return (
-    <section className={cn('relative w-full overflow-hidden bg-black py-28 md:py-40 lg:py-48 border-b border-neutral-900 flex items-center justify-center min-h-[85vh]', className)}>
+    <section className={cn('relative w-full overflow-hidden bg-black flex flex-col md:flex-row md:items-center md:justify-center md:min-h-[85vh] border-b border-neutral-900', className)}>
       
-      {/* Background Video */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
+      {/* Video Container */}
+      {/* On mobile: static block at the top with aspect-video. On desktop: absolute inset-0 object-cover */}
+      <div className="relative w-full md:absolute md:inset-0 md:h-full md:w-full z-0 aspect-video md:aspect-auto h-auto md:h-full overflow-hidden">
         <video 
           src={videoUrl}
           autoPlay
           loop
           muted={isMuted}
           playsInline
-          className="absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
+          className="w-full h-full object-cover"
         />
         {/* Anti-Gravity Protocol Phase 1: High contrast background overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black md:from-black/85 md:via-black/60 md:to-black z-10" />
+
+        {/* Floating Mute/Unmute Control directly on the video */}
+        <button 
+          onClick={() => setIsMuted(!isMuted)} 
+          className="absolute bottom-4 right-4 z-20 p-2.5 rounded-full bg-black/60 border border-white/20 hover:border-[#FFE600] text-white hover:text-[#FFE600] transition-all focus:outline-none flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider shadow-lg"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+        >
+          {isMuted ? (
+            <>
+              <VolumeX size={14} />
+              <span>Unmute</span>
+            </>
+          ) : (
+            <>
+              <Volume2 size={14} />
+              <span>Mute</span>
+            </>
+          )}
+        </button>
       </div>
 
-      <div className="relative container mx-auto px-6 z-20 flex flex-col items-center text-center max-w-4xl">
+      {/* Content Container */}
+      {/* On mobile: stacked below the video. On desktop: centered on top of video */}
+      <div className="relative container mx-auto px-6 py-12 md:py-28 lg:py-36 z-20 flex flex-col items-center text-center max-w-4xl">
         
         <motion.div
           className="flex flex-col items-center text-center w-full"
@@ -149,15 +171,6 @@ export const DonationHero = ({
         </motion.div>
 
       </div>
-
-      {/* Mute/Unmute Control */}
-      <button 
-        onClick={() => setIsMuted(!isMuted)} 
-        className="absolute bottom-6 right-6 z-30 p-3 rounded-full bg-black/50 border border-white/10 hover:border-[#FFE600] text-white hover:text-[#FFE600] transition-all focus:outline-none flex items-center justify-center"
-        aria-label={isMuted ? "Unmute video" : "Mute video"}
-      >
-        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-      </button>
     </section>
   );
 };
