@@ -104,16 +104,19 @@ export const DonationPage = () => {
   return (
     <div className="min-h-screen w-full bg-neutral-950 text-white flex flex-col justify-start">
       
-      {/* Premium DonationHero with programmatic target form scrolling */}
+      {/* Premium DonationHero with campaign poster narrative and form scrolling link */}
       <DonationHero 
-        title={<>LUDO CROWDFUNDING <span className="text-[#FFE600]">2026</span></>}
-        subtitle="A New South African Sport. A New South African Future."
+        title={<>THE FUTURE OF LUDO LEAGUE IS IN <span className="text-[#FFE600]">OUR HANDS</span></>}
+        subtitle="Every game played, every friendship formed, and every opportunity created through Ludo has been made possible by our community."
         stats={[
-          { value: "R1M", label: "Funding Goal" },
-          { value: "100%", label: "Youth Impact" },
-          { value: "2026", label: "National League" }
+          { value: "Opportunities", label: "For young people" },
+          { value: "Leagues", label: "Grow communities" },
+          { value: "Platform", label: "To learn & compete" }
         ]}
-        actions={[{ text: "Donate Safely Now", onClick: handleScrollToForm, isPrimary: true }, { text: "Read Our Story", onClick: () => window.scrollBy({ top: 600, behavior: 'smooth' }), isPrimary: false }]} 
+        actions={[
+          { text: "Support the Campaign", onClick: handleScrollToForm, isPrimary: true }, 
+          { text: "Read Our Story", onClick: () => window.scrollBy({ top: 600, behavior: 'smooth' }), isPrimary: false }
+        ]} 
       />
 
       {/* Narrative Section */}

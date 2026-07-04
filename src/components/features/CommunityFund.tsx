@@ -21,11 +21,11 @@ export const CommunityFund: React.FC = () => {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(20);
   const [customAmount, setCustomAmount] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast'>('payfast');
-  const [formData, setFormData] = useState({ fullName: '', email: '', proofOfPayment: null as File | null });
+  const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast' | 'investment'>('payfast');
+  const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null as File | null });
 
   const currentFunds = 12500;
-  const goalFunds = 50000;
+  const goalFunds = 1000000;
   const progressPercentage = Math.min((currentFunds / goalFunds) * 100, 100);
 
   const getFinalAmount = (): number => {
@@ -96,8 +96,9 @@ export const CommunityFund: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (finalAmount < 20) {
+    e?.preventDefault();
+    const isCallback = paymentMethod === 'investment';
+    if (!isCallback && finalAmount < 20) {
       alert("Donations must start from as little as R20. Please adjust your amount.");
       return;
     }
@@ -111,13 +112,15 @@ export const CommunityFund: React.FC = () => {
         await addDoc(collection(db, 'event_registrations'), {
           fullName: formData.fullName,
           email: formData.email,
+          phone: formData.phone || 'N/A',
           paymentMethod,
           proofOfPaymentUrl: popUrl,
-          status: paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
-          eventName: 'League Community Fund Donation',
+          status: isCallback ? 'pending_callback' : paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
+          eventName: isCallback ? 'Investment Callback Request' : 'League Community Fund Donation',
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Direct Donation',
-          amount: finalAmount,
+          amount: isCallback ? 0 : finalAmount,
+          message: formData.message || 'N/A',
           timestamp: serverTimestamp(),
         });
       }
@@ -144,35 +147,56 @@ export const CommunityFund: React.FC = () => {
           colorClass="text-white"
         />
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white border border-white/20 p-6 md:p-10 rounded-2xl shadow-xl mt-8 text-slate-800">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-6">
+            <button type="button" onClick={() => { setPaymentMethod('payfast'); setSelectedAmount(20); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod !== 'investment' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Direct Supporter</button>
+            <button type="button" onClick={() => { setPaymentMethod('investment'); setSelectedAmount(null); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod === 'investment' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Invest / Callback</button>
+          </div>
+
           {step === 1 && (
             <div className="space-y-6">
-              <div className="flex justify-between items-end mb-3">
-                <div>
-                  <span className="text-4xl font-display font-black italic text-[#0F172A]">R{currentFunds.toLocaleString()}</span>
-                  <span className="text-slate-500 ml-2 text-xs font-bold uppercase tracking-widest">raised of R{goalFunds.toLocaleString()} goal</span>
+              {paymentMethod !== 'investment' ? (
+                <div className="space-y-6">
+                  <div className="flex justify-between items-end mb-3">
+                    <div>
+                      <span className="text-4xl font-display font-black italic text-[#0F172A]">R{currentFunds.toLocaleString()}</span>
+                      <span className="text-slate-500 ml-2 text-xs font-bold uppercase tracking-widest">raised of R{goalFunds.toLocaleString()} goal</span>
+                    </div>
+                    <span className="text-sm font-bold text-[#0EA5E9]">{progressPercentage.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-4 mb-8 overflow-hidden shadow-inner">
+                    <div className="bg-[#0EA5E9] h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {fundTiers.map((tier) => (
+                      <button key={tier.amount} type="button" onClick={() => { setSelectedAmount(tier.amount); setCustomAmount(''); }} className={`p-6 rounded-xl border-2 text-left transition-all ${selectedAmount === tier.amount && customAmount === '' ? 'border-[#0EA5E9] bg-sky-50 shadow-md' : 'border-slate-200 hover:border-[#0EA5E9]'}`}>
+                        <div className="font-display font-black italic text-2xl text-[#0F172A] mb-2">R{tier.amount}</div>
+                        <div className="text-xs text-slate-600 font-bold leading-relaxed">{tier.perk}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="pt-2">
+                    <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Or enter Custom Amount (minimum R20):</label>
+                    <input type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
+                  </div>
                 </div>
-                <span className="text-sm font-bold text-[#0EA5E9]">{progressPercentage.toFixed(1)}%</span>
-              </div>
-              <div className="w-full bg-slate-100 rounded-full h-4 mb-8 overflow-hidden shadow-inner">
-                <div className="bg-[#0EA5E9] h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {fundTiers.map((tier) => (
-                  <button key={tier.amount} type="button" onClick={() => { setSelectedAmount(tier.amount); setCustomAmount(''); }} className={`p-6 rounded-xl border-2 text-left transition-all ${selectedAmount === tier.amount && customAmount === '' ? 'border-[#0EA5E9] bg-sky-50 shadow-md' : 'border-slate-200 hover:border-[#0EA5E9]'}`}>
-                    <div className="font-display font-black italic text-2xl text-[#0F172A] mb-2">R{tier.amount}</div>
-                    <div className="text-xs text-slate-600 font-bold leading-relaxed">{tier.perk}</div>
-                  </button>
-                ))}
-              </div>
-              <div className="pt-2">
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Or enter Custom Amount (minimum R20):</label>
-                <input type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
-              </div>
+              ) : (
+                <div className="bg-slate-50 p-5 border-l-4 border-[#0EA5E9] text-xs text-slate-600 space-y-2 rounded-r-xl">
+                  <p className="font-bold text-slate-800 uppercase text-sm">Corporate Investment Callback Request</p>
+                  <p>Leave your coordinates below. Our executive committee will promptly schedule an offline phone consultation to discuss local franchise club ownership (RTP modeling), corporate CSI sponsorships, and league shares.</p>
+                </div>
+              )}
+
               <div className="space-y-4 pt-6 border-t">
                 <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
                 <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <input required={paymentMethod === 'investment'} type="tel" placeholder="Your Phone Number" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                {paymentMethod === 'investment' && (
+                  <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
+                )}
               </div>
-              <button disabled={finalAmount < 20 || !formData.fullName || !formData.email} onClick={() => setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">Continue to Transfer</button>
+              <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit(null as any) : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
+                {paymentMethod === 'investment' ? 'Request Callback' : 'Continue to Transfer'}
+              </button>
             </div>
           )}
 
@@ -231,9 +255,15 @@ export const CommunityFund: React.FC = () => {
           {step === 3 && (
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-              <h3 className="text-2xl font-display font-black italic uppercase text-slate-955">ORDER PLACED pending verification</h3>
-              <p className="text-slate-600 leading-relaxed">Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.</p>
-              <button onClick={() => { setStep(1); setSelectedAmount(20); setCustomAmount(''); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
+              <h3 className="text-2xl font-display font-black italic uppercase text-slate-955">
+                {paymentMethod === 'investment' ? 'REQUEST LOGGED' : 'ORDER PLACED pending verification'}
+              </h3>
+              <p className="text-slate-600 leading-relaxed font-light">
+                {paymentMethod === 'investment' 
+                  ? 'Thank you! Your corporate investment callback query has been logged. Our administration and executive committee will contact you shortly on your provided phone number.'
+                  : 'Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.'}
+              </p>
+              <button onClick={() => { setStep(1); setSelectedAmount(20); setCustomAmount(''); setPaymentMethod('payfast'); setFormData({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null }); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
           )}
         </motion.div>
