@@ -248,6 +248,33 @@ export const sendEventRegistrationEmail = functions.firestore
           }
         });
       }
+    } else if (type === 'sponsorship') {
+      // 1. Send details immediately to admin
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[Sponsorship Inquiry] New Inquiry from ${data.fullName || 'User'}`,
+          html: `<p>A new corporate sponsorship inquiry has been logged:</p>
+                 <p><strong>Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Phone:</strong> ${data.phone || data.phoneNumber || 'N/A'}</p>
+                 <p><strong>Inquiry Message:</strong></p>
+                 <p>${data.message || 'No specific queries'}</p>`
+        }
+      });
+
+      // 2. Send receipt confirmation to user
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Corporate Partnership Verified',
+            html: `<p>Hello ${data.fullName || 'there'},</p>
+                   <p>Thank you for your commitment to sponsor our tournament circuit. An administrative representative will touch base shortly to coordinate media visibility parameters.</p>
+                   <p>Best regards,<br>The Ludo League SA Team</p>`
+          }
+        });
+      }
     } else if (type === 'donation') {
       // 1. Send receipt confirmation to user
       if (data.email) {
