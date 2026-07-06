@@ -115,6 +115,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
           proofOfPaymentUrl: popUrl,
           status: paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
           eventName: 'Shop Merchandise Purchase',
+          type: 'purchase',
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Physical Gear Delivery',
           deliveryAddress: formData.address,

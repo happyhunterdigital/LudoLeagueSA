@@ -170,20 +170,181 @@ export const sendEventRegistrationEmail = functions.firestore
   .document('event_registrations/{registrationId}')
   .onCreate(async (snap) => {
     const data = snap.data();
-    if (!data?.email) return;
-    const type = data.type || 'subscription';
-    let subject = 'Welcome to the Intelligence Network';
-    let content = '<p>Thank you for subscribing to our official updates channel.</p>';
+    if (!data) return;
 
-    if (type === 'donation') {
-      subject = 'Crowd Funding Donation Acknowledged';
-      content = `<p>Thank you for your generous donation of R${data.amount || '0'} to the Community Fund. Your support sustains screen-free learning clinics and township manufacturing jobs.</p>`;
-    } else if (type === 'sponsorship') {
-      subject = 'Corporate Partnership Verified';
-      content = `<p>Thank you for your commitment to sponsor our tournament circuit. An administrative representative will touch base shortly to coordinate media visibility parameters.</p>`;
+    // Detect type based on type field or eventName keyword matching
+    let type = data.type;
+    if (!type) {
+      const eventName = data.eventName || '';
+      if (eventName.includes('Donation') || eventName.includes('Crowdfunding') || eventName.includes('Narrative')) {
+        type = 'donation';
+      } else if (eventName.includes('Callback') || eventName.includes('Investment')) {
+        type = 'investment';
+      } else if (eventName.includes('Purchase') || eventName.includes('Shop')) {
+        type = 'purchase';
+      } else if (eventName.includes('Contact')) {
+        type = 'contact';
+      } else if (eventName.includes('Tournament') || eventName.includes('Registration')) {
+        type = 'tournament';
+      } else {
+        type = 'subscription';
+      }
     }
 
-    await db.collection('mail').add({ to: data.email, message: { subject, html: content } });
+    const adminEmail = 'info@ludoleague.co.za';
+
+    if (type === 'contact') {
+      // 1. Send details immediately to admin
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[Contact Us] New message from ${data.fullName || 'User'}`,
+          html: `<p>You received a new message from the contact form:</p>
+                 <p><strong>Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Message:</strong></p>
+                 <p>${data.message || 'No message provided'}</p>`
+        }
+      });
+
+      // 2. Send receipt confirmation to user
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Message Received - Ludo League SA',
+            html: `<p>Hello ${data.fullName || 'there'},</p>
+                   <p>Thank you for getting in touch with Ludo League SA. We have received your message and will be in touch with you soon.</p>
+                   <p>Best regards,<br>The Ludo League SA Team</p>`
+          }
+        });
+      }
+    } else if (type === 'investment') {
+      // 1. Send details immediately to admin
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[Callback Request] New Investment Inquiry from ${data.fullName || 'User'}`,
+          html: `<p>A new corporate investment callback request has been logged:</p>
+                 <p><strong>Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Phone:</strong> ${data.phone || data.phoneNumber || 'N/A'}</p>
+                 <p><strong>Inquiry Message:</strong></p>
+                 <p>${data.message || 'No specific queries'}</p>`
+        }
+      });
+
+      // 2. Send receipt confirmation to user
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Callback Request Logged - Ludo League SA',
+            html: `<p>Hello ${data.fullName || 'there'},</p>
+                   <p>Your corporate investment callback query has been logged. Our executive committee will contact you shortly on your provided phone number (${data.phone || data.phoneNumber || 'N/A'}).</p>
+                   <p>Best regards,<br>The Ludo League SA Team</p>`
+          }
+        });
+      }
+    } else if (type === 'donation') {
+      // 1. Send receipt confirmation to user
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Crowd Funding Donation Acknowledged',
+            html: `<p>Thank you for your generous donation of R${data.amount || '0'} to the Community Fund. Your support sustains screen-free learning clinics and township manufacturing jobs.</p>`
+          }
+        });
+      }
+
+      // 2. Notify the admin of the donation immediately
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[Donation] Contribution from ${data.fullName || 'User'}`,
+          html: `<p>A new donation has been received:</p>
+                 <p><strong>Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Amount:</strong> R${data.amount || '0'}</p>
+                 <p><strong>Payment Method:</strong> ${data.paymentMethod || 'N/A'}</p>
+                 <p><strong>Message:</strong> ${data.message || 'N/A'}</p>`
+        }
+      });
+    } else if (type === 'purchase') {
+      // 1. Send receipt confirmation to user
+      if (data.email) {
+        const containsBoard = data.items && data.items.some((item: any) => {
+          const name = typeof item === 'string' ? item : item.name || '';
+          return name.toLowerCase().includes('board') || name.toLowerCase().includes('mdf');
+        });
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Order Processed - Ludo League SA',
+            html: `<p>Thank you for your purchase.</p>${containsBoard ? '<p>Special Note: Your tournament MDF board is currently being hand-milled inside local township carpentry workshops. Thank you for supporting regional employment!</p>' : ''}`
+          }
+        });
+      }
+
+      // 2. Notify the admin of the order immediately
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[New Order] Purchase by ${data.fullName || 'User'}`,
+          html: `<p>A new shop order has been placed:</p>
+                 <p><strong>Customer Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Customer Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Delivery Address:</strong> ${data.deliveryAddress || 'N/A'}</p>
+                 <p><strong>Courier:</strong> ${data.courierChoice || 'N/A'} (Cost: R${data.courierCost || 0})</p>
+                 <p><strong>Total Paid:</strong> R${data.totalCost || 0}</p>
+                 <p><strong>Items:</strong></p>
+                 <ul>
+                   ${data.items ? data.items.map((item: any) => {
+                     const name = typeof item === 'string' ? item : item.name || 'Unknown item';
+                     const quantity = typeof item === 'string' ? 1 : item.quantity || 1;
+                     return `<li>${quantity}x ${name}</li>`;
+                   }).join('') : 'N/A'}
+                 </ul>`
+        }
+      });
+    } else if (type === 'tournament') {
+      // 1. Send confirmation to user
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Player Registration Verified',
+            html: `<p>Hello ${data.fullName || 'Player'},</p><p>We have successfully verified your registration to join the Ludo League SA circuit in the ${data.region || 'N/A'} region. Standard clock procedures will be provided on-ground.</p>`
+          }
+        });
+      }
+
+      // 2. Notify the admin of the registration immediately
+      await db.collection('mail').add({
+        to: adminEmail,
+        message: {
+          subject: `[Tournament Signup] ${data.fullName || 'Player'} registered`,
+          html: `<p>A new tournament registration has been received:</p>
+                 <p><strong>Name:</strong> ${data.fullName || 'N/A'}</p>
+                 <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+                 <p><strong>Phone:</strong> ${data.phoneNumber || 'N/A'}</p>
+                 <p><strong>Region:</strong> ${data.region || 'N/A'}</p>
+                 <p><strong>Payment Method:</strong> ${data.paymentMethod || 'N/A'}</p>`
+        }
+      });
+    } else {
+      // Default subscription/fallback
+      if (data.email) {
+        await db.collection('mail').add({
+          to: data.email,
+          message: {
+            subject: 'Welcome to the Intelligence Network',
+            html: '<p>Thank you for subscribing to our official updates channel.</p>'
+          }
+        });
+      }
+    }
   });
 
 export const sendOrderEmail = functions.firestore

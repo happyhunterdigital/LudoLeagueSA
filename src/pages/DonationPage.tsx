@@ -71,8 +71,8 @@ export const DonationPage = () => {
     document.body.appendChild(form); form.submit();
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     const isCallback = paymentMethod === 'investment';
     if (!isCallback && finalAmount < 20) { alert("Contributions must start from as little as R20.00."); return; }
     
@@ -89,6 +89,7 @@ export const DonationPage = () => {
           message: formData.message || 'N/A',
           status: isCallback ? 'pending_callback' : paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
           eventName: isCallback ? 'Investment Callback Request' : 'Crowdfunding Narrative 2026',
+          type: isCallback ? 'investment' : 'donation',
           eventDate: new Date().toLocaleDateString(), timestamp: serverTimestamp()
         });
       }
@@ -307,7 +308,7 @@ export const DonationPage = () => {
               )}
             </div>
 
-            <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit(null as any) : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-[#FFD700] text-white hover:text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-lg text-xs disabled:opacity-50">
+            <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-[#FFD700] text-white hover:text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-lg text-xs disabled:opacity-50">
               {paymentMethod === 'investment' ? 'Request Callback' : 'Continue to Transfer'}
             </button>
           </div>

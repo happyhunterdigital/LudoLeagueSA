@@ -95,7 +95,7 @@ export const CommunityFund: React.FC = () => {
     form.submit();
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
     const isCallback = paymentMethod === 'investment';
     if (!isCallback && finalAmount < 20) {
@@ -117,6 +117,7 @@ export const CommunityFund: React.FC = () => {
           proofOfPaymentUrl: popUrl,
           status: isCallback ? 'pending_callback' : paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
           eventName: isCallback ? 'Investment Callback Request' : 'League Community Fund Donation',
+          type: isCallback ? 'investment' : 'donation',
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Direct Donation',
           amount: isCallback ? 0 : finalAmount,
@@ -194,7 +195,7 @@ export const CommunityFund: React.FC = () => {
                   <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
                 )}
               </div>
-              <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit(null as any) : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
+              <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
                 {paymentMethod === 'investment' ? 'Request Callback' : 'Continue to Transfer'}
               </button>
             </div>
