@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import { onCall, onRequest } from 'firebase-functions/v2/https';
 import * as admin from 'firebase-admin';
+import * as nodemailer from 'nodemailer';
 import express, { Request, Response } from 'express';
 import axios from 'axios';
 
@@ -389,4 +390,52 @@ export const sendOrderEmail = functions.firestore
         html: `<p>Thank you for your purchase.</p>${containsBoard ? '<p>Special Note: Your tournament MDF board is currently being hand-milled inside local township carpentry workshops. Thank you for supporting regional employment!</p>' : ''}`
       }
     });
+  });
+
+// Cloud Function to act as a direct alternative to the Trigger Email Extension
+export const processMailQueue = functions.firestore
+  .document('mail/{docId}')
+  .onCreate(async (snap, context) => {
+    const data = snap.data();
+    if (!data || !data.to || !data.message) return;
+
+    // Use environment variables for secure SMTP configuration
+    // To set: firebase functions:config:set smtp.host="smtp.example.com" smtp.port="465" smtp.user="your_email" smtp.pass="your_password"
+    const transporter = nodemailer.createTransport({
+      host: functions.config().smtp?.host || process.env.SMTP_HOST || '',
+      port: Number(functions.config().smtp?.port || process.env.SMTP_PORT || 465),
+      secure: true,
+      auth: {
+        user: functions.config().smtp?.user || process.env.SMTP_USER || '',
+        pass: functions.config().smtp?.pass || process.env.SMTP_PASS || '',
+      },
+    });
+
+    try {
+      const info = await transporter.sendMail({
+        from: `"Ludo League SA" <${functions.config().smtp?.user || process.env.SMTP_USER || 'info@ludoleague.co.za'}>`,
+        to: data.to,
+        subject: data.message.subject,
+        text: data.message.text || '',
+        html: data.message.html || '',
+      });
+
+      // Update the document to indicate successful delivery
+      await snap.ref.update({
+        delivery: {
+          state: 'SUCCESS',
+          info: info.messageId,
+          error: null,
+        }
+      });
+    } catch (error: any) {
+      console.error('Error sending email:', error);
+      // Update the document to record the error
+      await snap.ref.update({
+        delivery: {
+          state: 'ERROR',
+          error: error.message || 'Unknown error',
+        }
+      });
+    }
   });
