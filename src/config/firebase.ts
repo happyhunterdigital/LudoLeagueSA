@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getFunctions } from 'firebase/functions';
 import { getAuth } from 'firebase/auth';
@@ -20,8 +20,8 @@ export const app = initializeApp(firebaseConfig);
 
 // Connects to the default database unless explicitly specified inside the configuration
 export const db = (firebaseAppletConfig as any).firestoreDatabaseId 
-  ? getFirestore(app, (firebaseAppletConfig as any).firestoreDatabaseId)
-  : getFirestore(app);
+  ? initializeFirestore(app, { experimentalForceLongPolling: true }, (firebaseAppletConfig as any).firestoreDatabaseId)
+  : initializeFirestore(app, { experimentalForceLongPolling: true });
 
 export const storage = getStorage(app);
 export const functions = getFunctions(app, 'us-central1');
