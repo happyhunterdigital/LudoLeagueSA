@@ -178,6 +178,8 @@ export const sendEventRegistrationEmail = functions.firestore
       const eventName = data.eventName || '';
       if (eventName.includes('Donation') || eventName.includes('Crowdfunding') || eventName.includes('Narrative')) {
         type = 'donation';
+      } else if (eventName.includes('Sponsor') || eventName.includes('Partnership')) {
+        type = 'sponsorship';
       } else if (eventName.includes('Callback') || eventName.includes('Investment')) {
         type = 'investment';
       } else if (eventName.includes('Purchase') || eventName.includes('Shop')) {

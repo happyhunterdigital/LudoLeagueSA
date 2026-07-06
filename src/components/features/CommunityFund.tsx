@@ -21,7 +21,7 @@ export const CommunityFund: React.FC = () => {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(20);
   const [customAmount, setCustomAmount] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast' | 'investment'>('payfast');
+  const [paymentMethod, setPaymentMethod] = useState<'eft' | 'payfast' | 'investment' | 'sponsorship'>('payfast');
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null as File | null });
 
   const currentFunds = 12500;
@@ -97,7 +97,7 @@ export const CommunityFund: React.FC = () => {
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    const isCallback = paymentMethod === 'investment';
+    const isCallback = paymentMethod === 'investment' || paymentMethod === 'sponsorship';
     if (!isCallback && finalAmount < 20) {
       alert("Donations must start from as little as R20. Please adjust your amount.");
       return;
@@ -116,8 +116,8 @@ export const CommunityFund: React.FC = () => {
           paymentMethod,
           proofOfPaymentUrl: popUrl,
           status: isCallback ? 'pending_callback' : paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
-          eventName: isCallback ? 'Investment Callback Request' : 'League Community Fund Donation',
-          type: isCallback ? 'investment' : 'donation',
+          eventName: paymentMethod === 'sponsorship' ? 'Corporate Sponsorship Inquiry' : (isCallback ? 'Investment Callback Request' : 'League Community Fund Donation'),
+          type: paymentMethod === 'sponsorship' ? 'sponsorship' : (paymentMethod === 'investment' ? 'investment' : 'donation'),
           eventDate: new Date().toLocaleDateString(),
           eventLink: 'N/A - Direct Donation',
           amount: isCallback ? 0 : finalAmount,
@@ -149,13 +149,14 @@ export const CommunityFund: React.FC = () => {
         />
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white border border-white/20 p-6 md:p-10 rounded-2xl shadow-xl mt-8 text-slate-800">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-6">
-            <button type="button" onClick={() => { setPaymentMethod('payfast'); setSelectedAmount(20); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod !== 'investment' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Direct Supporter</button>
+            <button type="button" onClick={() => { setPaymentMethod('payfast'); setSelectedAmount(20); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod !== 'investment' && paymentMethod !== 'sponsorship' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Direct Supporter</button>
             <button type="button" onClick={() => { setPaymentMethod('investment'); setSelectedAmount(null); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod === 'investment' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Invest / Callback</button>
+            <button type="button" onClick={() => { setPaymentMethod('sponsorship'); setSelectedAmount(null); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod === 'sponsorship' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Sponsor / Callback</button>
           </div>
 
           {step === 1 && (
             <div className="space-y-6">
-              {paymentMethod !== 'investment' ? (
+              {paymentMethod !== 'investment' && paymentMethod !== 'sponsorship' ? (
                 <div className="space-y-6">
                   <div className="flex justify-between items-end mb-3">
                     <div>
@@ -180,23 +181,28 @@ export const CommunityFund: React.FC = () => {
                     <input type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
                   </div>
                 </div>
-              ) : (
+              ) : paymentMethod === 'investment' ? (
                 <div className="bg-slate-50 p-5 border-l-4 border-[#0EA5E9] text-xs text-slate-600 space-y-2 rounded-r-xl">
                   <p className="font-bold text-slate-800 uppercase text-sm">Corporate Investment Callback Request</p>
                   <p>Leave your coordinates below. Our executive committee will promptly schedule an offline phone consultation to discuss local franchise club ownership (RTP modeling), corporate CSI sponsorships, and league shares.</p>
+                </div>
+              ) : (
+                <div className="bg-slate-50 p-5 border-l-4 border-[#0EA5E9] text-xs text-slate-600 space-y-2 rounded-r-xl">
+                  <p className="font-bold text-slate-800 uppercase text-sm">Corporate Sponsorship Inquiry</p>
+                  <p>Leave your coordinates below. An administrative representative will promptly contact you to coordinate tournament media visibility, brand integration, and CSI sponsorship packages.</p>
                 </div>
               )}
 
               <div className="space-y-4 pt-6 border-t">
                 <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
                 <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                <input required={paymentMethod === 'investment'} type="tel" placeholder="Your Phone Number" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
-                {paymentMethod === 'investment' && (
+                <input required={paymentMethod === 'investment' || paymentMethod === 'sponsorship'} type="tel" placeholder="Your Phone Number" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                {(paymentMethod === 'investment' || paymentMethod === 'sponsorship') && (
                   <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
                 )}
               </div>
-              <button disabled={(paymentMethod !== 'investment' && finalAmount < 20) || !formData.fullName || !formData.email || (paymentMethod === 'investment' && !formData.phone)} onClick={() => paymentMethod === 'investment' ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
-                {paymentMethod === 'investment' ? 'Request Callback' : 'Continue to Transfer'}
+              <button disabled={((paymentMethod !== 'investment' && paymentMethod !== 'sponsorship') && finalAmount < 20) || !formData.fullName || !formData.email || ((paymentMethod === 'investment' || paymentMethod === 'sponsorship') && !formData.phone)} onClick={() => (paymentMethod === 'investment' || paymentMethod === 'sponsorship') ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
+                {(paymentMethod === 'investment' || paymentMethod === 'sponsorship') ? 'Request Callback' : 'Continue to Transfer'}
               </button>
             </div>
           )}
@@ -257,12 +263,14 @@ export const CommunityFund: React.FC = () => {
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
               <h3 className="text-2xl font-display font-black italic uppercase text-slate-955">
-                {paymentMethod === 'investment' ? 'REQUEST LOGGED' : 'ORDER PLACED pending verification'}
+                {paymentMethod === 'investment' || paymentMethod === 'sponsorship' ? 'REQUEST LOGGED' : 'ORDER PLACED pending verification'}
               </h3>
               <p className="text-slate-600 leading-relaxed font-light">
-                {paymentMethod === 'investment' 
-                  ? 'Thank you! Your corporate investment callback query has been logged. Our administration and executive committee will contact you shortly on your provided phone number.'
-                  : 'Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.'}
+                {paymentMethod === 'sponsorship'
+                  ? 'Thank you for your commitment to sponsor our tournament circuit. An administrative representative will touch base shortly to coordinate media visibility parameters.'
+                  : paymentMethod === 'investment' 
+                    ? 'Thank you! Your corporate investment callback query has been logged. Our administration and executive committee will contact you shortly on your provided phone number.'
+                    : 'Your generous donation has been initiated! Once we verify your transfer receipt, your supporter status and perks will be unlocked.'}
               </p>
               <button onClick={() => { setStep(1); setSelectedAmount(20); setCustomAmount(''); setPaymentMethod('payfast'); setFormData({ fullName: '', email: '', phone: '', message: '', proofOfPayment: null }); }} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all">Back to start</button>
             </div>
