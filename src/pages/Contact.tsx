@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
 import { SectionHeader } from '../components/ui/SharedUI';
 import { Mail, Phone, Loader2, CheckCircle2 } from 'lucide-react';
+import { db } from '../config/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      if (db) {
+        await addDoc(collection(db, 'event_registrations'), {
+          fullName: formData.name,
+          email: formData.email,
+          message: formData.message,
+          type: 'contact',
+          eventName: 'Contact Us Submission',
+          timestamp: serverTimestamp()
+        });
+      }
       setSuccess(true);
-    }, 1500);
+    } catch (error) {
+      console.error("Failed to send contact message:", error);
+      alert("Failed to send message. Please verify your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -37,9 +54,9 @@ export const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input required type="text" placeholder="Your Name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
-                <input required type="email" placeholder="Your Email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
-                <textarea required rows={4} placeholder="Your Message" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]"></textarea>
+                <input required type="text" placeholder="Your Name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                <input required type="email" placeholder="Your Email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <textarea required rows={4} placeholder="Your Message" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Send Message'}
                 </button>
