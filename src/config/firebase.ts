@@ -18,10 +18,9 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-// Connects to the default database unless explicitly specified inside the configuration
 export const db = (firebaseAppletConfig as any).firestoreDatabaseId 
-  ? initializeFirestore(app, { experimentalForceLongPolling: true }, (firebaseAppletConfig as any).firestoreDatabaseId)
-  : initializeFirestore(app, { experimentalForceLongPolling: true });
+  ? initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any, (firebaseAppletConfig as any).firestoreDatabaseId)
+  : initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any);
 
 export const storage = getStorage(app);
 export const functions = getFunctions(app, 'us-central1');

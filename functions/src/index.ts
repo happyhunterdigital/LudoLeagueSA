@@ -399,15 +399,25 @@ export const processMailQueue = functions.firestore
     const data = snap.data();
     if (!data || !data.to || !data.message) return;
 
-    // Use environment variables for secure SMTP configuration
-    // To set: firebase functions:config:set smtp.host="smtp.example.com" smtp.port="465" smtp.user="your_email" smtp.pass="your_password"
+    const smtpHost = functions.config().smtp?.host || process.env.SMTP_HOST || '';
+    const smtpPort = Number(functions.config().smtp?.port || process.env.SMTP_PORT || 465);
+    const smtpUser = functions.config().smtp?.user || process.env.SMTP_USER || '';
+    const smtpPass = functions.config().smtp?.pass || process.env.SMTP_PASS || '';
+
+    if (!smtpHost) {
+      console.warn('WARNING: SMTP_HOST is not configured. Nodemailer will default to localhost (127.0.0.1), which causes ECONNREFUSED in Cloud Functions. Configure SMTP_HOST in your environment variables or functions config.');
+    }
+    if (!smtpUser || !smtpPass) {
+      console.warn('WARNING: SMTP_USER or SMTP_PASS is not configured. Authentication data may be incorrect/incomplete.');
+    }
+
     const transporter = nodemailer.createTransport({
-      host: functions.config().smtp?.host || process.env.SMTP_HOST || '',
-      port: Number(functions.config().smtp?.port || process.env.SMTP_PORT || 465),
+      host: smtpHost,
+      port: smtpPort,
       secure: true,
       auth: {
-        user: functions.config().smtp?.user || process.env.SMTP_USER || '',
-        pass: functions.config().smtp?.pass || process.env.SMTP_PASS || '',
+        user: smtpUser,
+        pass: smtpPass,
       },
     });
 
