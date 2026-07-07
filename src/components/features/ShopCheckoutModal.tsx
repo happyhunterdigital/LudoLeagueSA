@@ -148,12 +148,12 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
             {step === 1 && (
               <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-3.5">
                 <h3 className="text-xl sm:text-2xl font-display font-black italic uppercase">Step 1: Shipping Details</h3>
-                <input required type="text" placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
-                <input required type="email" placeholder="Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                <textarea required placeholder="Delivery Address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] h-16 sm:h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} />
+                <input id="shop-fullname" name="fullName" required type="text" placeholder="Full Name" autoComplete="name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+                <input id="shop-email" name="email" required type="email" placeholder="Email" autoComplete="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <textarea id="shop-address" name="address" required placeholder="Delivery Address" autoComplete="street-address" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] h-16 sm:h-20 text-slate-900 font-bold" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} />
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-widest mb-1.5 text-slate-500">Select Courier Rate (106x87x2cm - 3kg)</label>
-                  <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
+                  <select id="shop-courier" name="courierOption" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm outline-none focus:border-[#0EA5E9] text-slate-900 font-bold" value={selectedCourier} onChange={e => setSelectedCourier(e.target.value)}>
                     {courierOptions.map(option => (
                       <option key={option.id} value={option.id}>{option.name} (+R{option.price})</option>
                     ))}
@@ -183,7 +183,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                     <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                       <UploadCloud size={24} className="text-slate-400 mb-1" />
                       <span className="text-[10px] font-black text-[#0EA5E9] text-center truncate max-w-[200px]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
-                      <input required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
+                      <input id="shop-proof" name="proofOfPayment" required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
                     </div>
                   </div>
                 ) : (

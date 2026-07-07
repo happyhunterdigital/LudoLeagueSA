@@ -178,7 +178,7 @@ export const CommunityFund: React.FC = () => {
                   </div>
                   <div className="pt-2">
                     <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Or enter Custom Amount (minimum R20):</label>
-                    <input type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
+                    <input id="fund-custom-amount" name="customAmount" type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
                   </div>
                 </div>
               ) : paymentMethod === 'investment' ? (
@@ -194,11 +194,11 @@ export const CommunityFund: React.FC = () => {
               )}
 
               <div className="space-y-4 pt-6 border-t">
-                <input required type="text" placeholder="Your Full Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
-                <input required type="email" placeholder="Your Email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                <input required={paymentMethod === 'investment' || paymentMethod === 'sponsorship'} type="tel" placeholder="Your Phone Number" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+                <input id="fund-fullname" name="fullName" required type="text" placeholder="Your Full Name" autoComplete="name" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+                <input id="fund-email" name="email" required type="email" placeholder="Your Email" autoComplete="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <input id="fund-phone" name="phone" required={paymentMethod === 'investment' || paymentMethod === 'sponsorship'} type="tel" placeholder="Your Phone Number" autoComplete="tel" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
                 {(paymentMethod === 'investment' || paymentMethod === 'sponsorship') && (
-                  <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
+                  <textarea id="fund-message" name="message" placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
                 )}
               </div>
               <button disabled={((paymentMethod !== 'investment' && paymentMethod !== 'sponsorship') && finalAmount < 20) || !formData.fullName || !formData.email || ((paymentMethod === 'investment' || paymentMethod === 'sponsorship') && !formData.phone)} onClick={() => (paymentMethod === 'investment' || paymentMethod === 'sponsorship') ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
@@ -229,7 +229,7 @@ export const CommunityFund: React.FC = () => {
                   <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50 hover:bg-slate-100 transition-colors">
                     <UploadCloud size={32} className="text-slate-400 mb-2" />
                     <span className="text-xs font-black text-accent-teal">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
-                    <input required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
+                    <input id="fund-proof" name="proofOfPayment" required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
                   </div>
                 </div>
               ) : (

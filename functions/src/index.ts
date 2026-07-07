@@ -393,6 +393,8 @@ export const sendOrderEmail = functions.firestore
   });
 
 // Cloud Function to act as a direct alternative to the Trigger Email Extension
+// SMTP Setup: firebase functions:config:set smtp.host="smtp.gmail.com" smtp.port="587" smtp.user="info@ludoleague.co.za" smtp.pass="YOUR_APP_PASSWORD"
+// Then deploy: firebase deploy --only functions
 export const processMailQueue = functions.firestore
   .document('mail/{docId}')
   .onCreate(async (snap, context) => {
@@ -400,21 +402,27 @@ export const processMailQueue = functions.firestore
     if (!data || !data.to || !data.message) return;
 
     const smtpHost = functions.config().smtp?.host || process.env.SMTP_HOST || '';
-    const smtpPort = Number(functions.config().smtp?.port || process.env.SMTP_PORT || 465);
+    const smtpPort = Number(functions.config().smtp?.port || process.env.SMTP_PORT || 587);
     const smtpUser = functions.config().smtp?.user || process.env.SMTP_USER || '';
     const smtpPass = functions.config().smtp?.pass || process.env.SMTP_PASS || '';
+    // Port 465 uses implicit SSL (secure: true); port 587 uses STARTTLS (secure: false)
+    const smtpSecure = smtpPort === 465;
 
     if (!smtpHost) {
-      console.warn('WARNING: SMTP_HOST is not configured. Nodemailer will default to localhost (127.0.0.1), which causes ECONNREFUSED in Cloud Functions. Configure SMTP_HOST in your environment variables or functions config.');
+      console.error('SMTP_HOST is not configured. Nodemailer cannot connect — ECONNREFUSED will occur. Run: firebase functions:config:set smtp.host="your.smtp.host"');
+      await snap.ref.update({ delivery: { state: 'ERROR', error: 'SMTP_HOST not configured' } });
+      return;
     }
     if (!smtpUser || !smtpPass) {
-      console.warn('WARNING: SMTP_USER or SMTP_PASS is not configured. Authentication data may be incorrect/incomplete.');
+      console.error('SMTP_USER or SMTP_PASS is not configured. A 535 authentication error will occur. Run: firebase functions:config:set smtp.user="your@email.com" smtp.pass="yourAppPassword"');
+      await snap.ref.update({ delivery: { state: 'ERROR', error: 'SMTP credentials not configured' } });
+      return;
     }
 
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: true,
+      secure: smtpSecure,
       auth: {
         user: smtpUser,
         pass: smtpPass,
@@ -423,7 +431,7 @@ export const processMailQueue = functions.firestore
 
     try {
       const info = await transporter.sendMail({
-        from: `"Ludo League SA" <${functions.config().smtp?.user || process.env.SMTP_USER || 'info@ludoleague.co.za'}>`,
+        from: `"Ludo League SA" <${smtpUser}>`,
         to: data.to,
         subject: data.message.subject,
         text: data.message.text || '',
@@ -439,7 +447,7 @@ export const processMailQueue = functions.firestore
         }
       });
     } catch (error: any) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email:', error.message);
       // Update the document to record the error
       await snap.ref.update({
         delivery: {

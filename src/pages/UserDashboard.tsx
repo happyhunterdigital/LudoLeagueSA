@@ -77,8 +77,8 @@ export const UserDashboard = () => {
         <div className="w-full max-w-md bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-2xl space-y-6">
           <h2 className="text-3xl font-display font-black uppercase italic text-center text-amber-500">My Portal</h2>
           <form onSubmit={handleEmailAuth} className="space-y-4">
-            <input required type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white font-bold outline-none focus:border-amber-500 text-sm" />
-            <input required type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white font-bold outline-none focus:border-amber-500 text-sm" />
+            <input id="portal-email" name="email" required type="email" placeholder="Email Address" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white font-bold outline-none focus:border-amber-500 text-sm" />
+            <input id="portal-password" name="password" required type="password" placeholder="Password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white font-bold outline-none focus:border-amber-500 text-sm" />
             <button type="submit" className="w-full py-4 bg-[#D32F2F] hover:bg-white text-white hover:text-slate-950 font-black uppercase tracking-widest rounded-xl transition-all shadow-lg text-xs">{isSignUp ? 'Create Account' : 'Sign In'}</button>
           </form>
           <div className="relative flex items-center justify-center"><hr className="w-full border-slate-700" /><span className="absolute bg-slate-800 px-3 text-xs text-slate-400">OR</span></div>

@@ -54,9 +54,9 @@ export const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input required type="text" placeholder="Your Name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-                <input required type="email" placeholder="Your Email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                <textarea required rows={4} placeholder="Your Message" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
+                <input id="contact-name" name="name" required type="text" placeholder="Your Name" autoComplete="name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                <input id="contact-email" name="email" required type="email" placeholder="Your Email" autoComplete="email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                <textarea id="contact-message" name="message" required rows={4} placeholder="Your Message" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
                   {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : 'Send Message'}
                 </button>

@@ -107,7 +107,7 @@ export const AdminDashboard = () => {
           </div>
           <h2 className="text-3xl font-display font-black uppercase italic">Admin Portal Locked</h2>
           <p className="text-slate-400 text-sm">Please input the secret administrator access password to enter the console.</p>
-          <input required type="password" placeholder="Access Password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white text-center font-bold outline-none focus:border-amber-500 transition-colors" />
+          <input id="admin-password" name="password" required type="password" placeholder="Access Password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white text-center font-bold outline-none focus:border-amber-500 transition-colors" />
           <button type="submit" className="w-full py-4 bg-amber-500 hover:bg-white text-slate-950 font-black uppercase tracking-widest rounded-xl transition-all shadow-lg">Authenticate Console</button>
         </form>
       </section>

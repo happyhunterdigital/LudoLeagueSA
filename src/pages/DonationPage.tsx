@@ -291,7 +291,7 @@ export const DonationPage = () => {
                   ))}
                 </div>
 
-                <input type="number" min="20" placeholder="Custom Supporter Amount (Minimum R20.00)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-[#FFD700] font-bold outline-none focus:border-[#FFD700]" />
+                <input id="donate-custom-amount" name="customAmount" type="number" min="20" placeholder="Custom Supporter Amount (Minimum R20.00)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-[#FFD700] font-bold outline-none focus:border-[#FFD700]" />
               </div>
             ) : paymentMethod === 'investment' ? (
               <div className="bg-neutral-900/40 p-5 border-l-4 border-[#FFD700] text-xs text-neutral-400 space-y-2 rounded-r-xl">
@@ -306,11 +306,11 @@ export const DonationPage = () => {
             )}
 
             <div className="space-y-4 pt-4 border-t border-neutral-900">
-              <input required type="text" placeholder="Full Name" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
-              <input required type="email" placeholder="Email Address" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-              <input required={paymentMethod === 'investment' || paymentMethod === 'sponsorship'} type="tel" placeholder="Phone Number" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+              <input id="donate-fullname" name="fullName" required type="text" placeholder="Full Name" autoComplete="name" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+              <input id="donate-email" name="email" required type="email" placeholder="Email Address" autoComplete="email" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              <input id="donate-phone" name="phone" required={paymentMethod === 'investment' || paymentMethod === 'sponsorship'} type="tel" placeholder="Phone Number" autoComplete="tel" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700]" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               {(paymentMethod === 'investment' || paymentMethod === 'sponsorship') && (
-                <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
+                <textarea id="donate-message" name="message" placeholder="Message / Specific Queries (Optional)" className="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl p-4 text-white font-bold outline-none focus:border-[#FFD700] h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
               )}
             </div>
 
@@ -341,7 +341,7 @@ export const DonationPage = () => {
                 <div className="border-2 border-dashed border-neutral-800 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer relative bg-neutral-900/20 hover:bg-neutral-900/40">
                   <UploadCloud size={24} className="text-neutral-500 mb-1" />
                   <span className="text-[10px] font-black text-[#0ea5e9] text-center truncate max-w-[200px]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
-                  <input required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
+                  <input id="donate-proof" name="proofOfPayment" required={paymentMethod === 'eft'} type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
                 </div>
               </div>
             ) : (
