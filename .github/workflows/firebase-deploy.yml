@@ -40,8 +40,10 @@ jobs:
       - name: Inject Environment Secrets
         run: |
           echo "DEEPSEEK_API_KEY=${{ secrets.LUDO_DEEPSEEK_API_KEY }}" > functions/.env
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> functions/.env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> functions/.env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> functions/.env
+          echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> functions/.env
 
       - name: Deploy to Firebase
         run: firebase deploy --only hosting,functions --project ludoleaguesa-33371 --force
-
-
