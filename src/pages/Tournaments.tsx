@@ -81,6 +81,10 @@ export const Tournaments = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!db) {
+      alert('Registration is temporarily unavailable. Please try again shortly.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       let popUrl = '';

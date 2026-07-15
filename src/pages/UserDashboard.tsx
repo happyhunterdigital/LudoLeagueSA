@@ -14,6 +14,10 @@ export const UserDashboard = () => {
   const [records, setRecords] = useState<any[]>([]);
 
   useEffect(() => {
+    if (!auth) {
+      setAuthLoading(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setAuthLoading(false);
@@ -27,6 +31,7 @@ export const UserDashboard = () => {
   }, []);
 
   const fetchUserRecords = async (userEmail: string) => {
+    if (!db) return;
     setDataLoading(true);
     try {
       const q = query(collection(db, 'event_registrations'), where('email', '==', userEmail));
@@ -40,6 +45,10 @@ export const UserDashboard = () => {
   };
 
   const handleGoogleSignIn = async () => {
+    if (!auth) {
+      alert('Sign-in is temporarily unavailable. Please try again shortly.');
+      return;
+    }
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -50,6 +59,10 @@ export const UserDashboard = () => {
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth) {
+      alert('Sign-in is temporarily unavailable. Please try again shortly.');
+      return;
+    }
     try {
       if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
@@ -61,7 +74,9 @@ export const UserDashboard = () => {
     }
   };
 
-  const handleSignOut = () => signOut(auth);
+  const handleSignOut = () => {
+    if (auth) signOut(auth);
+  };
 
   if (authLoading) {
     return (

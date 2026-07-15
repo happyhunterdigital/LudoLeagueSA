@@ -103,6 +103,10 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     const testConnection = async () => {
+      if (!db) {
+        console.error("Firebase offline");
+        return;
+      }
       try { await getDocFromServer(doc(db, 'test', 'connection')); }
       catch (error) { console.error("Firebase offline"); }
     };
@@ -263,37 +267,37 @@ export default function App() {
                     </a>
                     <a href="https://wa.me/27725578097" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/40 hover:text-[#00f0c2] hover:border-[#00f0c2]/30 transition-all duration-300" aria-label="WhatsApp">
                       <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.615.96 3.2 1.456 4.903 1.456 5.4 0 9.794-4.392 9.797-9.794.002-2.618-1.01-5.074-2.852-6.92C16.652 2.052 14.191.995 11.597.995c-5.405 0-9.8 4.394-9.802 9.797-.001 1.792.482 3.447 1.4 4.966l-.92 3.35 3.456-.906zM17.5 13.9c-.3-.15-1.7-.85-2-.95-.25-.1-.45-.15-.65.15-.2.3-.75.95-.95 1.15-.15.2-.35.2-.65.05-1.1-.55-1.95-1-2.75-2.4-.2-.35-.05-.55.1-.7.15-.15.3-.35.45-.5.15-.15.2-.25.3-.45.1-.2.05-.35-.05-.5-.1-.15-.65-1.6-.9-2.2-.2-.55-.45-.45-.65-.45-.2 0-.4 0-.6.2-.2.2-.8.8-.8 1.95s.8 2.3 1 2.5c.2.2 1.8 2.7 4.3 3.8.6.25 1.1.4 1.5.55.6.2 1.1.15 1.5.1.5-.05 1.7-.7 1.9-1.35.2-.65.2-1.2.1-1.35-.1-.1-.3-.2-.6-.35z" /></svg>
-                        </a>
-                        <a href="https://www.youtube.com/@ludoleague1525" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/40 hover:text-[#D32F2F] hover:border-[#D32F2F]/30 transition-all duration-300" aria-label="YouTube">
-                          <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                        </a>
-                      </div>
-                      
-                      {/* Links */}
-                      <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
-                        <button onClick={() => scrollToSection('newsupdates')} className="hover:text-[#FACC15] transition-colors">News & Updates</button>
-                        <button onClick={() => scrollToSection('faqs')} className="hover:text-[#FACC15] transition-colors">FAQs</button>
-                      </div>
-                      
-                      {/* Divider */}
-                      <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                      
-                      {/* Copyright */}
-                      <div className="text-center space-y-2">
-                        <p className="text-[10px] text-white/20 font-medium">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
-                        <button onClick={() => setIsPrivacyOpen(true)} className="text-[10px] uppercase tracking-[0.15em] text-white/30 hover:text-[#FACC15] transition-colors font-bold">Privacy Policy & Terms</button>
-                        <p className="text-[10px] text-white/10">This website is coded by happyhunter.com</p>
-                      </div>
-                    </div>
+                    </a>
+                    <a href="https://www.youtube.com/@ludoleague1525" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/40 hover:text-[#D32F2F] hover:border-[#D32F2F]/30 transition-all duration-300" aria-label="YouTube">
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
                   </div>
-                </footer>
-              </main>
-              <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
-              <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
-              <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={() => setCart([])} />
-              <ChatbotWidget />
-            </div>
-          )}
+                  
+                  {/* Links */}
+                  <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
+                    <button onClick={() => scrollToSection('newsupdates')} className="hover:text-[#FACC15] transition-colors">News & Updates</button>
+                    <button onClick={() => scrollToSection('faqs')} className="hover:text-[#FACC15] transition-colors">FAQs</button>
+                  </div>
+                  
+                  {/* Divider */}
+                  <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                  
+                  {/* Copyright */}
+                  <div className="text-center space-y-2">
+                    <p className="text-[10px] text-white/20 font-medium">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
+                    <button onClick={() => setIsPrivacyOpen(true)} className="text-[10px] uppercase tracking-[0.15em] text-white/30 hover:text-[#FACC15] transition-colors font-bold">Privacy Policy & Terms</button>
+                    <p className="text-[10px] text-white/10">This website is coded by happyhunter.com</p>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </main>
+          <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
+          <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+          <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={() => setCart([])} />
+          <ChatbotWidget />
         </div>
-      );
-    }
+      )}
+    </div>
+  );
+}
