@@ -40,6 +40,9 @@ export const ChatbotWidget = () => {
     setLoading(true);
 
     try {
+      if (!functions) {
+        throw new Error('Chat service unavailable');
+      }
       const chatFn = httpsCallable(functions, 'ludoLeagueChatBot');
       const result = await chatFn({ message: userMessage, history: historyToSend }) as any;
       const botReply = result?.data?.reply || 'Pardon me, I encountered a communication delay. Please try again.';

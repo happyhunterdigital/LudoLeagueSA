@@ -105,6 +105,10 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     const testConnection = async () => {
+      if (!db) {
+        console.error("Firebase offline");
+        return;
+      }
       try { await getDocFromServer(doc(db, 'test', 'connection')); }
       catch (error) { console.error("Firebase offline"); }
     };
@@ -166,14 +170,15 @@ export default function App() {
           {/* News Ticker */}
           <div className="fixed top-[69px] md:top-[81px] left-0 right-0 z-[900] overflow-hidden border-b border-white/[0.04] py-2.5 bg-black/95 backdrop-blur-sm whitespace-nowrap select-none flex items-center">
             <motion.div 
-              animate={{ x: [0, -1400] }}
-              transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
-              className="flex space-x-16 text-[10px] font-display font-bold tracking-[0.18em] uppercase text-white/30"
+              animate={{ x: [0, -1800] }}
+              transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
+              className="flex space-x-16 text-[10px] font-display font-black tracking-[0.15em] uppercase text-white/30"
             >
-              <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FACC15] animate-pulse" /> SOWETO GIANTS VS ALEXANDRA MASTERS ACTIVE IN BATTLE OF THE KASIS GRAND FINALS +++</span>
-              <span>MAMELODI CIRCUIT: MASONA CLUB RETAINS UNDEFEATED LEAGUE RATING +++</span>
-              <span>LUDO4SCHOOLS: EXPANDING TO 15 NEW GAUTENG CLASSROOM CLINICS +++</span>
-              <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FACC15] animate-pulse" /> SOWETO GIANTS VS ALEXANDRA MASTERS ACTIVE IN BATTLE OF THE KASIS GRAND FINALS +++</span>
+              <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FACC15] animate-pulse" /> BACK THE LEAGUE: Support township carpentry workshops by donating as little as R20 on our Donate page +++</span>
+              <span>COMMUNITY FUNDING: Your contributions directly sustain cognitive, screen-free classroom mathematics clinics +++</span>
+              <span>INVEST IN LUDO: Secure club franchise ownership with an RTP license to empower regional youth sports structures +++</span>
+              <span>SPONSOR IMPACT: Partner with LLSA to gain high-impact township visibility and meet B-BBEE CSI scorecard goals +++</span>
+              <span>MEMBER PRIVILEGES: Become a member to unlock official tournament entries, verified rankings, and elite training +++</span>
             </motion.div>
           </div>
 
