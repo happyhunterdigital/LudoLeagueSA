@@ -120,6 +120,7 @@ export const KingsTable = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      if (!db) throw new Error('Database not initialised');
       let popUrl = '';
       if (paymentMethod === 'eft' && formData.proofOfPayment) {
         popUrl = await compressAndGetBase64(formData.proofOfPayment);
