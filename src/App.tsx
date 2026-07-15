@@ -31,12 +31,14 @@ import { ChatbotWidget } from './components/features/ChatbotWidget';
 import { UserDashboard } from './pages/UserDashboard';
 import { Ludo4Schools } from './pages/Ludo4Schools';
 import { DonationPage } from './pages/DonationPage';
+import { KingsTable } from './pages/KingsTable';
 import { LudoLoader } from './components/features/LudoLoader';
 import { ShopCheckoutModal } from './components/features/ShopCheckoutModal';
+import { KingsTablePopup } from './components/features/KingsTablePopup';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' |
-'Ludo4Schools' | 'Donate';
+'Ludo4Schools' | 'Donate' | 'KingsTable';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -57,7 +59,7 @@ export default function App() {
   const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate', 'shop'];
+  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate', 'shop', 'kingstable'];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -180,6 +182,7 @@ export default function App() {
             {activeSection === 'portal' && <UserDashboard />}
             {activeSection === 'ludo4schools' && <Ludo4Schools />}
             {activeSection === 'donate' && <DonationPage />}
+            {activeSection === 'kingstable' && <KingsTable />}
             {activeSection === 'botkgallery' && (
               <BotkGallery selectedTab={selectedGalleryTab} setSelectedTab={setSelectedGalleryTab} />
             )}
@@ -290,6 +293,10 @@ export default function App() {
           <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
           <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
           <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={() => setCart([])} />
+          {/* King's Table scroll-triggered popup — only on main landing pages */}
+          {!standalonePages.includes(activeSection.toLowerCase()) && (
+            <KingsTablePopup scrollToSection={scrollToSection} />
+          )}
           <ChatbotWidget />
         </div>
       )}

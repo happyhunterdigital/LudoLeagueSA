@@ -67,8 +67,25 @@ export const LandingHero = ({ scrollToSection }: { scrollToSection: (id: string)
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.7, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap"
         >
+          {/* King's Table Register CTA */}
+          <button
+            onClick={() => scrollToSection('kingstable')}
+            className="relative inline-flex items-center gap-2 px-7 py-4 font-black text-sm uppercase tracking-widest rounded-xl overflow-hidden group"
+            id="hero-cta-kingstable"
+            style={{
+              background: 'linear-gradient(135deg, #FACC15 0%, #D4A017 100%)',
+              color: '#000',
+              boxShadow: '0 0 30px rgba(250,204,21,0.25)'
+            }}
+          >
+            <span className="text-lg leading-none">👑</span>
+            Register Now — King's Table
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+          </button>
+
           <button 
             onClick={() => scrollToSection('tournaments')} 
             className="btn-action text-sm"

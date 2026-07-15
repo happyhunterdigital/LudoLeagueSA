@@ -143,6 +143,9 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
                 <div className="flex flex-col gap-4">
                   <button onClick={() => handleOverlayLinkClick('home')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Home Base</button>
                   <button onClick={() => handleOverlayLinkClick('tournaments')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Tournaments</button>
+                  <button onClick={() => handleOverlayLinkClick('kingstable')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-[#FACC15]/60 hover:text-[#FACC15] transition-colors flex items-center gap-2">
+                    King's Table
+                  </button>
                   <button onClick={() => handleOverlayLinkClick('leagues')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Leagues</button>
                   <button onClick={() => handleOverlayLinkClick('history')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Hall of Fame</button>
                 </div>
