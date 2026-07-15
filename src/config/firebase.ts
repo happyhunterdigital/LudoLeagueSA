@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { initializeFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-import { getFunctions } from 'firebase/functions';
-import { getAuth } from 'firebase/auth';
+import { initializeApp, FirebaseApp } from 'firebase/app';
+import { initializeFirestore, Firestore } from 'firebase/firestore';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
+import { getFunctions, Functions } from 'firebase/functions';
+import { getAuth, Auth } from 'firebase/auth';
 import firebaseAppletConfig from '../../firebase-applet-config.json';
 
 const firebaseConfig = {
@@ -15,16 +15,33 @@ const firebaseConfig = {
   apiKey: firebaseAppletConfig.apiKey
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+// Safe initialization: never throw at module import time.
+// If Firebase fails to init (bad key, network, restrictions), the app survives.
+let app: FirebaseApp | null = null;
+let db: Firestore | null = null;
+let storage: FirebaseStorage | null = null;
+let functions: Functions | null = null;
+let auth: Auth | null = null;
+let firebaseError: Error | null = null;
+let isFirebaseReady = false;
 
-export const db = (firebaseAppletConfig as any).firestoreDatabaseId 
-  ? initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any, (firebaseAppletConfig as any).firestoreDatabaseId)
-  : initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any);
+try {
+  app = initializeApp(firebaseConfig);
 
-export const storage = getStorage(app);
-export const functions = getFunctions(app, 'us-central1');
-export const auth = getAuth(app);
+  db = (firebaseAppletConfig as any).firestoreDatabaseId
+    ? initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any, (firebaseAppletConfig as any).firestoreDatabaseId)
+    : initializeFirestore(app, { experimentalForceLongPolling: true, useFetchStreams: false } as any);
+
+  storage = getStorage(app);
+  functions = getFunctions(app, 'us-central1');
+  auth = getAuth(app);
+  isFirebaseReady = true;
+} catch (err) {
+  firebaseError = err instanceof Error ? err : new Error(String(err));
+  console.error('[Firebase] Initialization failed — app running in degraded mode:', firebaseError.message);
+}
+
+export { app, db, storage, functions, auth, isFirebaseReady, firebaseError };
 
 export const chatbotConfig = {
   model: "gemini-3.1-flash-lite-preview",

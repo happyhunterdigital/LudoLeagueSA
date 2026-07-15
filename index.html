@@ -12,13 +12,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
     
-    <!-- Force unregister any stale service workers to break browser cache locks and force update visibility -->
+    <!-- Unregister stale service workers to break cache locks — only reload if one was actually found -->
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for (let r of registrations) {
-            r.unregister().then(function() {
-              window.location.reload(true);
+          if (registrations.length > 0) {
+            var unregistered = 0;
+            registrations.forEach(function(r) {
+              r.unregister().then(function() {
+                unregistered++;
+                if (unregistered === registrations.length) {
+                  window.location.reload(true);
+                }
+              });
             });
           }
         });
