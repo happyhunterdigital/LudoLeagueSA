@@ -22,7 +22,6 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        # --legacy-peer-deps prevents conflicts between vite, react, and other packages
         run: npm install --legacy-peer-deps
 
       - name: Deploy to Firebase
