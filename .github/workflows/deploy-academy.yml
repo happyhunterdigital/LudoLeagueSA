@@ -7,6 +7,8 @@ on:
       - 'ludo-academy/**'
       - 'firebase.json'
       - 'firestore.indexes.json'
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   deploy_academy:
@@ -22,7 +24,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci --legacy-peer-deps --no-audit
+        run: npm install --legacy-peer-deps
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
