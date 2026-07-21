@@ -1,60 +1,70 @@
-const crypto = require('crypto');
+// api/create-payment.js
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-// THESE STAY ON YOUR SERVER - NEVER EXPOSE TO CLIENT
-const MERCHANT_ID = '35471207';
-const MERCHANT_KEY = 'q9qkx9sqx9l3m';
-const PASSPHRASE = 'your_secure_passphrase'; // Add this in PayFast dashboard
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
+};
 
-module.exports = async function createPayment(req, res) {
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    const { firstName, lastName, email, phone, course, amount } = req.body;
+    const { 
+      registrationId,
+      amount,
+      paymentMethod = 'payfast',
+      participantData 
+    } = req.body;
 
-    // Generate unique transaction ID
-    const m_payment_id = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    // Validate required fields
+    if (!registrationId || !amount || !participantData) {
+      return res.status(400).json({ 
+        error: 'Missing required fields',
+        required: ['registrationId', 'amount', 'participantData']
+      });
+    }
 
-    // Create PayFast fields
-    const pfData = {
-      merchant_id: MERCHANT_ID,
-      merchant_key: MERCHANT_KEY,
-      return_url: `${process.env.BASE_URL}/payment/success`,
-      cancel_url: `${process.env.BASE_URL}/payment/cancel`,
-      notify_url: `${process.env.BASE_URL}/api/payment-ipn`,
-      name_first: firstName,
-      name_last: lastName,
-      email_address: email,
-      cell_number: phone,
-      m_payment_id: m_payment_id,
-      amount: amount,
-      item_name: `Ludo Academy - ${course} Course`,
-      custom_str1: course,
-      custom_str2: email,
+    // Create payment record
+    const paymentData = {
+      registrationId,
+      amount: parseFloat(amount),
+      paymentMethod,
+      status: 'pending',
+      currency: 'ZAR',
+      participantEmail: participantData.email,
+      participantName: participantData.fullName,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      metadata: {
+        ipAddress: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+        userAgent: req.headers['user-agent']
+      }
     };
 
-    // Generate signature
-    const pfParamString = Object.keys(pfData)
-      .filter(key => pfData[key] !== '' && pfData[key] !== null && pfData[key] !== undefined)
-      .map(key => `${key}=${encodeURIComponent(pfData[key]).replace(/%20/g, '+')}`)
-      .join('&');
+    const docRef = await addDoc(collection(db, 'payments'), paymentData);
 
-    const signature = crypto
-      .createHash('md5')
-      .update(pfParamString + '&passphrase=' + encodeURIComponent(PASSPHRASE))
-      .digest('hex');
-
-    pfData.signature = signature;
-
-    // Save registration to database here
-    // await db.registrations.create({ ...req.body, paymentId: m_payment_id });
-
-    res.json({
+    return res.status(201).json({
       success: true,
-      fields: pfData,
+      paymentId: docRef.id,
+      message: 'Payment record created successfully'
     });
+
   } catch (error) {
-    console.error('Payment creation error:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to create payment',
+    console.error('Error creating payment:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      message: error.message 
     });
   }
-};
+}
