@@ -3,57 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludo Academy of Excellence | Strategic Mindset & Competitive Training</title>
+    <title>Ludo Academy of Excellence</title>
     <meta name="description" content="Ludo Academy of Excellence develops professionals through competitive Ludo training, mentorship, and strategic mindset development. Learn the game, master the mindset.">
     <meta name="keywords" content="Ludo Academy, Strategic Thinking, Ludo Training South Africa, Mindset Development, Ludo League SA">
     <meta property="og:title" content="Ludo Academy of Excellence">
     <meta property="og:description" content="Where strategy meets skill. Developing professionals through competitive Ludo training and community engagement.">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href="styles.css">
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "Ludo Academy of Excellence",
-      "description": "An academy dedicated to personal development, strategic thinking, and continuous learning through the game of Ludo.",
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Ludo League South Africa"
-      },
-      "areaServed": "ZA",
-      "slogan": "Where strategy meets skill. Learn the game. Master the mindset. Play with excellence."
-    }
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body, #root { background: #0C0C0C; font-family: 'Kanit', sans-serif; overflow-x: hidden; }
+        .hero-heading {
+            background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .contact-gradient {
+            background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%);
+            box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset;
+            outline: 2px solid white;
+            outline-offset: -3px;
+        }
+        .marquee-row { will-change: transform; }
+        .magnet-wrap { will-change: transform; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0C0C0C; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    </style>
+    <base target="_blank">
 </head>
 <body>
-    <header>
-        <h1>Ludo Academy of Excellence</h1>
-        <p class="tagline">Where strategy meets skill.</p>
-    </header>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+        const { motion, useScroll, useTransform, useInView } = window.Motion;
 
-    <main>
-        <section class="philosophy" aria-label="Our Philosophy">
-            <h2>Our Philosophy</h2>
-            <p>At Ludo Academy of Excellence, we believe that every move matters both on the board and in life.</p>
-            <p>Our academy brings together passionate individuals who are committed to personal development, strategic thinking, and continuous learning. Through interactive engagement, teamwork, and practical discussions, participants develop the values that drive success: discipline, focus, strategy, and excellence.</p>
-        </section>
+        // --- Components ---
 
-        <section class="mindset" aria-label="The Winning Mindset">
-            <h2>The Winning Mindset</h2>
-            <p>Just as in a game of Ludo, success is not determined by luck alone. It is built through patience, careful planning, sound decision-making, resilience, and the courage to take calculated risks while continuing to move forward, even in the face of challenges.</p>
-            <p>We are proud to create a space where learning is engaging, empowering, and transformative, equipping individuals with the mindset and skills needed to succeed both in the game and in life.</p>
-        </section>
+        const FadeIn = ({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = "" }) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true, margin: "50px", amount: 0 });
+            return (
+                <motion.div
+                    ref={ref}
+                    initial={{ opacity: 0, x, y }}
+                    animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
+                    transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={className}
+                >
+                    {children}
+                </motion.div>
+            );
+        };
 
-        <section class="mission" aria-label="Our Mission">
-            <h2>Our Mission</h2>
-            <p>We are dedicated to developing professionals through competitive Ludo training, mentorship, and community engagement.</p>
-            <p class="call-to-action"><strong>Learn the game. Master the mindset. Play with excellence.</strong></p>
-        </section>
-    </main>
+        const Magnet = ({ children, padding = 150, strength = 3, activeTransition = "transform 0.3s ease-out", inactiveTransition = "transform 0.6s ease-in-out" }) => {
+            const ref = useRef(null);
+            const [transform, setTransform] = useState("translate3d(0px, 0px, 0px)");
+            const [isActive, setIsActive] = useState(false);
 
-    <footer>
-        <p>&copy; 2026 Ludo League SA. All rights reserved. An initiative by Happy Hunter Digital.</p>
-    </footer>
+            const handleMouseMove = useCallback((e) => {
+                if (!ref.current) return;
+                const rect = ref.current.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const distX = e.clientX - centerX;
+                const distY = e.clientY - centerY;
+                const distance = Math.sqrt(distX * distX + distY * distY);
+                const maxDist = Math.max(rect.width, rect.height) / 2 + padding;
+
+                if (distance < maxDist) {
+                    setIsActive(true);
+                    setTransform(`translate3d(${distX / strength}px, ${distY / strength}px, 0px)`);
+                } else {
+                    setIsActive(false);
+                    setTransform("translate3d(0px, 0px, 0px)");
+                }
+            }, [padding, strength]);
+
+            const handleMouseLeave = useCallback(() => {
+                setIsActive(false);
+                setTransform("translate3d(0px, 0px, 0px)");
+            }, []);
+
+            useEffect(() => {
+                window.addEventListener("mousemove", handleMouseMove);
+                return () => window.removeEventListener("mousemove", handleMouseMove);
+            }, [handleMouseMove]);
+
+            return (
+                <div 
+                    ref={ref} 
+                    className="magnet-wrap inline-block"
+                    style={{ 
+                        transform,
+                        transition: isActive ? activeTransition : inactiveTransition
+                    }}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    {children}
+                </div>
+            );
+        };
+
+        const ContactButton = ({ label = "Contact Me", className = "" }) => (
+            <button className={`contact-gradient text-white font-medium uppercase tracking-widest rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base transition-transform hover:scale-105 ${className}`}>
+                {label}
+            </button>
+        );
+
+        const LiveProjectButton = ({ label = "Live Project" }) => (
+            <button className="rounded-full border-2 border-[#D7E2EA] text-[#D7E2EA] font-medium uppercase tracking-widest px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base hover:bg-[#D7E2EA]/10 transition-colors">
+                {label}
+            </button>
+        );
+
+        const AnimatedText = ({ text, className = "" }) => {
+            const ref = useRef(null);
+            const { scrollYProgress } = useScroll({
+                target: ref,
+                offset: ["start 0.8", "end 0.2"]
+            });
+
+            const words = text.split(" ");
+
+            return (
+                <p ref={ref} className={`${className}`} style={{ lineHeight: 1.6 }}>
+                    {words.map((word, i) => {
+                        const start = i / words.length;
+                        const end = (i + 1) / words.length;
+                        return (
+                            <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                                {word}
+                            </Word>
+                        );
+                    })}
+                </p>
+            );
+        };
+
+        const Word = ({ children, progress, range }) => {
+            const opacity = useTransform(progress, range, [0.2, 1]);
+            return (
+                <span className="inline-block mr-[0.25em]">
+                    <motion.span style={{ opacity }} className="inline-block">
+                        {children}
+                    </motion.span>
+                </span>
+            );
+        };
+
+        // --- Sections ---
+
+        const HeroSection = () => {
+            return (
+                <section className="h-screen flex flex-col relative overflow-x-clip">
+                    {/* Navbar */}
+                    <FadeIn delay={0} y={-20}>
+                        <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8 text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem]">
+                            <a href="#about" className="hover:opacity-70 transition-opacity duration-200">About</a>
+                            <a href="#services" className="hover:opacity-70 transition-opacity duration-200">Training</a>
+                            <a href="#projects" className="hover:opacity-70 transition-opacity duration-200">Success</a>
+                            <a href="#contact" className="hover:opacity-70 transition-opacity duration-200">Contact</a>
+                        </nav>
+                    </FadeIn>
+
+                    {/* Hero Heading */}
+                    <div className="overflow-hidden w-full mt-6 sm:mt-4 md:-mt-5">
+                        <FadeIn delay={0.15} y={40}>
+                            <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-center text-[14vw] sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">
+                                Ludo Academy
+                            </h1>
+                        </FadeIn>
+                    </div>
+
+                    {/* Bottom Bar */}
+                    <div className="flex justify-between items-end px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 mt-auto">
+                        <FadeIn delay={0.35} y={20}>
+                            <p className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px]" style={{ fontSize: "clamp(0.75rem, 1.4vw, 1.5rem)" }}>
+                                Where every move matters. Strategy, discipline, and excellence in every game.
+                            </p>
+                        </FadeIn>
+                        <FadeIn delay={0.5} y={20}>
+                            <ContactButton label="Join Us" />
+                        </FadeIn>
+                    </div>
+
+                    {/* Hero Portrait - Ludo Board Image */}
+                    <FadeIn delay={0.6} y={30} className="absolute left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
+                        <Magnet padding={150} strength={3}>
+                            <img 
+                                src="https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=800&q=80" 
+                                alt="Ludo Board Strategy"
+                                className="w-full h-auto object-cover rounded-3xl opacity-90"
+                                loading="lazy"
+                            />
+                        </Magnet>
+                    </FadeIn>
+                </section>
+            );
+        };
+
+        const MarqueeSection = () => {
+            const sectionRef = useRef(null);
+            const [offset, setOffset] = useState(0);
+
+            const row1Images = [
+                "https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1606503825008-909a6184f56d?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1611996901089-7c3451a7d3b5?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1570303345338-e1f0eddf4946?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1602734846297-929b8b99b2f7?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=420&h=270&fit=crop"
+            ];
+
+            const row2Images = [
+                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1606503825008-909a6184f56d?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1611996901089-7c3451a7d3b5?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1570303345338-e1f0eddf4946?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1602734846297-929b8b99b2f7?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=420&h=270&fit=crop",
+                "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=420&h=270&fit=crop"
+            ];
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    if (!sectionRef.current) return;
+                    const sectionTop = sectionRef.current.offsetTop;
+                    const newOffset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
+                    setOffset(newOffset);
+                };
+                window.addEventListener("scroll", handleScroll, { passive: true });
+                return () => window.removeEventListener("scroll", handleScroll);
+            }, []);
+
+            const tripled1 = [...row1Images, ...row1Images, ...row1Images];
+            const tripled2 = [...row2Images, ...row2Images, ...row2Images];
+
+            return (
+                <section ref={sectionRef} className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden">
+                    <div className="flex flex-col gap-3">
+                        {/* Row 1 - Moves Right */}
+                        <div className="marquee-row flex gap-3" style={{ transform: `translateX(${offset - 200}px)` }}>
+                            {tripled1.map((src, i) => (
+                                <img key={i} src={src} alt="" className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0" loading="lazy" />
+                            ))}
+                        </div>
+                        {/* Row 2 - Moves Left */}
+                        <div className="marquee-row flex gap-3" style={{ transform: `translateX(-${offset - 200}px)` }}>
+                            {tripled2.map((src, i) => (
+                                <img key={i} src={src} alt="" className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0" loading="lazy" />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const AboutSection = () => {
+            return (
+                <section id="about" className="min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 relative">
+                    {/* Decorative Images - Ludo-themed */}
+                    <FadeIn delay={0.1} x={-80} y={0} duration={0.9} className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%]">
+                        <img src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=210&h=210&fit=crop" alt="Strategy Piece" className="w-[120px] sm:w-[160px] md:w-[210px] rounded-2xl opacity-80" />
+                    </FadeIn>
+                    <FadeIn delay={0.25} x={-80} y={0} duration={0.9} className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%]">
+                        <img src="https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=180&h=180&fit=crop" alt="Game Piece" className="w-[100px] sm:w-[140px] md:w-[180px] rounded-2xl opacity-80" />
+                    </FadeIn>
+                    <FadeIn delay={0.15} x={80} y={0} duration={0.9} className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%]">
+                        <img src="https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=210&h=210&fit=crop" alt="Board Game" className="w-[120px] sm:w-[160px] md:w-[210px] rounded-2xl opacity-80" />
+                    </FadeIn>
+                    <FadeIn delay={0.3} x={80} y={0} duration={0.9} className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%]">
+                        <img src="https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=220&h=220&fit=crop" alt="Chess Strategy" className="w-[130px] sm:w-[170px] md:w-[220px] rounded-2xl opacity-80" />
+                    </FadeIn>
+
+                    {/* Heading */}
+                    <FadeIn delay={0} y={40} className="mb-10 sm:mb-14 md:mb-16">
+                        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>
+                            Our Philosophy
+                        </h2>
+                    </FadeIn>
+
+                    {/* Animated Text */}
+                    <div className="max-w-[560px] text-center mb-16 sm:mb-20 md:mb-24">
+                        <AnimatedText 
+                            text="At Ludo Academy of Excellence, we believe that every move matters both on the board and in life. Our academy brings together passionate individuals committed to personal development, strategic thinking, and continuous learning. Through interactive engagement, teamwork, and practical discussions, participants develop the values that drive success: discipline, focus, strategy, and excellence."
+                            className="text-[#D7E2EA] font-medium leading-relaxed text-center"
+                            style={{ fontSize: "clamp(1rem, 2vw, 1.35rem)" }}
+                        />
+                    </div>
+
+                    <FadeIn delay={0.4} y={20}>
+                        <ContactButton label="Learn More" />
+                    </FadeIn>
+                </section>
+            );
+        };
+
+        const ServicesSection = () => {
+            const services = [
+                { num: "01", name: "Strategic Training", desc: "Comprehensive Ludo strategy sessions covering opening moves, mid-game tactics, and end-game precision. Master the board with calculated decisions." },
+                { num: "02", name: "Mentorship Program", desc: "One-on-one guidance from seasoned champions who have mastered the art of strategic gameplay. Learn from the best to become the best." },
+                { num: "03", name: "Competitive Play", desc: "Regular tournaments and competitive matches that simulate real championship environments. Build resilience under pressure." },
+                { num: "04", name: "Mindset Coaching", desc: "Develop the winning mindset through patience, careful planning, and the courage to take calculated risks while moving forward." },
+                { num: "05", name: "Community Events", desc: "Engaging workshops, team-building activities, and networking events that foster connections among passionate strategists." }
+            ];
+
+            return (
+                <section id="services" className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+                    <FadeIn delay={0} y={40}>
+                        <h2 className="text-[#0C0C0C] font-black uppercase text-center mb-16 sm:mb-20 md:mb-28" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>
+                            Training
+                        </h2>
+                    </FadeIn>
+
+                    <div className="max-w-5xl mx-auto">
+                        {services.map((service, i) => (
+                            <FadeIn key={i} delay={i * 0.1} y={30}>
+                                <div className={`flex flex-col sm:flex-row gap-4 sm:gap-8 py-8 sm:py-10 md:py-12 ${i > 0 ? "border-t" : ""}`} style={{ borderColor: "rgba(12, 12, 12, 0.15)" }}>
+                                    <div className="text-[#0C0C0C] font-black flex-shrink-0" style={{ fontSize: "clamp(3rem, 10vw, 140px)", lineHeight: 1 }}>
+                                        {service.num}
+                                    </div>
+                                    <div className="flex flex-col justify-center">
+                                        <h3 className="text-[#0C0C0C] font-medium uppercase mb-2" style={{ fontSize: "clamp(1rem, 2.2vw, 2.1rem)" }}>
+                                            {service.name}
+                                        </h3>
+                                        <p className="text-[#0C0C0C] font-light leading-relaxed max-w-2xl opacity-60" style={{ fontSize: "clamp(0.85rem, 1.6vw, 1.25rem)" }}>
+                                            {service.desc}
+                                        </p>
+                                    </div>
+                                </div>
+                            </FadeIn>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const ProjectsSection = () => {
+            const projects = [
+                {
+                    num: "01",
+                    category: "Championship",
+                    name: "National Ludo Masters",
+                    col1: [
+                        "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=600&h=400&fit=crop",
+                        "https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=600&h=500&fit=crop"
+                    ],
+                    col2: "https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=800&h=700&fit=crop"
+                },
+                {
+                    num: "02",
+                    category: "Workshop",
+                    name: "Strategic Mindset Summit",
+                    col1: [
+                        "https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=600&h=400&fit=crop",
+                        "https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=600&h=500&fit=crop"
+                    ],
+                    col2: "https://images.unsplash.com/photo-1606503825008-909a6184f56d?w=800&h=700&fit=crop"
+                },
+                {
+                    num: "03",
+                    category: "Community",
+                    name: "Excellence League Finals",
+                    col1: [
+                        "https://images.unsplash.com/photo-1611996901089-7c3451a7d3b5?w=600&h=400&fit=crop",
+                        "https://images.unsplash.com/photo-1570303345338-e1f0eddf4946?w=600&h=500&fit=crop"
+                    ],
+                    col2: "https://images.unsplash.com/photo-1602734846297-929b8b99b2f7?w=800&h=700&fit=crop"
+                }
+            ];
+
+            return (
+                <section id="projects" className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+                    <FadeIn delay={0} y={40}>
+                        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-28" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>
+                            Success
+                        </h2>
+                    </FadeIn>
+
+                    <div className="max-w-6xl mx-auto space-y-8">
+                        {projects.map((project, index) => (
+                            <div 
+                                key={index} 
+                                className="sticky top-24 md:top-32 h-[85vh]"
+                                style={{ top: `${index * 28}px` }}
+                            >
+                                <div className="h-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 flex flex-col">
+                                    {/* Top Row */}
+                                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                        <div className="flex items-center gap-4 sm:gap-8">
+                                            <span className="text-[#D7E2EA] font-black" style={{ fontSize: "clamp(3rem, 10vw, 140px)", lineHeight: 1 }}>
+                                                {project.num}
+                                            </span>
+                                            <div>
+                                                <span className="text-[#D7E2EA] uppercase tracking-widest text-sm opacity-60">{project.category}</span>
+                                                <h3 className="text-[#D7E2EA] font-medium uppercase" style={{ fontSize: "clamp(1rem, 2.2vw, 2.1rem)" }}>
+                                                    {project.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <LiveProjectButton label="View Event" />
+                                    </div>
+
+                                    {/* Bottom Row - Image Grid */}
+                                    <div className="flex-1 flex gap-4 min-h-0">
+                                        <div className="w-[40%] flex flex-col gap-4">
+                                            <div className="flex-1 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden" style={{ maxHeight: "clamp(130px, 16vw, 230px)" }}>
+                                                <img src={project.col1[0]} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex-[1.5] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden" style={{ maxHeight: "clamp(160px, 22vw, 340px)" }}>
+                                                <img src={project.col1[1]} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                        </div>
+                                        <div className="w-[60%] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden">
+                                            <img src={project.col2} alt="" className="w-full h-full object-cover" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Footer = () => (
+            <footer id="contact" className="bg-[#0C0C0C] px-6 md:px-10 py-20 text-center">
+                <FadeIn delay={0} y={40}>
+                    <h2 className="hero-heading font-black uppercase leading-none tracking-tight mb-8" style={{ fontSize: "clamp(2rem, 8vw, 100px)" }}>
+                        Ready to Play?
+                    </h2>
+                    <p className="text-[#D7E2EA] font-light uppercase tracking-wide mb-10 max-w-xl mx-auto" style={{ fontSize: "clamp(0.85rem, 1.6vw, 1.25rem)" }}>
+                        Learn the game. Master the mindset. Play with excellence.
+                    </p>
+                    <ContactButton label="Enroll Now" />
+                </FadeIn>
+                <div className="mt-20 pt-10 border-t border-[#D7E2EA]/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#D7E2EA]/40 text-sm">
+                    <span>&copy; 2026 Ludo Academy of Excellence</span>
+                    <span className="uppercase tracking-widest">Every Move Matters</span>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            return (
+                <div className="overflow-x-clip">
+                    <HeroSection />
+                    <MarqueeSection />
+                    <AboutSection />
+                    <ServicesSection />
+                    <ProjectsSection />
+                    <Footer />
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
 </body>
 </html>
