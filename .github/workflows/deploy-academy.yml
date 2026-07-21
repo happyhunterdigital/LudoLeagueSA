@@ -22,13 +22,19 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
-      - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+      - name: Clean Install Dependencies
+        run: |
+          rm -rf node_modules
+          npm install --legacy-peer-deps
+
+      - name: Verify Plugin Version
+        run: npm list @vitejs/plugin-react
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only firestore:rules,hosting:ludoacademy
+          args: deploy --only firestore:rules,hosting:ludoacademy --project ludoleaguesa-33371
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
