@@ -6,7 +6,7 @@ on:
     paths:
       - 'ludo-academy/**'
       - 'firebase.json'
-      - '.firebaserc'
+      - 'firestore.indexes.json'
 jobs:
   deploy_academy:
     runs-on: ubuntu-latest
@@ -14,9 +14,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies & Fix Audits
+        run: |
+          npm install --legacy-peer-deps
+          npm audit fix --audit-level=high || true
+
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:ludoacademy --project ludoleaguesa-33371
+          args: deploy --only firestore:rules,hosting:ludoacademy
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
