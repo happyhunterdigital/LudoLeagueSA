@@ -3,109 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludo Academy of Excellence | Strategic Mindset & Competitive Training</title>
-    <meta name="description" content="Ludo Academy of Excellence develops professionals through competitive Ludo training, mentorship, and strategic mindset development.">
-    <meta name="keywords" content="Ludo Academy, Strategic Thinking, Ludo Training South Africa, Mindset Development, Ludo League SA">
-    <meta property="og:title" content="Ludo Academy of Excellence">
-    <meta property="og:description" content="Where strategy meets skill. Developing professionals through competitive Ludo training and community engagement.">
-    <meta property="og:type" content="website">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Ludo Academy</title>
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body, #root { background: #0C0C0C; font-family: 'Kanit', sans-serif; overflow-x: hidden; }
-        .hero-heading { background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .contact-gradient { background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%); box-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset; outline: 2px solid white; outline-offset: -3px; }
-        .marquee-row, .magnet-wrap { will-change: transform; }
-        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0C0C0C; } ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(0,0,0,0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #EB1C24;
+        }
+
+        /* Main Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 5% 5rem;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        /* Ludo Color Bars */
+        .ludo-colors {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .color-bar {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            transform: rotate(45deg);
+        }
+
+        .color-red { background: #EB1C24; top: -50%; left: -50%; }
+        .color-green { background: #02A04B; top: -50%; right: -50%; }
+        .color-yellow { background: #FFE013; bottom: -50%; left: -50%; }
+        .color-blue { background: #22409A; bottom: -50%; right: -50%; }
+
+        /* Main Heading - Responsive */
+        .hero-title {
+            font-size: clamp(3rem, 12vw, 10rem);
+            font-weight: 900;
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 2rem;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #EB1C24 0%, #02A04B 25%, #FFE013 50%, #22409A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        /* Tagline - Responsive */
+        .hero-tagline {
+            font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            z-index: 1;
+            font-family: 'Arial', sans-serif;
+            font-weight: 400;
+            color: #ccc;
+            padding: 0 1rem;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            background: linear-gradient(135deg, #EB1C24 0%, #22409A 100%);
+            color: #fff;
+            padding: clamp(1rem, 3vw, 1.5rem) clamp(2rem, 5vw, 3rem);
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 1;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(235, 28, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(235, 28, 36, 0.5);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0,0,0,0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                padding: 7rem 5% 3rem;
+            }
+
+            .hero-title {
+                letter-spacing: -1px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: clamp(2.5rem, 15vw, 4rem);
+            }
+
+            .hero-tagline {
+                font-size: clamp(0.85rem, 4vw, 1.1rem);
+            }
+
+            nav {
+                padding: 1rem 5%;
+            }
+        }
+
+        /* Ludo Path Animation */
+        .ludo-path {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .path-dot {
+            position: absolute;
+            width: clamp(8px, 2vw, 15px);
+            height: clamp(8px, 2vw, 15px);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
     </style>
-    <script type="application/ld+json">
-    { "@context": "https://schema.org", "@type": "EducationalOrganization", "name": "Ludo Academy of Excellence", "description": "An academy dedicated to personal development, strategic thinking, and continuous learning through the game of Ludo.", "parentOrganization": { "@type": "Organization", "name": "Ludo League South Africa" }, "areaServed": "ZA", "slogan": "Where strategy meets skill. Learn the game. Master the mindset. Play with excellence." }
-    </script>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState, useEffect, useRef, useCallback } = React;
-        const { motion, useScroll, useTransform, useInView } = window.Motion;
-        const FadeIn = ({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = "" }) => {
-            const ref = useRef(null); const isInView = useInView(ref, { once: true, margin: "50px", amount: 0 });
-            return <motion.div ref={ref} initial={{ opacity: 0, x, y }} animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }} className={className}>{children}</motion.div>;
-        };
-        const Magnet = ({ children, padding = 150, strength = 3 }) => {
-            const ref = useRef(null); const [transform, setTransform] = useState("translate3d(0px, 0px, 0px)"); const [isActive, setIsActive] = useState(false);
-            const handleMouseMove = useCallback((e) => { if (!ref.current) return; const rect = ref.current.getBoundingClientRect(); const distX = e.clientX - (rect.left + rect.width / 2); const distY = e.clientY - (rect.top + rect.height / 2); const distance = Math.sqrt(distX * distX + distY * distY);
-                if (distance < Math.max(rect.width, rect.height) / 2 + padding) { setIsActive(true); setTransform(`translate3d(${distX / strength}px, ${distY / strength}px, 0px)`); } else { setIsActive(false); setTransform("translate3d(0px, 0px, 0px)"); }
-            }, [padding, strength]);
-            useEffect(() => { window.addEventListener("mousemove", handleMouseMove); return () => window.removeEventListener("mousemove", handleMouseMove); }, [handleMouseMove]);
-            return <div ref={ref} className="magnet-wrap inline-block" style={{ transform, transition: isActive ? "transform 0.3s ease-out" : "transform 0.6s ease-in-out" }} onMouseLeave={() => { setIsActive(false); setTransform("translate3d(0px, 0px, 0px)"); }}>{children}</div>;
-        };
-        const ContactButton = ({ label = "Contact Me", className = "" }) => <button className={`contact-gradient text-white font-medium uppercase tracking-widest rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base transition-transform hover:scale-105 ${className}`}>{label}</button>;
-        const LiveProjectButton = ({ label = "Live Project" }) => <button className="rounded-full border-2 border-[#D7E2EA] text-[#D7E2EA] font-medium uppercase tracking-widest px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base hover:bg-[#D7E2EA]/10 transition-colors">{label}</button>;
-        const Word = ({ children, progress, range }) => { const opacity = useTransform(progress, range, [0.2, 1]); return <span className="inline-block mr-[0.25em]"><motion.span style={{ opacity }} className="inline-block">{children}</motion.span></span>; };
-        const AnimatedText = ({ text, className = "" }) => {
-            const ref = useRef(null); const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.2"] }); const words = text.split(" ");
-            return <p ref={ref} className={`${className}`} style={{ lineHeight: 1.6 }}>{words.map((word, i) => <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>{word}</Word>)}</p>;
-        };
-        const HeroSection = () => (
-            <section className="h-screen flex flex-col relative overflow-x-clip">
-                <FadeIn delay={0} y={-20}><nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8 text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg"><a href="#about" className="hover:opacity-70">About</a><a href="#services" className="hover:opacity-70">Training</a><a href="#projects" className="hover:opacity-70">Success</a><a href="#contact" className="hover:opacity-70">Contact</a></nav></FadeIn>
-                <div className="overflow-hidden w-full mt-6 sm:mt-4 md:-mt-5"><FadeIn delay={0.15} y={40}><h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-center text-[14vw] md:text-[16vw] lg:text-[17.5vw]">Ludo Academy</h1></FadeIn></div>
-                <div className="flex justify-between items-end px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 mt-auto z-20">
-                    <FadeIn delay={0.35} y={20}><p className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[260px]" style={{ fontSize: "clamp(0.75rem, 1.4vw, 1.5rem)" }}>Where every move matters. Strategy, discipline, and excellence.</p></FadeIn>
-                    <FadeIn delay={0.5} y={20}><ContactButton label="Join Us" /></FadeIn>
-                </div>
-                <FadeIn delay={0.6} y={30} className="absolute left-1/2 -translate-x-1/2 z-10 w-[220px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-[35%] sm:top-auto sm:translate-y-0 sm:bottom-0"><Magnet padding={150} strength={3}><img src="https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=800&q=80" alt="Ludo Board Strategy" className="w-full h-auto object-cover rounded-3xl opacity-90" loading="lazy" /></Magnet></FadeIn>
-            </section>
-        );
-        const MarqueeSection = () => {
-            const sectionRef = useRef(null); const [offset, setOffset] = useState(0);
-            const row1Images = ["https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=420&h=270&fit=crop", "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=420&h=270&fit=crop", "https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=420&h=270&fit=crop", "https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=420&h=270&fit=crop", "https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=420&h=270&fit=crop"];
-            const tripled1 = [...row1Images, ...row1Images, ...row1Images];
-            useEffect(() => { const handleScroll = () => { if (sectionRef.current) setOffset((window.scrollY - sectionRef.current.offsetTop + window.innerHeight) * 0.3); }; window.addEventListener("scroll", handleScroll, { passive: true }); return () => window.removeEventListener("scroll", handleScroll); }, []);
-            return <section ref={sectionRef} className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"><div className="flex flex-col gap-3"><div className="marquee-row flex gap-3" style={{ transform: `translateX(${offset - 200}px)` }}>{tripled1.map((src, i) => <img key={i} src={src} alt="" className="w-[260px] h-[160px] sm:w-[420px] sm:h-[270px] rounded-2xl object-cover flex-shrink-0" loading="lazy" />)}</div></div></section>;
-        };
-        const AboutSection = () => (
-            <section id="about" className="min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 relative">
-                <FadeIn delay={0.1} x={-80} className="absolute top-[4%] left-[4%] hidden sm:block"><img src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=210&h=210&fit=crop" alt="Strategy" className="w-[160px] md:w-[210px] rounded-2xl opacity-80" /></FadeIn>
-                <FadeIn delay={0} y={40} className="mb-10 sm:mb-14 md:mb-16"><h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>Our Philosophy</h2></FadeIn>
-                <div className="max-w-[560px] text-center mb-16 sm:mb-20 md:mb-24"><AnimatedText text="At Ludo Academy of Excellence, we believe that every move matters both on the board and in life. Our academy brings together passionate individuals committed to personal development, strategic thinking, and continuous learning." className="text-[#D7E2EA] font-medium leading-relaxed text-center" style={{ fontSize: "clamp(1rem, 2vw, 1.35rem)" }} /></div>
-                <FadeIn delay={0.4} y={20}><ContactButton label="Learn More" /></FadeIn>
-            </section>
-        );
-        const ServicesSection = () => {
-            const services = [{ num: "01", name: "Strategic Training", desc: "Comprehensive Ludo strategy sessions covering opening moves, mid-game tactics, and end-game precision." }, { num: "02", name: "Mentorship Program", desc: "One-on-one guidance from seasoned champions who have mastered the art of strategic gameplay." }, { num: "03", name: "Mindset Coaching", desc: "Develop the winning mindset through patience, careful planning, and the courage to take calculated risks." }];
-            return (
-                <section id="services" className="bg-white rounded-t-[40px] sm:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-32">
-                    <FadeIn delay={0} y={40}><h2 className="text-[#0C0C0C] font-black uppercase text-center mb-16 sm:mb-28" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>Training</h2></FadeIn>
-                    <div className="max-w-5xl mx-auto">{services.map((service, i) => <FadeIn key={i} delay={i * 0.1} y={30}><div className={`flex flex-col sm:flex-row gap-4 sm:gap-8 py-8 sm:py-12 ${i > 0 ? "border-t" : ""}`} style={{ borderColor: "rgba(12, 12, 12, 0.15)" }}><div className="text-[#0C0C0C] font-black flex-shrink-0" style={{ fontSize: "clamp(3rem, 10vw, 140px)", lineHeight: 1 }}>{service.num}</div><div className="flex flex-col justify-center"><h3 className="text-[#0C0C0C] font-medium uppercase mb-2" style={{ fontSize: "clamp(1rem, 2.2vw, 2.1rem)" }}>{service.name}</h3><p className="text-[#0C0C0C] font-light leading-relaxed max-w-2xl opacity-60" style={{ fontSize: "clamp(0.85rem, 1.6vw, 1.25rem)" }}>{service.desc}</p></div></div></FadeIn>)}</div>
-                </section>
-            );
-        };
-        const ProjectsSection = () => {
-            const projects = [{ num: "01", category: "Championship", name: "National Ludo Masters", col1: ["https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1596492787861-0f406a9769e5?w=600&h=500&fit=crop"], col2: "https://images.unsplash.com/photo-1612442449529-58b6935d1f47?w=800&h=700&fit=crop" }, { num: "02", category: "Workshop", name: "Strategic Mindset Summit", col1: ["https://images.unsplash.com/photo-1582560475093-6f76c5e3b6b1?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1632501641765-e568d28b0015?w=600&h=500&fit=crop"], col2: "https://images.unsplash.com/photo-1606503825008-909a6184f56d?w=800&h=700&fit=crop" }];
-            return (
-                <section id="projects" className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[60px] -mt-10 sm:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 py-20 sm:py-32">
-                    <FadeIn delay={0} y={40}><h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-28" style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}>Success</h2></FadeIn>
-                    <div className="max-w-6xl mx-auto space-y-8">{projects.map((project, index) => <div key={index} className="sticky top-24 md:top-32 h-auto min-h-[85vh]" style={{ top: `${index * 28}px` }}><div className="h-full rounded-[40px] sm:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-8 flex flex-col"><div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div className="flex items-center gap-4 sm:gap-8"><span className="text-[#D7E2EA] font-black" style={{ fontSize: "clamp(3rem, 10vw, 140px)", lineHeight: 1 }}>{project.num}</span><div><span className="text-[#D7E2EA] uppercase tracking-widest text-sm opacity-60">{project.category}</span><h3 className="text-[#D7E2EA] font-medium uppercase" style={{ fontSize: "clamp(1rem, 2.2vw, 2.1rem)" }}>{project.name}</h3></div></div><LiveProjectButton label="View Event" /></div><div className="flex-1 flex flex-col sm:flex-row gap-4 min-h-0"><div className="w-full sm:w-[40%] flex flex-col gap-4"><div className="flex-1 rounded-[40px] sm:rounded-[60px] overflow-hidden" style={{ maxHeight: "clamp(130px, 16vw, 230px)" }}><img src={project.col1[0]} alt="" className="w-full h-full object-cover" /></div><div className="flex-[1.5] rounded-[40px] sm:rounded-[60px] overflow-hidden" style={{ maxHeight: "clamp(160px, 22vw, 340px)" }}><img src={project.col1[1]} alt="" className="w-full h-full object-cover" /></div></div><div className="w-full sm:w-[60%] rounded-[40px] sm:rounded-[60px] overflow-hidden min-h-[200px] sm:min-h-0"><img src={project.col2} alt="" className="w-full h-full object-cover" /></div></div></div></div>)}</div>
-                </section>
-            );
-        };
-        const Footer = () => (
-            <footer id="contact" className="bg-[#0C0C0C] px-6 md:px-10 py-20 text-center">
-                <FadeIn delay={0} y={40}><h2 className="hero-heading font-black uppercase leading-none tracking-tight mb-8" style={{ fontSize: "clamp(2rem, 8vw, 100px)" }}>Ready to Play?</h2><p className="text-[#D7E2EA] font-light uppercase tracking-wide mb-10 max-w-xl mx-auto" style={{ fontSize: "clamp(0.85rem, 1.6vw, 1.25rem)" }}>Learn the game. Master the mindset. Play with excellence.</p><ContactButton label="Enroll Now" /></FadeIn>
-                <div className="mt-20 pt-10 border-t border-[#D7E2EA]/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#D7E2EA]/40 text-sm"><span>&copy; 2026 Ludo Academy of Excellence</span><span className="uppercase tracking-widest">Every Move Matters</span></div>
-            </footer>
-        );
-        const App = () => <div className="overflow-x-clip"><HeroSection /><MarqueeSection /><AboutSection /><ServicesSection /><ProjectsSection /><Footer /></div>;
-        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    <nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#training">Training</a></li>
+            <li><a href="#success">Success</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="ludo-colors">
+            <div class="color-bar color-red"></div>
+            <div class="color-bar color-green"></div>
+            <div class="color-bar color-yellow"></div>
+            <div class="color-bar color-blue"></div>
+        </div>
+        
+        <h1 class="hero-title">LUDO ACADEMY</h1>
+        
+        <p class="hero-tagline">
+            WHERE EVERY MOVE MATTERS. STRATEGY, DISCIPLINE, AND EXCELLENCE.
+        </p>
+        
+        <a href="#join" class="cta-button">JOIN US</a>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Add responsive path dots
+        function createPathDots() {
+            const colors = ['#EB1C24', '#02A04B', '#FFE013', '#22409A'];
+            const container = document.querySelector('.hero');
+            
+            for (let i = 0; i < 20; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'path-dot';
+                dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(dot);
+            }
+        }
+
+        createPathDots();
     </script>
 </body>
 </html>
