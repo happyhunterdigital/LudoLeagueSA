@@ -22,12 +22,8 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
-
-      - name: Audit Dependencies (Non-blocking)
-        # The `|| true` ensures the pipeline continues even if npm audit finds 
-        # known, non-critical vulnerabilities in dev dependencies or the Firebase SDK.
-        run: npm audit --audit-level=high || true
+        # --legacy-peer-deps prevents conflicts between vite, react, and other packages
+        run: npm install --legacy-peer-deps
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
