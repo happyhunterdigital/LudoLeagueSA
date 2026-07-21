@@ -3,290 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludo Academy</title>
+    <title>Ludo Academy of Excellence | Strategic Mindset & Competitive Training</title>
+    <meta name="description" content="Ludo Academy of Excellence develops professionals through competitive Ludo training, mentorship, and strategic mindset development.">
+    <meta name="keywords" content="Ludo Academy, Strategic Thinking, Ludo Training South Africa, Mindset Development, Ludo League SA">
+    <meta property="og:title" content="Ludo Academy of Excellence">
+    <meta property="og:description" content="Where strategy meets skill. Developing professionals through competitive Ludo training and community engagement.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial Black', 'Impact', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            background: rgba(0,0,0,0.9);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: clamp(0.8rem, 1.5vw, 1rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #EB1C24;
-        }
-
-        /* Main Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 8rem 5% 5rem;
-            position: relative;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-        }
-
-        /* Ludo Color Bars */
-        .ludo-colors {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .color-bar {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            transform: rotate(45deg);
-        }
-
-        .color-red { background: #EB1C24; top: -50%; left: -50%; }
-        .color-green { background: #02A04B; top: -50%; right: -50%; }
-        .color-yellow { background: #FFE013; bottom: -50%; left: -50%; }
-        .color-blue { background: #22409A; bottom: -50%; right: -50%; }
-
-        /* Main Heading - Responsive */
-        .hero-title {
-            font-size: clamp(3rem, 12vw, 10rem);
-            font-weight: 900;
-            text-align: center;
-            line-height: 1;
-            margin-bottom: 2rem;
-            z-index: 1;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, #EB1C24 0%, #02A04B 25%, #FFE013 50%, #22409A 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body, #root { background: #0a0e27; font-family: 'Kanit', sans-serif; overflow-x: hidden; }
+        .hero-heading { 
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
             background-clip: text;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
+            filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
         }
-
-        /* Tagline - Responsive */
-        .hero-tagline {
-            font-size: clamp(0.9rem, 2.5vw, 1.5rem);
-            text-align: center;
-            max-width: 600px;
-            margin-bottom: 3rem;
-            line-height: 1.6;
-            z-index: 1;
-            font-family: 'Arial', sans-serif;
-            font-weight: 400;
-            color: #ccc;
-            padding: 0 1rem;
+        .nav-text { color: #d4af37; }
+        .nav-text:hover { color: #f4e5c2; }
+        .contact-gradient { 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%); 
+            box-shadow: 0px 4px 15px rgba(59, 130, 246, 0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+            border: 2px solid #d4af37;
+            color: #d4af37;
         }
-
-        /* CTA Button */
-        .cta-button {
-            background: linear-gradient(135deg, #EB1C24 0%, #22409A 100%);
-            color: #fff;
-            padding: clamp(1rem, 3vw, 1.5rem) clamp(2rem, 5vw, 3rem);
-            border: none;
-            border-radius: 50px;
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            z-index: 1;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 10px 30px rgba(235, 28, 36, 0.3);
+        .contact-gradient:hover {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+            transform: scale(1.05);
+            box-shadow: 0px 6px 20px rgba(59, 130, 246, 0.6);
         }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(235, 28, 36, 0.5);
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: #fff;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: rgba(0,0,0,0.95);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 3rem;
-                transition: 0.3s;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .hero {
-                padding: 7rem 5% 3rem;
-            }
-
-            .hero-title {
-                letter-spacing: -1px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: clamp(2.5rem, 15vw, 4rem);
-            }
-
-            .hero-tagline {
-                font-size: clamp(0.85rem, 4vw, 1.1rem);
-            }
-
-            nav {
-                padding: 1rem 5%;
-            }
-        }
-
-        /* Ludo Path Animation */
-        .ludo-path {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
-        .path-dot {
-            position: absolute;
-            width: clamp(8px, 2vw, 15px);
-            height: clamp(8px, 2vw, 15px);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
+        .marquee-row, .magnet-wrap { will-change: transform; }
+        ::-webkit-scrollbar { width: 8px; } 
+        ::-webkit-scrollbar-track { background: #0a0e27; } 
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d4af37, #b8941f); border-radius: 4px; }
+        .section-white { background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%); }
+        .gold-border { border-color: #d4af37; }
+        .navy-bg { background-color: #0a0e27; }
+        .gold-text { color: #d4af37; }
     </style>
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "EducationalOrganization", "name": "Ludo Academy of Excellence", "description": "An academy dedicated to personal development, strategic thinking, and continuous learning through the game of Ludo.", "parentOrganization": { "@type": "Organization", "name": "Ludo League South Africa" }, "areaServed": "ZA", "slogan": "Where strategy meets skill. Learn the game. Master the mindset. Play with excellence." }
+    </script>
 </head>
 <body>
-    <nav>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#about">About</a></li>
-            <li><a href="#training">Training</a></li>
-            <li><a href="#success">Success</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-
-    <section class="hero">
-        <div class="ludo-colors">
-            <div class="color-bar color-red"></div>
-            <div class="color-bar color-green"></div>
-            <div class="color-bar color-yellow"></div>
-            <div class="color-bar color-blue"></div>
-        </div>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+        const { motion, useScroll, useTransform, useInView } = window.Motion;
         
-        <h1 class="hero-title">LUDO ACADEMY</h1>
+        const FadeIn = ({ children, delay = 0, duration = 0.7, x = 0, y = 30, className = "" }) => {
+            const ref = useRef(null); 
+            const isInView = useInView(ref, { once: true, margin: "50px", amount: 0.1 });
+            return <motion.div ref={ref} initial={{ opacity: 0, x, y }} animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}} transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }} className={className}>{children}</motion.div>;
+        };
         
-        <p class="hero-tagline">
-            WHERE EVERY MOVE MATTERS. STRATEGY, DISCIPLINE, AND EXCELLENCE.
-        </p>
+        const Magnet = ({ children, padding = 150, strength = 3 }) => {
+            const ref = useRef(null); 
+            const [transform, setTransform] = useState("translate3d(0px, 0px, 0px)"); 
+            const [isActive, setIsActive] = useState(false);
+            const handleMouseMove = useCallback((e) => { 
+                if (!ref.current) return; 
+                const rect = ref.current.getBoundingClientRect(); 
+                const distX = e.clientX - (rect.left + rect.width / 2); 
+                const distY = e.clientY - (rect.top + rect.height / 2); 
+                const distance = Math.sqrt(distX * distX + distY * distY);
+                if (distance < Math.max(rect.width, rect.height) / 2 + padding) { 
+                    setIsActive(true); 
+                    setTransform(`translate3d(${distX / strength}px, ${distY / strength}px, 0px)`); 
+                } else { 
+                    setIsActive(false); 
+                    setTransform("translate3d(0px, 0px, 0px)"); 
+                }
+            }, [padding, strength]);
+            useEffect(() => { 
+                window.addEventListener("mousemove", handleMouseMove); 
+                return () => window.removeEventListener("mousemove", handleMouseMove); 
+            }, [handleMouseMove]);
+            return <div ref={ref} className="magnet-wrap inline-block" style={{ transform, transition: isActive ? "transform 0.3s ease-out" : "transform 0.6s ease-in-out" }} onMouseLeave={() => { setIsActive(false); setTransform("translate3d(0px, 0px, 0px)"); }}>{children}</div>;
+        };
         
-        <a href="#join" class="cta-button">JOIN US</a>
-    </section>
-
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Add responsive path dots
-        function createPathDots() {
-            const colors = ['#EB1C24', '#02A04B', '#FFE013', '#22409A'];
-            const container = document.querySelector('.hero');
+        const ContactButton = ({ label = "Contact Me", className = "" }) => (
+            <button className={`contact-gradient font-semibold uppercase tracking-wider rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-sm sm:text-base md:text-lg transition-all duration-300 ${className}`}>
+                {label}
+            </button>
+        );
+        
+        const LiveProjectButton = ({ label = "Live Project" }) => (
+            <button className="rounded-full border-2 border-[#d4af37] text-[#d4af37] font-semibold uppercase tracking-wider px-6 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm hover:bg-[#d4af37]/10 transition-all duration-300 hover:scale-105">
+                {label}
+            </button>
+        );
+        
+        const Word = ({ children, progress, range }) => { 
+            const opacity = useTransform(progress, range, [0.2, 1]); 
+            return <span className="inline-block mr-[0.25em]"><motion.span style={{ opacity }} className="inline-block">{children}</motion.span></span>; 
+        };
+        
+        const AnimatedText = ({ text, className = "" }) => {
+            const ref = useRef(null); 
+            const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.2"] }); 
+            const words = text.split(" ");
+            return <p ref={ref} className={`${className}`} style={{ lineHeight: 1.6 }}>{words.map((word, i) => <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>{word}</Word>)}</p>;
+        };
+        
+        const HeroSection = () => (
+            <section className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#0f1535] to-[#0a0e27]">
+                <FadeIn delay={0} y={-20}>
+                    <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8 nav-text font-medium uppercase tracking-wider text-xs sm:text-sm md:text-base">
+                        <a href="#about" className="hover:opacity-70 transition-opacity">About</a>
+                        <a href="#training" className="hover:opacity-70 transition-opacity">Training</a>
+                        <a href="#success" className="hover:opacity-70 transition-opacity">Success</a>
+                        <a href="#contact" className="hover:opacity-70 transition-opacity">Contact</a>
+                    </nav>
+                </FadeIn>
+                
+                <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-12">
+                    <FadeIn delay={0.15} y={20} className="w-full text-center mb-6 sm:mb-8">
+                        <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[6vw]">
+                            Ludo Academy
+                        </h1>
+                    </FadeIn>
+                    
+                    <FadeIn delay={0.3} y={20} className="mb-8 sm:mb-10">
+                        <p className="text-[#d4af37] font-light uppercase tracking-wide leading-snug max-w-md mx-auto text-center text-sm sm:text-base md:text-lg opacity-90">
+                            Where every move matters. Strategy, discipline, and excellence.
+                        </p>
+                    </FadeIn>
+                    
+                    <FadeIn delay={0.45} y={20} className="mb-10 sm:mb-12">
+                        <ContactButton label="Join Us" />
+                    </FadeIn>
+                    
+                    <FadeIn delay={0.6} y={30} className="w-full max-w-4xl mx-auto">
+                        <Magnet padding={150} strength={3}>
+                            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-4 border-[#d4af37]/30">
+                                <img 
+                                    src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_officials_after_training_for_their_respective_leagues_in_Alex_Soweto_and_Mamelodi._2022_tqwkjs.jpg" 
+                                    alt="Ludo Academy Training Session" 
+                                    className="w-full h-auto object-cover" 
+                                    loading="lazy" 
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e27]/60 to-transparent"></div>
+                            </div>
+                        </Magnet>
+                    </FadeIn>
+                </div>
+            </section>
+        );
+        
+        const MarqueeSection = () => {
+            const sectionRef = useRef(null); 
+            const [offset, setOffset] = useState(0);
+            const row1Images = [
+                "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_Academy_of_excellence_learning_vihidj.jpg",
+                "https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142171/LudoLeagueSA_vwtysc.png",
+                "https://res.cloudinary.com/dfzeb1s54/image/upload/v1779664335/Soweto_Ludo_League_Tournament_rnkewh.jpg",
+                "https://res.cloudinary.com/dfzeb1s54/image/upload/v1779563470/INTER-TOWNSHIP-KNOCKOUT_Battle_of_the_Kasis.The_ultimate_inter_township_clash.The_three_titans_of_the_Ludo_League_South_Africa_rmnqm4.jpg",
+                "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211756_1_b1jvqu.jpg"
+            ];
+            const tripled1 = [...row1Images, ...row1Images, ...row1Images];
             
-            for (let i = 0; i < 20; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'path-dot';
-                dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-                dot.style.left = Math.random() * 100 + '%';
-                dot.style.top = Math.random() * 100 + '%';
-                dot.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(dot);
-            }
-        }
-
-        createPathDots();
+            useEffect(() => { 
+                const handleScroll = () => { 
+                    if (sectionRef.current) setOffset((window.scrollY - sectionRef.current.offsetTop + window.innerHeight) * 0.3); 
+                }; 
+                window.addEventListener("scroll", handleScroll, { passive: true }); 
+                return () => window.removeEventListener("scroll", handleScroll); 
+            }, []);
+            
+            return (
+                <section ref={sectionRef} className="bg-[#0a0e27] pt-16 sm:pt-20 md:pt-24 pb-8 overflow-hidden">
+                    <div className="flex flex-col gap-3">
+                        <div className="marquee-row flex gap-3" style={{ transform: `translateX(${offset - 200}px)` }}>
+                            {tripled1.map((src, i) => (
+                                <img 
+                                    key={i} 
+                                    src={src} 
+                                    alt="" 
+                                    className="w-[200px] h-[130px] sm:w-[280px] sm:h-[180px] md:w-[360px] md:h-[230px] rounded-xl sm:rounded-2xl object-cover flex-shrink-0 border-2 border-[#d4af37]/20" 
+                                    loading="lazy" 
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        
+        const AboutSection = () => (
+            <section id="about" className="min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 relative bg-gradient-to-b from-[#0a0e27] to-[#0f1535]">
+                <FadeIn delay={0.1} x={-80} className="absolute top-[10%] left-[2%] hidden sm:block">
+                    <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg" alt="Strategy" className="w-[120px] md:w-[160px] rounded-2xl opacity-60 border-2 border-[#d4af37]/30" />
+                </FadeIn>
+                
+                <FadeIn delay={0} y={40} className="mb-8 sm:mb-10 md:mb-12">
+                    <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center" style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>
+                        Our Philosophy
+                    </h2>
+                </FadeIn>
+                
+                <div className="max-w-3xl text-center mb-12 sm:mb-16 md:mb-20">
+                    <AnimatedText 
+                        text="At Ludo Academy of Excellence, we believe that every move matters both on the board and in life. Our academy brings together passionate individuals committed to personal development, strategic thinking, and continuous learning." 
+                        className="text-[#d4af37] font-medium leading-relaxed text-center opacity-90" 
+                        style={{ fontSize: "clamp(1rem, 1.8vw, 1.25rem)" }} 
+                    />
+                </div>
+                
+                <FadeIn delay={0.4} y={20}>
+                    <ContactButton label="Learn More" />
+                </FadeIn>
+            </section>
+        );
+        
+        const ServicesSection = () => {
+            const services = [
+                { num: "01", name: "Strategic Training", desc: "Comprehensive Ludo strategy sessions covering opening moves, mid-game tactics, and end-game precision." }, 
+                { num: "02", name: "Mentorship Program", desc: "One-on-one guidance from seasoned champions who have mastered the art of strategic gameplay." }, 
+                { num: "03", name: "Mindset Coaching", desc: "Develop the winning mindset through patience, careful planning, and the courage to take calculated risks." }
+            ];
+            
+            return (
+                <section id="training" className="section-white rounded-t-[30px] sm:rounded-t-[50px] px-5 sm:px-8 md:px-10 py-16 sm:py-24">
+                    <FadeIn delay={0} y={40}>
+                        <h2 className="text-[#0a0e27] font-black uppercase text-center mb-12 sm:mb-16" style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>
+                            Training
+                        </h2>
+                    </FadeIn>
+                    <div className="max-w-4xl mx-auto">
+                        {services.map((service, i) => (
+                            <FadeIn key={i} delay={i * 0.1} y={30}>
+                                <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 py-6 sm:py-10 ${i > 0 ? "border-t border-[#d4af37]/20" : ""}`}>
+                                    <div className="text-[#1e3a8a] font-black flex-shrink-0" style={{ fontSize: "clamp(2.5rem, 7vw, 4rem)", lineHeight: 1 }}>
+                                        {service.num}
+                                    </div>
+                                    <div className="flex flex-col justify-center">
+                                        <h3 className="text-[#0a0e27] font-semibold uppercase mb-2" style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)" }}>
+                                            {service.name}
+                                        </h3>
+                                        <p className="text-[#0a0e27] font-light leading-relaxed max-w-2xl opacity-70" style={{ fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)" }}>
+                                            {service.desc}
+                                        </p>
+                                    </div>
+                                </div>
+                            </FadeIn>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+        
+        const ProjectsSection = () => {
+            const projects = [
+                { 
+                    num: "01", 
+                    category: "Championship", 
+                    name: "National Ludo Masters", 
+                    col1: [
+                        "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211759_1_v9zrci.jpg",
+                        "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211756_yyrdvt.jpg"
+                    ], 
+                    col2: "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211759_l3q3oi.jpg" 
+                }, 
+                { 
+                    num: "02", 
+                    category: "Workshop", 
+                    name: "Strategic Mindset Summit", 
+                    col1: [
+                        "https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_Academy_of_excellence_learning_vihidj.jpg",
+                        "https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142171/LudoLeagueSA_vwtysc.png"
+                    ], 
+                    col2: "https://res.cloudinary.com/dfzeb1s54/image/upload/v1779664335/Soweto_Ludo_League_Tournament_rnkewh.jpg" 
+                }
+            ];
+            
+            return (
+                <section id="success" className="bg-[#0a0e27] rounded-t-[30px] sm:rounded-t-[50px] -mt-8 sm:-mt-10 relative z-10 px-5 sm:px-8 md:px-10 py-16 sm:py-24">
+                    <FadeIn delay={0} y={40}>
+                        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-12 sm:mb-16" style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>
+                            Success
+                        </h2>
+                    </FadeIn>
+                    <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
+                        {projects.map((project, index) => (
+                            <div key={index} className="sticky top-20 sm:top-24 md:top-28 h-auto min-h-[70vh] sm:min-h-[75vh]" style={{ top: `${index * 20}px` }}>
+                                <div className="h-full rounded-[30px] sm:rounded-[50px] border-2 border-[#d4af37]/40 bg-[#0a0e27] p-4 sm:p-6 flex flex-col">
+                                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                        <div className="flex items-center gap-4 sm:gap-6">
+                                            <span className="hero-heading font-black" style={{ fontSize: "clamp(2.5rem, 7vw, 4rem)", lineHeight: 1 }}>
+                                                {project.num}
+                                            </span>
+                                            <div>
+                                                <span className="text-[#d4af37] uppercase tracking-wider text-xs sm:text-sm opacity-60">{project.category}</span>
+                                                <h3 className="text-[#d4af37] font-semibold uppercase" style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)" }}>
+                                                    {project.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <LiveProjectButton label="View Event" />
+                                    </div>
+                                    <div className="flex-1 flex flex-col sm:flex-row gap-4 min-h-0">
+                                        <div className="w-full sm:w-[40%] flex flex-col gap-3 sm:gap-4">
+                                            <div className="flex-1 rounded-[25px] sm:rounded-[40px] overflow-hidden border border-[#d4af37]/20" style={{ maxHeight: "clamp(120px, 14vw, 200px)" }}>
+                                                <img src={project.col1[0]} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="flex-[1.5] rounded-[25px] sm:rounded-[40px] overflow-hidden border border-[#d4af37]/20" style={{ maxHeight: "clamp(140px, 18vw, 280px)" }}>
+                                                <img src={project.col1[1]} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                        </div>
+                                        <div className="w-full sm:w-[60%] rounded-[25px] sm:rounded-[40px] overflow-hidden min-h-[180px] sm:min-h-0 border border-[#d4af37]/20">
+                                            <img src={project.col2} alt="" className="w-full h-full object-cover" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+        
+        const Footer = () => (
+            <footer id="contact" className="bg-[#0a0e27] px-6 md:px-10 py-16 sm:py-20 text-center border-t border-[#d4af37]/20">
+                <FadeIn delay={0} y={40}>
+                    <h2 className="hero-heading font-black uppercase leading-none tracking-tight mb-6 sm:mb-8" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
+                        Ready to Play?
+                    </h2>
+                    <p className="text-[#d4af37] font-light uppercase tracking-wide mb-8 sm:mb-10 max-w-xl mx-auto opacity-90" style={{ fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)" }}>
+                        Learn the game. Master the mindset. Play with excellence.
+                    </p>
+                    <ContactButton label="Enroll Now" />
+                </FadeIn>
+                <div className="mt-16 sm:mt-20 pt-8 sm:pt-10 border-t border-[#d4af37]/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#d4af37]/50 text-xs sm:text-sm">
+                    <span>&copy; 2026 Ludo Academy of Excellence</span>
+                    <span className="uppercase tracking-widest">Every Move Matters</span>
+                </div>
+            </footer>
+        );
+        
+        const App = () => (
+            <div className="overflow-x-clip">
+                <HeroSection />
+                <MarqueeSection />
+                <AboutSection />
+                <ServicesSection />
+                <ProjectsSection />
+                <Footer />
+            </div>
+        );
+        
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
 </body>
 </html>
