@@ -1,12 +1,17 @@
 {
   "projects": {
-    "default": "your-firebase-project-id"
+    "default": "ludoleaguesa-33371"
   },
   "targets": {
-    "your-firebase-project-id": {
+    "ludoleaguesa-33371": {
       "hosting": {
-        "main": ["ludoleaguesa.co.za"],
-        "academy": ["ludoacademy.ludoleaguesa.co.za"]
+        "app": [
+          "ludoleaguesa-33371"
+        ],
+        "academy": [
+          "academy-ludoleague",
+          "ludoleaguesa-33371"
+        ]
       }
     }
   }
