@@ -41,9 +41,10 @@ export const Contact = () => {
             <h3 className="text-3xl font-display font-black italic uppercase">Reach Us Directly</h3>
             <p className="text-slate-700">Our administrative committee is ready to assist your team with registration or media inquiries.</p>
             <div className="space-y-4 pt-4">
-              <p className="flex items-center gap-3 font-bold"><Mail className="text-white" /> info@ludoleague.co.za</p>
-              <p className="flex items-center gap-3 font-bold"><Phone className="text-white" /> 072 557 8097</p>
-            </div>
+                <a href="mailto:info@ludoleague.co.za" className="flex items-center gap-3 font-bold hover:text-sky-300 transition-colors"><Mail className="text-white" /> info@ludoleague.co.za</a>
+                <a href="tel:+27753211350" className="flex items-center gap-3 font-bold hover:text-sky-300 transition-colors"><Phone className="text-white" /> +27 (0) 75 321 1350</a>
+                <a href="tel:0725578097" className="flex items-center gap-3 font-semibold text-slate-600 hover:text-sky-300 transition-colors"><Phone className="text-white/50" size={18} /> 072 557 8097</a>
+              </div>
           </div>
           <div className="bg-white p-8 rounded-2xl shadow-xl border border-white/20">
             {success ? (

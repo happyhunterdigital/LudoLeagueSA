@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Academy of Excellence | Official Agent & Prospect Registration</title>
+    <meta name="description" content="Ludo Academy of Excellence — Register as a Founding Prospect or Official Ludo Agent. Develop your strategy, earn your accreditation, and become part of South Africa's professional Ludo ecosystem.">
+    <meta name="keywords" content="Ludo Academy, Ludo Agent, South Africa Ludo, Strategic Thinking, Ludo Training South Africa, Ludo League SA, Prospect Registration">
+    <meta property="og:title" content="Ludo Academy of Excellence | Official Registration">
+    <meta property="og:description" content="Where strategy meets skill. Register as a Founding Prospect or Official Ludo Agent and build a career in South Africa's emerging professional Ludo ecosystem.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://academy.ludoleague.co.za">
+    <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDK v10 -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js';
+      import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBqYqG2C4oqJL5w5Ub5RoUz3w_xrSkqW1Q",
+        authDomain: "ludoleaguesa-33371.firebaseapp.com",
+        projectId: "ludoleaguesa-33371",
+        storageBucket: "ludoleaguesa-33371.appspot.com",
+        messagingSenderId: "1088023817043",
+        appId: "1:1088023817043:web:b6e4b9a4e3a4f5c8d12345"
+      };
+
+      let db = null;
+      try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+      } catch(e) {
+        console.warn('Firebase init error — form will still submit to PayFast', e);
+      }
+
+      window.__saveToFirestore = async function(data) {
+        if (!db) return null;
+        try {
+          const ref = await addDoc(collection(db, 'academy_registrations'), {
+            ...data,
+            createdAt: serverTimestamp(),
+            status: 'pending_payment'
+          });
+          return ref.id;
+        } catch(e) {
+          console.error('Firestore save error:', e);
+          return null;
+        }
+      };
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Ludo Academy of Excellence",
+      "description": "An academy dedicated to personal development, strategic thinking, and continuous learning through the game of Ludo.",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Ludo League South Africa"
+      },
+      "areaServed": "ZA",
+      "slogan": "Where strategy meets skill. Learn the game. Master the mindset. Play with excellence.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+27753211350",
+        "email": "info@ludoleague.co.za",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x: hidden; color: #e5e7eb; }
+
+        /* Brand colours */
+        :root {
+          --gold: #d4af37;
+          --gold-light: #f4e5c2;
+          --gold-dark: #b8941f;
+          --navy: #05071a;
+          --navy-mid: #0a0e27;
+          --navy-card: #0f1535;
+          --navy-border: rgba(212,175,55,0.25);
+          --blue-accent: #3b82f6;
+        }
+
+        /* Typography */
+        .hero-heading {
+          background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 2px 12px rgba(212,175,55,0.35));
+        }
+        .section-tag {
+          font-family: 'Inter', sans-serif;
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: var(--gold);
+        }
+        .section-title {
+          font-family: 'Kanit', sans-serif;
+          font-weight: 900;
+          font-style: italic;
+          text-transform: uppercase;
+        }
+
+        /* Cards */
+        .card {
+          background: var(--navy-card);
+          border: 1px solid var(--navy-border);
+          border-radius: 1rem;
+          padding: 2rem;
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+          border-color: rgba(212,175,55,0.5);
+          box-shadow: 0 8px 32px rgba(212,175,55,0.1);
+        }
+        .card-gold {
+          background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%);
+          border: 1px solid rgba(212,175,55,0.35);
+        }
+
+        /* Buttons */
+        .btn-primary {
+          background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+          color: var(--navy);
+          font-family: 'Kanit', sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          border-radius: 9999px;
+          padding: 1rem 2.5rem;
+          transition: all 0.3s;
+          box-shadow: 0 4px 20px rgba(212,175,55,0.35);
+          cursor: pointer;
+          border: none;
+        }
+        .btn-primary:hover {
+          transform: translateY(-2px) scale(1.03);
+          box-shadow: 0 8px 32px rgba(212,175,55,0.5);
+        }
+        .btn-primary:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: none;
+        }
+        .btn-outline {
+          background: transparent;
+          color: var(--gold);
+          font-family: 'Kanit', sans-serif;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          border-radius: 9999px;
+          padding: 0.75rem 2rem;
+          border: 2px solid var(--gold);
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        .btn-outline:hover {
+          background: rgba(212,175,55,0.1);
+        }
+
+        /* Navbar */
+        .navbar {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 100;
+          background: rgba(5,7,26,0.92);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid var(--navy-border);
+          padding: 1rem 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .navbar-logo {
+          font-family: 'Kanit', sans-serif;
+          font-weight: 900;
+          font-style: italic;
+          font-size: 1.1rem;
+          text-transform: uppercase;
+          color: var(--gold);
+          letter-spacing: 0.05em;
+        }
+        .navbar-link {
+          color: rgba(255,255,255,0.6);
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          text-decoration: none;
+          transition: color 0.2s;
+          cursor: pointer;
+          background: none;
+          border: none;
+          font-family: 'Kanit', sans-serif;
+        }
+        .navbar-link:hover { color: var(--gold); }
+
+        /* Hero */
+        .hero {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          padding: 8rem 1.5rem 4rem;
+          background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.12) 0%, transparent 70%),
+                      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(59,130,246,0.08) 0%, transparent 60%),
+                      var(--navy);
+          overflow: hidden;
+        }
+        .hero::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M30 30m-28 0a28 28 0 1 0 56 0a28 28 0 1 0-56 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          opacity: 0.5;
+        }
+
+        /* Progress steps */
+        .step-indicator {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          margin-bottom: 2rem;
+        }
+        .step-dot {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 9999px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.75rem;
+          font-weight: 800;
+          font-family: 'Kanit', sans-serif;
+          transition: all 0.3s;
+          flex-shrink: 0;
+        }
+        .step-dot.active { background: var(--gold); color: var(--navy); }
+        .step-dot.completed { background: rgba(212,175,55,0.3); color: var(--gold); border: 1px solid var(--gold); }
+        .step-dot.upcoming { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.3); }
+        .step-line {
+          flex: 1;
+          height: 2px;
+          background: rgba(255,255,255,0.1);
+          transition: background 0.3s;
+        }
+        .step-line.done { background: rgba(212,175,55,0.4); }
+
+        /* Form */
+        .form-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.85);
+          backdrop-filter: blur(6px);
+          z-index: 200;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s;
+        }
+        .form-overlay.visible {
+          opacity: 1;
+          pointer-events: all;
+        }
+        .form-container {
+          background: var(--navy-mid);
+          border: 1px solid var(--navy-border);
+          border-radius: 1.25rem;
+          width: 100%;
+          max-width: 560px;
+          max-height: 92vh;
+          overflow-y: auto;
+          box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.1);
+          animation: formSlideUp 0.35s ease-out;
+        }
+        @keyframes formSlideUp {
+          from { transform: translateY(24px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        .form-header {
+          padding: 1.5rem;
+          border-bottom: 1px solid rgba(212,175,55,0.15);
+          position: sticky;
+          top: 0;
+          background: var(--navy-mid);
+          z-index: 10;
+          border-radius: 1.25rem 1.25rem 0 0;
+        }
+        .form-body { padding: 1.5rem; }
+        .form-input {
+          width: 100%;
+          background: var(--navy-card);
+          border: 1px solid rgba(212,175,55,0.25);
+          border-radius: 0.5rem;
+          padding: 0.75rem 1rem;
+          color: #e5e7eb;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.9rem;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: var(--gold); }
+        .form-input.error { border-color: #ef4444; }
+        .form-label {
+          display: block;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: #9ca3af;
+          margin-bottom: 0.375rem;
+          font-family: 'Inter', sans-serif;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+        .form-error {
+          color: #ef4444;
+          font-size: 0.75rem;
+          margin-top: 0.25rem;
+          font-family: 'Inter', sans-serif;
+        }
+        select.form-input option { background: var(--navy-card); }
+
+        /* Sections */
+        .section { padding: 6rem 1.5rem; }
+        .section-alt { background: rgba(212,175,55,0.03); }
+
+        /* Pricing badge */
+        .price-badge-old {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.3);
+          text-decoration: line-through;
+          font-family: 'Kanit', sans-serif;
+        }
+        .price-badge-new {
+          font-size: 3rem;
+          font-weight: 900;
+          font-style: italic;
+          color: var(--gold);
+          font-family: 'Kanit', sans-serif;
+          line-height: 1;
+        }
+        .limited-badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #dc2626, #991b1b);
+          color: white;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          padding: 0.25rem 0.75rem;
+          border-radius: 9999px;
+          font-family: 'Inter', sans-serif;
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--gold), var(--gold-dark)); border-radius: 3px; }
+
+        /* Agents section */
+        .agent-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.875rem;
+        }
+        .agent-table th {
+          text-align: left;
+          padding: 0.75rem 1rem;
+          background: rgba(212,175,55,0.12);
+          color: var(--gold);
+          font-weight: 700;
+          font-size: 0.75rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+        .agent-table td {
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          color: #d1d5db;
+          vertical-align: top;
+        }
+        .agent-table tr:last-child td { border-bottom: none; }
+        .agent-table tr:hover td { background: rgba(212,175,55,0.03); }
+
+        /* Marquee */
+        .marquee-track {
+          display: flex;
+          gap: 3rem;
+          animation: marquee 28s linear infinite;
+          width: max-content;
+        }
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+
+        /* Cookie banner */
+        .cookie-banner {
+          position: fixed;
+          bottom: 1rem;
+          right: 1rem;
+          z-index: 300;
+          background: var(--navy-mid);
+          border: 1px solid var(--navy-border);
+          border-radius: 0.75rem;
+          padding: 1rem 1.25rem;
+          max-width: 22rem;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+          font-family: 'Inter', sans-serif;
+          font-size: 0.8rem;
+          color: #9ca3af;
+          display: none;
+        }
+        .cookie-banner.show { display: block; }
+
+        /* Spinner */
+        .spinner {
+          width: 1.25rem;
+          height: 1.25rem;
+          border: 2px solid rgba(0,0,0,0.2);
+          border-top-color: var(--navy);
+          border-radius: 9999px;
+          animation: spin 0.7s linear infinite;
+          display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Fade-in utility */
+        .fade-in {
+          opacity: 0;
+          transform: translateY(24px);
+          transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+    <div class="navbar-logo">🎲 Ludo Academy</div>
+    <div class="hidden md:flex items-center gap-8">
+        <button class="navbar-link" onclick="scrollToId('about')">About</button>
+        <button class="navbar-link" onclick="scrollToId('training')">Training</button>
+        <button class="navbar-link" onclick="scrollToId('agents')">Agents</button>
+        <button class="navbar-link" onclick="scrollToId('pricing')">Pricing</button>
+        <button class="navbar-link" onclick="scrollToId('contact')">Contact</button>
+    </div>
+    <button class="btn-primary text-sm py-3 px-6" onclick="openForm('prospect')">Register Now</button>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="home">
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
+        <div class="flex justify-center mb-6">
+            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg"
+                 alt="Ludo Academy of Excellence Logo"
+                 class="w-20 h-20 object-cover rounded-2xl border border-yellow-500/30 shadow-2xl fade-in"
+                 onerror="this.style.display='none'">
+        </div>
+        <p class="section-tag mb-4 fade-in" style="transition-delay:0.1s">Ludo League South Africa Presents</p>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black italic uppercase leading-none hero-heading mb-6 fade-in" style="transition-delay:0.2s">
+            Ludo Academy<br>of Excellence
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-4 fade-in" style="font-family:'Inter',sans-serif;transition-delay:0.3s">
+            Where strategy meets skill. Develop your mindset, earn your accreditation, and step into South Africa's professional Ludo ecosystem from the very beginning.
+        </p>
+
+        <!-- Pricing teaser -->
+        <div class="flex items-center justify-center gap-4 mb-10 fade-in" style="transition-delay:0.4s">
+            <span class="limited-badge">⚡ Founding Prospect Rate</span>
+            <span class="price-badge-old">R2,500</span>
+            <span class="price-badge-new">R1,500</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in" style="transition-delay:0.5s">
+            <button class="btn-primary text-lg px-10 py-4" onclick="openForm('prospect')">
+                Register as a Prospect
+            </button>
+            <button class="btn-outline" onclick="scrollToId('agents')">
+                Become an Agent →
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating orbs -->
+    <div style="position:absolute;top:20%;left:10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,0.06),transparent);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:20%;right:10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.05),transparent);pointer-events:none;"></div>
+</section>
+
+<!-- ========== MARQUEE ========== -->
+<div style="overflow:hidden;border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1);padding:1rem 0;background:rgba(212,175,55,0.03);">
+    <div class="marquee-track">
+        <span class="section-tag">Strategic Mindset +++</span>
+        <span class="section-tag">Official Accreditation +++</span>
+        <span class="section-tag">Professional Licensing +++</span>
+        <span class="section-tag">Tournament Ready +++</span>
+        <span class="section-tag">Agent Network +++</span>
+        <span class="section-tag">Founding Prospects +++</span>
+        <span class="section-tag">Strategic Mindset +++</span>
+        <span class="section-tag">Official Accreditation +++</span>
+        <span class="section-tag">Professional Licensing +++</span>
+        <span class="section-tag">Tournament Ready +++</span>
+        <span class="section-tag">Agent Network +++</span>
+        <span class="section-tag">Founding Prospects +++</span>
+    </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<section class="section" id="about">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="fade-in">
+                <p class="section-tag mb-3">About the Programme</p>
+                <h2 class="section-title text-4xl md:text-5xl text-white mb-6">
+                    The Most Strategic<br>Game in South Africa
+                </h2>
+                <p class="text-gray-400 mb-4 leading-relaxed" style="font-family:'Inter',sans-serif">
+                    Ludo South Africa is professionalising one of the country's most-played and beloved games. The Ludo Academy of Excellence is our flagship training programme — designed to develop skilled, accredited, and tournament-ready players and officials.
+                </p>
+                <p class="text-gray-400 mb-8 leading-relaxed" style="font-family:'Inter',sans-serif">
+                    We are at the beginning of something significant. The Founding Prospect cohort will become the first officially accredited players in the country, with advantages that will only grow as the ecosystem expands.
+                </p>
+                <button class="btn-primary" onclick="openForm('prospect')">Join the Founding Cohort</button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 fade-in" style="transition-delay:0.2s">
+                <div class="card card-gold text-center p-6">
+                    <div class="text-4xl font-black italic text-yellow-400 font-kanit mb-1">2009</div>
+                    <div class="text-xs text-gray-400" style="font-family:'Inter',sans-serif">Playing Since</div>
+                </div>
+                <div class="card card-gold text-center p-6">
+                    <div class="text-4xl font-black italic text-yellow-400 font-kanit mb-1">9+</div>
+                    <div class="text-xs text-gray-400" style="font-family:'Inter',sans-serif">Provinces Active</div>
+                </div>
+                <div class="card card-gold text-center p-6">
+                    <div class="text-4xl font-black italic text-yellow-400 font-kanit mb-1">50</div>
+                    <div class="text-xs text-gray-400" style="font-family:'Inter',sans-serif">Founding Slots Only</div>
+                </div>
+                <div class="card card-gold text-center p-6">
+                    <div class="text-4xl font-black italic text-yellow-400 font-kanit mb-1">R1,500</div>
+                    <div class="text-xs text-gray-400" style="font-family:'Inter',sans-serif">Founding Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TRAINING ========== -->
+<section class="section section-alt" id="training">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 fade-in">
+            <p class="section-tag mb-3">Academy Programme</p>
+            <h2 class="section-title text-4xl md:text-5xl text-white mb-4">3-Day Intensive Training</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto" style="font-family:'Inter',sans-serif">
+                Practical, focused, and designed for people who are serious. No lengthy classroom sessions — just high-impact skill development you can apply immediately.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+            <!-- Day 1 -->
+            <div class="card fade-in" style="transition-delay:0.1s">
+                <div class="flex items-center gap-3 mb-4">
+                    <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;">
+                        <span style="color:var(--gold);font-weight:900;font-size:1rem;font-family:'Kanit',sans-serif;">1</span>
+                    </div>
+                    <span class="section-tag">Day One</span>
+                </div>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Foundation & Rules</h3>
+                <ul class="space-y-2" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Ludo South Africa official rules and regulations</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Player management principles and ethics</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Digital registration systems overview</li>
+                </ul>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="card fade-in" style="transition-delay:0.2s;border-color:rgba(212,175,55,0.35);">
+                <div class="flex items-center gap-3 mb-4">
+                    <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;">
+                        <span style="color:var(--gold);font-weight:900;font-size:1rem;font-family:'Kanit',sans-serif;">2</span>
+                    </div>
+                    <span class="section-tag">Day Two</span>
+                </div>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Operations & Commerce</h3>
+                <ul class="space-y-2" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Tournament operations and logistics</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Sponsorship and commercial opportunities</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Marketing and talent identification</li>
+                </ul>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="card fade-in" style="transition-delay:0.3s">
+                <div class="flex items-center gap-3 mb-4">
+                    <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;">
+                        <span style="color:var(--gold);font-weight:900;font-size:1rem;font-family:'Kanit',sans-serif;">3</span>
+                    </div>
+                    <span class="section-tag">Day Three</span>
+                </div>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Assessment & Accreditation</h3>
+                <ul class="space-y-2" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Ethics, dispute resolution, and the Code of Conduct</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Practical case study assessment</li>
+                    <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Official licence and accreditation award</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Course Levels -->
+        <div class="text-center mb-10 fade-in">
+            <p class="section-tag mb-3">Skill Pathway</p>
+            <h2 class="section-title text-3xl text-white mb-2">Three Levels of Mastery</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="card fade-in" style="transition-delay:0.1s">
+                <span class="section-tag block mb-2">Level 1</span>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Beginner Foundations</h3>
+                <p class="text-gray-400 text-sm" style="font-family:'Inter',sans-serif">
+                    Learn baseline strategic blocks, secure safety zone paths, and probability theory on standard dice-rolling.
+                </p>
+            </div>
+            <div class="card fade-in" style="transition-delay:0.2s;border-color:rgba(212,175,55,0.35);">
+                <span class="section-tag block mb-2">Level 2</span>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Intermediate Tactics</h3>
+                <p class="text-gray-400 text-sm" style="font-family:'Inter',sans-serif">
+                    Acquire racing trajectories, block manipulation, and double-token split strategies to control the board pace.
+                </p>
+            </div>
+            <div class="card fade-in" style="transition-delay:0.3s">
+                <span class="section-tag block mb-2">Level 3</span>
+                <h3 class="text-xl font-black italic text-white mb-3 uppercase">Advanced Mastery</h3>
+                <p class="text-gray-400 text-sm" style="font-family:'Inter',sans-serif">
+                    Master tournament psychology, club asset coordination, and advanced defensive and offensive strategy configurations.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== LUDO AGENTS ========== -->
+<section class="section" id="agents">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 fade-in">
+            <p class="section-tag mb-3">Professional Opportunity</p>
+            <h2 class="section-title text-4xl md:text-5xl text-white mb-4">Call for Ludo Agents</h2>
+            <p class="text-xl italic font-black text-yellow-400 mb-4" style="font-family:'Kanit',sans-serif;">
+                Become an Official Ludo South Africa Player Agency
+            </p>
+            <p class="text-gray-400 max-w-3xl mx-auto" style="font-family:'Inter',sans-serif">
+                Ludo South Africa is inviting registered agencies and sports talent representatives to become Official Ludo Agents. As the sport continues to grow across the country, this is an opportunity to establish your agency within a new and emerging professional sporting ecosystem from the very beginning.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Responsibilities -->
+            <div class="card fade-in" style="transition-delay:0.1s">
+                <h3 class="text-xl font-black italic text-white uppercase mb-5">Your Responsibilities</h3>
+                <ul class="space-y-3" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Scout, recruit, and develop talented Ludo players.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Register your agency with Ludo South Africa.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Build and manage your own roster of players.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Prepare players for leagues, tournaments, championships, and other official events.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Work with Ludo South Africa to ensure players are available for competitions, media engagements, and commercial opportunities.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Ensure all players are properly registered, accredited, and compliant with Ludo South Africa regulations.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Guide and protect the professional interests of your players throughout their careers.</li>
+                </ul>
+            </div>
+
+            <!-- Why become an agent -->
+            <div class="card card-gold fade-in" style="transition-delay:0.2s">
+                <h3 class="text-xl font-black italic text-white uppercase mb-5">Why Become an Official Agent?</h3>
+                <p class="text-gray-300 text-sm mb-4" style="font-family:'Inter',sans-serif;line-height:1.7">
+                    As one of the first officially recognised Ludo agencies in South Africa, you'll have the opportunity to establish relationships with players at the grassroots level and grow alongside the sport. Agencies that invest early will be well positioned as the player pool, competitions, sponsorships, and commercial opportunities expand over time.
+                </p>
+                <p class="text-gray-300 text-sm" style="font-family:'Inter',sans-serif;line-height:1.7">
+                    Your registered players remain your agency's responsibility and portfolio. Whenever they earn prize money, secure sponsorships, endorsements, or other approved commercial deals, your agency will be entitled to its agreed share in accordance with Ludo South Africa regulations and player representation agreements.
+                </p>
+            </div>
+        </div>
+
+        <!-- Minimum Requirements -->
+        <div class="card mb-8 fade-in">
+            <h3 class="text-xl font-black italic text-white uppercase mb-5">Minimum Requirements</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <ul class="space-y-3" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);">✓</span>A registered business with a valid licence to operate.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);">✓</span>Commitment to ethical player representation and development.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);">✓</span>Ability to recruit, manage, and support players professionally.</li>
+                </ul>
+                <ul class="space-y-3" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);">✓</span>Ensure every player under your agency is officially registered and accredited with Ludo South Africa.</li>
+                    <li class="flex items-start gap-3"><span style="color:var(--gold);">✓</span>Comply with all Ludo South Africa rules, regulations, and the Official Agent Code of Conduct.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Licensing Table -->
+        <div class="card mb-8 fade-in" style="overflow-x:auto;">
+            <h3 class="text-xl font-black italic text-white uppercase mb-5">Licensing Model</h3>
+            <table class="agent-table">
+                <thead>
+                    <tr>
+                        <th>Licence Type</th>
+                        <th>Initial Fee</th>
+                        <th>Annual Renewal</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:#e5e7eb;font-weight:600;">Individual Player Agent</td>
+                        <td>R2,500 – R5,000</td>
+                        <td>R1,000 – R2,000</td>
+                        <td>Standard rate</td>
+                    </tr>
+                    <tr style="background:rgba(212,175,55,0.05);">
+                        <td style="color:var(--gold);font-weight:700;">Founding Agent Licence <span class="limited-badge" style="font-size:0.6rem;padding:0.15rem 0.5rem;">Early Adopter</span></td>
+                        <td style="color:var(--gold);font-weight:700;">R1,500</td>
+                        <td>Standard annual rate</td>
+                        <td>First 50–100 agencies only</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-gray-500 text-xs mt-4" style="font-family:'Inter',sans-serif">
+                ⚡ The Founding Agent Licence rewards early adopters and helps establish a national agent network quickly, without permanently discounting the value of the licence.
+            </p>
+        </div>
+
+        <!-- Additional Revenue -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="card fade-in">
+                <h3 class="text-lg font-black italic text-white uppercase mb-4">Additional Revenue Streams</h3>
+                <p class="text-gray-500 text-xs mb-3" style="font-family:'Inter',sans-serif">Additional income you can generate as a registered agent:</p>
+                <table class="agent-table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Player registration</td><td>R100 – R250 / player / month</td></tr>
+                        <tr><td>Agent ID card issuance</td><td>R150 – R300</td></tr>
+                        <tr><td>CPD workshops</td><td>R500 – R1,500</td></tr>
+                        <tr><td>Licence reinstatement</td><td>R1,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card card-gold fade-in" style="transition-delay:0.2s">
+                <h3 class="text-lg font-black italic text-white uppercase mb-4">The Investment Perspective</h3>
+                <p class="text-gray-300 text-sm mb-4" style="font-family:'Inter',sans-serif;line-height:1.7">
+                    The key is that agents should see the licence as an investment in a long-term profession, not just a participation fee. As the Ludo ecosystem grows — with more tournaments, sponsorships, media exposure, and player earnings — the value of holding an official licence will increase alongside it.
+                </p>
+                <p class="text-gray-300 text-sm" style="font-family:'Inter',sans-serif;line-height:1.7">
+                    The professionalisation of Ludo is creating new opportunities beyond the game itself. Player representation will play an important role in shaping the future of the sport, and Ludo South Africa is looking for agencies ready to help build that future.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center fade-in">
+            <p class="text-gray-400 max-w-2xl mx-auto mb-8" style="font-family:'Inter',sans-serif">
+                Register your agency today and become part of the foundation of South Africa's professional Ludo ecosystem.
+            </p>
+            <button class="btn-primary text-lg px-12 py-5" onclick="openForm('agent')">
+                Register Your Agency Now
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section class="section section-alt" id="pricing">
+    <div class="max-w-4xl mx-auto text-center">
+        <div class="fade-in">
+            <p class="section-tag mb-3">Founding Prospect Registration</p>
+            <h2 class="section-title text-4xl md:text-5xl text-white mb-4">Limited Early-Bird Access</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-12" style="font-family:'Inter',sans-serif">
+                Only the first cohort of Prospects qualifies for the Founding rate. Once these slots are filled, the standard rate applies permanently.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <!-- Founding rate -->
+            <div class="card card-gold text-left relative overflow-hidden fade-in" style="transition-delay:0.1s">
+                <div style="position:absolute;top:1rem;right:1rem;"><span class="limited-badge">Limited</span></div>
+                <p class="section-tag mb-3">Founding Prospect</p>
+                <div class="mb-4">
+                    <span class="price-badge-old">R2,500</span>
+                    <div class="price-badge-new">R1,500</div>
+                    <p class="text-gray-400 text-sm mt-1" style="font-family:'Inter',sans-serif">Once-off registration fee</p>
+                </div>
+                <ul class="space-y-2 mb-6" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>Official academy accreditation</li>
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>3-day intensive training programme</li>
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>Founding Prospect certificate</li>
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>Tournament registration priority</li>
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>Access to Ludo SA official events</li>
+                    <li class="flex gap-2"><span style="color:var(--gold);">✓</span>Digital player profile</li>
+                </ul>
+                <button class="btn-primary w-full" onclick="openForm('prospect')">Register Now — R1,500</button>
+            </div>
+
+            <!-- Standard rate -->
+            <div class="card text-left fade-in" style="transition-delay:0.2s">
+                <p class="section-tag mb-3">Standard Prospect</p>
+                <div class="mb-4">
+                    <div class="price-badge-new" style="color:rgba(255,255,255,0.5)">R2,500</div>
+                    <p class="text-gray-500 text-sm mt-1" style="font-family:'Inter',sans-serif">Standard registration rate</p>
+                </div>
+                <ul class="space-y-2 mb-6" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#6b7280;">
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>Official academy accreditation</li>
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>3-day intensive training programme</li>
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>Standard prospect certificate</li>
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>Tournament registration access</li>
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>Access to Ludo SA official events</li>
+                    <li class="flex gap-2"><span style="color:#6b7280;">✓</span>Digital player profile</li>
+                </ul>
+                <button class="btn-outline w-full" onclick="openForm('prospect')">Apply at Standard Rate</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="section" id="contact">
+    <div class="max-w-4xl mx-auto text-center fade-in">
+        <p class="section-tag mb-3">Get In Touch</p>
+        <h2 class="section-title text-4xl text-white mb-6">Ready to Start?</h2>
+        <p class="text-gray-400 mb-10 max-w-xl mx-auto" style="font-family:'Inter',sans-serif">
+            Our administrative team is ready to assist with registration enquiries, agent applications, and media requests.
+        </p>
+        <div class="grid md:grid-cols-3 gap-6 mb-10">
+            <div class="card text-center">
+                <div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.75rem;">📞</div>
+                <p class="text-white font-bold mb-1" style="font-family:'Kanit',sans-serif;">Phone</p>
+                <a href="tel:+27753211350" style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;text-decoration:none;" class="hover:text-yellow-400 transition-colors">+27 (0) 75 321 1350</a>
+            </div>
+            <div class="card text-center">
+                <div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.75rem;">✉️</div>
+                <p class="text-white font-bold mb-1" style="font-family:'Kanit',sans-serif;">Email</p>
+                <a href="mailto:info@ludoleague.co.za" style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;text-decoration:none;" class="hover:text-yellow-400 transition-colors">info@ludoleague.co.za</a>
+            </div>
+            <div class="card text-center">
+                <div style="color:var(--gold);font-size:1.5rem;margin-bottom:0.75rem;">🌐</div>
+                <p class="text-white font-bold mb-1" style="font-family:'Kanit',sans-serif;">Main Website</p>
+                <a href="https://ludoleague.co.za" style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;text-decoration:none;" class="hover:text-yellow-400 transition-colors">ludoleague.co.za</a>
+            </div>
+        </div>
+        <button class="btn-primary text-lg px-10 py-4" onclick="openForm('prospect')">Register Now</button>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer style="background:#030510;border-top:1px solid rgba(212,175,55,0.1);padding:3rem 1.5rem;">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+            <div>
+                <div class="text-yellow-400 font-black italic text-xl uppercase mb-1" style="font-family:'Kanit',sans-serif;">🎲 Ludo Academy of Excellence</div>
+                <p class="text-gray-600 text-xs" style="font-family:'Inter',sans-serif;">A Ludo League South Africa Initiative</p>
+            </div>
+            <div class="flex flex-col items-center md:items-end gap-1">
+                <a href="tel:+27753211350" style="color:#6b7280;font-family:'Inter',sans-serif;font-size:0.8rem;text-decoration:none;" class="hover:text-yellow-400 transition-colors">📞 +27 (0) 75 321 1350</a>
+                <a href="mailto:info@ludoleague.co.za" style="color:#6b7280;font-family:'Inter',sans-serif;font-size:0.8rem;text-decoration:none;" class="hover:text-yellow-400 transition-colors">✉️ info@ludoleague.co.za</a>
+            </div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.05);margin-bottom:1.5rem;"></div>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p style="color:#374151;font-family:'Inter',sans-serif;font-size:0.75rem;">© 2026 Ludo League South Africa. All Rights Reserved.</p>
+            <p style="color:#1f2937;font-family:'Inter',sans-serif;font-size:0.7rem;">Powered by happyhunter.com</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ========== REGISTRATION FORM MODAL ========== -->
+<div class="form-overlay" id="formOverlay" onclick="handleOverlayClick(event)">
+    <div class="form-container" id="formContainer">
+        <div class="form-header">
+            <div>
+                <h3 id="formTitle" style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;font-size:1.25rem;text-transform:uppercase;">
+                    Prospect Registration
+                </h3>
+                <p id="formSubtitle" style="color:#6b7280;font-family:'Inter',sans-serif;font-size:0.8rem;margin-top:0.25rem;">Complete all steps to secure your place</p>
+            </div>
+            <button onclick="closeForm()" style="color:#6b7280;font-size:1.5rem;background:none;border:none;cursor:pointer;line-height:1;padding:0.25rem;">×</button>
+        </div>
+
+        <!-- Step Indicator -->
+        <div style="padding:1rem 1.5rem 0;">
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-dot active" id="dot1">1</div>
+                <div class="step-line" id="line1"></div>
+                <div class="step-dot upcoming" id="dot2">2</div>
+                <div class="step-line" id="line2"></div>
+                <div class="step-dot upcoming" id="dot3">3</div>
+                <div class="step-line" id="line3"></div>
+                <div class="step-dot upcoming" id="dot4">4</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:0.25rem;">
+                <span style="font-size:0.65rem;color:#6b7280;font-family:'Inter',sans-serif;">Personal</span>
+                <span style="font-size:0.65rem;color:#6b7280;font-family:'Inter',sans-serif;">Experience</span>
+                <span style="font-size:0.65rem;color:#6b7280;font-family:'Inter',sans-serif;">Summary</span>
+                <span style="font-size:0.65rem;color:#6b7280;font-family:'Inter',sans-serif;">Payment</span>
+            </div>
+        </div>
+
+        <div class="form-body">
+            <!-- STEP 1: Personal Details -->
+            <div id="step1">
+                <h4 style="color:#e5e7eb;font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;">Personal Details</h4>
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                    <div>
+                        <label class="form-label" for="f-fullName">Full Name *</label>
+                        <input class="form-input" type="text" id="f-fullName" placeholder="e.g. Sipho Dlamini" autocomplete="name">
+                        <div class="form-error" id="err-fullName"></div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="f-email">Email Address *</label>
+                        <input class="form-input" type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
+                        <div class="form-error" id="err-email"></div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="f-phone">Phone Number *</label>
+                        <input class="form-input" type="tel" id="f-phone" placeholder="+27 XX XXX XXXX" autocomplete="tel">
+                        <div class="form-error" id="err-phone"></div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="f-idNumber">SA ID Number *</label>
+                        <input class="form-input" type="text" id="f-idNumber" placeholder="13-digit ID number" maxlength="13">
+                        <div class="form-error" id="err-idNumber"></div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="f-province">Province *</label>
+                        <select class="form-input" id="f-province">
+                            <option value="">— Select Province —</option>
+                            <option>Gauteng</option>
+                            <option>Western Cape</option>
+                            <option>KwaZulu-Natal</option>
+                            <option>Eastern Cape</option>
+                            <option>Limpopo</option>
+                            <option>Mpumalanga</option>
+                            <option>North West</option>
+                            <option>Free State</option>
+                            <option>Northern Cape</option>
+                        </select>
+                        <div class="form-error" id="err-province"></div>
+                    </div>
+                </div>
+                <button class="btn-primary w-full mt-6" onclick="nextStep(1)">Continue →</button>
+            </div>
+
+            <!-- STEP 2: Experience -->
+            <div id="step2" style="display:none;">
+                <h4 style="color:#e5e7eb;font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;">Experience & Motivation</h4>
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                    <div>
+                        <label class="form-label" for="f-experience">Ludo Experience Level *</label>
+                        <select class="form-input" id="f-experience">
+                            <option value="">— Select your level —</option>
+                            <option value="beginner">Beginner — I play casually with family/friends</option>
+                            <option value="intermediate">Intermediate — I play regularly and know the rules well</option>
+                            <option value="competitive">Competitive — I have participated in tournaments</option>
+                            <option value="advanced">Advanced — I have coached or organised Ludo events</option>
+                        </select>
+                        <div class="form-error" id="err-experience"></div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="f-motivation">Why do you want to join the Academy? *</label>
+                        <textarea class="form-input" id="f-motivation" rows="4" placeholder="Tell us what drives you to professionalise your Ludo journey..."></textarea>
+                        <div class="form-error" id="err-motivation"></div>
+                    </div>
+                    <div id="agentFields" style="display:none;">
+                        <label class="form-label" for="f-businessName">Business / Agency Name *</label>
+                        <input class="form-input" type="text" id="f-businessName" placeholder="Your registered business name">
+                        <div class="form-error" id="err-businessName"></div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
+                    <button class="btn-outline" onclick="prevStep(2)" style="flex:1;">← Back</button>
+                    <button class="btn-primary" style="flex:2;" onclick="nextStep(2)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Summary -->
+            <div id="step3" style="display:none;">
+                <h4 style="color:#e5e7eb;font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;">Registration Summary</h4>
+                <div id="summaryBox" class="card card-gold mb-6" style="padding:1.25rem;">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div style="background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:0.75rem;padding:1.25rem;margin-bottom:1.25rem;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+                        <span style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;">Founding Prospect Licence</span>
+                        <span style="color:#6b7280;font-family:'Inter',sans-serif;font-size:0.875rem;text-decoration:line-through;">R2,500.00</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+                        <span style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;">Early Adopter Discount</span>
+                        <span style="color:#22c55e;font-family:'Inter',sans-serif;font-size:0.875rem;">−R1,000.00</span>
+                    </div>
+                    <div style="height:1px;background:rgba(212,175,55,0.15);margin:0.75rem 0;"></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <span style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;">Total Due</span>
+                        <span style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:900;font-size:1.5rem;font-style:italic;">R1,500.00</span>
+                    </div>
+                </div>
+
+                <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;margin-bottom:1rem;">
+                    <input type="checkbox" id="f-terms" style="margin-top:3px;accent-color:var(--gold);">
+                    <span style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.8rem;line-height:1.5;">
+                        I agree to the Ludo South Africa Code of Conduct, Terms of Registration, and understand that payment of R1,500.00 confirms my Founding Prospect place.
+                    </span>
+                </label>
+                <div class="form-error" id="err-terms"></div>
+
+                <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+                    <button class="btn-outline" onclick="prevStep(3)" style="flex:1;">← Back</button>
+                    <button class="btn-primary" style="flex:2;" onclick="nextStep(3)" id="proceedToPayBtn">Proceed to Payment →</button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Payment processing -->
+            <div id="step4" style="display:none;text-align:center;padding:2rem 0;">
+                <div style="font-size:3rem;margin-bottom:1rem;">🔒</div>
+                <h4 style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:900;font-size:1.25rem;font-style:italic;text-transform:uppercase;margin-bottom:0.5rem;">Securing Your Place</h4>
+                <p style="color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;margin-bottom:1.5rem;line-height:1.6;">
+                    Your registration data has been saved. You will now be redirected to PayFast to complete your secure payment of <strong style="color:var(--gold);">R1,500.00</strong>.
+                </p>
+                <div id="paymentSpinner" style="display:flex;align-items:center;justify-content:center;gap:0.75rem;color:#9ca3af;font-family:'Inter',sans-serif;font-size:0.875rem;margin-bottom:1.5rem;">
+                    <div class="spinner"></div>
+                    Saving registration &amp; redirecting…
+                </div>
+                <!-- Hidden PayFast form auto-submitted -->
+                <form id="payfastForm" method="post" action="https://www.payfast.co.za/eng/process" style="display:none;">
+                    <input type="hidden" name="merchant_id" value="35471207">
+                    <input type="hidden" name="merchant_key" value="q9qkx9sqx9l3m">
+                    <input type="hidden" name="return_url" value="https://academy.ludoleague.co.za?payment=success">
+                    <input type="hidden" name="cancel_url" value="https://academy.ludoleague.co.za?payment=cancelled">
+                    <input type="hidden" name="notify_url" value="https://us-central1-ludoleaguesa-33371.cloudfunctions.net/payfastNotify">
+                    <input type="hidden" name="amount" value="1500.00">
+                    <input type="hidden" name="item_name" value="Ludo Academy of Excellence — Founding Prospect Licence">
+                    <input type="hidden" name="item_description" value="Official Founding Prospect registration for Ludo Academy of Excellence, Ludo South Africa.">
+                    <input type="hidden" name="name_first" id="pf-name-first" value="">
+                    <input type="hidden" name="name_last" id="pf-name-last" value="">
+                    <input type="hidden" name="email_address" id="pf-email" value="">
+                    <input type="hidden" name="cell_number" id="pf-phone" value="">
+                    <input type="hidden" name="custom_str1" id="pf-firestoreId" value="">
+                    <input type="hidden" name="custom_str2" id="pf-registrationType" value="prospect">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAYMENT SUCCESS/CANCEL BANNERS ========== -->
+<div id="successBanner" style="display:none;position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:400;background:#16a34a;color:white;padding:1rem 2rem;border-radius:0.75rem;font-family:'Kanit',sans-serif;font-weight:700;font-style:italic;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+    ✅ Payment Successful! Welcome to the Ludo Academy of Excellence. Check your email.
+</div>
+<div id="cancelBanner" style="display:none;position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:400;background:#dc2626;color:white;padding:1rem 2rem;border-radius:0.75rem;font-family:'Kanit',sans-serif;font-weight:700;font-style:italic;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+    ❌ Payment was cancelled. Your registration is saved — you can complete payment anytime.
+</div>
+
+<!-- ========== COOKIE BANNER ========== -->
+<div class="cookie-banner" id="cookieBanner">
+    <p style="margin-bottom:0.75rem;">We use cookies to improve your experience. By continuing to use this site you accept our use of cookies.</p>
+    <button class="btn-primary" style="font-size:0.75rem;padding:0.5rem 1.5rem;" onclick="acceptCookies()">Accept &amp; Continue</button>
+</div>
+
+<script>
+    // ── Utility ──────────────────────────────────────────────────────────────
+    function scrollToId(id) {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Fade-in on scroll ─────────────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Cookie banner ─────────────────────────────────────────────────────
+    if (!localStorage.getItem('cookie-accepted')) {
+        setTimeout(() => document.getElementById('cookieBanner').classList.add('show'), 2500);
+    }
+    function acceptCookies() {
+        localStorage.setItem('cookie-accepted', '1');
+        document.getElementById('cookieBanner').classList.remove('show');
+    }
+
+    // ── Payment result banners ─────────────────────────────────────────────
+    (function() {
+        const p = new URLSearchParams(window.location.search);
+        if (p.get('payment') === 'success') {
+            const b = document.getElementById('successBanner');
+            b.style.display = 'block';
+            setTimeout(() => b.style.display = 'none', 8000);
+        } else if (p.get('payment') === 'cancelled') {
+            const b = document.getElementById('cancelBanner');
+            b.style.display = 'block';
+            setTimeout(() => b.style.display = 'none', 8000);
+        }
+    })();
+
+    // ── Form State ──────────────────────────────────────────────────────────
+    let registrationType = 'prospect';
+    let currentStep = 1;
+
+    function openForm(type) {
+        registrationType = type;
+        currentStep = 1;
+        document.getElementById('f-fullName').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-phone').value = '';
+        document.getElementById('f-idNumber').value = '';
+        document.getElementById('f-province').value = '';
+        document.getElementById('f-experience').value = '';
+        document.getElementById('f-motivation').value = '';
+        document.getElementById('f-businessName').value = '';
+        document.getElementById('f-terms').checked = false;
+        clearErrors();
+
+        const isAgent = type === 'agent';
+        document.getElementById('formTitle').textContent = isAgent ? 'Agent Registration' : 'Prospect Registration';
+        document.getElementById('formSubtitle').textContent = isAgent
+            ? 'Register your agency with Ludo South Africa'
+            : 'Secure your Founding Prospect place';
+        document.getElementById('agentFields').style.display = isAgent ? 'block' : 'none';
+
+        showStep(1);
+        document.getElementById('formOverlay').classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeForm() {
+        document.getElementById('formOverlay').classList.remove('visible');
+        document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+        if (e.target === document.getElementById('formOverlay')) closeForm();
+    }
+
+    // ── Step Navigation ────────────────────────────────────────────────────
+    function showStep(n) {
+        [1,2,3,4].forEach(i => {
+            document.getElementById('step'+i).style.display = (i===n) ? 'block' : 'none';
+        });
+        updateStepDots(n);
+        currentStep = n;
+    }
+
+    function updateStepDots(n) {
+        for (let i=1; i<=4; i++) {
+            const dot = document.getElementById('dot'+i);
+            dot.className = 'step-dot ' + (i < n ? 'completed' : i === n ? 'active' : 'upcoming');
+        }
+        for (let i=1; i<=3; i++) {
+            document.getElementById('line'+i).className = 'step-line' + (i < n ? ' done' : '');
+        }
+    }
+
+    function nextStep(from) {
+        if (from === 1 && !validateStep1()) return;
+        if (from === 2 && !validateStep2()) return;
+        if (from === 3 && !validateStep3()) return;
+
+        if (from === 3) {
+            showStep(4);
+            submitRegistration();
+        } else {
+            if (from === 2) buildSummary();
+            showStep(from + 1);
+        }
+    }
+
+    function prevStep(current) {
+        showStep(current - 1);
+    }
+
+    // ── Validation ─────────────────────────────────────────────────────────
+    function clearErrors() {
+        document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+        document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+    }
+
+    function setError(fieldId, msg) {
+        const el = document.getElementById('err-' + fieldId);
+        if (el) el.textContent = msg;
+        const input = document.getElementById('f-' + fieldId);
+        if (input) input.classList.add('error');
+    }
+
+    function validateStep1() {
+        let valid = true;
+        const fullName = document.getElementById('f-fullName').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const phone = document.getElementById('f-phone').value.trim();
+        const idNumber = document.getElementById('f-idNumber').value.trim();
+        const province = document.getElementById('f-province').value;
+
+        document.getElementById('err-fullName').textContent = '';
+        document.getElementById('err-email').textContent = '';
+        document.getElementById('err-phone').textContent = '';
+        document.getElementById('err-idNumber').textContent = '';
+        document.getElementById('err-province').textContent = '';
+
+        if (fullName.length < 3) { setError('fullName', 'Please enter your full name.'); valid = false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError('email', 'Please enter a valid email address.'); valid = false; }
+        if (phone.replace(/\D/g,'').length < 9) { setError('phone', 'Please enter a valid phone number.'); valid = false; }
+        if (!/^\d{13}$/.test(idNumber)) { setError('idNumber', 'Please enter a valid 13-digit SA ID number.'); valid = false; }
+        if (!province) { setError('province', 'Please select your province.'); valid = false; }
+
+        return valid;
+    }
+
+    function validateStep2() {
+        let valid = true;
+        const experience = document.getElementById('f-experience').value;
+        const motivation = document.getElementById('f-motivation').value.trim();
+
+        document.getElementById('err-experience').textContent = '';
+        document.getElementById('err-motivation').textContent = '';
+        document.getElementById('err-businessName').textContent = '';
+
+        if (!experience) { setError('experience', 'Please select your experience level.'); valid = false; }
+        if (motivation.length < 20) { setError('motivation', 'Please tell us a bit more (at least 20 characters).'); valid = false; }
+
+        if (registrationType === 'agent') {
+            const bizName = document.getElementById('f-businessName').value.trim();
+            if (bizName.length < 2) { setError('businessName', 'Please enter your business or agency name.'); valid = false; }
+        }
+
+        return valid;
+    }
+
+    function validateStep3() {
+        document.getElementById('err-terms').textContent = '';
+        if (!document.getElementById('f-terms').checked) {
+            document.getElementById('err-terms').textContent = 'You must agree to the Terms of Registration to proceed.';
+            return false;
+        }
+        return true;
+    }
+
+    // ── Build Summary Card ─────────────────────────────────────────────────
+    function buildSummary() {
+        const fullName = document.getElementById('f-fullName').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const phone = document.getElementById('f-phone').value.trim();
+        const province = document.getElementById('f-province').value;
+        const experience = document.getElementById('f-experience').value;
+        const type = registrationType === 'agent' ? 'Official Ludo Agent' : 'Founding Prospect';
+
+        document.getElementById('summaryBox').innerHTML = `
+            <p style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:700;font-size:0.875rem;margin-bottom:0.75rem;text-transform:uppercase;">Your Registration Summary</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-family:'Inter',sans-serif;font-size:0.8rem;">
+                <div><span style="color:#6b7280;">Name:</span><br><span style="color:#e5e7eb;">${fullName}</span></div>
+                <div><span style="color:#6b7280;">Type:</span><br><span style="color:var(--gold);font-weight:700;">${type}</span></div>
+                <div><span style="color:#6b7280;">Email:</span><br><span style="color:#e5e7eb;">${email}</span></div>
+                <div><span style="color:#6b7280;">Phone:</span><br><span style="color:#e5e7eb;">${phone}</span></div>
+                <div><span style="color:#6b7280;">Province:</span><br><span style="color:#e5e7eb;">${province}</span></div>
+                <div><span style="color:#6b7280;">Level:</span><br><span style="color:#e5e7eb;">${experience}</span></div>
+            </div>
+        `;
+    }
+
+    // ── Firestore + PayFast Submit ──────────────────────────────────────────
+    async function submitRegistration() {
+        const fullName = document.getElementById('f-fullName').value.trim();
+        const nameParts = fullName.split(' ');
+        const firstName = nameParts[0];
+        const lastName = nameParts.slice(1).join(' ') || '-';
+        const email = document.getElementById('f-email').value.trim();
+        const phone = document.getElementById('f-phone').value.trim();
+        const idNumber = document.getElementById('f-idNumber').value.trim();
+        const province = document.getElementById('f-province').value;
+        const experience = document.getElementById('f-experience').value;
+        const motivation = document.getElementById('f-motivation').value.trim();
+        const businessName = document.getElementById('f-businessName').value.trim();
+
+        const data = {
+            fullName, firstName, lastName, email, phone, idNumber,
+            province, experience, motivation, registrationType,
+            businessName: businessName || null,
+            amount: 1500.00,
+            currency: 'ZAR',
+            paymentStatus: 'pending'
+        };
+
+        // Save to Firestore
+        let firestoreId = '';
+        if (window.__saveToFirestore) {
+            firestoreId = await window.__saveToFirestore(data) || '';
+        }
+
+        // Populate PayFast hidden form
+        document.getElementById('pf-name-first').value = firstName;
+        document.getElementById('pf-name-last').value = lastName;
+        document.getElementById('pf-email').value = email;
+        document.getElementById('pf-phone').value = phone.replace(/\D/g,'');
+        document.getElementById('pf-firestoreId').value = firestoreId;
+        document.getElementById('pf-registrationType').value = registrationType;
+
+        // Auto-submit to PayFast after short delay
+        setTimeout(() => {
+            document.getElementById('payfastForm').submit();
+        }, 1500);
+    }
+
+    // ── Keyboard close ───────────────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeForm();
+    });
+</script>
+
+</body>
+</html>
