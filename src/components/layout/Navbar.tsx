@@ -32,6 +32,7 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
     { id: 'leagues', label: 'Leagues' },
     { id: 'tournaments', label: 'Tournaments' },
     { id: 'gallery', label: 'Gallery' },
+    { id: 'academy', label: 'Academy' },
     { id: 'shop', label: 'Shop' },
     { id: 'contact', label: 'Contact' }
   ];
@@ -169,6 +170,7 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
                 <span className="text-white/20 text-xs font-bold uppercase tracking-[0.2em] border-b border-white/5 pb-2">03. Platform Access</span>
                 <div className="flex flex-col gap-4">
                   <button onClick={() => handleOverlayLinkClick('portal')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Player Portal</button>
+                  <button onClick={() => handleOverlayLinkClick('academy')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-[#00c9a7]/60 hover:text-[#00c9a7] transition-colors">Academy</button>
                   <button onClick={() => handleOverlayLinkClick('contact')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Get in Touch</button>
                   <button onClick={() => handleOverlayLinkClick('admin')} className="text-left font-display font-black text-3xl md:text-5xl uppercase tracking-tight text-white/40 hover:text-white transition-colors">Secure Console</button>
                 </div>
