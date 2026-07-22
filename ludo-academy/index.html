@@ -17,12 +17,12 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
 
 const firebaseConfig = {
-apiKey: "AIzaSyBqYqG2C4oqJL5w5Ub5RoUz3w_xrSkqW1Q",
-authDomain: "ludoleaguesa-33371.firebaseapp.com",
-projectId: "ludoleaguesa-33371",
-storageBucket: "ludoleaguesa-33371.appspot.com",
-messagingSenderId: "1088023817043",
-appId: "1:1088023817043:web:b6e4b9a4e3a4f5c8d12345"
+  apiKey: "AIzaSyBqYqG2C4oqJL5w5Ub5RoUz3w_xrSkqW1Q",
+  authDomain: "ludoleaguesa-33371.firebaseapp.com",
+  projectId: "ludoleaguesa-33371",
+  storageBucket: "ludoleaguesa-33371.appspot.com",
+  messagingSenderId: "1088023817043",
+  appId: "1:1088023817043:web:b6e4b9a4e3a4f5c8d12345"
 };
 
 let db = null;
@@ -44,6 +44,7 @@ window.__saveToFirestore = async function(data) {
       createdAt: serverTimestamp(),
       status: 'pending_payment'
     };
+    // Save to event_registrations (visible in AdminDashboard) & academy_registrations
     const ref = await addDoc(collection(db, 'event_registrations'), payload);
     await addDoc(collection(db, 'academy_registrations'), payload);
     return ref.id;
@@ -59,21 +60,21 @@ window.__saveToFirestore = async function(data) {
 html { scroll-behavior: smooth; }
 body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x: hidden; color: #e5e7eb; }
 :root {
---gold: #d4af37;
---gold-light: #f4e5c2;
---gold-dark: #b8941f;
---navy: #05071a;
---navy-mid: #0a0e27;
---navy-card: #0f1535;
---navy-border: rgba(212,175,55,0.25);
---blue-accent: #3b82f6;
+  --gold: #d4af37;
+  --gold-light: #f4e5c2;
+  --gold-dark: #b8941f;
+  --navy: #05071a;
+  --navy-mid: #0a0e27;
+  --navy-card: #0f1535;
+  --navy-border: rgba(212,175,55,0.25);
+  --blue-accent: #3b82f6;
 }
 .hero-heading {
-background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-filter: drop-shadow(0 2px 12px rgba(212,175,55,0.35));
+  background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px rgba(212,175,55,0.35));
 }
 .section-tag { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
 .section-title { font-family: 'Kanit', sans-serif; font-weight: 900; font-style: italic; text-transform: uppercase; }
@@ -104,7 +105,7 @@ filter: drop-shadow(0 2px 12px rgba(212,175,55,0.35));
 .form-input { width: 100%; background: var(--navy-card); border: 1px solid rgba(212,175,55,0.25); border-radius: 0.5rem; padding: 0.75rem 1rem; color: #e5e7eb; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
 .form-input:focus { border-color: var(--gold); }
 .form-input.error { border-color: #ef4444; }
-.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: #9ca3af; margin-bottom: 0.375rem; font-family: 'Inter', sans-serif; uppercase; letter-spacing: 0.05em; }
+.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: #9ca3af; margin-bottom: 0.375rem; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
 .form-error { color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem; font-family: 'Inter', sans-serif; }
 select.form-input option { background: var(--navy-card); }
 .section { padding: 6rem 1.5rem; }
@@ -118,7 +119,7 @@ select.form-input option { background: var(--navy-card); }
 </head>
 <body>
 
-<!-- ========== NAVBAR ========== -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
 <div class="navbar-logo">🎲 Ludo Academy</div>
 <div class="hidden md:flex items-center gap-8">
@@ -131,7 +132,7 @@ select.form-input option { background: var(--navy-card); }
 <button class="btn-primary text-sm py-3 px-6" onclick="openForm('prospect')">Register Now</button>
 </nav>
 
-<!-- ========== HERO ========== -->
+<!-- HERO -->
 <section class="hero" id="home">
 <div class="relative z-10 max-w-5xl mx-auto text-center">
 <div class="flex justify-center mb-6">
@@ -146,12 +147,12 @@ Where strategy meets skill. Develop your mindset, earn your accreditation, and s
 </p>
 
 <!-- Pricing Teaser -->
-<div class="flex items-center justify-center gap-4 mb-8">
+<div class="flex items-center justify-center gap-4 mb-2">
 <span class="limited-badge">⚡ Founding Prospect Rate</span>
 <span class="price-badge-old">R2,500</span>
 <span class="price-badge-new">R1,500</span>
 </div>
-<p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8">Reduced from R2,500.00 for a limited cohort</p>
+<p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8">Reduced from R2,500.00 (Founding Prospect Rate - Limited Slots)</p>
 
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
 <button class="btn-primary text-lg px-10 py-4" onclick="openForm('prospect')">Register as a Prospect</button>
@@ -160,7 +161,7 @@ Where strategy meets skill. Develop your mindset, earn your accreditation, and s
 </div>
 </section>
 
-<!-- ========== REGISTRATION FORM MODAL ========== -->
+<!-- REGISTRATION FORM MODAL -->
 <div class="form-overlay" id="formOverlay" onclick="handleOverlayClick(event)">
 <div class="form-container" id="formContainer">
 <div class="form-header">
@@ -286,6 +287,7 @@ Where strategy meets skill. Develop your mindset, earn your accreditation, and s
 <span style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;">Total Due</span>
 <span style="color:var(--gold);font-family:'Kanit',sans-serif;font-weight:900;font-size:1.5rem;font-style:italic;">R1,500.00</span>
 </div>
+<p style="font-size:0.75rem;color:#f4e5c2;margin-top:0.5rem;text-align:right;">(Reduced from R2,500.00 for Founding Prospects)</p>
 </div>
 
 <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;margin-bottom:1rem;">
@@ -313,7 +315,7 @@ Your registration data has been saved. Redirecting to PayFast for secure payment
 <div class="spinner"></div> Saving registration &amp; redirecting…
 </div>
 
-<!-- Live PayFast Form with Signature -->
+<!-- Live Production PayFast Form with Signature -->
 <form id="payfastForm" method="post" action="https://www.payfast.co.za/eng/process" style="display:none;">
 <input type="hidden" name="merchant_id" value="35471207">
 <input type="hidden" name="merchant_key" value="q9qkx9sqx9l3m">
@@ -442,7 +444,7 @@ function nextStep(from) {
   if (from === 1 && !validateStep1()) return;
   if (from === 2 && !validateStep2()) return;
   if (from === 3 && !validateStep3()) return;
-  
+
   if (from === 3) {
     showStep(4);
     submitRegistration();
@@ -555,7 +557,6 @@ async function submitRegistration() {
 
   const cleanPhone = phone.replace(/\D/g,'');
 
-  // Populate hidden form
   document.getElementById('pf-name-first').value = firstName;
   document.getElementById('pf-name-last').value = lastName;
   document.getElementById('pf-email').value = email;
@@ -585,7 +586,7 @@ async function submitRegistration() {
 
   setTimeout(() => {
     document.getElementById('payfastForm').submit();
-  }, 1200);
+  }, 1000);
 }
 </script>
 </body>
