@@ -135,16 +135,14 @@ export const Tournaments = () => {
           status: paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
           eventName: 'Ludo Agent Registration',
           type: 'contact',
-          amount: 1500.00,
+          amount: entryFee,
           timestamp: serverTimestamp(),
           createdAt: serverTimestamp()
         };
 
-        // Save to Firestore for Admin Dashboard
         await setDoc(doc(db, 'event_registrations', registrationId), payload);
         await addDoc(collection(db, 'academy_registrations'), payload);
 
-        // Send Auto-Email Trigger
         await addDoc(collection(db, 'mail'), {
           to: formData.email,
           message: {
@@ -153,7 +151,7 @@ export const Tournaments = () => {
               <h2 style="color:#FFC107;">Application Logged Successfully!</h2>
               <p>Hello ${formData.fullName},</p>
               <p>Thank you for registering as an Official Ludo Agent for <b>${formData.businessName || formData.fullName}</b> in the ${formData.region} region.</p>
-              <p>Fee: R1,500.00 (Founding Agent Rate).</p>
+              <p>Fee: R${entryFee.toFixed(2)} (Founding Agent Rate).</p>
               <p>Best regards,<br>The Ludo League SA Team</p>
             </div>`
           },
@@ -183,7 +181,7 @@ export const Tournaments = () => {
           {step === 1 && (
             <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-4">
               <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-xs space-y-1 mb-4">
-                <p className="font-bold text-amber-900 text-sm">Founding Agent Licence: R1,500.00</p>
+                <p className="font-bold text-amber-900 text-sm flex items-center gap-2"><Shield size={16} /> Founding Agent Licence: R{entryFee.toFixed(2)}</p>
                 <p className="text-amber-700">* Reduced from R2,500.00 for early adopters (Limited Slots).</p>
               </div>
 
@@ -215,17 +213,25 @@ export const Tournaments = () => {
               </div>
 
               {paymentMethod === 'eft' && (
-                <div className="bg-slate-50 p-4 rounded-xl border text-xs space-y-1">
-                  <p><b>Bank:</b> Nedbank | <b>Account:</b> THE LUDO LEAGUE SOUTH AFRICA</p>
-                  <p><b>Account No:</b> 1120230365 | <b>Branch:</b> 198765</p>
-                  <p><b>Amount Due:</b> R1,500.00 | <b>Ref:</b> AGENT-{formData.fullName.replace(/\s+/g,'')}</p>
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-4 rounded-xl border text-xs space-y-1">
+                    <p><b>Bank:</b> Nedbank | <b>Account:</b> THE LUDO LEAGUE SOUTH AFRICA</p>
+                    <p><b>Account No:</b> 1120230365 | <b>Branch:</b> 198765</p>
+                    <p><b>Amount Due:</b> R{entryFee.toFixed(2)} | <b>Ref:</b> AGENT-{formData.fullName.replace(/\s+/g,'')}</p>
+                  </div>
+
+                  <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50">
+                    <UploadCloud size={24} className="text-slate-400 mb-1" />
+                    <span className="text-xs font-bold text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment (EFT)'}</span>
+                    <input type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
+                  </div>
                 </div>
               )}
 
               <div className="flex gap-4">
                 <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl font-bold">Back</button>
                 <button type="submit" disabled={isSubmitting} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl">
-                  {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'payfast' ? 'Pay R1,500 Now' : 'Complete Registration')}
+                  {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'payfast' ? `Pay R${entryFee.toFixed(2)} Now` : 'Complete Registration')}
                 </button>
               </div>
             </form>
@@ -235,7 +241,7 @@ export const Tournaments = () => {
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
               <h3 className="text-2xl font-bold uppercase">Application Logged!</h3>
-              <p className="text-slate-600">Your Ludo Agent application and registration details have been securely recorded. An confirmation email has been dispatched.</p>
+              <p className="text-slate-600">Your Ludo Agent application and registration details have been securely recorded. An acknowledgment email has been dispatched.</p>
               <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl">Back to Start</button>
             </div>
           )}
