@@ -5,10 +5,9 @@ export const Academy = ({ setActivePage }: { setActivePage?: (p: string) => void
   const handleNavToAgentForm = () => {
     if (setActivePage) {
       setActivePage('tournaments');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      const el = document.getElementById('tournaments');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-      else window.location.href = '?page=tournaments';
+      window.location.href = 'https://ludoleague.co.za/?page=tournaments';
     }
   };
 
@@ -21,7 +20,7 @@ export const Academy = ({ setActivePage }: { setActivePage?: (p: string) => void
           <p className="text-lg text-[#9abcb6] max-w-2xl mx-auto mb-8">
             Finesse. Strategy. Planning. Mastery. Turn casual matches into professional championships.
           </p>
-          <button onClick={handleNavToAgentForm} className="px-8 py-3 bg-[#e8a020] text-black font-black uppercase tracking-widest rounded-full hover:bg-white transition-colors shadow-lg">
+          <button onClick={handleNavToAgentForm} className="px-8 py-3 bg-[#e8a020] text-black font-black uppercase tracking-widest rounded-full hover:bg-white transition-colors shadow-lg cursor-pointer">
             Register as Ludo Agent (R1,500)
           </button>
         </div>
@@ -194,7 +193,7 @@ export const Academy = ({ setActivePage }: { setActivePage?: (p: string) => void
             <p className="text-[#9abcb6] max-w-2xl mx-auto mb-8 leading-relaxed">
               Register your agency today and become part of the foundation of South Africa's professional Ludo ecosystem.
             </p>
-            <button onClick={handleNavToAgentForm} className="inline-block px-10 py-4 rounded-full font-black italic uppercase tracking-wider text-[#041a18] transition-all hover:scale-105" style={{ background: 'linear-gradient(135deg, #e8a020, #f4c84a)', boxShadow: '0 4px 20px rgba(232,160,32,0.4)' }}>
+            <button onClick={handleNavToAgentForm} className="inline-block px-10 py-4 rounded-full font-black italic uppercase tracking-wider text-[#041a18] transition-all hover:scale-105 cursor-pointer" style={{ background: 'linear-gradient(135deg, #e8a020, #f4c84a)', boxShadow: '0 4px 20px rgba(232,160,32,0.4)' }}>
               Register Your Agency Now →
             </button>
           </div>
