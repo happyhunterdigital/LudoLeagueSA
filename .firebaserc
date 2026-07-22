@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "your-firebase-project-id"
+  },
+  "targets": {
+    "your-firebase-project-id": {
+      "hosting": {
+        "main": ["ludoleaguesa.co.za"],
+        "academy": ["ludoacademy.ludoleaguesa.co.za"]
+      }
+    }
+  }
+}

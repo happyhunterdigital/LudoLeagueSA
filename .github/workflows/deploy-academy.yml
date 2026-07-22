@@ -7,7 +7,6 @@ on:
     paths:
       - 'ludo-academy/**'
       - 'firebase.json'
-      - '.firebaserc'
 
 jobs:
   deploy_academy:

@@ -9,7 +9,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Clean Install Dependencies
+        run: |
+          rm -rf node_modules
+          npm install --legacy-peer-deps
+
+      - name: Verify Plugin Version
+        run: npm list @vitejs/plugin-react
+
       - run: npx tsc --noEmit
       - name: Run npm audit
         run: npm audit --audit-level=moderate
