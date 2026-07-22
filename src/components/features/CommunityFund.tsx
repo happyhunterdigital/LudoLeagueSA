@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark, Shield } from 'lucide-react';
+import { Lock, Loader2, CheckCircle2, UploadCloud, CreditCard, Landmark } from 'lucide-react';
 import { SectionHeader } from '../ui/SharedUI';
 import { motion } from 'framer-motion';
 import { db } from '../../config/firebase';
@@ -50,10 +50,10 @@ export const CommunityFund: React.FC = () => {
 
     try {
       if (db) {
-        const registrationType = paymentMethod === 'agent' ? 'agent' : (paymentMethod === 'sponsorship' ? 'sponsorship' : (paymentMethod === 'investment' ? 'investment' : 'donation'));
-        const eventTitle = paymentMethod === 'agent' ? 'Ludo Academy Agent Registration' : (paymentMethod === 'sponsorship' ? 'Corporate Sponsorship Inquiry' : (paymentMethod === 'investment' ? 'Investment Callback Request' : 'League Community Fund Donation'));
+        const eventTitle = paymentMethod === 'agent' 
+          ? 'Ludo Academy Agent Registration' 
+          : (paymentMethod === 'sponsorship' ? 'Corporate Sponsorship Inquiry' : (paymentMethod === 'investment' ? 'Investment Callback Request' : 'League Community Fund Donation'));
 
-        // Save to Firestore
         await addDoc(collection(db, 'event_registrations'), {
           fullName: formData.fullName,
           email: formData.email,
@@ -70,7 +70,6 @@ export const CommunityFund: React.FC = () => {
           createdAt: serverTimestamp(),
         });
 
-        // Trigger Auto-Email Acknowledgment
         await addDoc(collection(db, 'mail'), {
           to: formData.email,
           message: {
@@ -106,7 +105,7 @@ export const CommunityFund: React.FC = () => {
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="bg-white border border-white/20 p-6 md:p-10 rounded-2xl shadow-xl mt-8 text-slate-800">
           
-          {/* Toggle Menu Including New Ludo Agents Tab */}
+          {/* Toggle Line Including New Ludo Agents Option */}
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-6">
             <button type="button" onClick={() => { setPaymentMethod('payfast'); setSelectedAmount(20); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod === 'payfast' || paymentMethod === 'eft' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Direct Supporter</button>
             <button type="button" onClick={() => { setPaymentMethod('investment'); setSelectedAmount(null); }} className={`px-4 py-2 text-[10px] tracking-widest font-black uppercase rounded-lg transition-all ${paymentMethod === 'investment' ? 'bg-[#0EA5E9] text-white' : 'text-slate-400 hover:text-slate-600'}`}>Invest / Callback</button>
@@ -141,6 +140,10 @@ export const CommunityFund: React.FC = () => {
                       </button>
                     ))}
                   </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-500">Or enter Custom Amount (minimum R20):</label>
+                    <input type="number" min="20" placeholder="Custom Amount (R)" value={customAmount} onChange={e => { setCustomAmount(e.target.value); setSelectedAmount(null); }} className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none focus:border-[#0EA5E9]" />
+                  </div>
                 </div>
               ) : null}
 
@@ -154,24 +157,54 @@ export const CommunityFund: React.FC = () => {
                 <textarea placeholder="Message / Specific Queries (Optional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-[#001F3F] font-bold outline-none h-20" value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
               </div>
 
-              <button disabled={!formData.fullName || !formData.email || !formData.phone} onClick={() => handleSubmit()} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
-                {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'agent' ? 'Submit Agent Registration (R1,500)' : 'Submit Request')}
+              <button disabled={!formData.fullName || !formData.email || !formData.phone} onClick={() => (paymentMethod === 'agent' || paymentMethod === 'investment' || paymentMethod === 'sponsorship') ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl transition-all shadow-md">
+                {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'agent' ? 'Submit Agent Registration (R1,500)' : 'Continue to Transfer')}
               </button>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold uppercase">Choose Payment Option</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <button type="button" onClick={() => setPaymentMethod('payfast')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold ${paymentMethod === 'payfast' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><CreditCard size={20} className="text-[#0EA5E9]" />Payfast Online</button>
+                <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={20} className="text-[#0EA5E9]" />Manual EFT</button>
+              </div>
+
+              {paymentMethod === 'eft' && (
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-4 rounded-xl border text-xs space-y-1">
+                    <p><b>Bank:</b> Nedbank | <b>Account:</b> THE LUDO LEAGUE SOUTH AFRICA</p>
+                    <p><b>Account No:</b> 1120230365 | <b>Branch:</b> 198765</p>
+                    <p><b>Amount Due:</b> R{finalAmount.toFixed(2)}</p>
+                  </div>
+                  <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer relative bg-slate-50">
+                    <UploadCloud size={24} className="text-slate-400 mb-1" />
+                    <span className="text-xs font-bold text-[#0EA5E9]">{formData.proofOfPayment ? formData.proofOfPayment.name : 'Upload Proof of Payment'}</span>
+                    <input type="file" accept=".pdf,image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFormData({ ...formData, proofOfPayment: e.target.files ? e.target.files[0] : null })} />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-4">
+                <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl font-bold">Back</button>
+                <button type="button" onClick={() => handleSubmit()} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl">Complete Transfer</button>
+              </div>
             </div>
           )}
 
           {step === 3 && (
             <div className="text-center space-y-6 py-6">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
-              <h3 className="text-2xl font-display font-black italic uppercase text-slate-950">Registration Complete</h3>
-              <p className="text-slate-600 leading-relaxed font-light">Thank you for submitting your details. An automatic email acknowledgment has been sent to your email address and your registration has been logged for admin review.</p>
-              <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl">Back to Form</button>
+              <h3 className="text-2xl font-display font-black italic uppercase text-slate-955">Registration Logged</h3>
+              <p className="text-slate-600 leading-relaxed font-light">Thank you for submitting your details. An automatic acknowledgment email has been dispatched to {formData.email}.</p>
+              <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl">Back to Start</button>
             </div>
           )}
         </motion.div>
 
         <div className="flex items-center justify-center gap-2 mt-6 text-xs text-slate-500 uppercase tracking-widest font-bold">
-          <Lock size={14} className="text-[#0EA5E9]" /> Secure local payments via Payfast / EFT
+          <Lock size={14} className="text-[#0EA5E9]" /> Secure local payments via PayFast / EFT
         </div>
       </div>
     </section>
