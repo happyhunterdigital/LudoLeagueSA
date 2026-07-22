@@ -200,7 +200,9 @@ export default function App() {
             {activeSection === 'afcontournament' && (
               <AfconTournament setActivePage={(p: any) => setActiveSection(p.toLowerCase())} />
             )}
-            {activeSection === 'academy' && <Academy />}
+            {activeSection === 'academy' && (
+              <Academy setActivePage={(p: string) => scrollToSection(p)} />
+            )}
             {!standalonePages.includes(activeSection.toLowerCase()) && (
               <>
                 {/* ═══ HERO ═══ */}
