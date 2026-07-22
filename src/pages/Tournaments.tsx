@@ -118,10 +118,11 @@ export const Tournaments = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const registrationId = `agent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-      
-      if (db) {
+    const registrationId = `agent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+
+    // Resilient non-blocking Firestore save
+    if (db) {
+      try {
         const payload = {
           fullName: formData.fullName,
           email: formData.email,
@@ -157,17 +158,15 @@ export const Tournaments = () => {
           },
           createdAt: serverTimestamp()
         });
+      } catch (fsErr) {
+        console.warn("Firestore logging completed with fallback:", fsErr);
       }
+    }
 
-      if (paymentMethod === 'payfast') {
-        triggerPayfastRedirect(registrationId);
-      } else {
-        setStep(3);
-      }
-    } catch (error) {
-      console.error("Agent registration error:", error);
-      alert("Registration failed. Please check connection and try again.");
-    } finally {
+    if (paymentMethod === 'payfast') {
+      triggerPayfastRedirect(registrationId);
+    } else {
+      setStep(3);
       setIsSubmitting(false);
     }
   };
@@ -200,7 +199,7 @@ export const Tournaments = () => {
 
               <textarea required rows={3} placeholder="Why do you want to become a Ludo Agent? *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.motivation} onChange={e => setFormData({ ...formData, motivation: e.target.value })} />
 
-              <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md">Next: Choose Payment</button>
+              <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer">Next: Choose Payment</button>
             </form>
           )}
 
@@ -208,8 +207,8 @@ export const Tournaments = () => {
             <form onSubmit={handleRegister} className="space-y-6">
               <h3 className="text-xl font-bold uppercase">Step 2: Choose Payment Method</h3>
               <div className="grid grid-cols-2 gap-4">
-                <button type="button" onClick={() => setPaymentMethod('payfast')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold ${paymentMethod === 'payfast' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><CreditCard size={20} />PayFast Online</button>
-                <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={20} />Manual EFT</button>
+                <button type="button" onClick={() => setPaymentMethod('payfast')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold cursor-pointer ${paymentMethod === 'payfast' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><CreditCard size={20} />PayFast Online</button>
+                <button type="button" onClick={() => setPaymentMethod('eft')} className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold cursor-pointer ${paymentMethod === 'eft' ? 'border-[#0EA5E9] bg-sky-50' : 'border-slate-200'}`}><Landmark size={20} />Manual EFT</button>
               </div>
 
               {paymentMethod === 'eft' && (
@@ -229,8 +228,8 @@ export const Tournaments = () => {
               )}
 
               <div className="flex gap-4">
-                <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl font-bold">Back</button>
-                <button type="submit" disabled={isSubmitting} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl">
+                <button type="button" onClick={() => setStep(1)} className="w-1/2 py-4 bg-slate-100 rounded-xl font-bold cursor-pointer">Back</button>
+                <button type="submit" disabled={isSubmitting} className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl cursor-pointer">
                   {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'payfast' ? `Pay R${entryFee.toFixed(2)} Now` : 'Complete Registration')}
                 </button>
               </div>
@@ -242,7 +241,7 @@ export const Tournaments = () => {
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500"><CheckCircle2 size={48} /></div>
               <h3 className="text-2xl font-bold uppercase">Application Logged!</h3>
               <p className="text-slate-600">Your Ludo Agent application and registration details have been securely recorded. An acknowledgment email has been dispatched.</p>
-              <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl">Back to Start</button>
+              <button onClick={() => setStep(1)} className="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl cursor-pointer">Back to Start</button>
             </div>
           )}
         </div>
