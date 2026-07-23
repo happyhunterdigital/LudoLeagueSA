@@ -278,10 +278,17 @@ Ludo South Africa is inviting registered agencies to become Official Ludo Agents
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 }
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// DOM Sentinel: Immediately remove any old modal elements if injected by legacy cache
+setInterval(() => {
+  const overlay = document.getElementById('formOverlay');
+  if (overlay) overlay.remove();
+}, 200);
 </script>
 </body>
 </html>
