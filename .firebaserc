@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "ludoleaguesa-33371"
-  }
+  },
+  "targets": {
+    "ludoleaguesa-33371": {
+      "hosting": {
+        "academy": [
+          "ludoleaguesa-33371"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
