@@ -7,6 +7,9 @@
       "hosting": {
         "app": [
           "ludoleaguesa-33371"
+        ],
+        "academy": [
+          "ludoleaguesa-33371"
         ]
       }
     }
