@@ -120,7 +120,6 @@ export const Tournaments = () => {
 
     const registrationId = `agent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
-    // Resilient non-blocking Firestore save
     if (db) {
       try {
         const payload = {
