@@ -3,9 +3,6 @@ import { Gift, Award, Shield, CheckCircle2 } from 'lucide-react';
 import { ScrollReveal } from '../ui/ScrollReveal';
 
 export const DonationNarrative: React.FC<{ onScrollToForm: () => void }> = ({ onScrollToForm }) => {
-  const currentFunds = 12500;
-  const goalFunds = 1000000;
-
   return (
     <>
       {/* Narrative Section */}
