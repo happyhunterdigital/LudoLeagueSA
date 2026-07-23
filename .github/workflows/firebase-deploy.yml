@@ -45,5 +45,5 @@ jobs:
           echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> functions/.env
           echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> functions/.env
 
-      - name: Deploy to Firebase
-        run: firebase deploy --only hosting:app,hosting:academy,functions --project ludoleaguesa-33371 --force
+- name: Deploy to Firebase
+  run: firebase deploy --only hosting:app,functions --project ludoleaguesa-33371 --force
