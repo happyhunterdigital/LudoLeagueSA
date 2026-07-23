@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ludo Academy of Excellence | Official Agent & Prospect Registration</title>
-<meta name="description" content="Ludo Academy of Excellence — Register as a Founding Prospect or Official Ludo Agent. Develop your strategy, earn your accreditation, and become part of South Africa's professional Ludo ecosystem.">
+<meta name="description" content="Ludo Academy of Excellence — Register as an Official Ludo Agent or Prospect. Develop your strategy, earn your accreditation, and become part of South Africa's professional Ludo ecosystem.">
 <meta name="keywords" content="Ludo Academy, Ludo Agent, South Africa Ludo, Strategic Thinking, Ludo Training South Africa, Ludo League SA, Prospect Registration">
 <meta property="og:title" content="Ludo Academy of Excellence | Official Registration">
-<meta property="og:description" content="Where strategy meets skill. Register as a Founding Prospect or Official Ludo Agent and build a career in South Africa's emerging professional Ludo ecosystem.">
+<meta property="og:description" content="Where strategy meets skill. Register as an Official Ludo Agent or Prospect and build a career in South Africa's emerging professional Ludo ecosystem.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://academy.ludoleague.co.za">
 <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
@@ -42,7 +42,6 @@
 html { scroll-behavior: smooth; }
 body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x: hidden; color: #e5e7eb; }
 
-/* Brand colours */
 :root {
   --gold: #d4af37;
   --gold-light: #f4e5c2;
@@ -54,7 +53,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   --blue-accent: #3b82f6;
 }
 
-/* Typography */
 .hero-heading {
   background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%);
   -webkit-background-clip: text;
@@ -77,7 +75,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   text-transform: uppercase;
 }
 
-/* Cards */
 .card {
   background: var(--navy-card);
   border: 1px solid var(--navy-border);
@@ -94,7 +91,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   border: 1px solid rgba(212,175,55,0.35);
 }
 
-/* Buttons */
 .btn-primary {
   display: inline-block;
   text-align: center;
@@ -137,7 +133,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   background: rgba(212,175,55,0.1);
 }
 
-/* Navbar */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -174,7 +169,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
 }
 .navbar-link:hover { color: var(--gold); }
 
-/* Hero */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -187,19 +181,10 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
               var(--navy);
   overflow: hidden;
 }
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M30 30m-28 0a28 28 0 1 0 56 0a28 28 0 1 0-56 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  opacity: 0.5;
-}
 
-/* Sections */
 .section { padding: 6rem 1.5rem; }
 .section-alt { background: rgba(212,175,55,0.03); }
 
-/* Pricing badge */
 .price-badge-old {
   font-size: 1rem;
   color: rgba(255,255,255,0.3);
@@ -227,7 +212,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   font-family: 'Inter', sans-serif;
 }
 
-/* Agents section */
 .agent-table {
   width: 100%;
   border-collapse: collapse;
@@ -254,7 +238,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
 .agent-table tr:last-child td { border-bottom: none; }
 .agent-table tr:hover td { background: rgba(212,175,55,0.03); }
 
-/* Marquee */
 .marquee-track {
   display: flex;
   gap: 3rem;
@@ -266,7 +249,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
   to { transform: translateX(-50%); }
 }
 
-/* Cookie banner */
 .cookie-banner {
   position: fixed;
   bottom: 1rem;
@@ -285,7 +267,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
 }
 .cookie-banner.show { display: block; }
 
-/* Fade-in utility */
 .fade-in {
   opacity: 0;
   transform: translateY(24px);
@@ -303,7 +284,6 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
 </head>
 <body>
 
-<!-- ========== NAVBAR ========== -->
 <nav class="navbar" id="navbar">
 <div class="navbar-logo">🎲 Ludo Academy</div>
 <div class="hidden md:flex items-center gap-8">
@@ -313,14 +293,13 @@ body, #root { background: #05071a; font-family: 'Kanit', sans-serif; overflow-x:
 <button class="navbar-link" onclick="scrollToId('pricing')">Pricing</button>
 <button class="navbar-link" onclick="scrollToId('contact')">Contact</button>
 </div>
-<a class="btn-primary text-sm py-3 px-6" href="https://ludoleague.co.za/#tournaments">Register Now</a>
+<a class="btn-primary text-sm py-3 px-6" href="https://ludoleague.co.za/#tournaments">Register Ludo Agent</a>
 </nav>
 
-<!-- ========== HERO ========== -->
 <section class="hero" id="home">
 <div class="relative z-10 max-w-5xl mx-auto text-center">
 <div class="flex justify-center mb-6">
-<img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg" alt="Ludo Academy of Excellence Logo" class="w-20 h-20 object-cover rounded-2xl border border-yellow-500/30 shadow-2xl fade-in" onerror="this.style.display='none'">
+<img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg" alt="Ludo Academy Logo" class="w-20 h-20 object-cover rounded-2xl border border-yellow-500/30 shadow-2xl fade-in" onerror="this.style.display='none'">
 </div>
 <p class="section-tag mb-4 fade-in" style="transition-delay:0.1s">Ludo League South Africa Presents</p>
 <h1 class="text-5xl md:text-7xl lg:text-8xl font-black italic uppercase leading-none hero-heading mb-6 fade-in" style="transition-delay:0.2s">
@@ -330,26 +309,20 @@ Ludo Academy<br>of Excellence
 Where strategy meets skill. Develop your mindset, earn your accreditation, and step into South Africa's professional Ludo ecosystem from the very beginning.
 </p>
 
-<!-- Pricing teaser -->
 <div class="flex items-center justify-center gap-4 mb-2 fade-in" style="transition-delay:0.4s">
 <span class="limited-badge">⚡ Founding Prospect Rate</span>
 <span class="price-badge-old">R2,500</span>
 <span class="price-badge-new">R1,500</span>
 </div>
-<p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8 fade-in" style="transition-delay:0.45s">Reduced from R2,500.00 (Founding Prospect Rate - Limited Slots)</p>
+<p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8 fade-in" style="transition-delay:0.45s">Reduced from R2,500.00 (Founding Rate - Limited Slots)</p>
 
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in" style="transition-delay:0.5s">
 <a class="btn-primary text-lg px-10 py-4" href="https://ludoleague.co.za/#tournaments">Register as a Prospect</a>
 <button class="btn-outline" onclick="scrollToId('agents')">Become an Agent →</button>
 </div>
 </div>
-
-<!-- Floating orbs -->
-<div style="position:absolute;top:20%;left:10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,0.06),transparent);pointer-events:none;"></div>
-<div style="position:absolute;bottom:20%;right:10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.05),transparent);pointer-events:none;"></div>
 </section>
 
-<!-- ========== MARQUEE ========== -->
 <div style="overflow:hidden;border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1);padding:1rem 0;background:rgba(212,175,55,0.03);">
 <div class="marquee-track">
 <span class="section-tag">Strategic Mindset +++</span>
@@ -367,7 +340,6 @@ Where strategy meets skill. Develop your mindset, earn your accreditation, and s
 </div>
 </div>
 
-<!-- ========== ABOUT ========== -->
 <section class="section" id="about">
 <div class="max-w-6xl mx-auto">
 <div class="grid md:grid-cols-2 gap-16 items-center">
@@ -406,7 +378,6 @@ We are at the beginning of something significant. The Founding Prospect cohort w
 </div>
 </section>
 
-<!-- ========== TRAINING ========== -->
 <section class="section section-alt" id="training">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-16 fade-in">
@@ -417,7 +388,6 @@ Practical, focused, and designed for people who are serious. No lengthy classroo
 </p>
 </div>
 <div class="grid md:grid-cols-3 gap-6 mb-16">
-<!-- Day 1 -->
 <div class="card fade-in" style="transition-delay:0.1s">
 <div class="flex items-center gap-3 mb-4">
 <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;">
@@ -432,7 +402,6 @@ Practical, focused, and designed for people who are serious. No lengthy classroo
 <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Digital registration systems overview</li>
 </ul>
 </div>
-<!-- Day 2 -->
 <div class="card fade-in" style="transition-delay:0.2s;border-color:rgba(212,175,55,0.35);">
 <div class="flex items-center gap-3 mb-4">
 <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.5);display:flex;align-items:center;justify-content:center;">
@@ -447,7 +416,6 @@ Practical, focused, and designed for people who are serious. No lengthy classroo
 <li class="flex items-start gap-2"><span style="color:var(--gold);margin-top:2px;">▸</span>Marketing and talent identification</li>
 </ul>
 </div>
-<!-- Day 3 -->
 <div class="card fade-in" style="transition-delay:0.3s">
 <div class="flex items-center gap-3 mb-4">
 <div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;">
@@ -464,7 +432,6 @@ Practical, focused, and designed for people who are serious. No lengthy classroo
 </div>
 </div>
 
-<!-- Course Levels -->
 <div class="text-center mb-10 fade-in">
 <p class="section-tag mb-3">Skill Pathway</p>
 <h2 class="section-title text-3xl text-white mb-2">Three Levels of Mastery</h2>
@@ -495,7 +462,6 @@ Master tournament psychology, club asset coordination, and advanced defensive an
 </div>
 </section>
 
-<!-- ========== LUDO AGENTS ========== -->
 <section class="section" id="agents">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-16 fade-in">
@@ -509,7 +475,6 @@ Ludo South Africa is inviting registered agencies and sports talent representati
 </p>
 </div>
 <div class="grid md:grid-cols-2 gap-8 mb-12">
-<!-- Responsibilities -->
 <div class="card fade-in" style="transition-delay:0.1s">
 <h3 class="text-xl font-black italic text-white uppercase mb-5">Your Responsibilities</h3>
 <ul class="space-y-3" style="font-family:'Inter',sans-serif;font-size:0.875rem;color:#9ca3af;">
@@ -522,7 +487,6 @@ Ludo South Africa is inviting registered agencies and sports talent representati
 <li class="flex items-start gap-3"><span style="color:var(--gold);font-size:1.1rem;line-height:1.4;">▸</span>Guide and protect the professional interests of your players throughout their careers.</li>
 </ul>
 </div>
-<!-- Why become an agent -->
 <div class="card card-gold fade-in" style="transition-delay:0.2s">
 <h3 class="text-xl font-black italic text-white uppercase mb-5">Why Become an Official Agent?</h3>
 <p class="text-gray-300 text-sm mb-4" style="font-family:'Inter',sans-serif;line-height:1.7">
@@ -534,7 +498,6 @@ Your registered players remain your agency's responsibility and portfolio. Whene
 </div>
 </div>
 
-<!-- Minimum Requirements -->
 <div class="card mb-8 fade-in">
 <h3 class="text-xl font-black italic text-white uppercase mb-5">Minimum Requirements</h3>
 <div class="grid md:grid-cols-2 gap-4">
@@ -550,7 +513,6 @@ Your registered players remain your agency's responsibility and portfolio. Whene
 </div>
 </div>
 
-<!-- Licensing Table -->
 <div class="card mb-8 fade-in" style="overflow-x:auto;">
 <h3 class="text-xl font-black italic text-white uppercase mb-5">Licensing Model</h3>
 <table class="agent-table">
@@ -582,7 +544,6 @@ Your registered players remain your agency's responsibility and portfolio. Whene
 </p>
 </div>
 
-<!-- Additional Revenue -->
 <div class="grid md:grid-cols-2 gap-8 mb-12">
 <div class="card fade-in">
 <h3 class="text-lg font-black italic text-white uppercase mb-4">Additional Revenue Streams</h3>
@@ -624,7 +585,6 @@ Register Your Agency Now →
 </div>
 </section>
 
-<!-- ========== PRICING ========== -->
 <section class="section section-alt" id="pricing">
 <div class="max-w-4xl mx-auto text-center">
 <div class="fade-in">
@@ -635,7 +595,6 @@ Only the first cohort of Prospects qualifies for the Founding rate. Once these s
 </p>
 </div>
 <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-<!-- Founding rate -->
 <div class="card card-gold text-left relative overflow-hidden fade-in" style="transition-delay:0.1s">
 <div style="position:absolute;top:1rem;right:1rem;"><span class="limited-badge">Limited</span></div>
 <p class="section-tag mb-3">Founding Prospect</p>
@@ -654,7 +613,6 @@ Only the first cohort of Prospects qualifies for the Founding rate. Once these s
 </ul>
 <a class="btn-primary w-full text-center" href="https://ludoleague.co.za/#tournaments">Register Now — R1,500</a>
 </div>
-<!-- Standard rate -->
 <div class="card text-left fade-in" style="transition-delay:0.2s">
 <p class="section-tag mb-3">Standard Prospect</p>
 <div class="mb-4">
@@ -675,7 +633,6 @@ Only the first cohort of Prospects qualifies for the Founding rate. Once these s
 </div>
 </section>
 
-<!-- ========== CONTACT ========== -->
 <section class="section" id="contact">
 <div class="max-w-4xl mx-auto text-center fade-in">
 <p class="section-tag mb-3">Get In Touch</p>
@@ -704,7 +661,6 @@ Our administrative team is ready to assist with registration enquiries, agent ap
 </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
 <footer style="background:#030510;border-top:1px solid rgba(212,175,55,0.1);padding:3rem 1.5rem;">
 <div class="max-w-6xl mx-auto">
 <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
@@ -725,15 +681,6 @@ Our administrative team is ready to assist with registration enquiries, agent ap
 </div>
 </footer>
 
-<!-- ========== PAYMENT SUCCESS/CANCEL BANNERS ========== -->
-<div id="successBanner" style="display:none;position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:400;background:#16a34a;color:white;padding:1rem 2rem;border-radius:0.75rem;font-family:'Kanit',sans-serif;font-weight:700;font-style:italic;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
-✅ Payment Successful! Welcome to the Ludo Academy of Excellence. Check your email.
-</div>
-<div id="cancelBanner" style="display:none;position:fixed;top:5rem;left:50%;transform:translateX(-50%);z-index:400;background:#dc2626;color:white;padding:1rem 2rem;border-radius:0.75rem;font-family:'Kanit',sans-serif;font-weight:700;font-style:italic;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
-❌ Payment was cancelled. Your registration is saved — you can complete payment anytime.
-</div>
-
-<!-- ========== COOKIE BANNER ========== -->
 <div class="cookie-banner" id="cookieBanner">
 <p style="margin-bottom:0.75rem;">We use cookies to improve your experience. By continuing to use this site you accept our use of cookies.</p>
 <button class="btn-primary" style="font-size:0.75rem;padding:0.5rem 1.5rem;" onclick="acceptCookies()">Accept &amp; Continue</button>
@@ -744,13 +691,11 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Fade-in on scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// Cookie banner
 if (!localStorage.getItem('cookie-accepted')) {
   setTimeout(() => document.getElementById('cookieBanner')?.classList.add('show'), 2500);
 }
@@ -758,18 +703,6 @@ function acceptCookies() {
   localStorage.setItem('cookie-accepted', '1');
   document.getElementById('cookieBanner')?.classList.remove('show');
 }
-
-// Payment result banners
-(function() {
-  const p = new URLSearchParams(window.location.search);
-  if (p.get('payment') === 'success') {
-    const b = document.getElementById('successBanner');
-    if (b) { b.style.display = 'block'; setTimeout(() => b.style.display = 'none', 8000); }
-  } else if (p.get('payment') === 'cancelled') {
-    const b = document.getElementById('cancelBanner');
-    if (b) { b.style.display = 'block'; setTimeout(() => b.style.display = 'none', 8000); }
-  }
-})();
 </script>
 </body>
 </html>
