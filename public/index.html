@@ -1,37 +1,20 @@
-# 1. Switch to academyofludo branch
-git checkout academyofludo
-
-# 2. Force-write the SEO optimized index.html
-cat << 'EOF' > public/index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ludo Academy of Excellence | Official Agent & Prospect Registration</title>
-
-<!-- SEO & Social Media sharing meta tags (No prices mentioned) -->
-<meta name="description" content="Where strategy meets skill. Learn the game, master the mindset, and step into South Africa's professional competitive Ludo ecosystem. Supported by local township board manufacturing and cognitive classroom mathematics initiatives.">
+<meta name="description" content="Ludo Academy of Excellence: Register as an Official Ludo Agent or Prospect. Develop your strategy, earn your accreditation, and step into South Africa's professional Ludo ecosystem.">
 <meta name="keywords" content="Ludo Academy, Ludo Agent, South Africa Ludo, Strategic Thinking, Ludo Training South Africa, Ludo League SA, Prospect Registration">
+<link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
 
-<!-- Open Graph / WhatsApp / Facebook Preview Tags -->
+<!-- Social Media & WhatsApp Link Sharing Meta Tags -->
 <meta property="og:title" content="Ludo Academy of Excellence | Official Accreditation">
-<meta property="og:description" content="Where strategy meets skill. Learn the game, master the mindset, and step into South Africa's professional competitive Ludo ecosystem. Supported by local township board manufacturing and cognitive classroom mathematics initiatives.">
+<meta property="og:description" content="Where strategy meets skill. Register as a Founding Prospect or Ludo Agent and join South Africa's emerging professional Ludo ecosystem.">
 <meta property="og:image" content="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_Academy_of_excellence_learning_vihidj.jpg">
-<meta property="og:image:secure_url" content="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_Academy_of_excellence_learning_vihidj.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://academy.ludoleague.co.za">
 <meta property="og:type" content="website">
 
-<!-- Twitter Card Preview Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ludo Academy of Excellence | Official Accreditation">
-<meta name="twitter:description" content="Where strategy meets skill. Learn the game, master the mindset, and step into South Africa's professional competitive Ludo ecosystem. Supported by local township board manufacturing and cognitive classroom mathematics initiatives.">
-<meta name="twitter:image" content="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647925/Ludo_Academy_of_excellence_learning_vihidj.jpg">
-
-<link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -139,7 +122,7 @@ window.__registerCandidate = async function(formData, paymentMethod) {
     await addDoc(collection(db, 'mail'), {
       to: formData.email,
       message: {
-        subject: 'Ludo Agent Application Received - Ludo League SA',
+        subject: 'Ludo Agent Application Received: Ludo League SA',
         html: `<div style="font-family: sans-serif; padding:20px; background:#0f172a; color:#fff;">
           <h2 style="color:#FFC107;">Application Logged Successfully!</h2>
           <p>Hello ${formData.fullName},</p>
@@ -193,7 +176,7 @@ window.__registerCandidate = async function(formData, paymentMethod) {
       <span class="price-badge-old">R2,500</span>
       <span class="price-badge-new">R1,500</span>
     </div>
-    <p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8 fade-in">Reduced from R2,500.00 (Founding Rate — Limited Slots)</p>
+    <p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8 fade-in">Reduced from R2,500.00 (Founding Rate: Limited Slots)</p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in">
       <button class="btn-primary text-lg px-10 py-4" onclick="scrollToSection('registration')">Register Now</button>
@@ -269,23 +252,23 @@ window.__registerCandidate = async function(formData, paymentMethod) {
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16 fade-in">
       <p class="section-tag">02. The Training Section</p>
-      <h2 class="section-title text-3xl md:text-4xl text-white mb-4">3-Day Intensive Accreditation Programme</h2>
+      <h2 class="section-title text-3xl md:text-4xl text-white mb-4">Intensive Accreditation Programme</h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-sm" style="font-family:'Inter',sans-serif">
-        The Ludo Academy offers a focused, practical 3-day training programme built for serious competitors, referees, and agency managers:
+        The Ludo Academy offers a focused, practical training programme built for serious competitors, referees, and agency managers:
       </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6 mb-16 fade-in">
       <div class="card">
-        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Day 1 — Foundation & Rules</h4>
+        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Level 1: Foundation & Rules</h4>
         <p class="text-sm text-gray-400 leading-relaxed" style="font-family:'Inter',sans-serif">In-depth analysis of official LLSA rules, dispute resolution frameworks, player ethics, and digital registration procedures.</p>
       </div>
       <div class="card">
-        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Day 2 — Operations & Commerce</h4>
+        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Level 2: Operations & Commerce</h4>
         <p class="text-sm text-gray-400 leading-relaxed" style="font-family:'Inter',sans-serif">Logistics of tournament management, media visibility, commercial sponsorship integration, and talent identification.</p>
       </div>
       <div class="card" style="border-color:rgba(212,175,55,0.35);">
-        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Day 3 — Assessment & Accreditation</h4>
+        <h4 class="text-yellow-400 font-bold mb-3 uppercase text-sm">Level 3: Assessment & Accreditation</h4>
         <p class="text-sm text-gray-400 leading-relaxed" style="font-family:'Inter',sans-serif">Practical case study evaluation, code of conduct verification, and the official awarding of national licences.</p>
       </div>
     </div>
@@ -298,17 +281,17 @@ window.__registerCandidate = async function(formData, paymentMethod) {
     <div class="grid md:grid-cols-3 gap-6 fade-in">
       <div class="card">
         <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211756_1_b1jvqu.jpg" alt="Level 1" class="rounded-xl mb-4 w-full h-40 object-cover border border-white/5">
-        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 1 — Beginner Foundations</span>
+        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 1: Beginner Foundations</span>
         <p class="text-gray-400 text-xs mt-2" style="font-family:'Inter',sans-serif">Master baseline strategic blockades, safety path navigation, and probability assessment based on standard dice mechanics.</p>
       </div>
       <div class="card">
         <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211759_l3q3oi.jpg" alt="Level 2" class="rounded-xl mb-4 w-full h-40 object-cover border border-white/5">
-        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 2 — Intermediate Tactics</span>
+        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 2: Intermediate Tactics</span>
         <p class="text-gray-400 text-xs mt-2" style="font-family:'Inter',sans-serif">Acquire racing trajectories, blockade manipulation, and double-token split configurations to control board pace.</p>
       </div>
       <div class="card">
         <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784649728/Ludo_Academy_of_Excellence_2K_202607211759_1_v9zrci.jpg" alt="Level 3" class="rounded-xl mb-4 w-full h-40 object-cover border border-white/5">
-        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 3 — Advanced Mastery</span>
+        <span class="text-[#d4af37] text-xs font-bold uppercase tracking-wider">Level 3: Advanced Mastery</span>
         <p class="text-gray-400 text-xs mt-2" style="font-family:'Inter',sans-serif">Dominate high-stakes tournament psychology, asset coordination, and defensive perimeter containment algorithms.</p>
       </div>
     </div>
@@ -340,8 +323,8 @@ window.__registerCandidate = async function(formData, paymentMethod) {
       <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784648841/Battle_of_the_Kasis_BOTK_entry_to_the_Ludo_League_fz2qjl.jpg" alt="Battle of the Kasis" class="rounded-2xl border border-white/10 shadow-2xl">
       <div class="card card-gold space-y-3">
         <h4 class="text-lg font-bold text-slate-900 uppercase">Licensing Model & Pricing</h4>
-        <p class="text-xs text-slate-800" style="font-family:'Inter',sans-serif"><b>Standard Licence:</b> R2,500.00 – R5,000.00 (Standard annual rate).</p>
-        <p class="text-xs text-slate-900 font-bold" style="font-family:'Inter',sans-serif"><b>Founding Agent Licence:</b> R1,500.00 (Special early-adopter rate reduced from R2,500.00 for the first 50–100 registered agencies).</p>
+        <p class="text-xs text-slate-800" style="font-family:'Inter',sans-serif"><b>Standard Licence:</b> R2,500.00 to R5,000.00 (Standard annual rate).</p>
+        <p class="text-xs text-slate-900 font-bold" style="font-family:'Inter',sans-serif"><b>Founding Agent Licence:</b> R1,500.00 (Special early-adopter rate reduced from R2,500.00 for the first 50 to 100 registered agencies).</p>
       </div>
     </div>
   </div>
@@ -554,3 +537,13 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+EOF
+
+# 4. Stage, commit, and push the updated layout
+git add public/index.html
+git commit -m "Deploy complete updated Ludo Academy Layout replacing Day intervals with Levels"
+git push origin academyofludo
+
+# 5. Build and deploy changes to live subdomain
+npm run build
+firebase deploy --only hosting --project ludoleaguesa-33371 --force
