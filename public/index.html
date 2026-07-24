@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ludo Academy of Excellence | Official Agent & Prospect Registration</title>
+<meta name="description" content="Ludo Academy of Excellence — Register as an Official Ludo Agent or Prospect. Develop your strategy, earn your accreditation, and step into South Africa's professional Ludo ecosystem.">
+<link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #05071a; font-family: 'Kanit', sans-serif; color: #e5e7eb; overflow-x: hidden; }
+
+:root {
+  --gold: #d4af37;
+  --gold-light: #f4e5c2;
+  --gold-dark: #b8941f;
+  --navy: #05071a;
+  --navy-card: #0f1535;
+  --navy-border: rgba(212,175,55,0.25);
+}
+
+.hero-heading {
+  background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 50%, #b8941f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px rgba(212,175,55,0.35));
+}
+.section-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.section-title {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.card:hover {
+  border-color: rgba(212,175,55,0.5);
+  box-shadow: 0 8px 32px rgba(212,175,55,0.1);
+  transform: translateY(-4px);
+}
+.card-gold {
+  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%);
+  border: 1px solid rgba(212,175,55,0.35);
+}
+
+.btn-primary {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color: var(--navy);
+  font-family: 'Kanit', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: 9999px;
+  padding: 1rem 2.5rem;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(212,175,55,0.35);
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(212,175,55,0.5);
+}
+.btn-outline {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--gold);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn-outline:hover { background: rgba(212,175,55,0.1); }
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(5,7,26,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--navy-border);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-logo {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.navbar-link {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.navbar-link:hover { color: var(--gold); }
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 1.5rem 4rem;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.12) 0%, transparent 70%), var(--navy);
+  text-align: center;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.price-badge-old { font-size: 1rem; color: rgba(255,255,255,0.3); text-decoration: line-through; }
+.price-badge-new { font-size: 3rem; font-weight: 900; font-style: italic; color: var(--gold); line-height: 1; }
+.limited-badge {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: white; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.25rem 0.75rem; border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+}
+
+.how-step {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.how-step::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: var(--gold);
+  color: var(--navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0.75rem 1rem; }
+  .navbar .hidden { display: none; }
+  .hero { padding: 6rem 1rem 3rem; }
+}
+</style>
+<base target="_blank">
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js';
+import { getFirestore, doc, setDoc, addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqYqG2C4oqJL5w5Ub5RoUz3w_xrSkqW1Q",
+  authDomain: "ludoleaguesa-33371.firebaseapp.com",
+  projectId: "ludoleaguesa-33371",
+  storageBucket: "ludoleaguesa-33371.appspot.com",
+  messagingSenderId: "1088023817043",
+  appId: "1:1088023817043:web:b6e4b9a4e3a4f5c8d12345"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.__registerCandidate = async function(formData, paymentMethod) {
+  const regId = `agent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+  const payload = {
+    fullName: formData.fullName,
+    email: formData.email,
+    phone: formData.phoneNumber,
+    phoneNumber: formData.phoneNumber,
+    businessName: formData.businessName || '',
+    region: formData.region,
+    experience: 'intermediate',
+    motivation: formData.motivation,
+    paymentMethod,
+    status: paymentMethod === 'payfast' ? 'pending_online_payment' : 'pending_verification',
+    eventName: 'Ludo Agent Registration',
+    type: 'contact',
+    amount: 1500.00,
+    createdAt: serverTimestamp(),
+    timestamp: serverTimestamp()
+  };
+
+  try {
+    await setDoc(doc(db, 'event_registrations', regId), payload);
+    await addDoc(collection(db, 'academy_registrations'), payload);
+    await addDoc(collection(db, 'mail'), {
+      to: formData.email,
+      message: {
+        subject: 'Ludo Agent Application Received - Ludo League SA',
+        html: `<div style="font-family: sans-serif; padding:20px; background:#0f172a; color:#fff;">
+          <h2 style="color:#FFC107;">Application Logged Successfully!</h2>
+          <p>Hello ${formData.fullName},</p>
+          <p>Thank you for registering as an Official Ludo Agent for <b>${formData.businessName || formData.fullName}</b> in the ${formData.region} region.</p>
+          <p>Fee: R1500.00 (Founding Agent Rate).</p>
+          <p>Best regards,<br>The Ludo League SA Team</p>
+        </div>`
+      },
+      createdAt: serverTimestamp()
+    });
+  } catch(e) {
+    console.warn("Firestore save warning:", e);
+  }
+  return regId;
+};
+</script>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar-logo">🎲 Ludo Academy</div>
+  <div class="hidden md:flex items-center gap-8">
+    <button class="navbar-link" onclick="scrollToSection('about')">About</button>
+    <button class="navbar-link" onclick="scrollToSection('training')">Training</button>
+    <button class="navbar-link" onclick="scrollToSection('agents')">Agents</button>
+    <button class="navbar-link" onclick="scrollToSection('how-it-works')">How It Works</button>
+    <button class="navbar-link" onclick="scrollToSection('contact')">Contact</button>
+  </div>
+  <a class="btn-primary text-sm py-3 px-6" href="https://ludoleague.co.za/#tournaments?utm_source=academy&utm_medium=cta&utm_campaign=agent_registration">Register Ludo Agent</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex justify-center mb-6">
+      <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg" alt="Ludo Academy Logo" class="w-20 h-20 object-cover rounded-2xl border border-yellow-500/30 shadow-2xl fade-in">
+    </div>
+    <p class="section-tag mb-4 fade-in">Ludo League South Africa Presents</p>
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black italic uppercase leading-none hero-heading mb-6 fade-in">
+      Ludo Academy<br>of Excellence
+    </h1>
+    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-6 fade-in" style="font-family:'Inter',sans-serif">
+      Where strategy meets skill. Develop your mindset, earn your accreditation, and step into South Africa's professional Ludo ecosystem.
+    </p>
+
+    <div class="flex items-center justify-center gap-4 mb-2 fade-in">
+      <span class="limited-badge">⚡ Founding Agent Licence</span>
+      <span class="price-badge-old">R2,500</span>
+      <span class="price-badge-new">R1,500</span>
+    </div>
+    <p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mb-8 fade-in">Reduced from R2,500.00 (Founding Rate — Limited Slots)</p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in">
+      <button class="btn-primary text-lg px-10 py-4" onclick="scrollToSection('registration')">Register as Ludo Agent</button>
+      <button class="btn-primary btn-red text-lg px-10 py-4" onclick="scrollToSection('agents')">View Agent Details →</button>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div style="overflow:hidden;border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1);padding:1rem 0;background:rgba(212,175,55,0.03);">
+  <div class="marquee-track">
+    <span class="section-tag">Strategic Mindset +++</span>
+    <span class="section-tag">Official Accreditation +++</span>
+    <span class="section-tag">Professional Licensing +++</span>
+    <span class="section-tag">Tournament Ready +++</span>
+    <span class="section-tag">Agent Network +++</span>
+    <span class="section-tag">Founding Prospects +++</span>
+    <span class="section-tag">Strategic Mindset +++</span>
+    <span class="section-tag">Official Accreditation +++</span>
+    <span class="section-tag">Professional Licensing +++</span>
+    <span class="section-tag">Tournament Ready +++</span>
+    <span class="section-tag">Agent Network +++</span>
+    <span class="section-tag">Founding Prospects +++</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="py-16 md:py-24 px-4 max-w-6xl mx-auto" id="about">
+  <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+    <div>
+      <p class="section-tag mb-3">About the Programme</p>
+      <h2 class="section-title text-3xl md:text-4xl text-white mb-6">The Most Strategic Game in South Africa</h2>
+      <p class="text-gray-400 mb-6 leading-relaxed" style="font-family:'Inter',sans-serif">
+        The Ludo Academy of Excellence is our flagship training programme — designed to develop skilled, accredited, and tournament-ready players and officials.
+      </p>
+      <button class="btn-primary" onclick="scrollToSection('registration')">Join the Founding Cohort</button>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="card card-gold text-center p-6"><div class="text-4xl font-black text-yellow-400">2009</div><div class="text-xs text-gray-400 mt-1">Playing Since</div></div>
+      <div class="card card-gold text-center p-6"><div class="text-4xl font-black text-yellow-400">9+</div><div class="text-xs text-gray-400 mt-1">Provinces Active</div></div>
+      <div class="card card-gold text-center p-6"><div class="text-4xl font-black text-yellow-400">50</div><div class="text-xs text-gray-400 mt-1">Founding Slots</div></div>
+      <div class="card card-gold text-center p-6"><div class="text-4xl font-black text-yellow-400">R1,500</div><div class="text-xs text-gray-400 mt-1">Founding Rate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-16 md:py-24 px-4 bg-white/5" id="how-it-works">
+  <div class="max-w-4xl mx-auto fade-in">
+    <p class="section-tag mb-3 text-center">Registration Process</p>
+    <h2 class="section-title text-3xl md:text-4xl text-white mb-10 text-center">How to Register</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="card how-step" data-step="1">
+        <h3 class="text-lg font-bold text-white mb-2">Complete Your Profile</h3>
+        <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Fill in your full name, contact details, agency name, region, and motivation in the registration section below.</p>
+      </div>
+      <div class="card how-step" data-step="2">
+        <h3 class="text-lg font-bold text-white mb-2">Choose Payment</h3>
+        <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Pay securely via PayFast (Card, Instant EFT, Capitec Pay, SnapScan, or Zapper) or submit a manual EFT with proof of payment.</p>
+      </div>
+      <div class="card how-step" data-step="3">
+        <h3 class="text-lg font-bold text-white mb-2">Get Accredited</h3>
+        <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Your application is logged instantly. You will receive an automated confirmation email and your accreditation will be reviewed by our admin team.</p>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <button class="btn-primary text-lg px-10 py-4" onclick="scrollToSection('registration')">Start Your Registration →</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING / SERVICES -->
+<section class="py-16 md:py-24 px-4 max-w-6xl mx-auto" id="training">
+  <p class="section-tag mb-3 text-center fade-in">Curriculum</p>
+  <h2 class="section-title text-3xl md:text-4xl text-white mb-10 text-center fade-in">3-Day Agent Training Curriculum</h2>
+  <div class="grid md:grid-cols-3 gap-6 fade-in">
+    <div class="card">
+      <div class="text-yellow-400 text-2xl mb-3">📘</div>
+      <h3 class="text-lg font-bold text-white mb-2">Day 1: Foundations</h3>
+      <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Ludo rules mastery, strategic positioning, risk assessment, and opening theory.</p>
+    </div>
+    <div class="card">
+      <div class="text-yellow-400 text-2xl mb-3">📗</div>
+      <h3 class="text-lg font-bold text-white mb-2">Day 2: Tournament Ops</h3>
+      <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Bracket management, officiating protocols, dispute resolution, and live-event logistics.</p>
+    </div>
+    <div class="card">
+      <div class="text-yellow-400 text-2xl mb-3">📙</div>
+      <h3 class="text-lg font-bold text-white mb-2">Day 3: Business & Licensing</h3>
+      <p class="text-sm text-gray-400" style="font-family:'Inter',sans-serif">Agent accreditation, revenue structures, talent representation, and official Ludo League licensing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMBEDDED TOURNAMENT-GRADE REGISTRATION FORM -->
+<section class="py-24 px-4 bg-[#0a0e27]" id="registration">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="section-tag mb-2">Official Accreditation</p>
+      <h2 class="section-title text-4xl text-white">Ludo Agents Registration</h2>
+      <p class="text-xs text-yellow-400 font-bold uppercase tracking-widest mt-2">Founding Agent Rate: R1,500.00 (Reduced from R2,500.00)</p>
+    </div>
+
+    <div class="bg-white text-slate-900 border border-white/20 p-8 rounded-2xl shadow-2xl">
+      <!-- Step 1: Form Fields -->
+      <form id="agentFormStep1" onsubmit="handleStep1Submit(event)" class="space-y-4">
+        <input required type="text" id="f_fullName" placeholder="Full Name *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]">
+        <input required type="email" id="f_email" placeholder="Email Address *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]">
+        <input required type="tel" id="f_phone" placeholder="Phone Number *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]">
+        <input required type="text" id="f_businessName" placeholder="Business / Agency Name *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]">
+        <select id="f_region" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]">
+          <option value="Soweto">Soweto</option>
+          <option value="Alexandra">Alexandra</option>
+          <option value="Mamelodi">Mamelodi</option>
+          <option value="Pretoria">Pretoria</option>
+          <option value="Gauteng">Gauteng (Other)</option>
+        </select>
+        <textarea required id="f_motivation" rows="3" placeholder="Why do you want to become a Ludo Agent? *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]"></textarea>
+        <button type="submit" class="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer hover:bg-black transition-colors">Next: Choose Payment</button>
+      </form>
+
+      <!-- Step 2: Payment Gateway Selection -->
+      <div id="agentFormStep2" style="display:none;" class="space-y-6">
+        <h3 class="text-xl font-bold uppercase text-slate-900 border-b pb-2">Step 2: Choose Payment Method</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <button type="button" id="payfastBtn" onclick="setPaymentChoice('payfast')" class="p-4 rounded-xl border-2 font-bold cursor-pointer border-[#0EA5E9] bg-sky-50 text-slate-900">PayFast Online</button>
+          <button type="button" id="eftBtn" onclick="setPaymentChoice('eft')" class="p-4 rounded-xl border-2 font-bold cursor-pointer border-slate-200 text-slate-900">Manual EFT</button>
+        </div>
+
+        <div id="eftDetails" style="display:none;" class="space-y-4">
+          <div class="bg-slate-50 p-4 rounded-xl border text-xs space-y-1 text-slate-800">
+            <p><b>Bank:</b> Nedbank | <b>Account:</b> THE LUDO LEAGUE SOUTH AFRICA</p>
+            <p><b>Account No:</b> 1120230365 | <b>Branch:</b> 198765</p>
+            <p><b>Amount Due:</b> R1,500.00 | <b>Ref:</b> AGENT-<span id="eftRefName">APPLICANT</span></p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+          <button type="button" onclick="goToStep(1)" class="w-1/2 py-4 bg-slate-100 rounded-xl font-bold text-slate-800 cursor-pointer">Back</button>
+          <button type="button" onclick="processFinalPayment()" id="submitBtn" class="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl cursor-pointer hover:bg-black transition-colors">Pay R1,500.00 Now</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Success Screen -->
+      <div id="agentFormStep3" style="display:none;" class="text-center space-y-6 py-6">
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
+        <h3 class="text-2xl font-bold uppercase text-slate-900">Application Logged!</h3>
+        <p class="text-slate-600 text-sm">Your Ludo Agent application and registration details have been securely recorded. An acknowledgment email has been dispatched.</p>
+        <button onclick="goToStep(1)" class="w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest rounded-xl cursor-pointer">Register Another Candidate</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALL FOR AGENTS -->
+<section class="py-16 md:py-24 px-4 bg-white/5" id="agents">
+  <div class="max-w-6xl mx-auto text-center fade-in">
+    <p class="section-tag mb-3">Professional Opportunity</p>
+    <h2 class="section-title text-3xl md:text-4xl text-white mb-4">Call for Ludo Agents</h2>
+    <p class="text-gray-400 max-w-2xl mx-auto mb-8" style="font-family:'Inter',sans-serif">
+      Ludo South Africa is inviting registered agencies to become Official Ludo Agents. Establish your agency within an emerging professional sporting ecosystem.
+    </p>
+    <button class="btn-primary text-lg px-12 py-5" onclick="scrollToSection('registration')">Register Your Agency Now →</button>
+  </div>
+</section>
+
+<!-- CONTACT / FINAL CTA -->
+<section class="py-16 md:py-24 px-4" id="contact">
+  <div class="max-w-4xl mx-auto text-center fade-in">
+    <p class="section-tag mb-3">Get In Touch</p>
+    <h2 class="section-title text-3xl md:text-4xl text-white mb-6">Ready to Start?</h2>
+    <p class="text-gray-400 mb-8 max-w-xl mx-auto" style="font-family:'Inter',sans-serif">
+      All registrations and payments are handled securely through our centralized Ludo Agents portal. Click below to begin your official accreditation journey.
+    </p>
+    <div class="flex justify-center gap-6 mb-10 text-sm text-gray-400" style="font-family:'Inter',sans-serif">
+      <p>📞 +27 (0) 75 321 1350</p>
+      <p>✉️ info@ludoleague.co.za</p>
+    </div>
+    <button class="btn-primary text-lg px-10 py-4" onclick="scrollToSection('registration')">Enroll Now →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="p-8 text-center text-xs text-gray-600 border-t border-yellow-500/10" style="font-family:'Inter',sans-serif">
+  <p>© 2026 Ludo League South Africa. All Rights Reserved. Powered by happyhunter.com</p>
+</footer>
+
+<script>
+let currentPaymentMethod = 'payfast';
+let savedFormData = {};
+
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function goToStep(step) {
+  document.getElementById('agentFormStep1').style.display = step === 1 ? 'block' : 'none';
+  document.getElementById('agentFormStep2').style.display = step === 2 ? 'block' : 'none';
+  document.getElementById('agentFormStep3').style.display = step === 3 ? 'block' : 'none';
+}
+
+function handleStep1Submit(e) {
+  e.preventDefault();
+  savedFormData = {
+    fullName: document.getElementById('f_fullName').value.trim(),
+    email: document.getElementById('f_email').value.trim(),
+    phoneNumber: document.getElementById('f_phone').value.trim(),
+    businessName: document.getElementById('f_businessName').value.trim(),
+    region: document.getElementById('f_region').value,
+    motivation: document.getElementById('f_motivation').value.trim()
+  };
+  document.getElementById('eftRefName').textContent = savedFormData.fullName.replace(/\s+/g,'').toUpperCase();
+  goToStep(2);
+}
+
+function setPaymentChoice(method) {
+  currentPaymentMethod = method;
+  document.getElementById('payfastBtn').className = method === 'payfast' ? 'p-4 rounded-xl border-2 font-bold cursor-pointer border-[#0EA5E9] bg-sky-50 text-slate-900' : 'p-4 rounded-xl border-2 font-bold cursor-pointer border-slate-200 text-slate-900';
+  document.getElementById('eftBtn').className = method === 'eft' ? 'p-4 rounded-xl border-2 font-bold cursor-pointer border-[#0EA5E9] bg-sky-50 text-slate-900' : 'p-4 rounded-xl border-2 font-bold cursor-pointer border-slate-200 text-slate-900';
+  document.getElementById('eftDetails').style.display = method === 'eft' ? 'block' : 'none';
+  document.getElementById('submitBtn').textContent = method === 'payfast' ? 'Pay R1,500.00 Now' : 'Complete Registration';
+}
+
+async function processFinalPayment() {
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+
+  const regId = await window.__registerCandidate(savedFormData, currentPaymentMethod);
+
+  if (currentPaymentMethod === 'payfast') {
+    triggerPayFastCheckout(regId, savedFormData);
+  } else {
+    goToStep(3);
+    submitBtn.disabled = false;
+    setPaymentChoice('payfast');
+  }
+}
+
+function triggerPayFastCheckout(regId, data) {
+  const nameParts = data.fullName.trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '-';
+  const cleanPhone = data.phoneNumber.replace(/\D/g, '');
+
+  const form = document.createElement('form');
+  form.action = 'https://www.payfast.co.za/eng/process';
+  form.method = 'POST';
+
+  const fields = {
+    merchant_id: '35471207',
+    merchant_key: 'q9qkx9sqx9l3m',
+    return_url: 'https://academy.ludoleague.co.za?status=success',
+    cancel_url: 'https://academy.ludoleague.co.za?status=cancel',
+    notify_url: 'https://us-central1-ludoleaguesa-33371.cloudfunctions.net/payfastNotify',
+    amount: '1500.00',
+    item_name: 'Ludo Agent Official Registration',
+    item_description: 'Official Agent Registration - Ludo League South Africa',
+    name_first: firstName,
+    name_last: lastName,
+    email_address: data.email,
+    cell_number: cleanPhone,
+    m_payment_id: regId,
+    custom_str1: regId,
+    custom_str2: 'agent'
+  };
+
+  Object.entries(fields).forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden'; input.name = k; input.value = v;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+}
+</script>
+</body>
+</html>
