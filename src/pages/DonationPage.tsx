@@ -210,9 +210,12 @@ export const DonationPage = () => {
               )}
             </div>
 
-            <button disabled={(!formData.fullName || !formData.email) || ((paymentMethod === 'investment' || paymentMethod === 'sponsorship' || paymentMethod === 'agent') && !formData.phone)} onClick={() => (paymentMethod === 'investment' || paymentMethod === 'sponsorship' || paymentMethod === 'agent') ? handleSubmit() : setStep(2)} className="w-full py-4 bg-[#D32F2F] hover:bg-[#FFD700] text-white hover:text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-lg text-xs disabled:opacity-50 cursor-pointer">
-              {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'agent' ? 'Submit Ludo Agent Registration (R1,500)' : (paymentMethod === 'investment' || paymentMethod === 'sponsorship' ? 'Request Callback' : 'Continue to Transfer'))}
-            </button>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => { window.location.href = window.location.origin; }} className="w-1/2 py-4 bg-neutral-800 hover:bg-neutral-700 text-white font-black uppercase tracking-widest rounded-xl transition-all text-xs cursor-pointer">Cancel</button>
+              <button disabled={(!formData.fullName || !formData.email) || ((paymentMethod === 'investment' || paymentMethod === 'sponsorship' || paymentMethod === 'agent') && !formData.phone)} onClick={() => (paymentMethod === 'investment' || paymentMethod === 'sponsorship' || paymentMethod === 'agent') ? handleSubmit() : setStep(2)} className="w-1/2 py-4 bg-[#D32F2F] hover:bg-[#FFD700] text-white hover:text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-lg text-xs disabled:opacity-50 cursor-pointer">
+                {isSubmitting ? <Loader2 className="animate-spin mx-auto" size={18} /> : (paymentMethod === 'agent' ? 'Submit Ludo Agent Registration (R1,500)' : (paymentMethod === 'investment' || paymentMethod === 'sponsorship' ? 'Request Callback' : 'Continue to Transfer'))}
+              </button>
+            </div>
           </div>
         )}
 

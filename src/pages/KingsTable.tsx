@@ -410,13 +410,22 @@ export const KingsTable = () => {
                     </p>
                   </div>
 
-                  <button
-                    type="submit"
-                    id="kt-next-btn"
-                    className="w-full mt-2 py-4 bg-[#FACC15] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:bg-[#FFE600] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#FACC15]/10"
-                  >
-                    Next: Payment <ArrowRight size={18} />
-                  </button>
+                  <div className="flex gap-3 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => { window.location.href = window.location.origin; }}
+                      className="w-1/2 py-4 bg-white/[0.04] border border-white/10 rounded-xl text-white/60 font-bold hover:bg-white/[0.08] hover:text-white transition-all text-sm"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      id="kt-next-btn"
+                      className="w-1/2 py-4 bg-[#FACC15] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:bg-[#FFE600] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#FACC15]/10"
+                    >
+                      Next: Payment <ArrowRight size={18} />
+                    </button>
+                  </div>
                 </form>
               </motion.div>
             )}

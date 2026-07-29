@@ -198,7 +198,10 @@ export const Tournaments = () => {
 
               <textarea required rows={3} placeholder="Why do you want to become a Ludo Agent? *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.motivation} onChange={e => setFormData({ ...formData, motivation: e.target.value })} />
 
-              <button type="submit" className="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer">Next: Choose Payment</button>
+              <div className="flex gap-3">
+                <button type="button" onClick={() => { window.location.href = window.location.origin; }} className="w-1/2 py-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer">Cancel</button>
+                <button type="submit" className="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer">Next: Payment</button>
+              </div>
             </form>
           )}
 

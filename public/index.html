@@ -390,7 +390,10 @@ window.__registerCandidate = async function(formData, paymentMethod) {
           <option value="Gauteng">Gauteng (Other)</option>
         </select>
         <textarea required id="f_motivation" rows="3" placeholder="Why do you want to become a Ludo Agent? *" class="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold outline-none focus:border-[#0EA5E9]"></textarea>
-        <button type="submit" class="w-full py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer hover:bg-black transition-colors">Next: Choose Payment</button>
+        <div class="flex gap-4">
+          <button type="button" onclick="window.location.href='https://ludoleague.co.za/'" class="w-1/2 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer">Cancel</button>
+          <button type="submit" class="w-1/2 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-widest rounded-xl shadow-md cursor-pointer hover:bg-black transition-colors">Finish Registration</button>
+        </div>
       </form>
 
       <!-- Step 2: Payment Gateway Selection -->

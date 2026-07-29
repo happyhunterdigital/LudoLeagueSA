@@ -67,7 +67,7 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
     setStep(1);
     setFormData({ fullName: '', email: '', address: '', proofOfPayment: null });
     onClose();
-    alert("Transaction cancelled. Your shopping cart has been emptied.");
+    window.location.href = window.location.origin;
   };
 
   const triggerPayfastRedirect = () => {
@@ -159,7 +159,10 @@ export const ShopCheckoutModal: React.FC<CheckoutProps> = ({ isOpen, onClose, ca
                     ))}
                   </select>
                 </div>
-                <button type="submit" className="w-full py-3 sm:py-4 bg-[#0EA5E9] hover:bg-slate-900 text-white text-xs sm:text-sm font-black uppercase tracking-widest rounded-xl transition-all shadow-md mt-1">Next: Payment Info</button>
+                <div className="flex gap-3">
+                  <button type="button" onClick={handleCancelTransaction} className="w-1/2 py-3 sm:py-4 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs sm:text-sm font-black uppercase tracking-widest rounded-xl transition-all shadow-md mt-1">Cancel</button>
+                  <button type="submit" className="w-1/2 py-3 sm:py-4 bg-[#0EA5E9] hover:bg-slate-900 text-white text-xs sm:text-sm font-black uppercase tracking-widest rounded-xl transition-all shadow-md mt-1">Next: Payment Info</button>
+                </div>
               </form>
             )}
             {step === 2 && (
