@@ -547,13 +547,3 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
-EOF
-
-# 4. Commit and push the SEO fixes
-git add public/index.html
-git commit -m "Deploy finalized SEO rich link metadata and levels layout to academyofludo"
-git push origin academyofludo
-
-# 5. Build and force-deploy
-npm run build
-firebase deploy --only hosting --project ludoleaguesa-33371 --force

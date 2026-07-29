@@ -103,8 +103,11 @@ export const ChatbotWidget = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <button onClick={() => setIsOpen(!isOpen)} className="w-14 h-14 bg-slate-900 hover:scale-105 text-white rounded-full flex items-center justify-center shadow-2xl transition-all border border-amber-400 overflow-hidden">
-        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1782024034/GoldDiceHero_1_kusjkg.png" alt="Chat" className="w-full h-full object-cover" />
+      <button onClick={() => setIsOpen(!isOpen)} className="group relative w-16 h-16 bg-gradient-to-br from-[#FACC15] to-[#D4A017] hover:scale-105 text-white rounded-full flex items-center justify-center shadow-[0_0_24px_rgba(250,204,21,0.45)] transition-all border-2 border-[#FACC15] overflow-hidden">
+        <span className="absolute inset-0 rounded-full animate-ping bg-[#FACC15]/20 duration-1000" />
+        <span className="absolute inset-0 rounded-full bg-gradient-to-br from-[#FACC15] to-[#D4A017]" />
+        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1782024034/GoldDiceHero_1_kusjkg.png" alt="Chat" className="relative z-10 w-full h-full object-cover" />
+        <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse z-20" />
       </button>
     </div>
   );
