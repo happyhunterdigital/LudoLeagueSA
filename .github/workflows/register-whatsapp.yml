@@ -9,7 +9,7 @@ on:
 jobs:
   register_webhook:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Register app webhook subscription
         id: app_subscription
