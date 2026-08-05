@@ -84,6 +84,28 @@ service cloud.firestore {
       allow read, write: if false; 
     }
 
+    // WhatsApp bot: session message log (server-only)
+    match /whatsapp_sessions/{phoneId} {
+      allow read, write: if false;
+    }
+
+    // WhatsApp bot: verified keyword claims (seeded via admin callable)
+    match /verified_claims/{claimId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // WhatsApp bot: captured leads (server-written, admin-read)
+    match /prospects/{prospectId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Rate limiting (server-only)
+    match /rate_limits/{docId} {
+      allow read, write: if false;
+    }
+
     // Leads collection
     match /leads/{leadId} {
       allow read: if isAdmin();

@@ -36,5 +36,11 @@ jobs:
           echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> functions/.env
           echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> functions/.env
           echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> functions/.env
+          echo "WHATSAPP_TOKEN=${{ secrets.WHATSAPP_TOKEN }}" >> functions/.env
+          echo "PHONE_NUMBER_ID=${{ secrets.PHONE_NUMBER_ID }}" >> functions/.env
+          echo "WHATSAPP_VERIFY_TOKEN=${{ secrets.WHATSAPP_VERIFY_TOKEN }}" >> functions/.env
+          echo "META_APP_SECRET=${{ secrets.META_APP_SECRET }}" >> functions/.env
+          echo "ADMIN_PHONE_NUMBER=${{ secrets.ADMIN_PHONE_NUMBER }}" >> functions/.env
+          echo "FIELD_ENCRYPTION_KEY=${{ secrets.FIELD_ENCRYPTION_KEY }}" >> functions/.env
       - name: Deploy to Firebase
         run: firebase deploy --only hosting,functions --project ludoleaguesa-33371 --force
