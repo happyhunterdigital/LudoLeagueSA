@@ -36,10 +36,11 @@ import { Academy } from './pages/Academy';
 import { LudoLoader } from './components/features/LudoLoader';
 import { ShopCheckoutModal } from './components/features/ShopCheckoutModal';
 import { KingsTablePopup } from './components/features/KingsTablePopup';
+import { Privacy } from './pages/Privacy';
 
 export type Page = 'Landing' | 'Home' | 'Leagues' | 'Tournaments' | 'History' | 'Gallery' | 'Shop' |
  'Contact' | 'Admin' | 'BotkGallery' | 'NewsUpdates' | 'Faqs' | 'AfconTournament' | 'About' | 'Portal' |
- 'Ludo4Schools' | 'Donate' | 'KingsTable' | 'Academy';
+ 'Ludo4Schools' | 'Donate' | 'KingsTable' | 'Academy' | 'Privacy';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -60,7 +61,7 @@ export default function App() {
   const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate', 'shop', 'kingstable', 'academy'];
+  const standalonePages = ['admin', 'botkgallery', 'newsupdates', 'faqs', 'afcontournament', 'portal', 'ludo4schools', 'donate', 'shop', 'kingstable', 'academy', 'privacy'];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -203,6 +204,9 @@ export default function App() {
             {activeSection === 'academy' && (
               <Academy setActivePage={(p: string) => scrollToSection(p)} />
             )}
+            {activeSection === 'privacy' && (
+              <Privacy onBack={() => scrollToSection('home')} />
+            )}
             {!standalonePages.includes(activeSection.toLowerCase()) && (
               <>
                 {/* ═══ HERO ═══ */}
@@ -297,6 +301,7 @@ export default function App() {
                   <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
                     <button onClick={() => scrollToSection('newsupdates')} className="hover:text-[#FACC15] transition-colors">News & Updates</button>
                     <button onClick={() => scrollToSection('faqs')} className="hover:text-[#FACC15] transition-colors">FAQs</button>
+                    <button onClick={() => scrollToSection('privacy')} className="hover:text-[#FACC15] transition-colors">Privacy Policy</button>
                   </div>
                   
                   {/* Divider */}
