@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import { onCall } from 'firebase-functions/v2/https';
 import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
+import { ensureVerifiedClaimsSeeded } from './claimsSeed';
 import { SYSTEM_PROMPT } from './prompt';
 
 admin.initializeApp();
@@ -16,6 +17,10 @@ const db = admin.firestore();
 export { whatsappWebhook } from './whatsappBot';
 export { seedVerifiedClaims } from './claimsSeed';
 export * from './triggers';
+
+// Bootstraps 12 verified_claims on cold start if the collection is empty
+// (no admin/auth required). Idempotent.
+void ensureVerifiedClaimsSeeded();
 
 // ─── Lead view for the admin dashboard ──────────────────
 export const getLeads = onCall({ region: 'us-central1' }, async (request) => {

@@ -193,6 +193,24 @@ const seedClaimsIntoDb = async (): Promise<number> => {
 };
 
 /**
+ * Self-healing bootstrap: seeds verified_claims on cold start if the
+ * collection is empty. Invoked from index.ts so no admin is required.
+ * Idempotent (merge:true) and safe under concurrent cold starts.
+ */
+export const ensureVerifiedClaimsSeeded = async (): Promise<void> => {
+  try {
+    if (!admin.apps.length) admin.initializeApp();
+    const db = admin.firestore();
+    const existing = await db.collection("verified_claims").limit(1).get();
+    if (!existing.empty) return;
+    await seedClaimsIntoDb();
+    console.log("[claimsSeed] Auto-seeded verified_claims (collection was empty).");
+  } catch (error) {
+    console.error("[claimsSeed] Auto-seed check failed:", error);
+  }
+};
+
+/**
  * Admin-only callable to seed verified_claims once after deployment.
  */
 export const seedVerifiedClaims = onCall(
