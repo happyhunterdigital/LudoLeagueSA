@@ -1,0 +1,44 @@
+name: Register WhatsApp Webhook
+
+on:
+  workflow_run:
+    workflows: ["Deploy Main Site to Firebase Hosting & Functions"]
+    types: [completed]
+
+jobs:
+  register_webhook:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Register app webhook subscription
+        id: app_subscription
+        run: |
+          RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.META_APP_ID }}/subscriptions" \
+            --data-urlencode "object=whatsapp_business_account" \
+            --data-urlencode "callback_url=https://us-central1-ludoleaguesa-33371.cloudfunctions.net/whatsappWebhook" \
+            --data-urlencode "verify_token=${{ secrets.WHATSAPP_VERIFY_TOKEN }}" \
+            --data-urlencode "fields=messages" \
+            --data-urlencode "access_token=${{ secrets.WHATSAPP_TOKEN }}")
+          HTTP="${RESP##*$'\n'}"
+          BODY="${RESP%$'\n'*}"
+          echo "HTTP $HTTP"
+          echo "$BODY"
+          echo "$BODY" | jq -e '.success == true' > /dev/null || {
+            echo "::error::Webhook subscription failed: $BODY"
+            exit 1
+          }
+          echo "App webhook subscription registered."
+
+      - name: Subscribe phone number
+        run: |
+          RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}/subscribed_apps" \
+            --data-urlencode "access_token=${{ secrets.WHATSAPP_TOKEN }}")
+          HTTP="${RESP##*$'\n'}"
+          BODY="${RESP%$'\n'*}"
+          echo "HTTP $HTTP"
+          echo "$BODY"
+          echo "$BODY" | jq -e '.success == true' > /dev/null || {
+            echo "::error::Phone number subscription failed: $BODY"
+            exit 1
+          }
+          echo "Phone number subscribed to the app."
