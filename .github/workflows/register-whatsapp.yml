@@ -31,6 +31,18 @@ jobs:
           }
           echo "App webhook subscription registered."
 
+      - name: Diagnose token & phone number access
+        run: |
+          echo "== /me (system user) =="
+          curl -sS "https://graph.facebook.com/v21.0/me?fields=id,name&access_token=${{ secrets.WHATSAPP_TOKEN }}"
+          echo ""
+          echo "== WABAs visible to token =="
+          curl -sS "https://graph.facebook.com/v21.0/me/businesses?fields=id,name,client_businesses,instagram_business_accounts&access_token=${{ secrets.WHATSAPP_TOKEN }}"
+          echo ""
+          echo "== Read PHONE_NUMBER_ID directly =="
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}?fields=display_phone_number,verified_name,id&access_token=${{ secrets.WHATSAPP_TOKEN }}"
+          echo ""
+
       - name: Subscribe phone number
         run: |
           RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}/subscribed_apps" \
