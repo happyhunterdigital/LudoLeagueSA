@@ -1,6 +1,7 @@
 name: Register WhatsApp Webhook
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Deploy Main Site to Firebase Hosting & Functions"]
     types: [completed]
@@ -13,12 +14,13 @@ jobs:
       - name: Register app webhook subscription
         id: app_subscription
         run: |
+          APP_TOKEN="${{ secrets.META_APP_ID }}|${{ secrets.META_APP_SECRET }}"
           RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.META_APP_ID }}/subscriptions" \
             --data-urlencode "object=whatsapp_business_account" \
             --data-urlencode "callback_url=https://us-central1-ludoleaguesa-33371.cloudfunctions.net/whatsappWebhook" \
             --data-urlencode "verify_token=${{ secrets.WHATSAPP_VERIFY_TOKEN }}" \
             --data-urlencode "fields=messages" \
-            --data-urlencode "access_token=${{ secrets.WHATSAPP_TOKEN }}")
+            --data-urlencode "access_token=${APP_TOKEN}")
           HTTP="${RESP##*$'\n'}"
           BODY="${RESP%$'\n'*}"
           echo "HTTP $HTTP"
