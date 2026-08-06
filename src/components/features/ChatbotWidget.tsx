@@ -13,7 +13,7 @@ export const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hello! I am your LLSA assistant. How can I assist you with tournaments, Ludo4Schools, or custom board purchases today?' }
+    { role: 'assistant', content: 'Hello! I am your Ludo League SA assistant. Ask me about tournaments, King\'s Table, township leagues, Ludo4Schools, the Academy, becoming a Ludo Agent, donations, sponsorships, our shop, or anything else about LLSA!' }
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

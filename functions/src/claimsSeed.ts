@@ -22,15 +22,27 @@ export interface VerifiedClaimDoc {
 export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
   {
     keywords: [
-      "tournament", "register", "entry", "fee", "qualifier",
+      "tournament", "register", "entry", "qualifier",
       "compete", "play in a", "fixture", "clock", "rules",
     ],
     title: "Tournaments",
     category: "sales",
     response:
-      "Tournament entry is R200 and all play follows strict standardized rules with certified referees and standard mechanical clocks (no backyard exceptions - rolling three sixes invalidates the turn).\n\n" +
+      "LLSA runs standardized, refereed tournaments across South Africa with certified referees and standard mechanical clocks. Rolling three sixes invalidates the turn - no backyard exceptions.\n\n" +
       "Active regions: Alexandra, Soweto, Mamelodi.\n\n" +
-      "Register here: https://ludoleague.co.za/#tournaments",
+      "Register here: https://ludoleague.co.za/?page=tournaments",
+    isHighIntent: true,
+  },
+  {
+    keywords: [
+      "king's table", "kings table", "king table", "prestigious", "elite",
+    ],
+    title: "King's Table",
+    category: "sales",
+    response:
+      "The King's Table is the most prestigious Ludo competition in South Africa. Teams register with player details and city, then choose between PayFast online payment or Manual EFT.\n\n" +
+      "Registration includes email confirmation and WhatsApp event details.\n\n" +
+      "Register your team: https://ludoleague.co.za/?page=kingstable",
     isHighIntent: true,
   },
   {
@@ -52,9 +64,33 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     title: "Ludo4Schools",
     category: "info",
     response:
-      "Ludo4Schools inserts physical strategy play into classrooms to combat screen addiction and sharpen math, logic, and spatial reasoning skills.\n\n" +
+      "Ludo4Schools is an approved curriculum add-on that inserts physical strategy play into primary and secondary classrooms. It sharpens cognitive mathematics, spatial geometry, probability assessment, and strategic reasoning while promoting social cohesion.\n\n" +
       "Learn more: https://ludoleague.co.za/?page=ludo4schools",
     isHighIntent: false,
+  },
+  {
+    keywords: [
+      "academy", "training", "accreditation", "course", "certify",
+      "licence", "license", "level 1", "level 2", "level 3",
+    ],
+    title: "Ludo Academy",
+    category: "info",
+    response:
+      "The Ludo Academy of Excellence is the official training, educational, and accreditation arm of LLSA. We develop certified tournament players, official referees, and accredited talent agents through three levels of mastery.\n\n" +
+      "Learn more: https://academy.ludoleague.co.za",
+    isHighIntent: false,
+  },
+  {
+    keywords: [
+      "agent", "become an agent", "register as agent", "scout", "talent",
+      "roster", "agency", "player agent", "founding agent",
+    ],
+    title: "Ludo Agent",
+    category: "sales",
+    response:
+      "Official Ludo Agents have exclusive rights to scout talent, build player rosters, and represent athletes in official leagues and national championships. Responsibilities include recruiting players, managing commercial contracts, and enforcing the Official Code of Conduct.\n\n" +
+      "Register as an agent: https://academy.ludoleague.co.za or https://ludoleague.co.za/?page=tournaments",
+    isHighIntent: true,
   },
   {
     keywords: [
@@ -64,46 +100,58 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     title: "Local Manufacturing",
     category: "info",
     response:
-      "All LLSA boards are built from high-density MDF and acrylic inside local township carpentry workshops - keeping economic value circular and creating jobs.\n\n" +
+      "All LLSA boards are built from high-density MDF and acrylic inside local township carpentry workshops - keeping economic value circular and creating jobs in Alexandra, Soweto, and Mamelodi.\n\n" +
       "Shop a board: https://ludoleague.co.za/?page=shop",
     isHighIntent: false,
   },
   {
     keywords: [
       "donate", "donation", "fund", "crowdfund", "support", "contribute",
-      "give", "backing", "sponsor a player",
+      "give", "backing", "sponsor a player", "community fund",
     ],
     title: "Donations",
     category: "sales",
     response:
-      "Help us build the future of competitive Ludo! Every contribution creates opportunities, starting from just R20.\n\n" +
-      "EFT: Nedbank, account 1120230365, branch 198765. Reference: DON-<YourName>.\n" +
-      "Supporter tiers: R50 (profile badge), R200 (exclusive avatar), R500 (complimentary Ludo gift).\n\n" +
+      "Help us build the future of competitive Ludo! Our crowdfunding goal supports national expansion, recruitment, league production, and Ludo4Schools. Every contribution creates opportunities.\n\n" +
+      "EFT: Nedbank, account 1120230365, branch 198765. Reference: DON-YourName.\n" +
+      "Supporter tiers available with each contribution level.\n\n" +
       "Donate here: https://ludoleague.co.za/?page=donate",
     isHighIntent: true,
   },
   {
     keywords: [
       "invest", "franchise", "league shares", "share", "equity", "callback",
-      "sponsorship", "sponsor", "brand", "csi", "corporate", "partnership",
+      "corporate", "partnership", "rtp",
     ],
-    title: "Invest & Sponsor",
+    title: "Investment",
     category: "sales",
     response:
-      "Corporate partners can INVEST in franchise club ownership and league shares, or SPONSOR tournament media visibility and CSI packages.\n\n" +
-      "Leave your details via: https://ludoleague.co.za/?page=donate\n\n" +
-      "Our executive committee will schedule an offline consultation.",
+      "Corporate partners can invest in franchise club ownership (RTP modeling), corporate CSI sponsorships, and league shares. Our executive committee will schedule an offline phone consultation to discuss opportunities.\n\n" +
+      "Request a callback: https://ludoleague.co.za/?page=donate",
     isHighIntent: true,
   },
   {
     keywords: [
-      "shop", "buy", "board", "price of the board", "token", "dice",
-      "purchase", "order", "heritage", "cost",
+      "sponsor", "sponsorship", "brand", "csi", "media visibility",
+      "tournament sponsor", "brand integration",
+    ],
+    title: "Sponsorship",
+    category: "sales",
+    response:
+      "Sponsors receive tournament media visibility, brand integration, and CSI sponsorship packages. An administrative representative will coordinate all parameters.\n\n" +
+      "Request a callback: https://ludoleague.co.za/?page=donate",
+    isHighIntent: true,
+  },
+  {
+    keywords: [
+      "shop", "buy", "board", "token", "dice",
+      "purchase", "order", "heritage",
     ],
     title: "Shop & Merch",
     category: "price",
     response:
-      "Official Heritage Wooden Boards are R1,200 each (was R1,500) - available in Royal Purple, Classic Teal, Obsidian Black, Electric Blue, and Amber Orange. Professional Token & Dice Set: R200.\n\n" +
+      "Official Heritage Wooden Boards are available in Royal Purple, Classic Teal, Obsidian Black, Electric Blue, and Amber Orange. Oversized professional design with premium lacquer. Professional Token and Dice Set also available.\n\n" +
+      "All boards are 100% locally manufactured in township carpentry workshops.\n\n" +
       "Shop: https://ludoleague.co.za/?page=shop",
     isHighIntent: true,
   },
@@ -115,7 +163,7 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     title: "Player Guide",
     category: "guide",
     response:
-      "Here is the official LLSA Player & Tournament Guide - tournament rules, clock protocol, and circuit information. View it directly in WhatsApp.",
+      "Here is the official LLSA Player and Tournament Guide - tournament rules, clock protocol, and circuit information. View it directly in WhatsApp.",
     isHighIntent: false,
     docName: "llsa-player-guide.pdf",
   },
@@ -129,7 +177,7 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     response:
       "Reach the LLSA administrative committee at:\n\n" +
       "Email: info@ludoleague.co.za\n" +
-      "Phone: 072 557 8097\n\n" +
+      "Phone: +27 75 321 1350\n\n" +
       "We are happy to help.",
     isHighIntent: false,
   },
@@ -148,12 +196,12 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
   {
     keywords: [
       "who", "about", "what is", "what do you", "history", "story",
-      "founder", "started", "organisation", "ngo",
+      "founder", "started", "organisation", "ngo", "joe setladi",
     ],
     title: "About LLSA",
     category: "info",
     response:
-      "Ludo League South Africa is the governing body professionalizing Ludo from a backyard hobby into a structured, nationally recognized competitive discipline - combining screen-free education, township manufacturing, standardized fair play, and community funding.\n\n" +
+      "Ludo League South Africa was founded in 2009 by President Joe Setladi. Headquartered in Pretoria, we are the governing body professionalizing Ludo from a backyard hobby into a structured, nationally recognized competitive discipline with active hubs in Soweto, Alexandra, and Mamelodi.\n\n" +
       "More: https://ludoleague.co.za/?page=about",
     isHighIntent: false,
   },
@@ -166,7 +214,7 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     category: "info",
     response:
       "Welcome to Ludo League South Africa!\n\n" +
-      "Ask me about tournaments, leagues, Ludo4Schools, donations, sponsorships, or our shop - or explore https://ludoleague.co.za",
+      "Ask me about tournaments, King's Table, leagues, Ludo4Schools, the Academy, donations, sponsorships, becoming an agent, or our shop - or explore https://ludoleague.co.za",
     isHighIntent: false,
   },
 ];
