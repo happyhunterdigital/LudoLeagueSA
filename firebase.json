@@ -96,10 +96,7 @@
         "firebase-debug.log",
         "firebase-debug.*.log",
         "*.local"
-      ],
-      "envVars": {
-        "ADMIN_PHONE_NUMBER": "27725578097"
-      }
+      ]
     }
   ],
   "firestore": {

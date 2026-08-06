@@ -4,9 +4,15 @@ export const BRAND_DOMAIN = "https://ludoleague.co.za";
 export const ADMIN_EMAIL = "info@ludoleague.co.za";
 // The WhatsApp number that receives high-intent lead alerts.
 // International format, no "+" or spaces.
+// Reads ADMIN_PHONE_NUMBER env var; if it's missing or equals the bot's own number,
+// falls back to the designated admin number.
+const BOT_PHONE_NUMBER = "27753211350";
+const DESIGNATED_ADMIN = "27725578097";
 export const ADMIN_PHONE_NUMBER = (() => {
-  const raw = (process.env.ADMIN_PHONE_NUMBER || "27725578097").trim();
-  return raw.replace(/\D/g, "");
+  const raw = (process.env.ADMIN_PHONE_NUMBER || "").trim();
+  const cleaned = raw.replace(/\D/g, "");
+  if (!cleaned || cleaned === BOT_PHONE_NUMBER) return DESIGNATED_ADMIN;
+  return cleaned;
 })();
 
 // ─── META WHATSAPP CREDENTIALS ──────────────────────────
