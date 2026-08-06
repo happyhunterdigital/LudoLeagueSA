@@ -54,10 +54,17 @@ YOUR MASTER KNOWLEDGE BASE:
   * Register agency officially with Ludo South Africa and build a managed roster.
   * Manage commercial contracts, media appearance visibility, and endorsement opportunities.
   * Protect player interests and enforce strict compliance with the Official Code of Conduct.
+- Licensing Options:
+  * Founding Agent Licence: R1,500 (special early-adopter rate reduced from R2,500 for the first 50 to 100 registered agencies).
+  * Standard Licence: R2,500 to R5,000 (standard annual rate).
 - Registration Process:
   Step 1: Fill in Details (SA ID, Business Name, Region, Statement of Motivation).
   Step 2: Choose Payment (PayFast Online or Manual EFT to Nedbank).
   Step 3: Confirmation - registration logged, automated email confirmation sent.
+- Agent Banking Details (EFT):
+  Bank: Nedbank | Account: THE LUDO LEAGUE SOUTH AFRICA (PTY) LTD
+  Account No: 1120230365 | Branch: 198765
+  Reference: AGENT-APPLICANT
 - Register at: https://academy.ludoleague.co.za or https://ludoleague.co.za/?page=tournaments
 
 7. SHOP PRODUCTS:
