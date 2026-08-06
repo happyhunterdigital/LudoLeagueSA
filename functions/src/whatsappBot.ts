@@ -14,6 +14,9 @@ import {
 import {
   WHATSAPP_VERIFY_TOKEN,
   META_APP_SECRET,
+  PHONE_NUMBER_ID,
+  WHATSAPP_TOKEN,
+  ADMIN_PHONE_NUMBER,
   HISTORY_WINDOW_SIZE,
   RATE_LIMIT_MAX_REQUESTS,
   RATE_LIMIT_WINDOW_MINUTES,
@@ -21,6 +24,18 @@ import {
 
 if (!admin.apps.length) admin.initializeApp();
 const db = admin.firestore();
+
+console.log(
+  "[whatsappBot] init:",
+  "PHONE_NUMBER_ID:",
+  !!PHONE_NUMBER_ID,
+  "WHATSAPP_TOKEN:",
+  !!WHATSAPP_TOKEN,
+  "META_APP_SECRET:",
+  !!META_APP_SECRET,
+  "ADMIN_PHONE_NUMBER:",
+  !!ADMIN_PHONE_NUMBER
+);
 
 interface RateLimitData {
   count: number;
@@ -143,7 +158,7 @@ const runAIConversation = async (
  * POST → inbound message processing (5-phase pipeline).
  */
 export const whatsappWebhook = onRequest(
-  { region: "us-central1", cors: true, maxInstances: 10 },
+  { region: "us-central1", cors: true, maxInstances: 10, rawBody: true } as any,
   async (request, response) => {
     const ip = request.ip || "unknown";
 
@@ -176,17 +191,30 @@ export const whatsappWebhook = onRequest(
     // PHASE 1 (cont.): Signature verification (POST)
     const signature = request.get("X-Hub-Signature-256");
     const rawBody = (request as any).rawBody?.toString?.("utf8") || "";
+
+    if (!signature) {
+      console.warn("[whatsappWebhook] No X-Hub-Signature-256 header. Rejecting.");
+      response.status(403).end();
+      return;
+    }
+    if (!META_APP_SECRET) {
+      console.error("[whatsappWebhook] META_APP_SECRET is not configured.");
+      response.status(500).end();
+      return;
+    }
     if (!verifyMetaSignature(rawBody, signature, META_APP_SECRET)) {
-      console.warn("Invalid webhook signature from IP:", ip);
+      console.warn("[whatsappWebhook] Signature mismatch. Rejecting request.");
       response.status(403).end();
       return;
     }
 
+    console.log("[whatsappWebhook] POST received from:", ip);
     const value = request.body.entry?.[0]?.changes?.[0]?.value;
     const message = value?.messages?.[0];
     const contact = value?.contacts?.[0];
 
     if (!message || message.type !== "text") {
+      console.log("[whatsappWebhook] No text message payload. Responding 200.");
       response.status(200).end();
       return;
     }
@@ -194,6 +222,7 @@ export const whatsappWebhook = onRequest(
     const fromNumber = message.from as string;
     const userMessage = (message.text?.body || "").trim();
     const senderName = contact?.profile?.name;
+    console.log("[whatsappWebhook] Text message from:", fromNumber, "=>", userMessage);
 
     if (!userMessage) {
       response.status(200).end();

@@ -63,17 +63,29 @@ export const verifyMetaSignature = (
   signature: string | undefined,
   appSecret: string
 ): boolean => {
-  if (!signature || !appSecret) return false;
+  if (!signature || !appSecret) {
+    console.warn(
+      "[verifyMetaSignature] Missing signature or app secret. signature:",
+      !!signature,
+      "appSecret:",
+      !!appSecret
+    );
+    return false;
+  }
   const expected = crypto
     .createHmac("sha256", appSecret)
     .update(body, "utf8")
     .digest("hex");
   try {
-    return crypto.timingSafeEqual(
-      Buffer.from(signature.replace("sha256=", "")),
+    const sig = signature.replace("sha256=", "");
+    const ok = crypto.timingSafeEqual(
+      Buffer.from(sig),
       Buffer.from(expected)
     );
-  } catch {
+    if (!ok) console.warn("[verifyMetaSignature] HMAC mismatch.");
+    return ok;
+  } catch (err) {
+    console.warn("[verifyMetaSignature] Signature compare error:", err);
     return false;
   }
 };
@@ -156,11 +168,28 @@ export const sendWhatsAppText = async (
   };
 
   try {
-    return await fetch(META_GRAPH_URL, {
+    const res = await fetch(META_GRAPH_URL, {
       method: "POST",
       ...authHeader,
       body: JSON.stringify(payload),
     });
+
+    const data = await res.json().catch(() => null);
+    console.log(
+      "[WhatsApp] sendWhatsAppText response:",
+      res.status,
+      JSON.stringify(data)
+    );
+
+    if (!res.ok) {
+      console.error(
+        "[WhatsApp] Meta API error sending text:",
+        res.status,
+        JSON.stringify(data)
+      );
+    }
+
+    return res;
   } catch (err) {
     console.error("Failed to send WhatsApp text:", err);
   }
@@ -204,11 +233,28 @@ export const sendWhatsAppInteractiveDoc = async (
   };
 
   try {
-    return await fetch(META_GRAPH_URL, {
+    const res = await fetch(META_GRAPH_URL, {
       method: "POST",
       ...authHeader,
       body: JSON.stringify(payload),
     });
+
+    const data = await res.json().catch(() => null);
+    console.log(
+      "[WhatsApp] sendWhatsAppInteractiveDoc response:",
+      res.status,
+      JSON.stringify(data)
+    );
+
+    if (!res.ok) {
+      console.error(
+        "[WhatsApp] Meta API error sending interactive doc:",
+        res.status,
+        JSON.stringify(data)
+      );
+    }
+
+    return res;
   } catch (err) {
     console.error("Failed to send WhatsApp interactive doc:", err);
   }
