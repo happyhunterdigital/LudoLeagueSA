@@ -36,24 +36,24 @@ jobs:
           echo "== /me (system user) =="
           curl -sS "https://graph.facebook.com/v21.0/me?fields=id,name&access_token=${{ secrets.WHATSAPP_TOKEN }}"
           echo ""
-          echo "== WABAs visible to token =="
-          curl -sS "https://graph.facebook.com/v21.0/me/businesses?fields=id,name,client_businesses,instagram_business_accounts&access_token=${{ secrets.WHATSAPP_TOKEN }}"
+          echo "== Read WABA directly =="
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.WABA_ID }}?fields=name,account_review_status,ownership_status&access_token=${{ secrets.WHATSAPP_TOKEN }}"
           echo ""
           echo "== Read PHONE_NUMBER_ID directly =="
           curl -sS "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}?fields=display_phone_number,verified_name,id&access_token=${{ secrets.WHATSAPP_TOKEN }}"
           echo ""
 
-      - name: Subscribe phone number
+      - name: Subscribe WABA to app
         run: |
-          RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}/subscribed_apps" \
+          RESP=$(curl -sS -w "\n%{http_code}" -X POST "https://graph.facebook.com/v21.0/${{ secrets.WABA_ID }}/subscribed_apps" \
             --data-urlencode "access_token=${{ secrets.WHATSAPP_TOKEN }}")
           HTTP="${RESP##*$'\n'}"
           BODY="${RESP%$'\n'*}"
           echo "HTTP $HTTP"
           echo "$BODY"
           if echo "$BODY" | jq -e '.success == true' > /dev/null; then
-            echo "Phone number subscribed to the app."
+            echo "WABA subscribed to the app."
           else
-            echo "::warning::Phone number 'subscribed_apps' returned non-success: $BODY"
-            echo "Non-fatal: the app-level webhook subscription is already registered. Confirm delivery with a live message test."
+            echo "::error::WABA subscription failed: $BODY"
+            exit 1
           fi
