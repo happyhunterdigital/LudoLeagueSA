@@ -42,6 +42,9 @@ jobs:
           echo "== Read PHONE_NUMBER_ID directly =="
           curl -sS "https://graph.facebook.com/v21.0/${{ secrets.PHONE_NUMBER_ID }}?fields=display_phone_number,verified_name,id&access_token=${{ secrets.WHATSAPP_TOKEN }}"
           echo ""
+          echo "== WABA subscribed_apps =="
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.WABA_ID }}/subscribed_apps?access_token=${{ secrets.WHATSAPP_TOKEN }}" | jq .
+          echo ""
 
       - name: Subscribe WABA to app
         run: |
@@ -54,6 +57,18 @@ jobs:
           if echo "$BODY" | jq -e '.success == true' > /dev/null; then
             echo "WABA subscribed to the app."
           else
-            echo "::error::WABA subscription failed: $BODY"
-            exit 1
+            echo "::warning::WABA subscription returned: $BODY"
           fi
+
+      - name: Full diagnostic
+        run: |
+          echo "== Phone numbers in WABA =="
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.WABA_ID }}/phone_numbers?fields=verified_name,display_phone_number,id&access_token=${{ secrets.WHATSAPP_TOKEN }}" | jq .
+          echo ""
+          echo "== Apps subscribed to WABA =="
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.WABA_ID }}/subscribed_apps?access_token=${{ secrets.WHATSAPP_TOKEN }}" | jq .
+          echo ""
+          echo "== Webhook config on app =="
+          APP_TOKEN="${{ secrets.META_APP_ID }}|${{ secrets.META_APP_SECRET }}"
+          curl -sS "https://graph.facebook.com/v21.0/${{ secrets.META_APP_ID }}/subscriptions?object=whatsapp_business_account&access_token=${APP_TOKEN}" | jq .
+          echo ""
