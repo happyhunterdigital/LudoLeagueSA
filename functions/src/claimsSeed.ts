@@ -22,8 +22,8 @@ export interface VerifiedClaimDoc {
 export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
   {
     keywords: [
-      "tournament", "register", "entry", "qualifier",
-      "compete", "play in a", "fixture", "clock", "rules",
+      "tournament", "tournaments", "qualifier", "compete",
+      "play in a tournament", "fixture", "clock", "rules",
     ],
     title: "Tournaments",
     category: "sales",
@@ -249,10 +249,27 @@ export const ensureVerifiedClaimsSeeded = async (): Promise<void> => {
   try {
     if (!admin.apps.length) admin.initializeApp();
     const db = admin.firestore();
-    const existing = await db.collection("verified_claims").limit(1).get();
-    if (!existing.empty) return;
+
+    // Always re-sync on cold start so claim updates reach Firestore even
+    // when the collection already has data. batch.set(merge:true) overwrites
+    // existing slugs and adds new ones, so this is idempotent and safe.
     await seedClaimsIntoDb();
-    console.log("[claimsSeed] Auto-seeded verified_claims (collection was empty).");
+
+    // Remove any stale claim docs whose slugs no longer exist in VERIFIED_CLAIMS
+    // (e.g. the old "invest-sponsor" combined claim after it was split).
+    const currentSlugs = new Set(
+      VERIFIED_CLAIMS.map((c) =>
+        c.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+      )
+    );
+    const snapshot = await db.collection("verified_claims").get();
+    const staleDocs = snapshot.docs.filter((d) => !currentSlugs.has(d.id));
+    for (const stale of staleDocs) {
+      await stale.ref.delete();
+    }
+    if (staleDocs.length > 0) {
+      console.log(`[claimsSeed] Removed ${staleDocs.length} stale verified_claims.`);
+    }
   } catch (error) {
     console.error("[claimsSeed] Auto-seed check failed:", error);
   }
