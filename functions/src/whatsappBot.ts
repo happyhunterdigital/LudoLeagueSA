@@ -85,16 +85,17 @@ interface ClaimDoc {
 
 const findMatchingClaim = (userMessage: string): ClaimDoc | null => {
   const clean = userMessage.toLowerCase().trim();
+  console.log("[findMatchingClaim] Input:", clean);
 
   for (const data of VERIFIED_CLAIMS) {
     const keywords: string[] = data.keywords || [];
-    if (
-      keywords.length > 0 &&
-      keywords.some((k) => clean.includes(k.toLowerCase().trim()))
-    ) {
+    const matched = keywords.some((k) => clean.includes(k.toLowerCase().trim()));
+    if (keywords.length > 0 && matched) {
+      console.log("[findMatchingClaim] Matched claim:", data.title, "| Keywords:", keywords.join(", "));
       return data;
     }
   }
+  console.log("[findMatchingClaim] No claim matched. Falling through to AI.");
   return null;
 };
 
@@ -262,6 +263,7 @@ export const whatsappWebhook = onRequest(
         }
 
         reply = matchedClaim.response || "";
+        console.log("[whatsappBot] Claim response (first 100 chars):", reply.substring(0, 100));
       } else {
         // PHASE 4: AI conversation
         reply = await runAIConversation(fromNumber, userMessage);
