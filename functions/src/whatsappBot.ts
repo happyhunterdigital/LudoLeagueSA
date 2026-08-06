@@ -8,9 +8,9 @@ import {
   triggerAdminAlert,
   stripPII,
   ChatMessage,
-  VerifiedClaim,
   SYSTEM_PROMPT,
 } from "./whatsappService";
+import { VERIFIED_CLAIMS } from "./claimsSeed";
 import {
   WHATSAPP_VERIFY_TOKEN,
   META_APP_SECRET,
@@ -72,16 +72,21 @@ const checkRateLimit = async (
   return true;
 };
 
-// ─── PHASE 2: Intent Check (Firestore verified_claims) ──
+// ─── PHASE 2: Intent Check (in-code verified_claims) ────
 
-const findMatchingClaim = async (
-  userMessage: string
-): Promise<VerifiedClaim | null> => {
-  const claimsSnapshot = await db.collection("verified_claims").get();
+interface ClaimDoc {
+  keywords?: string[];
+  title?: string;
+  category?: string;
+  response?: string;
+  isHighIntent?: boolean;
+  docName?: string | null;
+}
+
+const findMatchingClaim = (userMessage: string): ClaimDoc | null => {
   const clean = userMessage.toLowerCase().trim();
 
-  for (const doc of claimsSnapshot.docs) {
-    const data = doc.data() as VerifiedClaim;
+  for (const data of VERIFIED_CLAIMS) {
     const keywords: string[] = data.keywords || [];
     if (
       keywords.length > 0 &&
@@ -97,7 +102,7 @@ const findMatchingClaim = async (
 const captureLead = async (
   phone: string,
   name: string | undefined,
-  claim: VerifiedClaim,
+  claim: ClaimDoc,
   query: string
 ): Promise<void> => {
   const intent = claim.category || claim.title || "general_inquiry";
@@ -231,7 +236,7 @@ export const whatsappWebhook = onRequest(
 
     try {
       // PHASE 2: Intent check
-      const matchedClaim = await findMatchingClaim(userMessage);
+      const matchedClaim = findMatchingClaim(userMessage);
       let reply = "";
 
       if (matchedClaim) {
