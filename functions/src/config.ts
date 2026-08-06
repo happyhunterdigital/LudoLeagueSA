@@ -5,7 +5,7 @@ export const ADMIN_EMAIL = "info@ludoleague.co.za";
 // The WhatsApp number that receives high-intent lead alerts.
 // International format, no "+" or spaces.
 export const ADMIN_PHONE_NUMBER = (() => {
-  const raw = (process.env.ADMIN_PHONE_NUMBER || "27753211350").trim();
+  const raw = (process.env.ADMIN_PHONE_NUMBER || "27725578097").trim();
   return raw.replace(/\D/g, "");
 })();
 
