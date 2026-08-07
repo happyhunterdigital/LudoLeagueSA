@@ -49,7 +49,7 @@ export const ludoLeagueChatBot = onCall({ region: 'us-central1', maxInstances: 1
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY || ''}` },
-      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history, { role: 'user', content: message }] })
+      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...(history || []), { role: 'user', content: message }] })
     });
     const resData: any = await response.json();
     return { reply: resData.choices?.[0]?.message?.content || 'Please try again.' };

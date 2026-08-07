@@ -88,17 +88,11 @@ export const VERIFIED_CLAIMS: VerifiedClaimDoc[] = [
     title: "Ludo Agent",
     category: "sales",
     response:
-      "Official Ludo Agents have exclusive rights to scout talent, build player rosters, and represent athletes in official leagues and national championships.\n\n" +
-      "Responsibilities include recruiting players, managing commercial contracts, media appearances, and enforcing the Official Code of Conduct.\n\n" +
-      "Licensing Options:\n" +
-      "- Founding Agent Licence: R1,500 (special early-adopter rate for the first 50-100 agencies)\n" +
-      "- Standard Licence: R2,500 to R5,000 (annual rate)\n\n" +
-      "Registration Process:\n" +
-      "1. Fill in Details (SA ID, Business Name, Region, Statement of Motivation)\n" +
-      "2. Choose Payment (PayFast Online or Manual EFT)\n" +
-      "3. Confirmation - registration logged, email sent\n\n" +
-      "EFT Details: Nedbank, Account: THE LUDO LEAGUE SOUTH AFRICA (PTY) LTD, Account No: 1120230365, Branch: 198765, Reference: AGENT-APPLICANT\n\n" +
-      "Register: https://academy.ludoleague.co.za",
+      "Official Ludo Agents get exclusive rights to scout talent, build player rosters, and represent athletes in official leagues and national championships.\n\n" +
+      "Your role: recruit and mentor players in township leagues, manage contracts and endorsements, and enforce the Official Code of Conduct.\n\n" +
+      "Register on the Academy site in 3 steps: submit your details, choose PayFast or EFT, and get email confirmation. A special founding-agent rate is currently available for early applicants.\n\n" +
+      "Start here: https://academy.ludoleague.co.za\n\n" +
+      "Ask me if you'd like the current licensing fees.",
     isHighIntent: true,
   },
   {

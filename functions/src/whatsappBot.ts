@@ -120,14 +120,25 @@ const captureLead = async (
 };
 
 // ─── PHASE 4: AI Conversation ───────────────────────────
+const getSessionRef = (phone: string) =>
+  db.collection("whatsapp_sessions").doc(phone).collection("messages");
+
+const saveExchange = async (
+  phone: string,
+  userMessage: string,
+  botReply: string
+): Promise<void> => {
+  const ts = admin.firestore.FieldValue.serverTimestamp();
+  const sessionRef = getSessionRef(phone);
+  await sessionRef.add({ role: "user", content: userMessage, timestamp: ts });
+  await sessionRef.add({ role: "bot", content: botReply, timestamp: ts });
+};
+
 const runAIConversation = async (
   phone: string,
   userMessage: string
 ): Promise<string> => {
-  const sessionRef = db
-    .collection("whatsapp_sessions")
-    .doc(phone)
-    .collection("messages");
+  const sessionRef = getSessionRef(phone);
 
   const historySnap = await sessionRef
     .orderBy("timestamp", "desc")
@@ -149,9 +160,7 @@ const runAIConversation = async (
 
   const replyText = (await callDeepSeek(messages)).replace(/\*/g, "").trim();
 
-  const ts = admin.firestore.FieldValue.serverTimestamp();
-  await sessionRef.add({ role: "user", content: userMessage, timestamp: ts });
-  await sessionRef.add({ role: "bot", content: replyText, timestamp: ts });
+  await saveExchange(phone, userMessage, replyText);
 
   return replyText;
 };
@@ -262,6 +271,8 @@ export const whatsappWebhook = onRequest(
         }
 
         reply = matchedClaim.response || "";
+        // Save claim replies to session so follow-up questions retain context.
+        await saveExchange(fromNumber, userMessage, reply);
       } else {
         // PHASE 4: AI conversation
         reply = await runAIConversation(fromNumber, userMessage);
