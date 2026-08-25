@@ -1,4 +1,38 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "ludo_agents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "qualificationStatus", "order": "ASCENDING" },
+        { "fieldPath": "regionCluster", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "ludo_agents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "eventId", "order": "ASCENDING" },
+        { "fieldPath": "townNormalized", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "ludo_agents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "gender", "order": "ASCENDING" },
+        { "fieldPath": "ageGroup", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "attendees",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        { "fieldPath": "qualificationStatus", "order": "ASCENDING" },
+        { "fieldPath": "regionCluster", "order": "ASCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }

@@ -90,6 +90,27 @@ service cloud.firestore {
       allow write: if false; 
     }
 
+    // === Silverton 2026 Attendance & Ludo Agents ===
+    // Event metadata
+    match /attendance_registers/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+      match /attendees/{attendeeId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+    // Top-level qualified candidates (denormalized for fast queries)
+    match /ludo_agents/{agentId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+    // Alternate flat collection for simple imports / CSV sync
+    match /silverton_attendance/{recordId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
     // Default deny all other paths
     match /{document=**} {
       allow read, write: if false;

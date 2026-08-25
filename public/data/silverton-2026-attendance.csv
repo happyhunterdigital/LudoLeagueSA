@@ -1,0 +1,58 @@
+id,fullName,age,gender,phoneRaw,phoneE164,townNormalized,regionCluster,ageGroup,signature,qualificationStatus,sourcePage,sourceRow
+SVT-2026-001,"Masenemi Linelani",25,M,"071 275 2300",+27712752300,"Cosmo City",Other-Gauteng,25-34,true,qualified_pending_review,1,1
+SVT-2026-002,"Mzerepe Tshegofatso",27,M,"072 014 3159",+27720143159,"Pretoria",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,2
+SVT-2026-003,"Nthabeng Patience Rashote",22,F,"072 691 4416",+27726914416,"Pretoria / Mamelodi",Mamelodi-Pretoria,18-24,true,qualified_pending_review,1,3
+SVT-2026-004,"Ndulula Thubelihle Mahlangu",26,F,"068 322 5420",+27683225420,"Pretoria / Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,4
+SVT-2026-005,"Mhiko Muriel Baloyi",24,F,"061 840 4561",+27618404561,"Daveyton",Other-Gauteng,18-24,true,qualified_pending_review,1,5
+SVT-2026-006,"Emelda Mahlangu",25,F,"065 756 1121",+27657561121,"Bronkhorstspruit",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,1,6
+SVT-2026-007,"Andisiwe Makalima",31,M,"081 731 3551",+27817313551,"Eastlynne",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,7
+SVT-2026-008,"Mhlokozisi Matshuye",20,M,"079 636 9410",+27796369410,"Kwamhlanga",Other-Gauteng,18-24,true,qualified_pending_review,1,8
+SVT-2026-009,"Mashifane Agatha",21,M,"082 433 6316",+27824336316,"Pretoria",Mamelodi-Pretoria,18-24,true,qualified_pending_review,1,9
+SVT-2026-010,"Margaret Kewedi",30,F,"076 835 8490",+27768358490,"Pretoria",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,10
+SVT-2026-011,"Hlengiwe Simelane",24,F,"068 572 4409",+27685724409,"Pretoria",Mamelodi-Pretoria,18-24,true,qualified_pending_review,1,11
+SVT-2026-012,"Thabiso Mbatha",23,F,"072 962 9946",+27729629946,"Mamelodi",Mamelodi-Pretoria,18-24,true,qualified_pending_review,1,12
+SVT-2026-013,"Lungile Masombuka",25,F,"078 103 9234",+27781039234,"Bronkhorstspruit",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,1,13
+SVT-2026-014,"Hyperia Thandeka Nkheni",29,F,"082 453 1712",+27824531712,"Eastlynne",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,14
+SVT-2026-015,"Bulelwa Masola",30,F,"081 064 3108",+27810643108,"Hatfield",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,15
+SVT-2026-016,"Calvin Skosana",23,M,"079 912 3965",+27799123965,"Pretoria",Mamelodi-Pretoria,18-24,true,qualified_pending_review,1,16
+SVT-2026-017,"Khanyisa Ngobeni",47,F,"081 706 2286",+27817062286,"Soweto",Soweto,45+,true,qualified_pending_review,1,17
+SVT-2026-018,"Xholisa Tlale",46,M,"083 882 8452",+27838828452,"Pretoria",Mamelodi-Pretoria,45+,true,qualified_pending_review,1,18
+SVT-2026-019,"Goldine Nice Chauke",33,M,"078 549 6905",+27785496905,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,19
+SVT-2026-020,"Zenile Nhlanhla Ngwenya",30,F,"063 355 7005",+27633557005,"Soweto",Soweto,25-34,true,qualified_pending_review,1,20
+SVT-2026-021,"Kedilegile Mathisi",26,F,"073 046 5202",+27730465202,"Hammanskraal",Other-Gauteng,25-34,true,qualified_pending_review,1,21
+SVT-2026-022,"Patrick Matladi",43,M,"071 705 1866",+27717051866,"Soshanguve (Boshanguve)",Other-Gauteng,35-44,true,qualified_pending_review,1,22
+SVT-2026-023,"Orentse Morena",32,F,"060 374 0185",+27603740185,"Nellmapius / Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,1,23
+SVT-2026-024,"Michael Munonde",37,M,"084 811 8857",+27848118857,"Rosslyn",Mamelodi-Pretoria,35-44,true,qualified_pending_review,1,24
+SVT-2026-025,"Sonise Evans Mokoma",26,M,"066 366 4367",+27663664367,"Mamelodi East",Mamelodi-Pretoria,25-34,true,qualified_pending_review,2,1
+SVT-2026-026,"Phumla Maqmqeni",26,F,"079 150 3157",+27791503157,"Mamelodi East",Mamelodi-Pretoria,25-34,true,qualified_pending_review,2,2
+SVT-2026-027,"Nhlenhla Tala",32,M,"064 348 6387",+27643486387,"Mamelodi East",Mamelodi-Pretoria,25-34,true,qualified_pending_review,2,3
+SVT-2026-028,"Teboho Malatji",33,F,"079 667 5911",+27796675911,"Goshamanube",Silverton-Atteridgeville,25-34,true,qualified_pending_review,2,4
+SVT-2026-029,"Tisetso Lebello",26,F,"063 121 0069",+27631210069,"Atteridgeville",Silverton-Atteridgeville,25-34,true,qualified_pending_review,2,5
+SVT-2026-030,"Swanziba Mampodi",33,M,"068 094 8589",+27680948589,"Johannesburg",Soweto,25-34,true,qualified_pending_review,2,6
+SVT-2026-031,"Zama Ncamela",29,M,"067 030 861",+2767030861,"Soweto",Soweto,25-34,true,qualified_pending_review,2,7
+SVT-2026-032,"Penelope Sayanelo",30,F,"079 333 903",+2779333903,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,2,8
+SVT-2026-033,"Odile Mudau",45,M,"082 748 7220",+27827487220,"Montana",Mamelodi-Pretoria,45+,true,qualified_pending_review,2,9
+SVT-2026-034,"Mankululeko Phukwayo",32,F,"068 774 5973",+27687745973,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,1
+SVT-2026-035,"Ndunduzile Luvulo",34,F,"076 711 8241",+27767118241,"Vosloorus",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,3,2
+SVT-2026-036,"Precious Malaza",29,F,"065 895 0908",+27658950908,"Pretoria / Soshanguve",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,3
+SVT-2026-037,"Thobile Mgidi",22,F,"060 749 8591",+27607498591,"Pretoria / Cullinan (Bonkospult)",Mamelodi-Pretoria,18-24,true,qualified_pending_review,3,4
+SVT-2026-038,"Colisile Mbonane",32,F,"065 692 9210",+27656929210,"Refilwe / Cullinan",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,3,5
+SVT-2026-039,"Joy Mpho Malamula",37,F,"079 095 3034",+27790953034,"Kaye N Park",Other-Gauteng,35-44,true,qualified_pending_review,3,6
+SVT-2026-040,"Esthel Ngwenya",33,F,"060 723 6250",+27607236250,"Bronkhorstspruit",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,3,7
+SVT-2026-041,"Lebogang Modibane",25,F,"067 744 0163",+27677440163,"Mamelodi / Nellmapius",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,8
+SVT-2026-042,"Tumishe Tselane",22,M,"067 028 3119",+27670283119,"Silverton",Silverton-Atteridgeville,18-24,true,qualified_pending_review,3,9
+SVT-2026-043,"Joseph Letwaba",20,M,"060 826 5381",+27608265381,"Mamelodi",Mamelodi-Pretoria,18-24,true,qualified_pending_review,3,10
+SVT-2026-044,"Kagiso Marongwane",28,F,"076 245 6876",+27762456876,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,11
+SVT-2026-045,"Julia Nkhotso",24,F,"079 668 5608",+27796685608,"Mamelodi",Mamelodi-Pretoria,18-24,true,qualified_pending_review,3,12
+SVT-2026-046,"Lisbeth Mabonela",31,F,"051 872 1722",+27518721722,"Cullinan",Bronkhorstspruit-Cullinan,25-34,true,qualified_pending_review,3,13
+SVT-2026-047,"Lindiwe Sithole",28,F,"072 363 3901",+27723633901,"Silverton",Silverton-Atteridgeville,25-34,true,qualified_pending_review,3,14
+SVT-2026-048,"Musiwa Tshisaphungo",35,F,"079 6635 458",+27796635458,"Mamelodi",Mamelodi-Pretoria,35-44,true,qualified_pending_review,3,15
+SVT-2026-049,"Tshwepo Sala",25,M,"067 342 3644",+27673423644,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,16
+SVT-2026-050,"Atang Mabini",26,F,"032 539 8798",+27325398798,"Pretoria",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,17
+SVT-2026-051,"Prosper Mahlangu",36,M,"065 851 5347",+27658515347,"Nellmapius",Mamelodi-Pretoria,35-44,true,qualified_pending_review,3,18
+SVT-2026-052,"Joyce Thabethe",37,M,"073 660 8587",+27736608587,"Mamelodi West",Mamelodi-Pretoria,35-44,true,qualified_pending_review,3,19
+SVT-2026-053,"Fabio Tlame",33,M,"065 821 9910",+27658219910,"Soweto",Soweto,25-34,true,qualified_pending_review,3,20
+SVT-2026-054,"Sbonelo Mathonsi",35,F,"067 699 714",+2767699714,"Mamelodi",Mamelodi-Pretoria,35-44,true,qualified_pending_review,3,21
+SVT-2026-055,"Beloyi Antonet Bongiwe",25,F,"063 635 5214",+27636355214,"Mamelodi",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,22
+SVT-2026-056,"Nqubekile Venda Senhetha",25,F,"079 177 2121",+27791772121,"Mamelodi East",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,23
+SVT-2026-057,"Owethu Majola",31,F,"060 409 4972",+27604094972,"Mamelodi East",Mamelodi-Pretoria,25-34,true,qualified_pending_review,3,24
