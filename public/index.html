@@ -534,6 +534,211 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== ADMIN CONSOLE (academy.ludoleague.co.za/?page=admin) =====
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('page') !== 'admin') return;
+  document.documentElement.style.scrollBehavior = 'auto';
+  // hide main site, show admin
+  document.body.innerHTML = `
+  <div id="admin-root" style="min-height:100vh;background:#05071a;color:#e5e7eb;font-family:'Inter',sans-serif;">
+    <div style="position:sticky;top:0;z-index:50;background:rgba(5,7,26,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,175,55,0.25);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1784647932/Ludo_Academy_of_excellence_Logo_ky20i3.jpg" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,175,55,0.3);" alt="logo"/>
+        <div>
+          <div style="font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;color:#d4af37;letter-spacing:0.06em;font-size:0.9rem;">Ludo Academy • Admin</div>
+          <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:700;">academy.ludoleague.co.za — Secure Console</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span id="admin-badge" style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:rgba(212,175,55,0.15);color:#d4af37;border:1px solid rgba(212,175,55,0.3);padding:0.35rem 0.6rem;border-radius:9999px;">Silverton 2026 • 57 qualified</span>
+        <a href="/" style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:0.5rem 0.9rem;border-radius:9999px;">← Back to site</a>
+      </div>
+    </div>
+
+    <div id="admin-login" style="min-height:calc(100vh - 73px);display:flex;align-items:center;justify-content:center;padding:2rem;">
+      <form id="adminLoginForm" style="width:100%;max-width:420px;background:#0f1535;border:1px solid rgba(212,175,55,0.25);border-radius:1.25rem;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,0.5);text-align:center;">
+        <div style="width:64px;height:64px;margin:0 auto 1rem;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🔒</div>
+        <h2 style="font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;color:#fff;font-size:1.6rem;">Admin Locked</h2>
+        <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;margin:0.5rem 0 1.25rem;">Enter the secret password to view the Silverton attendance register. Only admin can access.</p>
+        <input id="adminPass" type="password" placeholder="Access Password" required autocomplete="current-password" style="width:100%;background:#05071a;border:1px solid rgba(255,255,255,0.12);border-radius:0.75rem;padding:0.9rem 1rem;color:#fff;text-align:center;font-weight:700;outline:none;margin-bottom:1rem;"/>
+        <button type="submit" style="width:100%;padding:0.95rem;background:linear-gradient(135deg,#b8941f,#d4af37,#f4e5c2);color:#05071a;font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:0.1em;border:none;border-radius:9999px;cursor:pointer;">Authenticate</button>
+        <p style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-top:0.75rem;font-family:'Inter',sans-serif;">Hint: academy.ludoleague.co.za/?page=admin</p>
+      </form>
+    </div>
+
+    <div id="admin-panel" style="display:none;max-width:1280px;margin:0 auto;padding:1.5rem;">
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.25rem;">
+        <div style="background:#0f1535;border:1px solid rgba(212,175,55,0.25);border-radius:1rem;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(212,175,55,0.9);">Event</div>
+          <div style="font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;color:#fff;margin-top:0.35rem;">Silverton Recreation Center</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">15 Aug 2026 • Certified Ludo Agent Register</div>
+          <div style="margin-top:0.75rem;display:inline-flex;align-items:center;gap:0.35rem;background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);font-size:0.7rem;font-weight:800;padding:0.3rem 0.6rem;border-radius:9999px;">✓ 57 qualified to be considered</div>
+        </div>
+        <div style="background:#0f1535;border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);">By Region Cluster</div>
+          <div id="stat-region" style="margin-top:0.6rem;font-size:0.8rem;line-height:1.6;color:rgba(255,255,255,0.85);"></div>
+        </div>
+        <div style="background:#0f1535;border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);">By Gender / Age</div>
+          <div id="stat-demo" style="margin-top:0.6rem;font-size:0.8rem;line-height:1.6;color:rgba(255,255,255,0.85);"></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#b8941f,#d4af37);border-radius:1rem;padding:1.25rem;color:#05071a;">
+          <div style="font-size:0.65rem;font-weight:900;letter-spacing:0.12em;text-transform:uppercase;opacity:0.7;">Qualification Logic</div>
+          <div style="font-family:'Kanit',sans-serif;font-weight:900;font-style:italic;margin-top:0.35rem;line-height:1.2;">Ticks ✓ = qualifies to be considered for Ludo Agent</div>
+          <div style="font-size:0.78rem;opacity:0.85;margin-top:0.4rem;">All 57 with signatures. Next: vetting + R1,500 Founding Licence.</div>
+          <div style="margin-top:0.6rem;font-family:monospace;font-size:0.65rem;background:rgba(0,0,0,0.15);display:inline-block;padding:0.25rem 0.5rem;border-radius:0.5rem;">silverton-2026-08-15</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div style="background:#0f1535;border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1rem;margin-bottom:1rem;">
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
+          <div style="flex:1;min-width:220px;position:relative;">
+            <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);opacity:0.5;">🔍</span>
+            <input id="agentSearch" placeholder="Search name, town, phone, ID…" style="width:100%;padding:0.7rem 0.75rem 0.7rem 2rem;background:#05071a;border:1px solid rgba(255,255,255,0.12);border-radius:0.75rem;color:#fff;outline:none;font-size:0.85rem;"/>
+          </div>
+          <select id="agentRegion" style="padding:0.7rem;background:#05071a;border:1px solid rgba(255,255,255,0.12);border-radius:0.75rem;color:#fff;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
+            <option value="all">All Regions</option>
+            <option value="Mamelodi-Pretoria">Mamelodi-Pretoria</option>
+            <option value="Soweto">Soweto</option>
+            <option value="Bronkhorstspruit-Cullinan">Bronkhorst-Cullinan</option>
+            <option value="Silverton-Atteridgeville">Silverton-Atteridgeville</option>
+            <option value="Other-Gauteng">Other-Gauteng</option>
+          </select>
+          <select id="agentGender" style="padding:0.7rem;background:#05071a;border:1px solid rgba(255,255,255,0.12);border-radius:0.75rem;color:#fff;font-size:0.75rem;font-weight:700;text-transform:uppercase;">
+            <option value="all">All Genders</option>
+            <option value="F">Female (F)</option>
+            <option value="M">Male (M)</option>
+          </select>
+          <select id="agentAge" style="padding:0.7rem;background:#05071a;border:1px solid rgba(255,255,255,0.12);border-radius:0.75rem;color:#fff;font-size:0.75rem;font-weight:700;">
+            <option value="all">All Ages</option>
+            <option value="18-24">18-24</option>
+            <option value="25-34">25-34</option>
+            <option value="35-44">35-44</option>
+            <option value="45+">45+</option>
+          </select>
+          <button id="exportBtn" style="padding:0.7rem 1rem;background:#05071a;border:1px solid rgba(212,175,55,0.4);color:#d4af37;border-radius:0.75rem;font-size:0.75rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;">⬇ Export CSV</button>
+        </div>
+        <div id="filterMeta" style="margin-top:0.6rem;font-size:0.75rem;color:rgba(255,255,255,0.5);"></div>
+      </div>
+
+      <!-- Table -->
+      <div style="background:#0f1535;border:1px solid rgba(255,255,255,0.08);border-radius:1rem;overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+              <tr style="background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);">
+                <th style="padding:0.9rem;text-align:left;white-space:nowrap;">#</th>
+                <th style="padding:0.9rem;text-align:left;">Candidate</th>
+                <th style="padding:0.9rem;text-align:left;">Age / Gender</th>
+                <th style="padding:0.9rem;text-align:left;">Town / Region</th>
+                <th style="padding:0.9rem;text-align:left;">Phone</th>
+                <th style="padding:0.9rem;text-align:left;">Qualification</th>
+              </tr>
+            </thead>
+            <tbody id="agentTbody" style="color:rgba(255,255,255,0.9);"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" style="display:none;padding:2rem;text-align:center;color:rgba(255,255,255,0.5);font-size:0.85rem;">No candidates match filters.</div>
+      </div>
+      <div style="text-align:center;color:rgba(255,255,255,0.35);font-size:0.7rem;margin-top:0.75rem;">Private admin view only • academy.ludoleague.co.za/?page=admin • Not indexed • Firestore: ludo_agents (admin-only writes)</div>
+    </div>
+  </div>
+  `;
+  document.body.style.margin='0';
+  // block indexing
+  const metaRobots=document.createElement('meta'); metaRobots.name='robots'; metaRobots.content='noindex,nofollow'; document.head.appendChild(metaRobots);
+  document.title='Admin — Silverton 2026 • Ludo Academy';
+
+  const loginForm=document.getElementById('adminLoginForm');
+  const passInput=document.getElementById('adminPass');
+  const loginWrap=document.getElementById('admin-login');
+  const panel=document.getElementById('admin-panel');
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(passInput.value === 'LudoAdmin2026!'){
+      loginWrap.style.display='none';
+      panel.style.display='block';
+      loadAgents();
+    } else {
+      alert('Incorrect access password.');
+      passInput.value='';
+      passInput.focus();
+    }
+  });
+
+  let allAgents=[];
+  async function loadAgents(){
+    try{
+      const res=await fetch('/data/silverton-2026-attendance.json', {cache:'no-store'});
+      if(!res.ok) throw new Error('fetch failed');
+      const j=await res.json();
+      allAgents=j.attendees || [];
+    }catch(e){
+      // fallback to GitHub raw if needed
+      try{
+        const r2=await fetch('https://raw.githubusercontent.com/happyhunterdigital/LudoLeagueSA/academyofludo/public/data/silverton-2026-attendance.json');
+        const j2=await r2.json(); allAgents=j2.attendees || [];
+      }catch(e2){ allAgents=[]; }
+    }
+    renderStats();
+    bindFilters();
+    renderTable();
+  }
+  function renderStats(){
+    const byRegion={}, byGender={}, byAge={};
+    allAgents.forEach(a=>{ byRegion[a.regionCluster]=(byRegion[a.regionCluster]||0)+1; byGender[a.gender]=(byGender[a.gender]||0)+1; byAge[a.ageGroup]=(byAge[a.ageGroup]||0)+1; });
+    document.getElementById('stat-region').innerHTML = Object.entries(byRegion).map(([k,v])=> `<div style="display:flex;justify-content:space-between;"><span style="opacity:0.7;">${k}</span><b>${v}</b></div>`).join('');
+    document.getElementById('stat-demo').innerHTML = `<div style="display:flex;justify-content:space-between;"><span style="opacity:0.7;">M / F</span><b>${byGender['M']||0} / ${byGender['F']||0}</b></div>` + Object.entries(byAge).map(([k,v])=> `<div style="display:flex;justify-content:space-between;"><span style="opacity:0.7;">${k}</span><b>${v}</b></div>`).join('');
+  }
+  function getFiltered(){
+    const q=(document.getElementById('agentSearch').value||'').toLowerCase();
+    const r=document.getElementById('agentRegion').value;
+    const g=document.getElementById('agentGender').value;
+    const a=document.getElementById('agentAge').value;
+    return allAgents.filter(x=>{
+      if(r!=='all' && x.regionCluster!==r) return false;
+      if(g!=='all' && x.gender!==g) return false;
+      if(a!=='all' && x.ageGroup!==a) return false;
+      if(q) return x.fullName.toLowerCase().includes(q) || x.townNormalized.toLowerCase().includes(q) || x.phoneRaw.includes(q) || x.id.toLowerCase().includes(q);
+      return true;
+    });
+  }
+  function renderTable(){
+    const rows=getFiltered();
+    const tb=document.getElementById('agentTbody');
+    const empty=document.getElementById('emptyState');
+    const meta=document.getElementById('filterMeta');
+    meta.textContent = `Showing ${rows.length} of ${allAgents.length} candidates • Ticks ✓ = qualifies to be considered • Data: public/data/silverton-2026-attendance.json`;
+    if(rows.length===0){ tb.innerHTML=''; empty.style.display='block'; return; }
+    empty.style.display='none';
+    tb.innerHTML = rows.map(a=> `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+        <td style="padding:0.8rem;white-space:nowrap;"><span style="font-family:monospace;font-size:0.7rem;color:rgba(255,255,255,0.6);">${a.id}</span><div style="font-family:monospace;font-size:0.6rem;color:rgba(255,255,255,0.35);">p${a.sourcePage}-r${a.sourceRow}</div></td>
+        <td style="padding:0.8rem;"><div style="font-weight:800;color:#fff;">${a.fullName}</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.55);">📍 ${a.townNormalized}</div></td>
+        <td style="padding:0.8rem;"><span style="display:inline-flex;padding:0.25rem 0.55rem;background:#05071a;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:9999px;font-weight:800;font-size:0.75rem;">${a.age} • ${a.gender}</span><div style="font-size:0.65rem;color:rgba(255,255,255,0.45);margin-top:0.25rem;">${a.ageGroup}</div></td>
+        <td style="padding:0.8rem;"><span style="display:inline-flex;padding:0.25rem 0.55rem;background:rgba(14,165,233,0.15);color:#7dd3fc;border:1px solid rgba(14,165,233,0.3);border-radius:9999px;font-weight:700;font-size:0.7rem;">${a.regionCluster}</span><div style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.2rem;">${a.townRaw}</div></td>
+        <td style="padding:0.8rem;"><div style="font-family:monospace;font-weight:700;color:#fff;font-size:0.8rem;">📞 ${a.phoneRaw}</div><div style="font-family:monospace;font-size:0.65rem;color:rgba(255,255,255,0.4);">${a.phoneE164}</div></td>
+        <td style="padding:0.8rem;"><span style="display:inline-flex;align-items:center;gap:0.25rem;padding:0.3rem 0.55rem;background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);border-radius:9999px;font-weight:800;font-size:0.7rem;">✓ qualified_pending_review</span><div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:0.2rem;">eligible to be considered</div></td>
+      </tr>
+    `).join('');
+  }
+  function bindFilters(){
+    ['agentSearch','agentRegion','agentGender','agentAge'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', renderTable);
+      document.getElementById(id).addEventListener('change', renderTable);
+    });
+    document.getElementById('exportBtn').addEventListener('click', function(){
+      const rows=getFiltered();
+      let csv='id,fullName,age,gender,phoneRaw,phoneE164,townNormalized,regionCluster,ageGroup,qualificationStatus\n';
+      rows.forEach(a=>{ csv+= [a.id, '"'+a.fullName.replace(/"/g,'""')+'"', a.age, a.gender, '"'+a.phoneRaw+'"', a.phoneE164, '"'+a.townNormalized+'"', a.regionCluster, a.ageGroup, a.qualificationStatus].join(',')+'\n'; });
+      const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const el=document.createElement('a'); el.href=url; el.download='silverton-2026-agents.csv'; el.click(); URL.revokeObjectURL(url);
+    });
+  }
+})();
 </script>
 </body>
 </html>
