@@ -34,7 +34,7 @@ export const ShopHero = ({ onExplore }: { onExplore: () => void }) => {
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 rounded-3xl overflow-hidden shadow-2xl border border-slate-700/50 mb-8"
       >
-        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg" alt="Ludo Hero" className="w-full h-full object-cover" />
+        <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg" alt="Professional Ludo League SA acrylic tokens and balanced dice set" className="w-full h-full object-cover" />
       </motion.div>
 
       {/* Cycling feature text with crossfades */}

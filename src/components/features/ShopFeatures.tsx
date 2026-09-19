@@ -33,7 +33,8 @@ export const ShopFeatures = ({ }: { selectedVariant: string }) => {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8 }}
             src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1780434262/Ludo_League_SA_Tokens_x4cu8a.jpg"
-            alt="Feature focus"
+            alt="Close-up of Ludo League SA professional tokens and board craftsmanship"
+            loading="lazy"
             className="w-full h-80 object-cover rounded-xl"
           />
         </div>

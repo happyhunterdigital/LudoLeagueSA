@@ -29,7 +29,7 @@ export const DonationNarrative: React.FC<{ onScrollToForm: () => void }> = ({ on
           <ScrollReveal direction="right" className="space-y-6">
             <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-neutral-800/80 shadow-2xl bg-neutral-900/50">
               <img 
-                src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142496/LudoLeagueSA_Team_gvizo3.png" 
+                src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1783142496/LudoLeagueSA_Team_gvizo3.png" 
                 alt="LudoLeagueSA Team and participants" 
                 loading="lazy"
                 className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500" 
@@ -52,7 +52,7 @@ export const DonationNarrative: React.FC<{ onScrollToForm: () => void }> = ({ on
           <ScrollReveal direction="left" className="order-2 md:order-1">
             <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-neutral-800/80 shadow-2xl bg-neutral-900/50">
               <img 
-                src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142713/LudoLeagueSA_taking_kids_off_the_street_and_screen._dgzntf.png" 
+                src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1783142713/LudoLeagueSA_taking_kids_off_the_street_and_screen._dgzntf.png" 
                 alt="LudoLeagueSA taking kids off the street and screen" 
                 loading="lazy"
                 className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500" 
@@ -89,7 +89,7 @@ export const DonationNarrative: React.FC<{ onScrollToForm: () => void }> = ({ on
           <ScrollReveal direction="right">
             <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-neutral-800/80 shadow-2xl bg-neutral-900/50">
               <img 
-                src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142261/LudoLeagueSA_taking_kids_off_the_street_and_screen_dykywz.png" 
+                src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1783142261/LudoLeagueSA_taking_kids_off_the_street_and_screen_dykywz.png" 
                 alt="LudoLeagueSA youth development action" 
                 loading="lazy"
                 className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500" 
@@ -102,7 +102,7 @@ export const DonationNarrative: React.FC<{ onScrollToForm: () => void }> = ({ on
         <ScrollReveal direction="up" className="pt-12 border-t border-neutral-900/60">
           <div className="relative w-full h-[280px] sm:h-[380px] md:h-[450px] overflow-hidden rounded-3xl border border-neutral-800/60 shadow-2xl bg-neutral-900/40">
             <img 
-              src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142171/LudoLeagueSA_vwtysc.png" 
+              src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1783142171/LudoLeagueSA_vwtysc.png" 
               alt="LudoLeagueSA crowdfunding banner artwork" 
               loading="lazy"
               className="w-full h-full object-cover" 

@@ -55,8 +55,9 @@ export function Navbar({ scaleX, cart, activeSection, scrollToSection, mobileMen
           {/* Brand Logo - Updated with the specific Cloudinary Logo Asset */}
           <button onClick={() => scrollToSection('home')} className="flex items-center gap-3 group">
             <img 
-              src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1781346202/favicon_o48plg.png" 
+              src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1781346202/favicon_o48plg.png" 
               alt="Ludo League SA Logo" 
+              fetchPriority="high"
               className="w-10 h-10 object-contain transform group-hover:rotate-12 transition-transform duration-300"
             />
             <span className="font-display font-bold text-white tracking-widest uppercase hidden md:block">

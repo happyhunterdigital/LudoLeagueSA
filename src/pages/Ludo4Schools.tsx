@@ -5,7 +5,7 @@ export const Ludo4Schools = () => {
   return (
     <section id="ludo4schools" className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A] overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-10">
-        <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg" alt="Schools" className="w-full h-full object-cover" />
+        <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg" alt="School team holding Ludo League SA tournament boards" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-transparent to-[#0F172A]"></div>
       </div>
 

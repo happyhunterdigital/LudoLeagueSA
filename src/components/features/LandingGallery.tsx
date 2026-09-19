@@ -10,11 +10,11 @@ interface BoardItem {
 }
 
 const boards: BoardItem[] = [
-  { id: "purple", name: "Royal Purple", desc: "Premium handcrafted timber board layout.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Purple_Board_hohd9k.png" },
-  { id: "original", name: "Classic Teal", desc: "Our signature flagship tournament board.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Original_Board_m6uyqi.png" },
-  { id: "orange", name: "Amber Orange", desc: "High-vibrancy solid wood amber layout.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Orange_Board_h3mopp.png" },
-  { id: "black", name: "Obsidian Black", desc: "Sleek, modern matte obsidian design.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Black_Board_aq9yjo.png" },
-  { id: "blue", name: "Electric Blue", desc: "Modern blue layout certified for league play.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Blue_Board_mvqu4j.png" },
+  { id: "purple", name: "Royal Purple", desc: "Premium handcrafted timber board layout.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458042/Final_Purple_Board_hohd9k.png" },
+  { id: "original", name: "Classic Teal", desc: "Our signature flagship tournament board.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458042/Final_Original_Board_m6uyqi.png" },
+  { id: "orange", name: "Amber Orange", desc: "High-vibrancy solid wood amber layout.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Orange_Board_h3mopp.png" },
+  { id: "black", name: "Obsidian Black", desc: "Sleek, modern matte obsidian design.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Black_Board_aq9yjo.png" },
+  { id: "blue", name: "Electric Blue", desc: "Modern blue layout certified for league play.", src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Blue_Board_mvqu4j.png" },
 ];
 
 export const LandingGallery: React.FC = () => {

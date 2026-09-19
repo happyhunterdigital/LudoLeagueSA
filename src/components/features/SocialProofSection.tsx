@@ -121,7 +121,7 @@ export const SocialProofSection: React.FC = () => {
             <div className="bg-[#111827]/40 border border-[#FACC15]/10 rounded-3xl overflow-hidden flex flex-col md:flex-row backdrop-blur-sm">
               <div className="md:w-2/5 h-80 md:h-auto relative">
                 <img 
-                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
+                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
                   alt="Joe Setladi - Founder" 
                   className="w-full h-full object-cover object-top"
                   loading="lazy"

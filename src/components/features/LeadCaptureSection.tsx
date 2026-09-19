@@ -7,11 +7,25 @@ export const LeadCaptureSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  // Spam defenses: honeypot + time-trap
+  const [company, setCompany] = useState('');
+  const [formLoadedAt] = useState(() => Date.now());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    
+    // Honeypot: silently accept but discard bot submissions
+    if (company) { setIsSubmitted(true); return; }
+    // Time-trap: humans take >2s to type an email
+    if (Date.now() - formLoadedAt < 2000) {
+      setError('Please take a moment before subscribing.');
+      return;
+    }
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.trim())) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    setError('');
     setIsLoading(true);
     // Simulate async submission (replace with actual API call for email orchestration)
     await new Promise(resolve => setTimeout(resolve, 1200));
@@ -67,6 +81,8 @@ export const LeadCaptureSection: React.FC = () => {
                           exit={{ opacity: 0, y: -10 }}
                           className="space-y-4"
                         >
+                          {/* Honeypot — hidden from humans */}
+                          <input type="text" name="company" value={company} onChange={(e) => setCompany(e.target.value)} autoComplete="off" tabIndex={-1} aria-hidden="true" className="absolute opacity-0 h-0 w-0 pointer-events-none" />
                           <div className="relative">
                             <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
                             <input
@@ -100,9 +116,10 @@ export const LeadCaptureSection: React.FC = () => {
                             )}
                           </button>
                           
-                          <p className="text-[10px] text-white/20 text-center">
-                            No spam. Unsubscribe anytime. We respect your privacy.
-                          </p>
+                           <p className="text-[10px] text-white/20 text-center">
+                             No spam. Unsubscribe anytime. We respect your privacy.
+                           </p>
+                           {error && <p role="alert" className="text-xs font-bold text-red-400 text-center">{error}</p>}
                         </motion.form>
                       ) : (
                         <motion.div

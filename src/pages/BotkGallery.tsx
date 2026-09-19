@@ -4,16 +4,16 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const botkPhotos = [
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779654012/Battle_of_the_Kasis_BOTK_Ludo_League_bw2pa9.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779654107/Battle_of_the_Kasis_BOTK_Ludo_League1_zkgif3.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779654159/Battle_of_the_Kasis__BOTK__Ludo_League_rvhbya.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779654190/Battle_of_the_Kasis_BOTK_Ludo_League2_zqwyvz.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655268/20210911_151619_kospmv.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655339/Battle_of_the_Kasis_BOTK_entry_to_the_Ludo_League_rznpkq.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655371/Battle_of_the_Kasis_BOTK_Ludo_League_Alex_shhxsl.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655376/Battle_of_the_Kasis_BOTK_Ludo_League_welcome_gbrgzp.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655380/Battle_of_the_Kasis_BOTK_Ludo_League_Soweto_uutjzq.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1779655586/Battle_of_the_Kasis_BOTK_hero_image_ehchpx.jpg"
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779654012/Battle_of_the_Kasis_BOTK_Ludo_League_bw2pa9.jpg", alt: "Battle of the Kasis tournament kickoff" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779654107/Battle_of_the_Kasis_BOTK_Ludo_League1_zkgif3.jpg", alt: "BOTK players competing at the Ludo board" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779654159/Battle_of_the_Kasis__BOTK__Ludo_League_rvhbya.jpg", alt: "Battle of the Kasis knockout round action" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779654190/Battle_of_the_Kasis_BOTK_Ludo_League2_zqwyvz.jpg", alt: "BOTK finalists battling for the township title" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655268/20210911_151619_kospmv.jpg", alt: "BOTK crowd and players at the venue" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655339/Battle_of_the_Kasis_BOTK_entry_to_the_Ludo_League_rznpkq.jpg", alt: "Fans entering the Battle of the Kasis arena" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655371/Battle_of_the_Kasis_BOTK_Ludo_League_Alex_shhxsl.jpg", alt: "Alexandra squad at Battle of the Kasis" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655376/Battle_of_the_Kasis_BOTK_Ludo_League_welcome_gbrgzp.jpg", alt: "Welcome ceremony at Battle of the Kasis" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655380/Battle_of_the_Kasis_BOTK_Ludo_League_Soweto_uutjzq.jpg", alt: "Soweto squad at Battle of the Kasis" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779655586/Battle_of_the_Kasis_BOTK_hero_image_ehchpx.jpg", alt: "Battle of the Kasis championship hero moment" }
 ];
 
 const mamelodiPhotos = [
@@ -53,7 +53,9 @@ export const BotkGallery: React.FC<BotkGalleryProps> = ({ selectedTab, setSelect
 
   const activePhotos = getPhotos();
   const currentAsset = activePhotos[index];
-  const isVideo = currentAsset ? currentAsset.endsWith('.mp4') : false;
+  const currentSrc = typeof currentAsset === 'string' ? currentAsset : currentAsset.src;
+  const currentAlt = typeof currentAsset === 'string' ? 'League gallery photo' : currentAsset.alt;
+  const isVideo = currentSrc ? currentSrc.endsWith('.mp4') : false;
 
   const next = () => setIndex((prev) => (prev + 1) % activePhotos.length);
   const prev = () => setIndex((prev) => (prev - 1 + activePhotos.length) % activePhotos.length);
@@ -85,14 +87,15 @@ export const BotkGallery: React.FC<BotkGalleryProps> = ({ selectedTab, setSelect
         <div className="relative h-[300px] md:h-[500px] w-full bg-black/40 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center">
           <AnimatePresence mode="wait">
             {isVideo ? (
-              <video key={currentAsset} autoPlay loop muted playsInline controls className="w-full h-full object-cover">
-                <source src={currentAsset} type="video/mp4" />
+              <video key={currentSrc} autoPlay loop muted playsInline controls className="w-full h-full object-cover">
+                <source src={currentSrc} type="video/mp4" />
               </video>
             ) : (
               <motion.img 
-                key={currentAsset}
-                src={currentAsset} 
-                alt="Active View"
+                key={currentSrc}
+                src={currentSrc} 
+                alt={currentAlt}
+                loading="lazy"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
@@ -111,8 +114,10 @@ export const BotkGallery: React.FC<BotkGalleryProps> = ({ selectedTab, setSelect
 
         {/* Interactive Thumbnails */}
         <div className="grid grid-cols-5 md:grid-cols-10 gap-3 mt-8">
-          {activePhotos.map((src, i) => {
-            const isThumbVideo = src.endsWith('.mp4');
+          {activePhotos.map((photo, i) => {
+            const thumbSrc = typeof photo === 'string' ? photo : photo.src;
+            const thumbAlt = typeof photo === 'string' ? `Gallery thumbnail ${i + 1}` : photo.alt;
+            const isThumbVideo = thumbSrc.endsWith('.mp4');
             return (
               <button 
                 key={i} 
@@ -122,7 +127,7 @@ export const BotkGallery: React.FC<BotkGalleryProps> = ({ selectedTab, setSelect
                 {isThumbVideo ? (
                   <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white"><Play size={20} /></div>
                 ) : (
-                  <img src={src} alt="Thumbnail" className="w-full h-full object-cover" />
+                  <img src={thumbSrc} alt={thumbAlt} loading="lazy" className="w-full h-full object-cover" />
                 )}
               </button>
             );

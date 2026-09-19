@@ -48,8 +48,9 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyProps> = ({ isOpen, onClo
                 <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>2. Data Collection</h3>
                 <p className="mb-2">We collect the following personal information when you register for tournaments or purchase official gear:</p>
                 <ul className="list-disc pl-5 space-y-2">
-                  <li><b>Identity Data:</b> Full Name.</li>
+                  <li><b>Identity Data:</b> Full Name, Date of Birth, SA ID Number (for prize verification and age checks).</li>
                   <li><b>Contact Data:</b> Email Address, Phone Number, Region (e.g., Soweto, Alexandra).</li>
+                  <li><b>Transaction Data:</b> Order details and EFT proof-of-payment documents (bank account numbers are redacted after verification).</li>
                   <li><b>Technical Data:</b> IP address, browser type, and device telemetry via strictly necessary cookies.</li>
                 </ul>
               </section>
@@ -65,7 +66,33 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyProps> = ({ isOpen, onClo
               </section>
 
               <section>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>5. Your Rights (POPIA & GDPR)</h3>
+                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>5. Children & Guardian Consent (Under-18 Players)</h3>
+                <p className="mb-2">Ludo4Schools and junior tournaments involve players under 18. POPIA (s8) and GDPR (Art. 8) require prior consent from a competent person — a parent or legal guardian — before we process a child's personal information.</p>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Players under 18 may only register with the full name and contact details of a parent/guardian, who consents on their behalf.</li>
+                  <li>We collect only what is necessary for participation (name, age division, guardian contact, emergency contact).</li>
+                  <li>Children's photos or names are never published without explicit, separate guardian consent.</li>
+                  <li>A guardian may withdraw consent at any time by contacting info@ludoleague.co.za, after which the child's data is deleted.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>6. Operators & Third Parties</h3>
+                <p className="mb-2">We share data only with trusted operators who process it on our behalf under written agreements:</p>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><b>Google Firebase</b> (hosting, database, storage) — data hosted in Google Cloud regions.</li>
+                  <li><b>PayFast</b> — secure payment processing; we never store card numbers.</li>
+                  <li><b>Email delivery providers</b> — tournament and order confirmations only.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>7. Retention & Security</h3>
+                <p>Registration records are kept for a maximum of 3 years after your last tournament or transaction, then deleted or anonymised. Proof-of-payment documents are deleted within 12 months of verification. We apply access controls, Firestore security rules, and encryption in transit (HTTPS) to safeguard your data. If a breach compromises your personal information, we will notify you and the Information Regulator as required by POPIA (s22).</p>
+              </section>
+
+              <section>
+                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>8. Your Rights (POPIA & GDPR)</h3>
                 <ul className="list-disc pl-5 space-y-2">
                   <li><b>Right to Access:</b> You may request a copy of all personal data we hold.</li>
                   <li><b>Right to Rectification:</b> You may request corrections to inaccurate data.</li>
@@ -75,8 +102,8 @@ export const PrivacyPolicyModal: React.FC<PrivacyPolicyProps> = ({ isOpen, onClo
               </section>
 
               <section>
-                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>6. Contact Information</h3>
-                <p>To exercise any of your data rights, or if you have concerns regarding our data architecture, please contact our Data Protection Officer at <b>info@ludoleague.co.za</b>.</p>
+                <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--accent)' }}>9. Contact & Complaints</h3>
+                <p>To exercise any of your data rights, or if you have concerns regarding our data architecture, please contact our Data Protection Officer at <b>info@ludoleague.co.za</b>. If unresolved, you may lodge a complaint with the Information Regulator (South Africa) at <b>POPIAComplaints@inforegulator.org.za</b> or an EU supervisory authority under the GDPR.</p>
               </section>
             </div>
             

@@ -15,7 +15,9 @@ export const OurTeam = () => {
       <section className="py-24 px-6 bg-[#072e28]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="theme-card flex flex-col items-center text-center p-10">
-            <img src="https://placehold.co/150x150/041a18/e8a020?text=JS" alt="Joe Setladi" className="w-32 h-32 rounded-full border-2 border-[#e8a020] mb-6 object-cover" />
+            <div className="w-32 h-32 rounded-full border-2 border-[#e8a020] mb-6 flex items-center justify-center bg-[#041a18]" aria-label="Portrait placeholder for Joe Setladi" role="img">
+              <span className="text-4xl font-display font-black text-[#e8a020]">JS</span>
+            </div>
             <h3 className="text-white mb-2">Joe Setladi</h3>
             <span className="eyebrow" style={{ color: 'var(--color-accent)' }}>Founder & President</span>
             <p className="text-[#9abcb6] text-sm max-w-sm mt-4">
@@ -24,7 +26,9 @@ export const OurTeam = () => {
           </div>
 
           <div className="theme-card flex flex-col items-center text-center p-10">
-            <img src="https://placehold.co/150x150/041a18/00c9a7?text=Tibi" alt="Tibi" className="w-32 h-32 rounded-full border-2 border-[#00c9a7] mb-6 object-cover" />
+            <div className="w-32 h-32 rounded-full border-2 border-[#00c9a7] mb-6 flex items-center justify-center bg-[#041a18]" aria-label="Portrait placeholder for Tibi" role="img">
+              <span className="text-4xl font-display font-black text-[#00c9a7]">T</span>
+            </div>
             <h3 className="text-white mb-2">Tibi</h3>
             <span className="eyebrow">Community Liaison</span>
             <p className="text-[#9abcb6] text-sm max-w-sm mt-4">

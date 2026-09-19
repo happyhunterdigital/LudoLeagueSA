@@ -9,7 +9,7 @@ const features = [
     tagColor: '#FACC15',
     title: 'Inclusive Community',
     description: 'We transcend race, gender, sexual orientation, and age. Ludo League SA provides a physical, screen-free platform designed to build vibrant networks, foster social cohesion, and empower local townships.',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_School_teams_playing_Ludo_jhuckm.jpg',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949477/Ludo_League_SA_School_teams_playing_Ludo_jhuckm.jpg',
     reverse: false,
   },
   {
@@ -18,7 +18,7 @@ const features = [
     tagColor: '#00f0c2',
     title: 'Competitive Excellence',
     description: 'Participate in professional structures, climb the national rankings, and become a verified legend. With weekly regional fixtures in Pretoria and Soweto, compete for substantial player salaries and cash prizes.',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1778074844/Ludo_League_SA_award_ceremony_tsya47.jpg',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1778074844/Ludo_League_SA_award_ceremony_tsya47.jpg',
     reverse: true,
   },
   {
@@ -27,7 +27,7 @@ const features = [
     tagColor: '#FACC15',
     title: 'Ludo4Schools',
     description: 'Through our specialized schools initiative, we are introducing cognitive, screen-free strategic problem solving into South African primary and high schools, transforming education and building social cohesion.',
-    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg',
+    image: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg',
     reverse: false,
   },
 ];

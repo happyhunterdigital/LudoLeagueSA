@@ -52,8 +52,9 @@ export const StoryAndSocialProof = ({ setActivePage }: { setActivePage: (p: Page
         <div className="max-w-5xl mx-auto bg-bg-card border border-accent-gold/20 rounded-3xl overflow-hidden flex flex-col md:flex-row">
           <div className="md:w-2/5 h-80 md:h-auto relative">
             <img 
-              src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
+              src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
               alt="Joe Setladi - Founder" 
+              loading="lazy"
               className="w-full h-full object-cover object-top"
             />
           </div>

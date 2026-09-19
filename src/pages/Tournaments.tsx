@@ -69,6 +69,10 @@ export const Tournaments = () => {
     motivation: '',
     proofOfPayment: null as File | null
   });
+  // Spam defenses: honeypot + time-trap
+  const [website, setWebsite] = useState('');
+  const [formLoadedAt] = useState(() => Date.now());
+  const [spamBlocked, setSpamBlocked] = useState(false);
 
   const entryFee = 1500.00;
 
@@ -79,8 +83,9 @@ export const Tournaments = () => {
     const cleanPhone = formData.phoneNumber.replace(/\D/g, '');
 
     const payfastData: Record<string, string> = {
-      merchant_id: '35471207',
-      merchant_key: 'q9qkx9sqx9l3m',
+      // Publishable credentials: prefer VITE_ env vars, fall back to defaults
+      merchant_id: import.meta.env.VITE_PAYFAST_MERCHANT_ID || '35471207',
+      merchant_key: import.meta.env.VITE_PAYFAST_MERCHANT_KEY || 'q9qkx9sqx9l3m',
       return_url: 'https://ludoleague.co.za/?page=tournaments&status=success',
       cancel_url: 'https://ludoleague.co.za/?page=tournaments&status=cancel',
       notify_url: 'https://us-central1-ludoleaguesa-33371.cloudfunctions.net/payfastNotify',
@@ -177,15 +182,18 @@ export const Tournaments = () => {
 
         <div className="bg-white border border-white/20 p-8 rounded-2xl shadow-xl mt-8">
           {step === 1 && (
-            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }} className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); if (website) { setStep(2); return; } if (Date.now() - formLoadedAt < 3000) { setSpamBlocked(true); return; } setStep(2); }} className="space-y-4" noValidate>
+              {/* Honeypot — hidden from humans, bots fill it in */}
+              <input type="text" name="website" value={website} onChange={e => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} aria-hidden="true" className="absolute opacity-0 h-0 w-0 pointer-events-none" />
+              {spamBlocked && <p role="alert" className="text-xs font-bold text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">Please take a moment to complete the form before continuing.</p>}
               <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-xs space-y-1 mb-4">
                 <p className="font-bold text-amber-900 text-sm flex items-center gap-2"><Shield size={16} /> Founding Agent Licence: R{entryFee.toFixed(2)}</p>
                 <p className="text-amber-700">* Reduced from R2,500.00 for early adopters (Limited Slots).</p>
               </div>
 
-              <input required type="text" placeholder="Full Name *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
-              <input required type="email" placeholder="Email Address *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-              <input required type="tel" placeholder="Phone Number *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.phoneNumber} onChange={e => setFormData({ ...formData, phoneNumber: e.target.value })} />
+              <input required type="text" minLength={2} maxLength={100} placeholder="Full Name *" autoComplete="name" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} />
+              <input required type="email" maxLength={128} placeholder="Email Address *" autoComplete="email" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              <input required type="tel" minLength={9} maxLength={20} placeholder="Phone Number *" autoComplete="tel" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.phoneNumber} onChange={e => setFormData({ ...formData, phoneNumber: e.target.value })} />
               <input required type="text" placeholder="Business / Agency Name *" className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.businessName} onChange={e => setFormData({ ...formData, businessName: e.target.value })} />
               
               <select className="w-full bg-[#F8F9FA] border border-[#E2E8F0] rounded-xl p-4 font-bold" value={formData.region} onChange={e => setFormData({ ...formData, region: e.target.value })}>

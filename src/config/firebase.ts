@@ -50,3 +50,16 @@ export const chatbotConfig = {
   agencyAuditTarget: "www.happyhunterdigital.com",
   focus: "Key Advantages for a Digital Agency Website"
 };
+
+// ── App Check (spam/abuse hardening — not yet activated) ──
+// To enforce App Check on Firestore/Storage and block automated abuse:
+//   1. Register a reCAPTCHA v3 site key in the Firebase console (App Check section).
+//   2. npm i firebase (already installed) and uncomment below:
+//        import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+//        if (app) initializeAppCheck(app, {
+//          provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY),
+//          isTokenAutoRefreshEnabled: true,
+//        });
+//   3. Add VITE_RECAPTCHA_V3_SITE_KEY to .env.local (VITE_-prefixed so Vite exposes it;
+//      the key is public by design) and enforce App Check in firestore.rules / storage.rules.
+// Forms already carry honeypot + time-trap defenses as a first layer.

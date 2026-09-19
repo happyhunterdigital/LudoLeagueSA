@@ -22,7 +22,7 @@ export const AfconGalleryAndInfo = ({ setActivePage }: { setActivePage: (p: Page
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
             {/* Featured Hero Image spanning 2 columns */}
             <div className="col-span-2 row-span-2 h-64 md:h-[420px] rounded-2xl overflow-hidden relative group border border-slate-800 shadow-2xl">
-              <img src={afconPhotos[0]} alt="Featured AFCON" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src={afconPhotos[0]} alt="Opening ceremony of the Africa Ludo Cup of Nations 2023" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent p-6 flex items-end">
                 <span className="text-sm font-bold tracking-widest text-[#FFC107]">Opening Ceremony - AFCON 2023</span>
               </div>
@@ -30,7 +30,7 @@ export const AfconGalleryAndInfo = ({ setActivePage }: { setActivePage: (p: Page
 
             {afconPhotos.slice(1, 4).map((src, idx) => (
               <div key={idx} className="h-32 md:h-48 rounded-2xl overflow-hidden relative group border border-slate-800">
-                <img src={src} alt="AFCON Match" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={src} alt={`Africa Ludo Cup of Nations qualifier match ${idx + 1}`} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent p-4 flex items-end opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-xs font-bold text-white">Qualifier Match</span>
                 </div>

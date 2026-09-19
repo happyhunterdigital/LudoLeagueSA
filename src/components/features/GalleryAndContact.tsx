@@ -12,19 +12,19 @@ export const GallerySection = () => {
         />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
           <div className="md:col-span-2 md:row-span-2 h-64 md:h-full bg-bg-deep rounded-xl overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1611996598517-380f27471644?w=800&h=800&fit=crop" alt="Ludo Match" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949477/Ludo_League_SA_tough_match_evhrw5.jpg" alt="Intense Ludo League SA tournament match in progress" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
           </div>
           <div className="h-48 md:h-64 bg-bg-deep rounded-xl overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&h=400&fit=crop" alt="Tournament Gear" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949473/Ludo_League_SA_Corporate_exhibition_rv2l3j.jpg" alt="Ludo League SA corporate exhibition boards on display" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
           </div>
           <div className="h-48 md:h-64 bg-bg-deep rounded-xl overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1589149022630-fce4e6f47795?w=600&h=400&fit=crop" alt="Dice Roll" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1777030102/Ludo_League_SA_tourmanent_in_session_e0qruk.jpg" alt="Tournament dice roll deciding a Ludo League SA match" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
           </div>
           <div className="h-48 md:h-64 bg-bg-deep rounded-xl overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop" alt="Player Focus" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949476/Ludo_League_SA_women_and_kids_oioj8d.jpg" alt="Focused Ludo League SA player studying the board" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
           </div>
           <div className="h-48 md:h-64 bg-bg-deep rounded-xl overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1605733513597-a8f8d410fe3c?w=600&h=400&fit=crop" alt="Board Setup" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949477/Ludo_League_SA_School_teams_playing_Ludo_jhuckm.jpg" alt="Ludo4Schools tournament board setup before a match" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
           </div>
         </div>
       </div>

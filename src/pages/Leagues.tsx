@@ -26,7 +26,7 @@ export const Leagues: React.FC<LeaguesProps> = ({ setActivePage, setSelectedGall
             <button onClick={() => handleLaunchGallery('mamelodi')} className="btn-action bg-[#0F172A] text-white">Launch Mamelodi Gallery &rarr;</button>
           </motion.div>
           <div className="md:w-1/2 h-80 md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/20 relative group cursor-pointer" onClick={() => handleLaunchGallery('mamelodi')}>
-            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg" alt="Mamelodi" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779558549/Ludo_league_South_Africa_Mamelodi_branch_aho65a.jpg" alt="Mamelodi Ludo League players competing at a community tournament" loading="lazy" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <span className="px-6 py-3 bg-white text-bg-deep font-black uppercase text-xs rounded-xl tracking-wider shadow-lg">View Gallery &rarr;</span>
             </div>
@@ -38,7 +38,7 @@ export const Leagues: React.FC<LeaguesProps> = ({ setActivePage, setSelectedGall
       <section className="min-h-screen w-full relative flex flex-col justify-center py-24 px-4 md:px-10 bg-[#0F172A] text-white border-b border-white/15">
         <div className="max-w-7xl mx-auto w-full flex flex-col-reverse md:flex-row items-center gap-12">
           <div className="md:w-1/2 h-80 md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-800 relative group cursor-pointer" onClick={() => handleLaunchGallery('botk')}>
-            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779651635/Battle_of_the_Kasis_BOTK_hero_image_e8e2cy.jpg" alt="BOTK" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+            <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779651635/Battle_of_the_Kasis_BOTK_hero_image_e8e2cy.jpg" alt="Battle of the Kasis inter-township championship showdown" loading="lazy" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <span className="px-6 py-3 bg-white text-bg-deep font-black uppercase text-xs rounded-xl tracking-wider shadow-lg">View Gallery &rarr;</span>
             </div>
@@ -64,7 +64,7 @@ export const Leagues: React.FC<LeaguesProps> = ({ setActivePage, setSelectedGall
             <button onClick={() => handleLaunchGallery('soweto')} className="btn-action bg-[#0F172A] text-white">Launch Soweto Gallery &rarr;</button>
           </motion.div>
           <div className="md:w-1/2 h-80 md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/20 relative group cursor-pointer" onClick={() => handleLaunchGallery('soweto')}>
-            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664330/Soweto_Ludo_League_Event_zjbpig.jpg" alt="Soweto Ludo League" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+            <img src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1779664330/Soweto_Ludo_League_Event_zjbpig.jpg" alt="Soweto Ludo League tournament event with players and spectators" loading="lazy" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <span className="px-6 py-3 bg-white text-bg-deep font-black uppercase text-xs rounded-xl tracking-wider shadow-lg">View Gallery &rarr;</span>
             </div>

@@ -3,12 +3,12 @@ import { PlayCircle } from 'lucide-react';
 import { ScrollReveal, StaggerContainer, StaggerChild } from '../ui/ScrollReveal';
 
 const mediaPhotos = [
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_tough_match_evhrw5.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949476/Ludo_League_SA_women_and_kids_oioj8d.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949477/Ludo_League_SA_School_teams_playing_Ludo_jhuckm.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949475/IMG-20191017-WA0019_pascys.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_Corporate_exhibition_rv2l3j.jpg",
-  "https://res.cloudinary.com/dkyg07qvv/image/upload/v1777030102/Ludo_League_SA_tourmanent_in_session_e0qruk.jpg",
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949477/Ludo_League_SA_tough_match_evhrw5.jpg", alt: "Decisive moment in a tough Ludo League SA tournament match" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949476/Ludo_League_SA_women_and_kids_oioj8d.jpg", alt: "Women and children playing Ludo at a community tournament" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949477/Ludo_League_SA_School_teams_playing_Ludo_jhuckm.jpg", alt: "School teams competing in a Ludo4Schools tournament" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949475/IMG-20191017-WA0019_pascys.jpg", alt: "Ludo League SA players gathered around the board" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949473/Ludo_League_SA_Corporate_exhibition_rv2l3j.jpg", alt: "Corporate exhibition match hosted by Ludo League SA" },
+  { src: "https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1777030102/Ludo_League_SA_tourmanent_in_session_e0qruk.jpg", alt: "League tournament session in full swing" },
 ];
 
 export const LandingMediaGrid: React.FC = () => {
@@ -25,7 +25,7 @@ export const LandingMediaGrid: React.FC = () => {
         </ScrollReveal>
 
         <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" staggerDelay={0.08}>
-          {mediaPhotos.map((src, index) => (
+          {mediaPhotos.map((photo, index) => (
             <StaggerChild
               key={index}
               className={`${index === 0 ? 'col-span-2 row-span-2' : ''}`}
@@ -36,8 +36,8 @@ export const LandingMediaGrid: React.FC = () => {
                 }`}
               >
                 <img 
-                  src={src} 
-                  alt="Media Asset" 
+                  src={photo.src} 
+                  alt={photo.alt} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                   loading="lazy"
                 />

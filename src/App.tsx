@@ -27,6 +27,8 @@ import { Faqs } from './pages/Faqs';
 import { AfconTournament } from './pages/AfconTournament';
 import { CookieConsent } from './components/features/CookieConsent';
 import { PrivacyPolicyModal } from './components/features/PrivacyPolicyModal';
+import { TermsOfServiceModal } from './components/features/TermsOfServiceModal';
+import { NotFound } from './components/features/NotFound';
 import { ChatbotWidget } from './components/features/ChatbotWidget';
 import { UserDashboard } from './pages/UserDashboard';
 import { Ludo4Schools } from './pages/Ludo4Schools';
@@ -56,6 +58,8 @@ export default function App() {
   };
 
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [unknownPage, setUnknownPage] = useState<string | null>(null);
   const [selectedGalleryTab, setSelectedGalleryTab] = useState<'botk' | 'mamelodi' | 'soweto'>('botk');
   const isScrollingLock = useRef(false);
   const { scrollYProgress } = useScroll();
@@ -74,6 +78,10 @@ export default function App() {
     const pageParam = params.get('page');
     if (pageParam && standalonePages.includes(pageParam.toLowerCase())) {
       setActiveSection(pageParam.toLowerCase());
+      setUnknownPage(null);
+    } else if (pageParam) {
+      // Unknown ?page= value → 404 fallback ("*" route equivalent)
+      setUnknownPage(pageParam);
     }
     const observer = new IntersectionObserver((entries) => {
       if (isScrollingLock.current) return;
@@ -123,6 +131,7 @@ export default function App() {
   }, [activeSection]);
 
   const scrollToSection = (id: string) => {
+    setUnknownPage(null);
     const isTargetStandalone = standalonePages.includes(id.toLowerCase());
     isScrollingLock.current = true;
     if (isTargetStandalone) {
@@ -184,6 +193,18 @@ export default function App() {
           </div>
 
           <main className="w-full pt-[111px] md:pt-[125px]">
+            {unknownPage ? (
+              <NotFound
+                requestedPage={unknownPage}
+                onHome={() => {
+                  setUnknownPage(null);
+                  window.history.pushState({ section: 'home' }, '', '/');
+                  setActiveSection('home');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+            ) : (
+              <>
             {activeSection === 'admin' && <AdminDashboard />}
             {activeSection === 'portal' && <UserDashboard />}
             {activeSection === 'ludo4schools' && <Ludo4Schools />}
@@ -305,15 +326,22 @@ export default function App() {
                   {/* Copyright */}
                   <div className="text-center space-y-2">
                     <p className="text-[10px] text-white/20 font-medium">&copy; 2026 Ludo League South Africa. All Rights Reserved.</p>
-                    <button onClick={() => setIsPrivacyOpen(true)} className="text-[10px] uppercase tracking-[0.15em] text-white/30 hover:text-[#FACC15] transition-colors font-bold">Privacy Policy & Terms</button>
+                    <div className="flex items-center justify-center gap-4">
+                      <button onClick={() => setIsPrivacyOpen(true)} className="text-[10px] uppercase tracking-[0.15em] text-white/30 hover:text-[#FACC15] transition-colors font-bold">Privacy Policy</button>
+                      <span className="text-white/10">·</span>
+                      <button onClick={() => setIsTermsOpen(true)} className="text-[10px] uppercase tracking-[0.15em] text-white/30 hover:text-[#FACC15] transition-colors font-bold">Terms of Service</button>
+                    </div>
                     <p className="text-[10px] text-white/10">This website is coded by happyhunter.com</p>
                   </div>
                 </div>
               </div>
             </footer>
+              </>
+            )}
           </main>
           <CookieConsent openPrivacy={() => setIsPrivacyOpen(true)} />
           <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+          <TermsOfServiceModal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
           <ShopCheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} cart={cart} clearCart={() => setCart([])} />
           {/* King's Table scroll-triggered popup — only on main landing pages */}
           {!standalonePages.includes(activeSection.toLowerCase()) && (

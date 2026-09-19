@@ -22,8 +22,9 @@ const SA_CITIES = [
 ];
 
 const ENTRY_FEE = 250.00;
-const MERCHANT_ID = '35471207';
-const MERCHANT_KEY = 'q9qkx9sqx9l3m';
+// Publishable credentials: prefer VITE_ env vars, fall back to defaults
+const MERCHANT_ID = import.meta.env.VITE_PAYFAST_MERCHANT_ID || '35471207';
+const MERCHANT_KEY = import.meta.env.VITE_PAYFAST_MERCHANT_KEY || 'q9qkx9sqx9l3m';
 
 export const KingsTable = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -39,6 +40,10 @@ export const KingsTable = () => {
     region: 'Gauteng',
     proofOfPayment: null,
   });
+  // Spam defenses: honeypot + time-trap
+  const [website, setWebsite] = useState('');
+  const [formLoadedAt] = useState(() => Date.now());
+  const [spamBlocked, setSpamBlocked] = useState(false);
 
   // Check for PayFast return URL status
   useEffect(() => {
@@ -112,6 +117,11 @@ export const KingsTable = () => {
 
   const handleDetailsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Honeypot: silently pass bots through to an empty step-2 dead end is
+    // overkill — instead block: bots fill the hidden field.
+    if (website) return;
+    // Time-trap: reject submissions faster than 3s
+    if (Date.now() - formLoadedAt < 3000) { setSpamBlocked(true); return; }
     setStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -293,7 +303,10 @@ export const KingsTable = () => {
                   <p className="text-white/40 text-sm mt-1">Fill in your team's information to secure your spot.</p>
                 </div>
 
-                <form onSubmit={handleDetailsSubmit} className="space-y-5">
+                <form onSubmit={handleDetailsSubmit} className="space-y-5" noValidate>
+                  {/* Honeypot — hidden from humans, bots fill it in */}
+                  <input type="text" name="website" value={website} onChange={e => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} aria-hidden="true" className="absolute opacity-0 h-0 w-0 pointer-events-none" />
+                  {spamBlocked && <p role="alert" className="text-xs font-bold text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl p-3">Please take a moment to complete the form before continuing.</p>}
                   {/* Full Name */}
                   <div className="relative">
                     <label className="block text-white/60 text-[11px] font-bold uppercase tracking-[0.15em] mb-2">

@@ -46,7 +46,7 @@ export const ValuePropsAndPrograms = ({ setActivePage }: { setActivePage: (p: Pa
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
             <div className="bg-bg-card border border-white/10 rounded-2xl overflow-hidden group">
               <div className="h-64 relative overflow-hidden bg-black">
-                <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg" alt="Ludo4Schools" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105" />
+                <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949473/Ludo_League_SA_School_team_hold_Ludo_league_Boards_xaiclf.jpg" alt="School team holding Ludo League SA boards for the Ludo4Schools programme" loading="lazy" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105" />
                 <div className="absolute top-4 left-4 bg-sky-500 text-white p-2 rounded-lg"><GraduationCap size={24} /></div>
               </div>
               <div className="p-8">
@@ -58,7 +58,7 @@ export const ValuePropsAndPrograms = ({ setActivePage }: { setActivePage: (p: Pa
 
             <div className="bg-bg-card border border-white/10 rounded-2xl overflow-hidden group">
               <div className="h-64 relative overflow-hidden bg-black">
-                <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778074844/Ludo_League_SA_award_ceremony_tsya47.jpg" alt="The Roll of Legends" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105" />
+                <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1778074844/Ludo_League_SA_award_ceremony_tsya47.jpg" alt="Champions crowned at the Ludo League SA Roll of Legends award ceremony" loading="lazy" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105" />
                 <div className="absolute top-4 left-4 bg-accent-gold text-bg-deep p-2 rounded-lg"><Trophy size={24} /></div>
               </div>
               <div className="p-8">

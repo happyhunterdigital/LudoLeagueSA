@@ -61,7 +61,7 @@ export const Home = ({ setActivePage }: { setActivePage: (p: Page) => void }) =>
 
       <section className="relative py-32 px-6 md:px-10 bg-[#072e28] overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" alt="Ludo Pieces" className="w-full h-full object-cover opacity-10 mix-blend-luminosity" />
+          <img src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779551715/Ludo_League_game_pieces_on_wood_yz2omo.png" alt="Ludo League SA game tokens arranged on a wooden board" loading="lazy" className="w-full h-full object-cover opacity-10 mix-blend-luminosity" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#072e28] via-[#072e28]/95 to-[#072e28]"></div>
         </div>
 

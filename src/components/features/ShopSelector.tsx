@@ -9,12 +9,12 @@ interface SelectorProps {
 }
 
 const variants = [
-  { id: 'board-purple', name: 'Royal Purple', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Purple_Board_hohd9k.png', price: 750 },
-  { id: 'board-original', name: 'Classic Teal', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458042/Final_Original_Board_m6uyqi.png', price: 750 },
-  { id: 'board-black', name: 'Obsidian Black', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Black_Board_aq9yjo.png', price: 750 },
-  { id: 'board-blue', name: 'Electric Blue', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Blue_Board_mvqu4j.png', price: 750 },
-  { id: 'board-orange', name: 'Amber Orange', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Orange_Board_h3mopp.png', price: 750 },
-  { id: 'tokens-dice', name: 'Token & Dice Set', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/v1779458041/Final_Tokens_and_Dice_gk3mbd.png', price: 200 }
+  { id: 'board-purple', name: 'Royal Purple', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458042/Final_Purple_Board_hohd9k.png', price: 750 },
+  { id: 'board-original', name: 'Classic Teal', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458042/Final_Original_Board_m6uyqi.png', price: 750 },
+  { id: 'board-black', name: 'Obsidian Black', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Black_Board_aq9yjo.png', price: 750 },
+  { id: 'board-blue', name: 'Electric Blue', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Blue_Board_mvqu4j.png', price: 750 },
+  { id: 'board-orange', name: 'Amber Orange', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Orange_Board_h3mopp.png', price: 750 },
+  { id: 'tokens-dice', name: 'Token & Dice Set', src: 'https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1779458041/Final_Tokens_and_Dice_gk3mbd.png', price: 200 }
 ];
 
 export const ShopSelector: React.FC<SelectorProps> = ({ selectedVariant, setSelectedVariant, onSelectComplete }) => {

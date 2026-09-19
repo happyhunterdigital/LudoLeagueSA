@@ -21,6 +21,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ openPrivacy }) => 
 
   const handleAccept = (type: 'all' | 'essential') => {
     localStorage.setItem('ludo-cookie-consent', type);
+    localStorage.setItem('ludo-cookie-consent-date', new Date().toISOString());
     setIsVisible(false);
   };
 

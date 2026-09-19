@@ -38,8 +38,9 @@ export default function KingsTablePopup() {
         </button>
 
         <img
-          src="https://res.cloudinary.com/dfzeb1s54/image/upload/v1783142171/LudoLeagueSA_vwtysc.png"
-          alt="The Ludo League SA"
+          src="https://res.cloudinary.com/dfzeb1s54/image/upload/q_auto/f_auto/v1783142171/LudoLeagueSA_vwtysc.png"
+          alt="The King's Table tournament promotional artwork"
+          loading="lazy"
           style={styles.image}
         />
 

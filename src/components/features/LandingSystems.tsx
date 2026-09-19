@@ -46,8 +46,8 @@ export const LandingSystems: React.FC = () => {
             <ScrollReveal direction="right" delay={0.2} className="md:w-1/2">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.06] group">
                 <img 
-                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
-                  alt="Sporting Structure" 
+                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1778074844/Ludo_League_SA_awards_dwmmoi.jpg" 
+                  alt="Ludo League SA champions celebrating at the awards ceremony" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy" 
                 />
@@ -65,8 +65,8 @@ export const LandingSystems: React.FC = () => {
             <ScrollReveal direction="left" className="md:w-1/2">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.06] group">
                 <img 
-                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/v1776949475/Ludo_League_SA_Africa_Playing_tq1eth.jpg" 
-                  alt="Club Franchise" 
+                  src="https://res.cloudinary.com/dkyg07qvv/image/upload/q_auto/f_auto/v1776949475/Ludo_League_SA_Africa_Playing_tq1eth.jpg" 
+                  alt="Club franchise owners and players at a Ludo League SA community tournament" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy" 
                 />
