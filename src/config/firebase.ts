@@ -11,7 +11,8 @@ const firebaseConfig = {
   storageBucket: firebaseAppletConfig.storageBucket,
   messagingSenderId: firebaseAppletConfig.messagingSenderId,
   appId: firebaseAppletConfig.appId,
-  measurementId: firebaseAppletConfig.measurementId,
+  // measurementId is intentionally not passed: Firebase Analytics is not
+  // initialised. Add it back only behind the consent helper.
   apiKey: firebaseAppletConfig.apiKey
 };
 

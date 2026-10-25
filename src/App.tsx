@@ -302,6 +302,7 @@ export default function App() {
                     <button onClick={() => scrollToSection('newsupdates')} className="hover:text-[#FACC15] transition-colors">News & Updates</button>
                     <button onClick={() => scrollToSection('faqs')} className="hover:text-[#FACC15] transition-colors">FAQs</button>
                     <button onClick={() => scrollToSection('privacy')} className="hover:text-[#FACC15] transition-colors">Privacy Policy</button>
+                    <button onClick={() => document.dispatchEvent(new Event('hh:open-consent'))} className="hover:text-[#FACC15] transition-colors">Cookie Settings</button>
                   </div>
                   
                   {/* Divider */}
